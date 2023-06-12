@@ -35,34 +35,45 @@ public class EnemyAttacking : MonoBehaviour
         // 살아있는 상태라면
         if (!enemyInfo.GetIsDead())
         {
-            // 탐지 대상이 공격 사거리 안에 존재한다면
-            if (Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetAttackRange())
+            // 탐지 대상을 인식하고 있는 중이라면
+            if (enemyInfo.GetIsTracking())
             {
-                // 공격 사거리 진입 -> true
-                enemyInfo.SetIsInAttackRange(true);
-                // 공격 가능이 true라면
-                if (enemyInfo.GetCanAttack())
+                // 탐지 대상이 공격 사거리 안에 존재한다면
+                if (Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetAttackRange())
                 {
-                    // 공격 중이 true가 아니라면
-                    if (enemyInfo.GetIsAttacking() != true)
+                    // 공격 사거리 진입 -> true
+                    enemyInfo.SetIsInAttackRange(true);
+                    // 공격 가능이 true라면
+                    if (enemyInfo.GetCanAttack())
                     {
-                        // 공격 중 -> true
-                        enemyInfo.SetIsAttacking(true);
-                        // 공격 가능 -> false
-                        enemyInfo.SetCanAttack(false);
-                        // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
-                        StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
-                        StartCoroutine(AttackTimer());
+                        // 공격 중이 true가 아니라면
+                        if (enemyInfo.GetIsAttacking() != true)
+                        {
+                            // 공격 중 -> true
+                            enemyInfo.SetIsAttacking(true);
+                            // 공격 가능 -> false
+                            enemyInfo.SetCanAttack(false);
+                            // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
+                            StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+                            StartCoroutine(AttackTimer());
+                        }
                     }
-
+                }
+                // 탐지 대상이 공격 사거리 밖이라면
+                else
+                {
+                    // 공격 사거리 진입 -> false
+                    enemyInfo.SetIsInAttackRange(false);
                 }
             }
-            // 탐지 대상이 공격 사거리 밖이라면
-            else
-            {
-                // 공격 사거리 진입 -> false
-                enemyInfo.SetIsInAttackRange(false);
-            }
+        }
+        // 죽었다면
+        else
+        {
+            // 공격 멈춤
+            StopAllCoroutines();
+            // 공격 판정 off
+            attackRange.SetActive(false);
         }
     }
 

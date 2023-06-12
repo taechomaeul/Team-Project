@@ -36,8 +36,8 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                     // 추격 중 -> true
                     enemyInfo.SetIsTracking(true);
                 }
-                // 탐지 대상을 바라봄
-                transform.LookAt(enemyInfo.target.transform.position);
+                //// 탐지 대상을 바라봄
+                //transform.LookAt(enemyInfo.target.transform.position);
             }
 
             // 추격 중이라면
@@ -51,8 +51,12 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                     // ~~~~~ 인식거리를 두 개로 나눠서 작은 범위에서 추격 시작하고 큰 범위에서 추격 중지하게 하면?
                 }
 
-                // 탐지 대상을 바라봄
-                transform.LookAt(enemyInfo.target.transform.position);
+                // 공격 중이 아니라면
+                if (!enemyInfo.GetIsAttacking())
+                {
+                    // 탐지 대상을 바라봄
+                    transform.LookAt(enemyInfo.target.transform.position);
+                }
 
                 // 공격 사거리 밖에 있고 공격 중이 아니라면
                 if (!enemyInfo.GetIsInAttackRange() && !enemyInfo.GetIsAttacking())
