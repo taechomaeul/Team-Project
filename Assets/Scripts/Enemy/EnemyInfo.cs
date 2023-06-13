@@ -3,69 +3,69 @@ using UnityEngine;
 
 public class EnemyInfo : MonoBehaviour
 {
-    [Header("µğ¹ö±×")]
-    [Tooltip("±âÁî¸ğ on/off ½ºÀ§Ä¡")]
+    [Header("ë””ë²„ê·¸")]
+    [Tooltip("ê¸°ì¦ˆëª¨ on/off ìŠ¤ìœ„ì¹˜")]
     [SerializeField] bool isDebug;
 
-    [Header("Å½Áö ´ë»ó")]
-    [Tooltip("Å½Áö ´ë»ó(ÇÃ·¹ÀÌ¾î)")]
+    [Header("íƒì§€ ëŒ€ìƒ")]
+    [Tooltip("íƒì§€ ëŒ€ìƒ(í”Œë ˆì´ì–´)")]
     public GameObject target;
 
     [Serializable]
     public class Stat
     {
-        [Header("ÀÌµ¿")]
-        [Tooltip("ÀÌµ¿ ¼Óµµ")]
+        [Header("ì´ë™")]
+        [Tooltip("ì´ë™ ì†ë„")]
         [SerializeField] internal float movingSpeed;
 
-        [Header("ÀÎ½Ä")]
-        [Tooltip("½Ã¾ß°¢")]
+        [Header("ì¸ì‹")]
+        [Tooltip("ì‹œì•¼ê°")]
         [SerializeField] internal float detectAngle;
 
-        [Tooltip("ÀÎ½Ä °Å¸®")]
+        [Tooltip("ì¸ì‹ ê±°ë¦¬")]
         [SerializeField] internal float detectRadius;
 
-        [Header("Ã¼·Â")]
-        [Tooltip("ÃÖ´ë Ã¼·Â")]
-        [SerializeField] internal float maxHp;
+        [Header("ì²´ë ¥")]
+        [Tooltip("ìµœëŒ€ ì²´ë ¥")]
+        [SerializeField] internal int maxHp;
 
-        [Tooltip("ÇöÀç Ã¼·Â")]
-        [SerializeField] internal float currentHp;
+        [Tooltip("í˜„ì¬ ì²´ë ¥")]
+        [SerializeField] internal int currentHp;
 
-        [Header("°ø°İ")]
-        [Tooltip("µ¥¹ÌÁö")]
-        [SerializeField] internal float damage;
+        [Header("ê³µê²©")]
+        [Tooltip("ë°ë¯¸ì§€")]
+        [SerializeField] internal int damage;
 
-        [Tooltip("°ø°İ ÁÖ±â")]
+        [Tooltip("ê³µê²© ì£¼ê¸°")]
         [SerializeField] internal float attackCycle;
 
-        [Tooltip("°ø°İ »ç°Å¸®")]
+        [Tooltip("ê³µê²© ì‚¬ê±°ë¦¬")]
         [SerializeField] internal float attackRange;
     }
 
-    [Header("Àû ½ºÅÈ")]
+    [Header("ì  ìŠ¤íƒ¯")]
     [SerializeField] Stat stat;
 
-    [Header("ÇöÀç »óÅÂ")]
-    [Tooltip("Ãß°İ Áß")]
+    [Header("í˜„ì¬ ìƒíƒœ")]
+    [Tooltip("ì¶”ê²© ì¤‘")]
     [SerializeField] bool isTracking;
 
-    [Tooltip("°ø°İ »ç°Å¸® ÁøÀÔ")]
+    [Tooltip("ê³µê²© ì‚¬ê±°ë¦¬ ì§„ì…")]
     [SerializeField] bool isInAttackRange;
 
-    [Tooltip("°ø°İ °¡´É")]
+    [Tooltip("ê³µê²© ê°€ëŠ¥")]
     [SerializeField] bool canAttack;
 
-    [Tooltip("°ø°İ Áß")]
+    [Tooltip("ê³µê²© ì¤‘")]
     [SerializeField] bool isAttacking;
 
-    [Tooltip("ÇÇ°İ Áß")]
+    [Tooltip("í”¼ê²© ì¤‘")]
     [SerializeField] bool isAttacked;
 
-    [Tooltip("»ç¸Á")]
+    [Tooltip("ì‚¬ë§")]
     [SerializeField] bool isDead;
 
-    // ¿ÜºÎ¿¡¼­ ¾²±â À§ÇÑ º¯¼ö ¹İÈ¯ ÇÔ¼öµé
+    // ì™¸ë¶€ì—ì„œ ì“°ê¸° ìœ„í•œ ë³€ìˆ˜ ë°˜í™˜ í•¨ìˆ˜ë“¤
     #region Get Functions
     public GameObject CurrentTarget() { return target; }
     public bool GetIsDebug() { return isDebug; }
@@ -79,14 +79,14 @@ public class EnemyInfo : MonoBehaviour
     public float GetMovingSpeed() { return stat.movingSpeed; }
     public float GetDetectAngle() { return stat.detectAngle; }
     public float GetDetectRadius() { return stat.detectRadius; }
-    public float GetMaxHp() { return stat.maxHp; }
-    public float GetCurrentHp() { return stat.currentHp; }
-    public float GetDamage() { return stat.damage; }
+    public int GetMaxHp() { return stat.maxHp; }
+    public int GetCurrentHp() { return stat.currentHp; }
+    public int GetDamage() { return stat.damage; }
     public float GetAttackCycle() { return stat.attackCycle; }
     public float GetAttackRange() { return stat.attackRange; }
     #endregion
 
-    // º¯¼ö ¼¼ÆÃ ÇÔ¼öµé
+    // ë³€ìˆ˜ ì„¸íŒ… í•¨ìˆ˜ë“¤
     #region Set Functions
     public void SetIsTracking(bool tf) { isTracking = tf; }
     public void SetIsInAttackRange(bool tf) { isInAttackRange = tf;}
@@ -94,10 +94,10 @@ public class EnemyInfo : MonoBehaviour
     public void SetIsAttacking(bool  tf) { isAttacking = tf; }
     public void SetIsAttacked(bool tf) { isAttacked = tf;}
     public void SetIsDead(bool tf) { isDead = tf;}
-    public void SetCurrentHp(float hp) { stat.currentHp = hp; }
+    public void SetCurrentHp(int hp) { stat.currentHp = hp; }
     #endregion
 
-    // µ¥ÀÌÅÍ ÆÄÀÏ Ãß°¡µÇ¸é ¿©±â¼­ ¼öÄ¡ ÃÊ±âÈ­
+    // ë°ì´í„° íŒŒì¼ ì¶”ê°€ë˜ë©´ ì—¬ê¸°ì„œ ìˆ˜ì¹˜ ì´ˆê¸°í™”
     private void Awake()
     {
         stat.currentHp = stat.maxHp;
