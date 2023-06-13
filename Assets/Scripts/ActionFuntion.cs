@@ -6,6 +6,7 @@ public class ActionFuntion : MonoBehaviour
 {
 
     public PlayerInfo plInfo;
+    public SoulController soulController;
 
     private void Start()
     {
@@ -13,16 +14,12 @@ public class ActionFuntion : MonoBehaviour
     }
 
     /// <summary>
-    /// 영혼석에서 영혼의 무게를 옮겨 플레이어의 혼력(HP)을 채우는 함수
+    /// 영혼석에서 영혼의 무게를 옮겨 영혼석(HP)을 채우는 함수
     /// 플레이어의 혼력(HP)은 최대 수치(maxHP)를 넘길 수 없다.
     /// </summary>
     /// <param name="hp">영혼석에 담긴 영혼의 무게(HP)</param>
-    public void MoveSoulToPlayer(float hp)
+    public void MoveSoulToStone(float hp)
     {
-        plInfo.curHp += hp;
-        if (plInfo.curHp > plInfo.maxHp)
-        {
-            plInfo.curHp = plInfo.maxHp;
-        }
+        plInfo.soulHp += hp;
     }
 }

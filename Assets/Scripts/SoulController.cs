@@ -7,6 +7,7 @@ public class SoulController : MonoBehaviour
 {
 
     public bool isDetail = false;
+    public const float maxSoul = 666;
 
     public SoulInfo exampleSoul;
     public Transform cameraTransform;
@@ -14,6 +15,7 @@ public class SoulController : MonoBehaviour
     public GameObject detailToolTip;
 
     public ActionFuntion actionFuntion;
+    public PlayerInfo plInfo;
 
     private void Start()
     {
@@ -21,6 +23,7 @@ public class SoulController : MonoBehaviour
 
         exampleSoul = GetComponent<SoulInfo>();
         exampleSoul.havingHP = 30f;
+        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
     }
 
@@ -48,12 +51,15 @@ public class SoulController : MonoBehaviour
                 {
                     Debug.Log("더이상 혼력을 추출할 수 없습니다!");
                     detailToolTip.SetActive(false);
-
                 }
                 else
                 {
                     detailToolTip.SetActive(false);
-                    actionFuntion.MoveSoulToPlayer(exampleSoul.havingHP);
+                    actionFuntion.MoveSoulToStone(exampleSoul.havingHP);
+                    if (plInfo.soulHp > maxSoul)
+                    {
+                        plInfo.soulHp = maxSoul;
+                    }
                     exampleSoul.havingHP = 0;
                 }
             }
