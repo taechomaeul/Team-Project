@@ -5,12 +5,18 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     public float curTime = 0;
-    public void CountSeconds(float coolTime)
+    public bool CountSeconds(float coolTime)
     {
-        StartCoroutine(Counting(coolTime));
+        curTime += Time.deltaTime;
+        if (curTime > coolTime)
+        {
+            curTime = 0;
+            return true;
+        }
+        else { return false; }
     }
 
-    IEnumerator Counting(float coolTime)
+    public IEnumerator Counting(float coolTime)
     {
         yield return new WaitForSeconds(coolTime);
     }

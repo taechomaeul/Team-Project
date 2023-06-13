@@ -10,8 +10,9 @@ public class PlayerController : MonoBehaviour
     public float gravity = -20f;
     public float yVelocity = 0;
     public const float moveSpd = 10f; //(고정) 움직임 속도, 현재 움직이는 속도는 plInfo에서 확인
-    
+
     [Header("플래그")]
+    public bool isActivated = false;
     public bool isAttack = false;
     public bool isNextAtk = false; // (M1, M2, M3)attack 상태에서 true가 되면 다음 모션으로 이동가능
     public bool isAvoid = false;
@@ -29,9 +30,15 @@ public class PlayerController : MonoBehaviour
 
     [Header("공격 변수")]
     public float originAtk;
+    public const float damageRange = 0.3f; //0~1 사이의 값
+
+    [Header("회복 변수")]
+    public const float healHp = 3; //초당 회복하는 영혼의 무게 수
 
     public Timer timer;
     public PlayerInfo plInfo;
+    public DamageCalc damangeCalc;
+    public ActionFuntion actionFuntion;
     public Transform cameraTransform;
     public CharacterController characterController;
 
@@ -56,6 +63,8 @@ public class PlayerController : MonoBehaviour
     {
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
+        damangeCalc = GetComponent<DamageCalc>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
 
@@ -97,6 +106,11 @@ public class PlayerController : MonoBehaviour
         yVelocity += (gravity * Time.deltaTime);
         moveDirection.y = yVelocity;
         characterController.Move(moveDirection * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.Alpha1)) //1번키가 들어오면
+        {
+            Heal(); //회복한다.
+        }
 
         IsAvoiding();
 
@@ -246,6 +260,7 @@ public class PlayerController : MonoBehaviour
                 plInfo.plAtk = originAtk;
                 //공격력 설정
 
+                //enemy.currentHp -= damangeCalc.DamageRandomCalc(plInfo.plAtk, damageRange);
                 //실제 들어갈 대미지 계산
 
                 //애니메이션 실행
@@ -278,16 +293,12 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PL_STATE.DAMAGED:
-                float enemyAtkDamage = 10f; //적 정보랑 연결해주세요!
-                plInfo.curHp -= enemyAtkDamage;
-                //적이 가한 대미지의 양을 플레이어 현재 혼력(HP)에서 차감
-
-                //현재 PL의 HP(혼력) 0이하면 DIE
-                if (plInfo.curHp <= 0)
+                if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
                 {
                     plInfo.curHp = 0;
                     plState = PL_STATE.DIE;
-                } else
+                }
+                else
                 {
                     plState = PL_STATE.IDLE;
                 }
@@ -357,5 +368,36 @@ public class PlayerController : MonoBehaviour
         }
         else return false;
         
+    }
+
+    public void Heal()
+    {
+        if (timer.CountSeconds(1f))
+        {
+            if (plInfo.soulHp > 0) //영혼석에 담긴 영혼의 무게가 0보다 크고
+            {
+                if (plInfo.curHp < plInfo.maxHp) //현재 플레이어의 혼력(HP)가 최대치보다 작으면
+                {
+                    actionFuntion.FillHpUsingStone(healHp);//회복
+                }
+                else
+                {
+                    Debug.Log("최대 체력 이상으로 회복할 수 없습니다!");
+                }
+            }
+            else
+            {
+                Debug.Log("영혼석이 비어있습니다!");
+            }
+        }
+        
+    }
+
+    public void BeAttacked(int damage)
+    {
+        plInfo.curHp -= damage;
+        //적이 가한 대미지의 양을 플레이어 현재 혼력(HP)에서 차감
+        plState = PL_STATE.DAMAGED;
+        //플레이어 상태 변경
     }
 }

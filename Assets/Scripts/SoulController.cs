@@ -7,7 +7,6 @@ public class SoulController : MonoBehaviour
 {
 
     public bool isDetail = false;
-    public const float healHp = 2; //초당 회복하는 영혼의 무게 수
     public const float maxSoul = 666;
 
     public SoulInfo exampleSoul;
