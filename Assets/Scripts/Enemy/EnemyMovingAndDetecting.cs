@@ -64,7 +64,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                     // 공격 사거리 안이라면
                     if (enemyInfo.GetIsInAttackRange())
                     {
-                        // 
+                        // 정지
                         navMeshAgent.speed = 0;
                     }
                     // 공격 사거리 밖이라면
@@ -90,12 +90,10 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                 // 공격 사거리 밖에 있고 공격 중이 아니라면
                 if (!enemyInfo.GetIsInAttackRange() && !enemyInfo.GetIsAttacking())
                 {
-                    // 현재 위치부터 원래 위치까지의 거리가 0.1 이상이라면
-                    if (Vector3.Distance(transform.position, originPosition) > 0.1f)
+                    // 현재 위치부터 원래 위치까지의 거리가 navmesh 정지 거리 이상이라면
+                    if (Vector3.Distance(transform.position, originPosition) > navMeshAgent.stoppingDistance)
                     {
-                        // 제자리로 돌아가기(이후에 NavMeshAgent 사용하게 되면 변경)
-                        //transform.LookAt(originPosition);
-                        //transform.Translate(new Vector3(0, 0, enemyInfo.GetMovingSpeed() * Time.deltaTime));
+                        // 제자리로 돌아가기
                         navMeshAgent.SetDestination(originPosition);
                     }
                     // 원래 위치에 도착했다면
