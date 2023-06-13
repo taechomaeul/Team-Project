@@ -7,10 +7,10 @@ public class SoulController : MonoBehaviour
 {
 
     public bool isDetail = false;
+    public const float healHp = 2; //초당 회복하는 영혼의 무게 수
     public const float maxSoul = 666;
 
     public SoulInfo exampleSoul;
-    public Transform cameraTransform;
     public GameObject toolTip;
     public GameObject detailToolTip;
 
@@ -30,7 +30,7 @@ public class SoulController : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 5f);
+        Gizmos.DrawWireSphere(transform.position, 5f);
     }
 
     private void OnTriggerStay(Collider other)

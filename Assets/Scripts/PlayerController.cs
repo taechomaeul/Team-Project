@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("시점 및 이동 변수")]
+    public float rotSpd = 10f;
     public float jumpSpeed = 10f;
     public float gravity = -20f;
     public float yVelocity = 0;
@@ -26,6 +27,10 @@ public class PlayerController : MonoBehaviour
     public float attackTime = 0; //deltaTime 더할 변수
     public float atkResetTime = 2f; //공격 초기화 시간 2초
 
+    [Header("공격 변수")]
+    public float originAtk;
+
+    public Timer timer;
     public PlayerInfo plInfo;
     public Transform cameraTransform;
     public CharacterController characterController;
@@ -50,10 +55,17 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         plInfo = GetComponent<PlayerInfo>();
+        timer = GameObject.Find("Timer").GetComponent<Timer>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
 
         plInfo.plMoveSpd = moveSpd;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
     }
 
 
@@ -65,6 +77,12 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = new Vector3(h, 0, v);
         moveDirection = cameraTransform.TransformDirection(moveDirection);
         moveDirection *= plInfo.plMoveSpd;
+
+        if (moveDirection != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * rotSpd);
+        }
+
 
         if (characterController.isGrounded)
         {
@@ -80,15 +98,6 @@ public class PlayerController : MonoBehaviour
         moveDirection.y = yVelocity;
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (IsAttacking())
-        {
-            if (plState == PL_STATE.IDLE)
-            {
-                plState = PL_STATE.ATTACKM1;
-            }
-            
-        }
-
         IsAvoiding();
 
         switch (plState)
@@ -98,6 +107,11 @@ public class PlayerController : MonoBehaviour
                         || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
                 {
                     plState = PL_STATE.MOVE;
+                }
+
+                if (IsAttacking())
+                {
+                    plState = PL_STATE.ATTACKM1;
                 }
 
                 break;
@@ -113,6 +127,10 @@ public class PlayerController : MonoBehaviour
                 {
                     plState = PL_STATE.WALK;
                 }
+                else if (IsAttacking())
+                {
+                    plState = PL_STATE.ATTACKM1;
+                }
                 else if (!Input.anyKey)
                 {
                     plState = PL_STATE.IDLE;
@@ -121,6 +139,15 @@ public class PlayerController : MonoBehaviour
 
             case PL_STATE.WALK:
                 plInfo.plMoveSpd = WalkMoveSpd();
+                //이동속도를 반으로 줄인다.
+
+                if (IsAttacking())
+                {
+                    plState = PL_STATE.ATTACKM1;
+
+                    originAtk = plInfo.plAtk; //원래 공격력 임시저장
+                    plInfo.plAtk *= 1.5f; //공격력 1.5배 증가 (공격력 설정)
+                }
 
                 if (Input.GetKeyUp(KeyCode.LeftControl))
                 {
@@ -142,10 +169,16 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
 
+
             case PL_STATE.ATTACKM1:
-                //애니메이션 실행
+                plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
+
+                //실제 들어갈 대미지 계산
+
+                //애니메이션 실행 코드
 
                 //연타 초기화 시간
+
                 attackTime += Time.deltaTime;
                 if (IsAttacking())
                 {
@@ -162,6 +195,8 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         attackTime = 0;
+                        plInfo.plAtk = originAtk; //원래의 대미지로 변경
+                        plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
                         plState = PL_STATE.IDLE;
                         isNextAtk = false;
                         isAttack = false;
@@ -172,6 +207,11 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PL_STATE.ATTACKM2:
+                plInfo.plAtk = originAtk;
+                //공격력 설정
+
+                //실제 들어갈 대미지 계산
+
                 //애니메이션 실행
 
                 //연타 초기화 시간
@@ -191,6 +231,7 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         attackTime = 0;
+                        plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
                         plState = PL_STATE.IDLE;
                         isNextAtk = false;
                         isAttack = false;
@@ -202,6 +243,11 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PL_STATE.ATTACKM3:
+                plInfo.plAtk = originAtk;
+                //공격력 설정
+
+                //실제 들어갈 대미지 계산
+
                 //애니메이션 실행
 
                 //연타 초기화 시간
@@ -221,6 +267,7 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         attackTime = 0;
+                        plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
                         plState = PL_STATE.IDLE;
                         isNextAtk = false;
                         isAttack = false;
@@ -231,12 +278,18 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PL_STATE.DAMAGED:
+                float enemyAtkDamage = 10f; //적 정보랑 연결해주세요!
+                plInfo.curHp -= enemyAtkDamage;
+                //적이 가한 대미지의 양을 플레이어 현재 혼력(HP)에서 차감
 
                 //현재 PL의 HP(혼력) 0이하면 DIE
                 if (plInfo.curHp <= 0)
                 {
                     plInfo.curHp = 0;
                     plState = PL_STATE.DIE;
+                } else
+                {
+                    plState = PL_STATE.IDLE;
                 }
 
                 break;
