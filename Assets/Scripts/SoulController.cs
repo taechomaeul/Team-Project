@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,7 +48,7 @@ public class SoulController : MonoBehaviour
             {
                 if (exampleSoul.havingHP == 0)
                 {
-                    Debug.Log("´õÀÌ»ó È¥·ÂÀ» ÃßÃâÇÒ ¼ö ¾ø½À´Ï´Ù!");
+                    Debug.Log("ë”ì´ìƒ í˜¼ë ¥ì„ ì¶”ì¶œí•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
                     detailToolTip.SetActive(false);
                 }
                 else
@@ -65,8 +65,8 @@ public class SoulController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha2) && isDetail)
             {
-                //ºùÀÇÇÏ±â
-                Debug.Log("ºùÀÇÇÏ±â!!!");
+                //ë¹™ì˜í•˜ê¸°
+                Debug.Log("ë¹™ì˜í•˜ê¸°!!!");
             }
         }
     }

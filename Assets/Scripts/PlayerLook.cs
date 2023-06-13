@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ public class PlayerLook : MonoBehaviour
 
         //if (rotationX > 5f) { rotationX = 5f; }
         //if (rotationX < -5f) { rotationX = -5f; }
-        //»óÇÏ À§Ä¡ Á¦ÇÑ
+        //ìƒí•˜ ìœ„ì¹˜ ì œí•œ
 
         transform.eulerAngles = new Vector3(-rotationX, rotationY, 0);
     }
