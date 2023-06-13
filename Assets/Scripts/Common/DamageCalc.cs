@@ -2,24 +2,28 @@ using UnityEngine;
 
 public class DamageCalc : MonoBehaviour
 {
-    private void Start()
-    {
-        // Å×½ºÆ®¿ë ÀÓ½Ã °ª
-        Debug.Log(DamageRandomCalc(10, 0.3f));
-    }
+    //private void Start()
+    //{
+    //    // í…ŒìŠ¤íŠ¸ìš© ì„ì‹œ ê°’
+    //    Debug.Log(DamageRandomCalc(10, 0.3f));
+    //}
 
-    // ±âÁØ°ª(damage)¿¡¼­ +- ¹üÀ§(rangeValue) »çÀÌÀÇ ·£´ıÇÑ °ª ¹İÈ¯, rangeValue´Â 0~1»çÀÌÀÇ ¼Ò¼ö°ªÀ» °¡Áü
-    public float DamageRandomCalc(float damage, float rangeValue)
+    // ê¸°ì¤€ê°’(damage)ì—ì„œ +- ë²”ìœ„(rangeValue) ì‚¬ì´ì˜ ëœë¤í•œ ê°’ ë°˜í™˜, rangeValueëŠ” 0~1ì‚¬ì´ì˜ ì†Œìˆ˜ê°’ì„ ê°€ì§
+    public int DamageRandomCalc(int damage, float rangeValue)
     {
-        // ¹üÀ§°¡ 0 ¹Ì¸¸ÀÌ°Å³ª 1 ÃÊ°úÀÎ °æ¿ì
+        // ë²”ìœ„ê°€ 0 ë¯¸ë§Œì´ê±°ë‚˜ 1 ì´ˆê³¼ì¸ ê²½ìš°
         if (rangeValue < 0 || rangeValue > 1)
         {
-            // rangeValue 0À¸·Î
-            Debug.Log("Àß¸øµÈ ÀÔ·Â°ª");
+            // rangeValue 0ìœ¼ë¡œ
+            Debug.Log("ì˜ëª»ëœ ì…ë ¥ê°’");
             rangeValue = 0;
         }
-        // µ¥¹ÌÁö °ª °è»ê ÈÄ ¼Ò¼öÁ¡ µÎÀÚ¸®±îÁö ¹İÈ¯ 
-        damage *= (int)(Random.Range(1 - rangeValue, 1 + rangeValue) * 100) * 0.01f;
+        // ë°ë¯¸ì§€ ê°’ ê³„ì‚° í›„ ì†Œìˆ˜ì  ë‘ìë¦¬ê¹Œì§€ ë°˜í™˜
+        float temp = Random.Range(-rangeValue,rangeValue);
+
+        Debug.Log(temp);
+        damage = (int)((1+temp)*damage);
+        //damage *= (int)((int)(Random.Range(1 - rangeValue, 1 + rangeValue) * 100) * 0.01f);
         return damage;
     }
 }
