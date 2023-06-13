@@ -4,119 +4,119 @@ using UnityEngine;
 
 public class EnemyAttacking : MonoBehaviour
 {
-    // Àû Á¤º¸
+    // ì  ì •ë³´
     EnemyInfo enemyInfo;
-    // ÇöÀç °ø°İ ÁøÇàµµ
+    // í˜„ì¬ ê³µê²© ì§„í–‰ë„
     float attackProgress;
 
-    [Header("°ø°İ ÆÇÁ¤ ¹üÀ§")]
-    [Tooltip("°ø°İ ÆÇÁ¤ ¹üÀ§")]
+    [Header("ê³µê²© íŒì • ë²”ìœ„")]
+    [Tooltip("ê³µê²© íŒì • ë²”ìœ„")]
     [SerializeField] GameObject attackRange;
 
 
     void Start()
     {
-        // enemyInfo ÃÊ±âÈ­
+        // enemyInfo ì´ˆê¸°í™”
         if (enemyInfo == null)
         {
             enemyInfo = GetComponent<EnemyInfo>();
         }
-        // °ø°İ ÆÇÁ¤ off
+        // ê³µê²© íŒì • off
         attackRange.SetActive(false);
-        // °ø°İ ÁøÇàµµ ÃÊ±âÈ­
+        // ê³µê²© ì§„í–‰ë„ ì´ˆê¸°í™”
         attackProgress = 0f;
-        // °ø°İ °¡´É ÃÊ±âÈ­
+        // ê³µê²© ê°€ëŠ¥ ì´ˆê¸°í™”
         enemyInfo.SetCanAttack(true);
 
     }
 
     void FixedUpdate()
     {
-        // »ì¾ÆÀÖ´Â »óÅÂ¶ó¸é
+        // ì‚´ì•„ìˆëŠ” ìƒíƒœë¼ë©´
         if (!enemyInfo.GetIsDead())
         {
-            // Å½Áö ´ë»óÀ» ÀÎ½ÄÇÏ°í ÀÖ´Â ÁßÀÌ¶ó¸é
+            // íƒì§€ ëŒ€ìƒì„ ì¸ì‹í•˜ê³  ìˆëŠ” ì¤‘ì´ë¼ë©´
             if (enemyInfo.GetIsTracking())
             {
-                // Å½Áö ´ë»óÀÌ ½Ã¾ß°¢ ¾È¿¡ Á¸Àç && °ø°İ »ç°Å¸® ¾È¿¡ Á¸ÀçÇÑ´Ù¸é
+                // íƒì§€ ëŒ€ìƒì´ ì‹œì•¼ê° ì•ˆì— ì¡´ì¬ && ê³µê²© ì‚¬ê±°ë¦¬ ì•ˆì— ì¡´ì¬í•œë‹¤ë©´
                 if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.target.transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f
                     && Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetAttackRange())
                 {
-                    // °ø°İ »ç°Å¸® ÁøÀÔ -> true
+                    // ê³µê²© ì‚¬ê±°ë¦¬ ì§„ì… -> true
                     enemyInfo.SetIsInAttackRange(true);
-                    // °ø°İ °¡´ÉÀÌ true¶ó¸é
+                    // ê³µê²© ê°€ëŠ¥ì´ trueë¼ë©´
                     if (enemyInfo.GetCanAttack())
                     {
-                        // °ø°İ ÁßÀÌ true°¡ ¾Æ´Ï¶ó¸é
+                        // ê³µê²© ì¤‘ì´ trueê°€ ì•„ë‹ˆë¼ë©´
                         if (enemyInfo.GetIsAttacking() != true)
                         {
-                            // °ø°İ Áß -> true
+                            // ê³µê²© ì¤‘ -> true
                             enemyInfo.SetIsAttacking(true);
-                            // °ø°İ °¡´É -> false
+                            // ê³µê²© ê°€ëŠ¥ -> false
                             enemyInfo.SetCanAttack(false);
-                            // °ø°İ ½ÃÀÛ(°ø°İ ½ÃÀü ½Ã°£Àº ÀÓ½Ã·Î ÀÓÀÇ°ª ³ÖÀ½)
+                            // ê³µê²© ì‹œì‘(ê³µê²© ì‹œì „ ì‹œê°„ì€ ì„ì‹œë¡œ ì„ì˜ê°’ ë„£ìŒ)
                             StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
                             StartCoroutine(AttackTimer());
                         }
                     }
                 }
-                // Å½Áö ´ë»óÀÌ °ø°İ »ç°Å¸® ¹ÛÀÌ¶ó¸é
+                // íƒì§€ ëŒ€ìƒì´ ê³µê²© ì‚¬ê±°ë¦¬ ë°–ì´ë¼ë©´
                 else
                 {
-                    // °ø°İ »ç°Å¸® ÁøÀÔ -> false
+                    // ê³µê²© ì‚¬ê±°ë¦¬ ì§„ì… -> false
                     enemyInfo.SetIsInAttackRange(false);
                 }
             }
         }
-        // Á×¾ú´Ù¸é
+        // ì£½ì—ˆë‹¤ë©´
         else
         {
-            // °ø°İ ¸ØÃã
+            // ê³µê²© ë©ˆì¶¤
             StopAllCoroutines();
-            // °ø°İ ÆÇÁ¤ off
+            // ê³µê²© íŒì • off
             attackRange.SetActive(false);
         }
     }
 
-    // °ø°İ(°ø°İ ½ÃÀü ½Ã°£)
+    // ê³µê²©(ê³µê²© ì‹œì „ ì‹œê°„)
     IEnumerator Attack(float attackTime)
     {
-        // °ø°İ ÁßÀÌ true¶ó¸é
+        // ê³µê²© ì¤‘ì´ trueë¼ë©´
         if (enemyInfo.GetIsAttacking())
         {
-            // °ø°İ ÆÇÁ¤ on
+            // ê³µê²© íŒì • on
             attackRange.SetActive(true);
-            // attackTime ¸¸Å­ ±â´Ù¸²(°ø°İ ¸ğ¼Ç ½ÃÀÛºÎÅÍ ³¡±îÁöÀÇ ½Ã°£)
+            // attackTime ë§Œí¼ ê¸°ë‹¤ë¦¼(ê³µê²© ëª¨ì…˜ ì‹œì‘ë¶€í„° ëê¹Œì§€ì˜ ì‹œê°„)
             yield return new WaitForSeconds(attackTime);
-            // °ø°İ ÆÇÁ¤ off
+            // ê³µê²© íŒì • off
             attackRange.SetActive(false);
-            // °ø°İ Áß -> false
+            // ê³µê²© ì¤‘ -> false
             enemyInfo.SetIsAttacking(false);
         }
-        // °ø°İ ÁßÀÌ false¶ó¸é
+        // ê³µê²© ì¤‘ì´ falseë¼ë©´
         else
         {
-            // °ø°İ ÄÚ·çÆ¾ Á¾·á
+            // ê³µê²© ì½”ë£¨í‹´ ì¢…ë£Œ
             yield return null;
         }
     }
 
-    // °ø°İ °¡´É °è»ê Å¸ÀÌ¸Ó
+    // ê³µê²© ê°€ëŠ¥ ê³„ì‚° íƒ€ì´ë¨¸
     IEnumerator AttackTimer()
     {
         while (true)
         {
-            // °ø°İ ÁøÇàµµ°¡ °ø°İ ÁÖ±â¸¦ ³ÑÀ¸¸é
+            // ê³µê²© ì§„í–‰ë„ê°€ ê³µê²© ì£¼ê¸°ë¥¼ ë„˜ìœ¼ë©´
             if (attackProgress >= enemyInfo.GetAttackCycle())
             {
-                // °ø°İÁøÇàµµ ÃÊ±âÈ­
+                // ê³µê²©ì§„í–‰ë„ ì´ˆê¸°í™”
                 attackProgress = 0f;
-                // °ø°İ °¡´É -> true
+                // ê³µê²© ê°€ëŠ¥ -> true
                 enemyInfo.SetCanAttack(true);
-                // Å¸ÀÌ¸Ó ÄÚ·çÆ¾ Á¾·á
+                // íƒ€ì´ë¨¸ ì½”ë£¨í‹´ ì¢…ë£Œ
                 break;
             }
-            // ¸Å ÇÁ·¹ÀÓ °ø°İ ÁøÇàµµ¿¡ °æ°ú ½Ã°£ Ãß°¡
+            // ë§¤ í”„ë ˆì„ ê³µê²© ì§„í–‰ë„ì— ê²½ê³¼ ì‹œê°„ ì¶”ê°€
             attackProgress += Time.deltaTime;
             yield return null;
         }
@@ -124,16 +124,16 @@ public class EnemyAttacking : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // µğ¹ö±×¿ë enemyInfo ÃÊ±âÈ­
+        // ë””ë²„ê·¸ìš© enemyInfo ì´ˆê¸°í™”
         if (enemyInfo == null)
         {
             enemyInfo = GetComponent<EnemyInfo>();
         }
 
-        // µğ¹ö±× ½ºÀ§Ä¡°¡ ÄÑÁ®ÀÖ´Ù¸é
+        // ë””ë²„ê·¸ ìŠ¤ìœ„ì¹˜ê°€ ì¼œì ¸ìˆë‹¤ë©´
         if (enemyInfo.GetIsDebug())
         {
-            // °ø°İ »ç°Å¸® ±âÁî¸ğ Ç¥½Ã(»¡°£»ö)
+            // ê³µê²© ì‚¬ê±°ë¦¬ ê¸°ì¦ˆëª¨ í‘œì‹œ(ë¹¨ê°„ìƒ‰)
             Handles.color = Color.red;
             Handles.DrawWireDisc(transform.position, transform.up, enemyInfo.GetAttackRange());
         }
