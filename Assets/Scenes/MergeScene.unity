@@ -265,7 +265,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310680941}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -609,6 +609,7 @@ MonoBehaviour:
   jumpSpeed: 10
   gravity: -20
   yVelocity: 0
+  isActivated: 0
   isAttack: 0
   isNextAtk: 0
   isAvoid: 0
@@ -622,6 +623,8 @@ MonoBehaviour:
   originAtk: 10
   timer: {fileID: 0}
   plInfo: {fileID: 0}
+  damangeCalc: {fileID: 0}
+  actionFuntion: {fileID: 0}
   cameraTransform: {fileID: 0}
   characterController: {fileID: 0}
   plState: 0
@@ -792,7 +795,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &713704817
 Transform:
   m_ObjectHideFlags: 0
