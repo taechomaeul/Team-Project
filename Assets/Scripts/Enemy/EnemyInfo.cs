@@ -27,14 +27,14 @@ public class EnemyInfo : MonoBehaviour
 
         [Header("체력")]
         [Tooltip("최대 체력")]
-        [SerializeField] internal float maxHp;
+        [SerializeField] internal int maxHp;
 
         [Tooltip("현재 체력")]
-        [SerializeField] internal float currentHp;
+        [SerializeField] internal int currentHp;
 
         [Header("공격")]
         [Tooltip("데미지")]
-        [SerializeField] internal float damage;
+        [SerializeField] internal int damage;
 
         [Tooltip("공격 주기")]
         [SerializeField] internal float attackCycle;
@@ -79,9 +79,9 @@ public class EnemyInfo : MonoBehaviour
     public float GetMovingSpeed() { return stat.movingSpeed; }
     public float GetDetectAngle() { return stat.detectAngle; }
     public float GetDetectRadius() { return stat.detectRadius; }
-    public float GetMaxHp() { return stat.maxHp; }
-    public float GetCurrentHp() { return stat.currentHp; }
-    public float GetDamage() { return stat.damage; }
+    public int GetMaxHp() { return stat.maxHp; }
+    public int GetCurrentHp() { return stat.currentHp; }
+    public int GetDamage() { return stat.damage; }
     public float GetAttackCycle() { return stat.attackCycle; }
     public float GetAttackRange() { return stat.attackRange; }
     #endregion
@@ -94,7 +94,7 @@ public class EnemyInfo : MonoBehaviour
     public void SetIsAttacking(bool  tf) { isAttacking = tf; }
     public void SetIsAttacked(bool tf) { isAttacked = tf;}
     public void SetIsDead(bool tf) { isDead = tf;}
-    public void SetCurrentHp(float hp) { stat.currentHp = hp; }
+    public void SetCurrentHp(int hp) { stat.currentHp = hp; }
     #endregion
 
     // 데이터 파일 추가되면 여기서 수치 초기화

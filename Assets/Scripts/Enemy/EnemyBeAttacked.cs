@@ -60,11 +60,11 @@ public class EnemyBeAttacked : MonoBehaviour
             if (!enemyInfo.GetIsAttacking())
             {
                 // 피격 애니메이션 재생
-                Debug.Log("ㅁㄴㅇㄹ");
+                //Debug.Log("ㅁㄴㅇㄹ");
 
                 // 애니메이션 끝날 때까지 기다림
                 yield return new WaitForSeconds(time);
-                Debug.Log("ㅁㄴㅇㄹ2");
+                //Debug.Log("ㅁㄴㅇㄹ2");
             }
 
             // 탐지 대상을 인식하지 못하고 있다면
