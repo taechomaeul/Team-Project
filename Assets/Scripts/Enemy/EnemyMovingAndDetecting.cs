@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyMovingAndDetecting : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
     // 원래 위치
     Vector3 originPosition;
     Quaternion originRotation;
-
+    NavMeshAgent navMeshAgent;
     void Start()
     {
         // enemyInfo 초기화
@@ -19,6 +20,13 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         // originPosition, originRotation 초기화
         originPosition = transform.position;
         originRotation = transform.rotation;
+
+        // NavMeshAgent 세팅
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        // NavMeshAgent 이동 속도 조절
+        navMeshAgent.speed = enemyInfo.GetMovingSpeed();
+        // 회전 속도는 탐지 대상에 고정되게 설정
+        navMeshAgent.angularSpeed = 360;
     }
 
     private void FixedUpdate()
@@ -36,8 +44,6 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                     // 추격 중 -> true
                     enemyInfo.SetIsTracking(true);
                 }
-                //// 탐지 대상을 바라봄
-                //transform.LookAt(enemyInfo.target.transform.position);
             }
 
             // 추격 중이라면
@@ -54,15 +60,28 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                 // 공격 중이 아니라면
                 if (!enemyInfo.GetIsAttacking())
                 {
-                    // 탐지 대상을 바라봄
-                    transform.LookAt(enemyInfo.target.transform.position);
-                }
 
-                // 공격 사거리 밖에 있고 공격 중이 아니라면
-                if (!enemyInfo.GetIsInAttackRange() && !enemyInfo.GetIsAttacking())
+                    // 공격 사거리 안이라면
+                    if (enemyInfo.GetIsInAttackRange())
+                    {
+                        // 
+                        navMeshAgent.speed = 0;
+                    }
+                    // 공격 사거리 밖이라면
+                    else
+                    {
+                        // 탐지 대상을 바라봄
+                        transform.LookAt(enemyInfo.target.transform.position);
+                        // 추격
+                        navMeshAgent.speed = enemyInfo.GetMovingSpeed();
+                        navMeshAgent.SetDestination(enemyInfo.target.transform.position);
+                    }
+                }
+                // 공격 중이라면
+                else
                 {
-                    // 추격(이후에 NavMeshAgent 사용하게 되면 변경)
-                    transform.Translate(new Vector3(0, 0, enemyInfo.GetMovingSpeed() * Time.deltaTime));
+                    // 제자리 정지
+                    navMeshAgent.speed = 0;
                 }
             }
             // 추격 중이 아니라면
@@ -75,8 +94,9 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                     if (Vector3.Distance(transform.position, originPosition) > 0.1f)
                     {
                         // 제자리로 돌아가기(이후에 NavMeshAgent 사용하게 되면 변경)
-                        transform.LookAt(originPosition);
-                        transform.Translate(new Vector3(0, 0, enemyInfo.GetMovingSpeed() * Time.deltaTime));
+                        //transform.LookAt(originPosition);
+                        //transform.Translate(new Vector3(0, 0, enemyInfo.GetMovingSpeed() * Time.deltaTime));
+                        navMeshAgent.SetDestination(originPosition);
                     }
                     // 원래 위치에 도착했다면
                     else

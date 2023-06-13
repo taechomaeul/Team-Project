@@ -38,8 +38,9 @@ public class EnemyAttacking : MonoBehaviour
             // 탐지 대상을 인식하고 있는 중이라면
             if (enemyInfo.GetIsTracking())
             {
-                // 탐지 대상이 공격 사거리 안에 존재한다면
-                if (Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetAttackRange())
+                // 탐지 대상이 시야각 안에 존재 && 공격 사거리 안에 존재한다면
+                if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.target.transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f
+                    && Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetAttackRange())
                 {
                     // 공격 사거리 진입 -> true
                     enemyInfo.SetIsInAttackRange(true);
