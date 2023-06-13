@@ -20,10 +20,6 @@ public class EnemyBeAttacked : MonoBehaviour
         soulStone.SetActive(false);
     }
 
-    //void FixedUpdate()
-    //{
-    //}
-
     // damage만큼 공격 받음
     public void BeAttacked(float damage)
     {

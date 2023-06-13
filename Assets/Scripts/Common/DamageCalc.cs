@@ -18,6 +18,7 @@ public class DamageCalc : MonoBehaviour
             Debug.Log("잘못된 입력값");
             rangeValue = 0;
         }
+        // 데미지 값 계산 후 소수점 두자리까지 반환 
         damage *= (int)(Random.Range(1 - rangeValue, 1 + rangeValue) * 100) * 0.01f;
         return damage;
     }
