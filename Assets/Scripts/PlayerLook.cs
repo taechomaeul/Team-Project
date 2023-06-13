@@ -13,7 +13,7 @@ public class PlayerLook : MonoBehaviour
 
     void Start()
     {
-        plInfo = GetComponent<PlayerInfo>();
+        plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
     }
 
     void Update()

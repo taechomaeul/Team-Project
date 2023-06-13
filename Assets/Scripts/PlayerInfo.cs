@@ -10,4 +10,5 @@ public class PlayerInfo : MonoBehaviour
     public float plMoveSpd;
     public float curHp;
     public float maxHp;
+    public float soulHp;
 }
