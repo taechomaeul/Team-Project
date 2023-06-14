@@ -9,6 +9,9 @@ public class EnemyAttacking : MonoBehaviour
     // 현재 공격 진행도
     float attackProgress;
 
+    // 보스인지 확인
+    bool isBoss;
+
     [Header("공격 판정 범위")]
     [Tooltip("공격 판정 범위")]
     [SerializeField] GameObject attackRange;
@@ -23,11 +26,13 @@ public class EnemyAttacking : MonoBehaviour
             if (GetComponent<BossInfo>() == null)
             {
                 enemyInfo = GetComponent<EnemyInfo>();
+                isBoss = false;
             }
             // 보스라면
             else
             {
                 enemyInfo = GetComponent<BossInfo>();
+                isBoss = true;
             }
         }
         // 공격 판정 off
@@ -63,8 +68,27 @@ public class EnemyAttacking : MonoBehaviour
                             enemyInfo.SetIsAttacking(true);
                             // 공격 가능 -> false
                             enemyInfo.SetCanAttack(false);
-                            // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
-                            StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+
+                            // 보스라면 --- 패턴 발동 체력 조건 추가해야함
+                            if (isBoss)
+                            {
+                                if (Random.Range(0, 4) == 0)
+                                {
+                                    // 스킬
+                                }
+                                else
+                                {
+                                    // 일반 공격
+                                    // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
+                                    StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+                                }
+                            }
+                            // 일반 몬스터라면
+                            else
+                            {
+                                // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
+                                StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+                            }
                             StartCoroutine(AttackTimer());
                         }
                     }
