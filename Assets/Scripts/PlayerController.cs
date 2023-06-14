@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public float atkResetTime = 2f; //공격 초기화 시간 2초
 
     [Header("공격 변수")]
-    public float originAtk;
+    public int originAtk;
     public const float damageRange = 0.3f; //0~1 사이의 값
 
     [Header("회복 변수")]
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
                     plState = PL_STATE.ATTACKM1;
 
                     originAtk = plInfo.plAtk; //원래 공격력 임시저장
-                    plInfo.plAtk *= 1.5f; //공격력 1.5배 증가 (공격력 설정)
+                    plInfo.plAtk = (int) (plInfo.plAtk * 1.5f); //공격력 1.5배 증가 (공격력 설정)
                 }
 
                 if (Input.GetKeyUp(KeyCode.LeftControl))
