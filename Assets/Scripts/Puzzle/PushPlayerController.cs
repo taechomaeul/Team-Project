@@ -51,13 +51,4 @@ public class PushPlayerController : MonoBehaviour
         
 
     }
-
-    public void ResetPlayer()
-    {
-        Debug.Log(childTransform.localPosition);
-        childTransform.localPosition = Vector3.zero;
-        childTransform.localRotation = Quaternion.identity;
-        Debug.Log(childTransform.localPosition);
-        Debug.Log(childTransform.localRotation);
-    }
 }
