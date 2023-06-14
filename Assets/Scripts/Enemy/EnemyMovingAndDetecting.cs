@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovingAndDetecting : MonoBehaviour
 {
     // 적 정보
@@ -15,7 +16,16 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         // enemyInfo 초기화
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // 일반 몬스터라면
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>();
+            }
+            // 보스라면
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>();
+            }
         }
         // originPosition, originRotation 초기화
         originPosition = transform.position;
@@ -112,7 +122,16 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         // 디버그용 enemyInfo 초기화
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // 일반 몬스터라면
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>();
+            }
+            // 보스라면
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>();
+            }
         }
 
         // 디버그 스위치가 켜져있다면

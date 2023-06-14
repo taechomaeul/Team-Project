@@ -44,6 +44,7 @@ public class EnemyInfo : MonoBehaviour
     }
 
     [Header("적 스탯")]
+    [Tooltip("적 관련 정보들")]
     [SerializeField] Stat stat;
 
     [Header("현재 상태")]

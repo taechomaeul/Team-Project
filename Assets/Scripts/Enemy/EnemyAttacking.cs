@@ -19,7 +19,16 @@ public class EnemyAttacking : MonoBehaviour
         // enemyInfo 초기화
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // 일반 몬스터라면
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>();
+            }
+            // 보스라면
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>();
+            }
         }
         // 공격 판정 off
         attackRange.SetActive(false);
@@ -127,7 +136,16 @@ public class EnemyAttacking : MonoBehaviour
         // 디버그용 enemyInfo 초기화
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // 일반 몬스터라면
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>();
+            }
+            // 보스라면
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>();
+            }
         }
 
         // 디버그 스위치가 켜져있다면
