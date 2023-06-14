@@ -35,6 +35,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         // NavMeshAgent 이동 속도 조절
         navMeshAgent.speed = enemyInfo.GetMovingSpeed();
+        navMeshAgent.acceleration = 50;
         // 회전 속도는 탐지 대상에 고정되게 설정
         navMeshAgent.angularSpeed = 360;
     }
