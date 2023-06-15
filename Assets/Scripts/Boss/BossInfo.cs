@@ -7,6 +7,7 @@ public class BossInfo : MonoBehaviour
     [Tooltip("보스 정보")]
     [SerializeField] internal Boss stat = new();
 
+    // 데이터 파일 추가되면 여기서 수치 초기화
     private void Awake()
     {
         stat.currentHp = stat.maxHp;
