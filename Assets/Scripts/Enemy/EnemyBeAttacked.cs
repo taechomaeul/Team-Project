@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyBeAttacked : MonoBehaviour
 {
     // 적 정보
-    EnemyInfo enemyInfo;
+    Enemy enemyInfo;
 
     // 영혼석
     public GameObject soulStone;
@@ -17,12 +17,12 @@ public class EnemyBeAttacked : MonoBehaviour
             // 일반 몬스터라면
             if (GetComponent<BossInfo>() == null)
             {
-                enemyInfo = GetComponent<EnemyInfo>();
+                enemyInfo = GetComponent<EnemyInfo>().stat;
             }
             // 보스라면
             else
             {
-                enemyInfo = GetComponent<BossInfo>();
+                enemyInfo = GetComponent<BossInfo>().stat;
             }
         }
         // 영혼석 off

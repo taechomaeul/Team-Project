@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAttacking : MonoBehaviour
 {
     // 적 정보
-    EnemyInfo enemyInfo;
+    Enemy enemyInfo;
     // 현재 공격 진행도
     float attackProgress;
 
@@ -25,14 +25,15 @@ public class EnemyAttacking : MonoBehaviour
             // 일반 몬스터라면
             if (GetComponent<BossInfo>() == null)
             {
-                enemyInfo = GetComponent<EnemyInfo>();
+                enemyInfo = GetComponent<EnemyInfo>().stat;
                 isBoss = false;
             }
             // 보스라면
             else
             {
-                enemyInfo = GetComponent<BossInfo>();
+                enemyInfo = GetComponent<BossInfo>().stat;
                 isBoss = true;
+                Debug.Log(enemyInfo.GetType().Name);
             }
         }
         // 공격 판정 off
@@ -72,9 +73,11 @@ public class EnemyAttacking : MonoBehaviour
                             // 보스라면 --- 패턴 발동 체력 조건 추가해야함
                             if (isBoss)
                             {
+                                    Boss b = enemyInfo as Boss;
                                 if (Random.Range(0, 4) == 0)
                                 {
                                     // 스킬
+                                    Debug.Log(b.GetCanSkill());
                                 }
                                 else
                                 {
@@ -163,12 +166,12 @@ public class EnemyAttacking : MonoBehaviour
             // 일반 몬스터라면
             if (GetComponent<BossInfo>() == null)
             {
-                enemyInfo = GetComponent<EnemyInfo>();
+                enemyInfo = GetComponent<EnemyInfo>().stat;
             }
             // 보스라면
             else
             {
-                enemyInfo = GetComponent<BossInfo>();
+                enemyInfo = GetComponent<BossInfo>().stat;
             }
         }
 

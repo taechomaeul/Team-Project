@@ -1,25 +1,30 @@
 using System;
 using UnityEngine;
 
-public class BossInfo : EnemyInfo
+public class BossInfo : MonoBehaviour
 {
-    [Serializable]
-    public class BossSkill
+    [Header("보스 정보")]
+    [Tooltip("보스 정보")]
+    [SerializeField] internal Boss stat = new();
+
+    private void Awake()
     {
-        [Header("스킬")]
-        [Tooltip("스킬 공격력")]
-        [SerializeField] internal int skillDamage;
-
-        [Tooltip("스킬 재사용 대기시간")]
-        [SerializeField] internal float skillCoolDown;
-
-        [Tooltip("패턴 시작 체력")]
-        [SerializeField] internal int skillPhaseHp;
+        stat.currentHp = stat.maxHp;
     }
+}
 
-    [Header("보스 스킬")]
-    [Tooltip("보스 스킬 관련 정보들")]
-    [SerializeField] BossSkill bossSkill;
+[Serializable]
+internal class Boss : Enemy
+{
+    [Header("스킬")]
+    [Tooltip("스킬 공격력")]
+    [SerializeField] internal int skillDamage;
+
+    [Tooltip("스킬 재사용 대기시간")]
+    [SerializeField] internal float skillCoolDown;
+
+    [Tooltip("패턴 시작 체력")]
+    [SerializeField] internal int skillPhaseHp;
 
     [Header("현재 상태")]
     [Tooltip("스킬 사용 가능")]
@@ -27,8 +32,8 @@ public class BossInfo : EnemyInfo
 
     #region Get Functions
     public bool GetCanSkill() { return canSkill; }
-    public int GetSkillDamage() { return bossSkill.skillDamage; }
-    public float GetSkillCoolDown() {  return bossSkill.skillCoolDown; }
-    public int GetSkillPhaseHp() { return bossSkill.skillPhaseHp; }
+    public int GetSkillDamage() { return skillDamage; }
+    public float GetSkillCoolDown() { return skillCoolDown; }
+    public int GetSkillPhaseHp() { return skillPhaseHp; }
     #endregion
 }

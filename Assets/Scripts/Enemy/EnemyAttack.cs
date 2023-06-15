@@ -6,7 +6,7 @@ public class EnemyAttack : MonoBehaviour
     [Tooltip("랜덤 범위")]
     [SerializeField][Range(0f, 1f)] float atkRandomRatio;
 
-    EnemyInfo enemyInfo;
+    Enemy enemyInfo;
     DamageCalc damageCalc;
 
     private void Awake()
@@ -14,12 +14,12 @@ public class EnemyAttack : MonoBehaviour
         // 일반 몬스터라면
         if (GetComponent<BossInfo>() == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            enemyInfo = GetComponent<EnemyInfo>().stat;
         }
         // 보스라면
         else
         {
-            enemyInfo = GetComponent<BossInfo>();
+            enemyInfo = GetComponent<BossInfo>().stat;
         }
         // 데미지 계산용
         damageCalc = enemy.GetComponent<DamageCalc>();
