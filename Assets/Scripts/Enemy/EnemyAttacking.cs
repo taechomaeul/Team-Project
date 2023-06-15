@@ -40,8 +40,8 @@ public class EnemyAttacking : MonoBehaviour
                 isBoss = true;
                 // 스킬 사용 가능 초기화
                 bossInfo.SetCanSkill(true);
-        // 스킬 판정 off
-        skillRange.SetActive(false);
+                // 스킬 판정 off
+                skillRange.SetActive(false);
             }
         }
         // 공격 판정 off
