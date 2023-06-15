@@ -2,23 +2,27 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public GameObject enemy;
+    [Tooltip("스킬 여부")]
+    [SerializeField] bool isSkill;
     [Tooltip("랜덤 수치 범위")]
     [SerializeField][Range(0f, 1f)] float atkRandomRatio;
 
     Enemy enemyInfo;
+    Boss bossInfo;
 
     private void Awake()
     {
         // 일반 몬스터라면
-        if (GetComponent<BossInfo>() == null)
+        if (transform.parent.GetComponent<BossInfo>() == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>().stat;
+            enemyInfo = transform.parent.GetComponent<EnemyInfo>().stat;
+            isSkill = false;
         }
         // 보스라면
         else
         {
-            enemyInfo = GetComponent<BossInfo>().stat;
+            enemyInfo = transform.parent.GetComponent<BossInfo>().stat;
+            bossInfo = enemyInfo as Boss;
         }
     }
 
@@ -26,8 +30,17 @@ public class EnemyAttack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // 설정된 기준값, 범위로 데미지 계산 후 플레이어 체력에서 차감
-            other.GetComponentInParent<PlayerController>().BeAttacked(DamageManager.Instance.DamageRandomCalc(enemyInfo.GetDamage(), atkRandomRatio));
+            // 스킬이라면
+            if (isSkill)
+            {
+                // 스킬 데미지, 설정한 랜덤 범위 수치 계산 후 플레이어 체력에서 차감
+                other.GetComponentInParent<PlayerController>().BeAttacked(DamageManager.Instance.DamageRandomCalc(bossInfo.GetSkillDamage(), atkRandomRatio));
+            }
+            else
+            {
+                // 평타 데미지, 설정한 랜덤 범위 수치 계산 후 플레이어 체력에서 차감
+                other.GetComponentInParent<PlayerController>().BeAttacked(DamageManager.Instance.DamageRandomCalc(enemyInfo.GetDamage(), atkRandomRatio));
+            }
         }
     }
 }

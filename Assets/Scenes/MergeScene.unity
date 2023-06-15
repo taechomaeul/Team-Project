@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe86c13ee88ef6428d10503b84ad318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 905816760}
+  isSkill: 0
   atkRandomRatio: 0.5
 --- !u!1 &474623398
 GameObject:
@@ -680,7 +680,6 @@ GameObject:
   - component: {fileID: 656671963}
   - component: {fileID: 656671962}
   - component: {fileID: 656671961}
-  - component: {fileID: 656671964}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -735,7 +734,6 @@ MonoBehaviour:
   originAtk: 10
   timer: {fileID: 0}
   plInfo: {fileID: 0}
-  damangeCalc: {fileID: 0}
   actionFuntion: {fileID: 0}
   cameraTransform: {fileID: 0}
   characterController: {fileID: 0}
@@ -757,18 +755,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &656671964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 656671960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95b96d6527c23634ea605a0ae36a628d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &694140336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,18 +1482,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soulStone: {fileID: 630512573}
---- !u!114 &905816767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905816760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95b96d6527c23634ea605a0ae36a628d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &905816768
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1761,6 +1735,7 @@ GameObject:
   - component: {fileID: 1391392986}
   - component: {fileID: 1391392985}
   - component: {fileID: 1391392984}
+  - component: {fileID: 1391392988}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1846,6 +1821,20 @@ Transform:
   m_Father: {fileID: 2073963508}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1391392988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391392983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe86c13ee88ef6428d10503b84ad318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSkill: 0
+  atkRandomRatio: 0.2
 --- !u!1 &1458804910
 GameObject:
   m_ObjectHideFlags: 0
@@ -2041,10 +2030,12 @@ GameObject:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
+  m_Component:
   - component: {fileID: 1564862014}
   - component: {fileID: 1564862013}
   - component: {fileID: 1564862012}
   - component: {fileID: 1564862011}
+  - component: {fileID: 1564862015}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -2131,6 +2122,20 @@ Transform:
   m_Father: {fileID: 2073963508}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1564862015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564862010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe86c13ee88ef6428d10503b84ad318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSkill: 1
+  atkRandomRatio: 0.6
 --- !u!1 &1783505706
 GameObject:
   m_ObjectHideFlags: 0
@@ -2571,7 +2576,7 @@ GameObject:
   - component: {fileID: 2073963509}
   - component: {fileID: 2073963510}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2663,7 +2668,7 @@ MonoBehaviour:
     detectRadius: 10
     maxHp: 10
     currentHp: 0
-    damage: 0
+    damage: 5
     attackCycle: 3
     attackRange: 5
     isTracking: 0
@@ -2672,7 +2677,51 @@ MonoBehaviour:
     isAttacking: 0
     isAttacked: 0
     isDead: 0
-    skillDamage: 0
+    skillDamage: 20
     skillCoolDown: 5
     skillPhaseHp: 50
     canSkill: 0
+--- !u!1 &2092532125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2092532127}
+  - component: {fileID: 2092532126}
+  m_Layer: 0
+  m_Name: DamageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2092532126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092532125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b96d6527c23634ea605a0ae36a628d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2092532127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092532125}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
