@@ -7,6 +7,7 @@ TagManager:
   - Soul
   - Enemy
   - Box
+  - ClearTrigger
   layers:
   - Default
   - TransparentFX
