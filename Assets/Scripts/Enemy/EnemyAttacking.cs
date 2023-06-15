@@ -82,8 +82,8 @@ public class EnemyAttacking : MonoBehaviour
                             // 보스라면
                             if (isBoss)
                             {
-                                // 스킬을 쓸 수 있을 때 25% 확률로
-                                if (Random.Range(0, 4) == 0 && bossInfo.GetCanSkill())
+                                // 스킬 사용 가능 페이즈에서 스킬을 쓸 수 있을 때 25% 확률로
+                                if (Random.Range(0, 4) == 0 && bossInfo.GetCanSkill() && enemyInfo.currentHp <= bossInfo.GetSkillPhaseHp())
                                 {
                                     // 스킬 발동
                                     // 스킬 발동 가능 -> false
