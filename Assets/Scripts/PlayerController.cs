@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
                     plState = PL_STATE.ATTACKM1;
 
                     originAtk = plInfo.plAtk; //원래 공격력 임시저장
-                    //plInfo.plAtk *= 1.5f; //공격력 1.5배 증가 (공격력 설정)
+                    plInfo.plAtk = (int) (plInfo.plAtk * 1.5f); //공격력 1.5배 증가 (공격력 설정)
                 }
 
                 if (Input.GetKeyUp(KeyCode.LeftControl))
