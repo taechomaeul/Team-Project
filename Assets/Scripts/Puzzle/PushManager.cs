@@ -29,7 +29,7 @@ public class PushManager : MonoBehaviour
             //Box에 있는 playerController 상태(plState) 연결을 위해 newPlayer의 playerController를 연결시켜준다.
         }
         
-        player = newPlayer;
+        player = newPlayer; //새로 생성된 플레이어를 연결
         player.name = "Player";
     }
 }

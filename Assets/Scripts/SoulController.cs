@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,11 +32,18 @@ public class SoulController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 5f);
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Player"))
         {
             toolTip.SetActive(true);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
             if (Input.GetKeyDown(KeyCode.F))
             {
                 toolTip.SetActive(false);

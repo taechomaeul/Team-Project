@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,4 +9,6 @@ public class PlayerInfo : MonoBehaviour
     public float curHp;
     public float maxHp;
     public float soulHp;
+    [SerializeField]
+    public Skill curSkill;
 }

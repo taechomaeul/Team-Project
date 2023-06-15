@@ -1,17 +1,20 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionFuntion : MonoBehaviour
 {
     public float coolTime = 2f;
+    public const int increaseHp = 30;
+    public const float increaseAmount = 1.3f; // 30% 증가
     public PlayerInfo plInfo;
-    public SoulController soulController;
+    public PlayerController plController;
     public Timer timer;
 
     private void Start()
     {
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        plController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
     }
 
@@ -37,7 +40,6 @@ public class ActionFuntion : MonoBehaviour
     /// <param name="hp">초당 회복하는 HP</param>
     public void FillHpUsingStone(float hp)
     {
-        timer.CountSeconds(coolTime); //설정된 쿨타임만큼 기다린 후에 HP 합산
         if (plInfo.maxHp - plInfo.curHp < hp) //만약 최대체력-현재체력 보다 회복하려는 숫자가 더 크다면
         {
             float subHp = plInfo.maxHp - plInfo.curHp;
@@ -48,5 +50,38 @@ public class ActionFuntion : MonoBehaviour
         }
         plInfo.curHp += hp;
         plInfo.soulHp -= hp;
+    }
+
+    /// <summary>
+    /// 공격력 증가함수.
+    /// </summary>
+    public void IncreasePower()
+    {
+        plInfo.plAtk = (int)(plInfo.plAtk * increaseAmount);
+        Debug.Log("공격력" + plInfo.plAtk);
+    }
+
+    /// <summary>
+    /// 이동속도 증가함수.
+    /// </summary>
+    public void IncreaseSpeed()
+    {
+        plInfo.plMoveSpd *= increaseAmount;
+        Debug.Log("이동속도" + plInfo.plMoveSpd);
+    }
+
+    /// <summary>
+    /// 혼력(HP) 회복함수.
+    /// </summary>
+    public void IncreaseHp()
+    {
+        if (plInfo.maxHp - plInfo.curHp < increaseHp) //만약 최대체력-현재체력 보다 회복하려는 숫자가 더 크다면
+        {
+            float subHp = plInfo.maxHp - plInfo.curHp;
+            plInfo.curHp += subHp;
+            return;
+            //회복하려는 숫자가 아니라 뺀 숫자만큼의 크기를 더하고 뺀다.
+        }
+        plInfo.curHp += increaseHp;
     }
 }
