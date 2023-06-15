@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
 
     public Timer timer;
     public PlayerInfo plInfo;
-    public DamageCalc damangeCalc;
     public ActionFuntion actionFuntion;
     public Transform cameraTransform;
     public CharacterController characterController;
@@ -65,7 +64,6 @@ public class PlayerController : MonoBehaviour
     {
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
-        damangeCalc = GetComponent<DamageCalc>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();

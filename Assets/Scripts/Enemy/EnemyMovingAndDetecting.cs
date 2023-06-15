@@ -11,6 +11,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
     Vector3 originPosition;
     Quaternion originRotation;
     NavMeshAgent navMeshAgent;
+
     void Start()
     {
         // enemyInfo 초기화
@@ -73,7 +74,6 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                 // 공격 중이 아니라면
                 if (!enemyInfo.GetIsAttacking())
                 {
-
                     // 공격 사거리 안이라면
                     if (enemyInfo.GetIsInAttackRange())
                     {

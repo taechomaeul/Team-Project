@@ -30,10 +30,16 @@ internal class Boss : Enemy
     [Tooltip("스킬 사용 가능")]
     [SerializeField] bool canSkill;
 
+    // 외부에서 쓰기 위한 변수 반환 함수들
     #region Get Functions
     public bool GetCanSkill() { return canSkill; }
     public int GetSkillDamage() { return skillDamage; }
     public float GetSkillCoolDown() { return skillCoolDown; }
     public int GetSkillPhaseHp() { return skillPhaseHp; }
+    #endregion
+
+    // 변수 세팅 함수들
+    #region Set Functions
+    public void SetCanSkill(bool tf) { canSkill = tf; }
     #endregion
 }

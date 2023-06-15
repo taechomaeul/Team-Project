@@ -3,11 +3,10 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     public GameObject enemy;
-    [Tooltip("랜덤 범위")]
+    [Tooltip("랜덤 수치 범위")]
     [SerializeField][Range(0f, 1f)] float atkRandomRatio;
 
     Enemy enemyInfo;
-    DamageCalc damageCalc;
 
     private void Awake()
     {
@@ -21,8 +20,6 @@ public class EnemyAttack : MonoBehaviour
         {
             enemyInfo = GetComponent<BossInfo>().stat;
         }
-        // 데미지 계산용
-        damageCalc = enemy.GetComponent<DamageCalc>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,7 +27,7 @@ public class EnemyAttack : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // 설정된 기준값, 범위로 데미지 계산 후 플레이어 체력에서 차감
-            other.GetComponentInParent<PlayerController>().BeAttacked(damageCalc.DamageRandomCalc(enemyInfo.GetDamage(), atkRandomRatio));
+            other.GetComponentInParent<PlayerController>().BeAttacked(DamageManager.Instance.DamageRandomCalc(enemyInfo.GetDamage(), atkRandomRatio));
         }
     }
 }

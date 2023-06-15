@@ -6,12 +6,10 @@ public class PlayerAttack : MonoBehaviour
     [Range(0f, 1f)] public float atkRandomRatio;
 
     PlayerInfo plInfo;
-    DamageCalc damageCalc;
 
     private void Start()
     {
         plInfo = player.GetComponent<PlayerInfo>();
-        damageCalc = player.GetComponent<DamageCalc>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +19,7 @@ public class PlayerAttack : MonoBehaviour
         {
             Debug.Log("적 공격");
             // 랜덤 데미지 계산 후 적 체력 감소
-            other.GetComponent<EnemyBeAttacked>().BeAttacked(damageCalc.DamageRandomCalc(plInfo.plAtk, atkRandomRatio));
+            other.GetComponent<EnemyBeAttacked>().BeAttacked(DamageManager.Instance.DamageRandomCalc(plInfo.plAtk, atkRandomRatio));
         }
     }
 }

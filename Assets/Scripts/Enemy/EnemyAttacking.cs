@@ -6,16 +6,20 @@ public class EnemyAttacking : MonoBehaviour
 {
     // 적 정보
     Enemy enemyInfo;
+    Boss bossInfo;
     // 현재 공격 진행도
     float attackProgress;
+    // 스킬 남은 재사용 대기시간
+    float currentSkillCoolDown;
 
     // 보스인지 확인
     bool isBoss;
 
     [Header("공격 판정 범위")]
-    [Tooltip("공격 판정 범위")]
+    [Tooltip("평타 판정 범위")]
     [SerializeField] GameObject attackRange;
-
+    [Tooltip("스킬 판정 범위")]
+    [SerializeField] GameObject skillRange;
 
     void Start()
     {
@@ -32,17 +36,22 @@ public class EnemyAttacking : MonoBehaviour
             else
             {
                 enemyInfo = GetComponent<BossInfo>().stat;
+                bossInfo = enemyInfo as Boss;
                 isBoss = true;
-                Debug.Log(enemyInfo.GetType().Name);
+                // 스킬 사용 가능 초기화
+                bossInfo.SetCanSkill(true);
+        // 스킬 판정 off
+        skillRange.SetActive(false);
             }
         }
         // 공격 판정 off
         attackRange.SetActive(false);
         // 공격 진행도 초기화
         attackProgress = 0f;
+        // 스킬 재사용 대기시간 초기화
+        currentSkillCoolDown = 0f;
         // 공격 가능 초기화
         enemyInfo.SetCanAttack(true);
-
     }
 
     void FixedUpdate()
@@ -70,14 +79,19 @@ public class EnemyAttacking : MonoBehaviour
                             // 공격 가능 -> false
                             enemyInfo.SetCanAttack(false);
 
-                            // 보스라면 --- 패턴 발동 체력 조건 추가해야함
+                            // 보스라면
                             if (isBoss)
                             {
-                                    Boss b = enemyInfo as Boss;
-                                if (Random.Range(0, 4) == 0)
+                                // 스킬을 쓸 수 있을 때 25% 확률로
+                                if (Random.Range(0, 4) == 0 && bossInfo.GetCanSkill())
                                 {
-                                    // 스킬
-                                    Debug.Log(b.GetCanSkill());
+                                    // 스킬 발동
+                                    // 스킬 발동 가능 -> false
+                                    bossInfo.SetCanSkill(false);
+
+                                    // 스킬 시작(임시로 임의값 넣음)
+                                    StartCoroutine(Skill(bossInfo.GetSkillCoolDown() * 0.5f));
+                                    StartCoroutine(SkillTimer());
                                 }
                                 else
                                 {
@@ -92,6 +106,7 @@ public class EnemyAttacking : MonoBehaviour
                                 // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
                                 StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
                             }
+                            // 공격 가능 계산 타이머 시작
                             StartCoroutine(AttackTimer());
                         }
                     }
@@ -137,6 +152,29 @@ public class EnemyAttacking : MonoBehaviour
         }
     }
 
+    // 스킬 시전(스킬 시전 시간)
+    IEnumerator Skill(float skillTime)
+    {
+        // 공격 중이 true라면
+        if (enemyInfo.GetIsAttacking())
+        {
+            // 스킬 판정 on
+            skillRange.SetActive(true);
+            // skillTime 만큼 기다림(스킬 모션 시작부터 끝까지의 시간)
+            yield return new WaitForSeconds(skillTime);
+            // 스킬 판정 off
+            skillRange.SetActive(false);
+            // 공격 중 -> false
+            enemyInfo.SetIsAttacking(false);
+        }
+        // 공격 중이 false라면
+        else
+        {
+            // 공격 코루틴 종료
+            yield return null;
+        }
+    }
+
     // 공격 가능 계산 타이머
     IEnumerator AttackTimer()
     {
@@ -154,6 +192,27 @@ public class EnemyAttacking : MonoBehaviour
             }
             // 매 프레임 공격 진행도에 경과 시간 추가
             attackProgress += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    // 스킬 재사용 대기시간 계산 타이머
+    IEnumerator SkillTimer()
+    {
+        while (true)
+        {
+            // 재사용 대기시간이 지나면
+            if (currentSkillCoolDown >= bossInfo.GetSkillCoolDown())
+            {
+                // 재사용 대기시간 초기화
+                currentSkillCoolDown = 0f;
+                // 스킬 사용 가능 -> true
+                bossInfo.SetCanSkill(true);
+                //타이머 코루틴 종료
+                break;
+            }
+            // 매 프레임 경과 시간 추가
+            currentSkillCoolDown += Time.deltaTime;
             yield return null;
         }
     }
