@@ -9,4 +9,6 @@ public class PlayerInfo : MonoBehaviour
     public float curHp;
     public float maxHp;
     public float soulHp;
+    [SerializeField]
+    public Skill curSkill;
 }

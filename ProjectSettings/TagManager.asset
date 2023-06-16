@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Box
   - ClearTrigger
+  - SkillBox
   layers:
   - Default
   - TransparentFX

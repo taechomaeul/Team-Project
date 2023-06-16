@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public bool isAvoid = false;
     public bool isNoDamage = false; //무적 상태
     public bool isDead = false;
+    public bool isSkillCool = false; //스킬 쿨타임이 돌고 있는지 여부
 
     [Header("회피 애니메이션 변수")]
     public float avoidTime = 0; //deltaTime 더할 변수
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public const float healHp = 3; //초당 회복하는 영혼의 무게 수
 
     public Timer timer;
+    public SkillInfo skillData;
     public PlayerInfo plInfo;
     public ActionFuntion actionFuntion;
     public Transform cameraTransform;
@@ -65,6 +67,7 @@ public class PlayerController : MonoBehaviour
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
 
@@ -73,8 +76,8 @@ public class PlayerController : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
     }
 
 
@@ -111,7 +114,7 @@ public class PlayerController : MonoBehaviour
         {
             Heal(); //회복한다.
         }
-
+        isSkill();
         IsAvoiding();
 
         switch (plState)
@@ -399,5 +402,63 @@ public class PlayerController : MonoBehaviour
         //적이 가한 대미지의 양을 플레이어 현재 혼력(HP)에서 차감
         plState = PL_STATE.DAMAGED;
         //플레이어 상태 변경
+    }
+
+    public void isSkill()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && !isSkillCool) //E키 입력이 들어왔는데 CoolTime이 없다면
+        {
+            isSkillCool = true;
+            switch (plInfo.curSkill.skillName)
+            {
+                case "힘증가":
+                    int originAtk = plInfo.plAtk;
+                    actionFuntion.IncreasePower();
+                    StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originAtk, 1));
+                    break;
+
+                case "민첩증가":
+                    int originMoveSpd = plInfo.plAtk;
+                    actionFuntion.IncreaseSpeed();
+                    StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originMoveSpd, 2));
+                    break;
+
+                case "체력회복":
+                    actionFuntion.IncreaseHp();
+                    StartCoroutine(ResetCoolTime(plInfo.curSkill.coolTime));
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 지속시간 + 쿨타임 계산용 함수.
+    /// </summary>
+    /// <param name="duringTime">스킬 지속시간</param>
+    /// <param name="coolTime">스킬 쿨타임</param>
+    /// <param name="originAmount">변수 변경되기 전의 값</param>
+    /// <param name="select">공격력, 이동속도 선택용 변수</param>
+    /// <returns></returns>
+    public IEnumerator Reset(float duringTime, float coolTime, int originAmount, int select)
+    {
+        StartCoroutine(ResetCoolTime(coolTime)); //쿨타임 계산 함수
+        yield return new WaitForSeconds(duringTime);
+
+        if (select == 1) { plInfo.plAtk = originAmount; }
+        else if (select == 2) { plInfo.plMoveSpd = originAmount; }
+        //원래 값으로 변경
+    }
+
+    /// <summary>
+    /// 쿨타임 계산용 함수.
+    /// </summary>
+    /// <param name="coolTime">스킬 쿨타임</param>
+    /// <returns></returns>
+    public IEnumerator ResetCoolTime(float coolTime)
+    {
+        //Debug.Log("CoolTIme Reset-ing");
+        yield return new WaitForSeconds(coolTime);
+        isSkillCool = false; //스킬쿨 해제
+        //Debug.Log("CoolTIme Reset Complete!");
     }
 }
