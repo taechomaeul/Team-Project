@@ -25,7 +25,7 @@ public class SoulController : MonoBehaviour
 
         if (gameObject.tag == "Enemy")
         {
-            exampleSoul.havingHP = (int)transform.GetComponentInChildren<EnemyInfo>().GetMaxHp() * enemySoulPercent;
+            //exampleSoul.havingHP = (int)transform.GetComponentInChildren<EnemyInfo>().GetMaxHp() * enemySoulPercent;
         }
         else
         {

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2068782571958590615}
   - component: {fileID: 4512714553155662217}
   - component: {fileID: 4270909913243339499}
+  - component: {fileID: 4337641256857801996}
   m_Layer: 0
   m_Name: DG_WallGothic6m_Window_A
   m_TagString: Untagged
@@ -86,3 +87,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4337641256857801996
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136022668350381155}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.9999995, y: 6, z: 0.4919324}
+  m_Center: {x: 0.000000059604645, y: 3, z: 0.014154308}

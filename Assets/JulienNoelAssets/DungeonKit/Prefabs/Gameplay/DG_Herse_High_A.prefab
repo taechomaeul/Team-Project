@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 299431323300218129}
   - component: {fileID: 7323376802172433746}
   - component: {fileID: 3140919927633925542}
+  - component: {fileID: 8378871924825707893}
   m_Layer: 0
   m_Name: DG_Herse_High_A
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8378871924825707893
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9215559546659054258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.1182842, y: 4.9424076, z: 0.083951116}
+  m_Center: {x: 0.0000046491623, y: 2.5237966, z: -0.000000016763806}
