@@ -15,9 +15,4 @@ public class Timer : MonoBehaviour
         }
         else { return false; }
     }
-
-    public IEnumerator Counting(float coolTime)
-    {
-        yield return new WaitForSeconds(coolTime);
-    }
 }

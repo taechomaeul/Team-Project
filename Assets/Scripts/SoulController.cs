@@ -7,6 +7,7 @@ public class SoulController : MonoBehaviour
 {
 
     public bool isDetail = false;
+    public const float enemySoulPercent = 0.3f;
     public const float maxSoul = 666;
 
     public SoulInfo exampleSoul;
@@ -21,7 +22,16 @@ public class SoulController : MonoBehaviour
         toolTip.SetActive(false);
 
         exampleSoul = GetComponent<SoulInfo>();
-        exampleSoul.havingHP = 30f;
+
+        if (gameObject.tag == "Enemy")
+        {
+            exampleSoul.havingHP = (int)transform.GetComponentInChildren<EnemyInfo>().GetMaxHp() * enemySoulPercent;
+        }
+        else
+        {
+            exampleSoul.havingHP = 30; //예시로 만들어놓은 프리팹 적용용
+        }
+        Debug.Log($"시체에서 추출할 수 있는 영혼의 양 : {exampleSoul.havingHP}");
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
     }
@@ -32,11 +42,18 @@ public class SoulController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 5f);
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Player"))
         {
             toolTip.SetActive(true);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
             if (Input.GetKeyDown(KeyCode.F))
             {
                 toolTip.SetActive(false);
@@ -65,8 +82,8 @@ public class SoulController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha2) && isDetail)
             {
-                //빙의하기
-                Debug.Log("빙의하기!!!");
+                actionFuntion.ChangePrefab(other.gameObject, gameObject); //PlayerModel, Enemy
+                detailToolTip.SetActive(false);
             }
         }
     }
