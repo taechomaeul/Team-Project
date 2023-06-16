@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6712826498987058047}
   - component: {fileID: 651702351211887873}
   - component: {fileID: 8968804425157997809}
-  - component: {fileID: 7898943301344825756}
   m_Layer: 0
   m_Name: DG_GroundTile_F
   m_TagString: Untagged
@@ -84,16 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7898943301344825756
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4353130192277844982}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.9999995, y: 0.2520368, z: 2.9999995}
-  m_Center: {x: -3.1332366e-23, y: -0.07398146, z: 0.000000059604645}

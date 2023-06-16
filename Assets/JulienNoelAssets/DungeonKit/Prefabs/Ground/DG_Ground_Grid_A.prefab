@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 2797804719412788784}
   - component: {fileID: 7687906864419639629}
   - component: {fileID: 2308923396648319127}
-  - component: {fileID: 8928096367274426655}
-  - component: {fileID: 65889175722309296}
   m_Layer: 0
   m_Name: DG_Ground_Grid_A
   m_TagString: Untagged
@@ -87,29 +85,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8928096367274426655
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5188216523276074273}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.0385692, y: 3.0373719, z: 3.0184677}
-  m_Center: {x: -0.0051847114, y: -1.4944896, z: -0.0031003363}
---- !u!65 &65889175722309296
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5188216523276074273}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.0385685, y: 3.0373719, z: 3.018467}
-  m_Center: {x: -0.00518471, y: -1.4944896, z: -0.0031003356}
