@@ -3,80 +3,85 @@ using UnityEngine;
 
 public class EnemyBeAttacked : MonoBehaviour
 {
-    // Àû Á¤º¸
-    EnemyInfo enemyInfo;
+    // ì  ì •ë³´
+    Enemy enemyInfo;
 
-    // ¿µÈ¥¼®
+    // ì˜í˜¼ì„
     public GameObject soulStone;
 
     void Start()
     {
-        // enemyInfo ÃÊ±âÈ­
+        // enemyInfo ì´ˆê¸°í™”
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // ì¼ë°˜ ëª¬ìŠ¤í„°ë¼ë©´
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>().stat;
+            }
+            // ë³´ìŠ¤ë¼ë©´
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>().stat;
+            }
         }
-        // ¿µÈ¥¼® off
+        // ì˜í˜¼ì„ off
         soulStone.SetActive(false);
     }
 
-    //void FixedUpdate()
-    //{
-    //}
-
-    // damage¸¸Å­ °ø°İ ¹ŞÀ½
-    public void BeAttacked(float damage)
+    // damageë§Œí¼ ê³µê²© ë°›ìŒ
+    public void BeAttacked(int damage)
     {
-        // ÇöÀç Ã¼·Â¿¡¼­ damage¸¸Å­ Â÷°¨
+        // í˜„ì¬ ì²´ë ¥ì—ì„œ damageë§Œí¼ ì°¨ê°
         enemyInfo.SetCurrentHp(enemyInfo.GetCurrentHp() - damage);
 
-        // Àû ÇöÀç Ã¼·ÂÀÌ 0 ÀÌÇÏ¶ó¸é
+        // ì  í˜„ì¬ ì²´ë ¥ì´ 0 ì´í•˜ë¼ë©´
         if (enemyInfo.GetCurrentHp() <= 0)
         {
-            // Àû »ç¸Á
+            // ì  ì‚¬ë§
             enemyInfo.SetIsDead(true);
         }
 
-        // ÀÌÀü ÄÚ·çÆ¾ ÁßÁö
+        // ì´ì „ ì½”ë£¨í‹´ ì¤‘ì§€
         StopAllCoroutines();
 
-        // Á×¾ú´Ù¸é
+        // ì£½ì—ˆë‹¤ë©´
         if (enemyInfo.GetIsDead())
         {
-            // »ç¸Á ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+            // ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
             StartCoroutine(HitAnimation());
         }
-        // »ì¾ÆÀÖ´Ù¸é
+        // ì‚´ì•„ìˆë‹¤ë©´
         else
         {
-            // ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı(Å×½ºÆ®¿ë ÀÓÀÇ½Ã°£°ª)
+            // í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ(í…ŒìŠ¤íŠ¸ìš© ì„ì˜ì‹œê°„ê°’)
             StartCoroutine(HitAnimation(1));
         }
     }
 
-    // ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç(¾Ö´Ï¸ŞÀÌ¼Ç ½Ã°£)
+    // í”¼ê²© ì• ë‹ˆë©”ì´ì…˜(ì• ë‹ˆë©”ì´ì…˜ ì‹œê°„)
     IEnumerator HitAnimation(float time)
     {
-        // »ì¾ÆÀÖ´Ù¸é
+        // ì‚´ì•„ìˆë‹¤ë©´
         if (!enemyInfo.GetIsDead())
         {
-            // °ø°İ ÁßÀÌ ¾Æ´Ï¶ó¸é
+            // ê³µê²© ì¤‘ì´ ì•„ë‹ˆë¼ë©´
             if (!enemyInfo.GetIsAttacking())
             {
-                // ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
-                Debug.Log("¤±¤¤¤·¤©");
+                // í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
+                //Debug.Log("ã…ã„´ã…‡ã„¹");
 
-                // ¾Ö´Ï¸ŞÀÌ¼Ç ³¡³¯ ¶§±îÁö ±â´Ù¸²
+                // ì• ë‹ˆë©”ì´ì…˜ ëë‚  ë•Œê¹Œì§€ ê¸°ë‹¤ë¦¼
                 yield return new WaitForSeconds(time);
-                Debug.Log("¤±¤¤¤·¤©2");
+                //Debug.Log("ã…ã„´ã…‡ã„¹2");
             }
 
-            // Å½Áö ´ë»óÀ» ÀÎ½ÄÇÏÁö ¸øÇÏ°í ÀÖ´Ù¸é
+            // íƒì§€ ëŒ€ìƒì„ ì¸ì‹í•˜ì§€ ëª»í•˜ê³  ìˆë‹¤ë©´
             if (!enemyInfo.GetIsTracking())
             {
-                // Ãß°İ Áß -> true
+                // ì¶”ê²© ì¤‘ -> true
                 enemyInfo.SetIsTracking(true);
-                // Å½Áö ´ë»ó¿¡°Ô È¸ÀüÇÔ
+                // íƒì§€ ëŒ€ìƒì—ê²Œ íšŒì „í•¨
                 transform.LookAt(enemyInfo.target.transform.position);
             }
         }
@@ -84,16 +89,16 @@ public class EnemyBeAttacked : MonoBehaviour
 
     IEnumerator HitAnimation()
     {
-        // Á×¾ú´Ù¸é
+        // ì£½ì—ˆë‹¤ë©´
         if (enemyInfo.GetIsDead())
         {
-            // »ç¸Á ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
-            Debug.Log("»ç¸Á ¾Ö´Ï¸ŞÀÌ¼Ç");
+            // ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
+            Debug.Log("ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜");
 
-            // ¾Ö´Ï¸ŞÀÌ¼Ç ³¡³¯ ¶§±îÁö ±â´Ù¸²(ÀÓÀÇ°ª)
+            // ì• ë‹ˆë©”ì´ì…˜ ëë‚  ë•Œê¹Œì§€ ê¸°ë‹¤ë¦¼(ì„ì˜ê°’)
             yield return new WaitForSeconds(2);
 
-            // ¿µÈ¥¼® on
+            // ì˜í˜¼ì„ on
             soulStone.SetActive(true);
         }
     }

@@ -4,56 +4,77 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("½ÃÁ¡ ¹× ÀÌµ¿ º¯¼ö")]
+    [Header("ì‹œì  ë° ì´ë™ ë³€ìˆ˜")]
+    public float rotSpd = 10f;
     public float jumpSpeed = 10f;
     public float gravity = -20f;
     public float yVelocity = 0;
-    public const float moveSpd = 10f; //(°íÁ¤) ¿òÁ÷ÀÓ ¼Óµµ, ÇöÀç ¿òÁ÷ÀÌ´Â ¼Óµµ´Â plInfo¿¡¼­ È®ÀÎ
-    
-    [Header("ÇÃ·¡±×")]
+    public const float moveSpd = 10f; //(ê³ ì •) ì›€ì§ì„ ì†ë„, í˜„ì¬ ì›€ì§ì´ëŠ” ì†ë„ëŠ” plInfoì—ì„œ í™•ì¸
+
+    [Header("í”Œë˜ê·¸")]
+    public bool isActivated = false;
     public bool isAttack = false;
-    public bool isNextAtk = false; // (M1, M2, M3)attack »óÅÂ¿¡¼­ true°¡ µÇ¸é ´ÙÀ½ ¸ğ¼ÇÀ¸·Î ÀÌµ¿°¡´É
+    public bool isNextAtk = false; // (M1, M2, M3)attack ìƒíƒœì—ì„œ trueê°€ ë˜ë©´ ë‹¤ìŒ ëª¨ì…˜ìœ¼ë¡œ ì´ë™ê°€ëŠ¥
     public bool isAvoid = false;
-    public bool isNoDamage = false; //¹«Àû »óÅÂ
+    public bool isNoDamage = false; //ë¬´ì  ìƒíƒœ
     public bool isDead = false;
 
-    [Header("È¸ÇÇ ¾Ö´Ï¸ŞÀÌ¼Ç º¯¼ö")]
-    public float avoidTime = 0; //deltaTime ´õÇÒ º¯¼ö
-    public float avoidJAnimTime = 1f; //½ÇÁ¦ È¸ÇÇ-Á¡ÇÁ ¾Ö´Ï¸ŞÀÌ¼Ç ½Ã°£ º¯¼ö
-    public float avoidRAnimTime = 2f; //½ÇÁ¦ È¸ÇÇ-±¸¸£±â ¾Ö´Ï¸ŞÀÌ¼Ç ½Ã°£ º¯¼ö
+    [Header("íšŒí”¼ ì• ë‹ˆë©”ì´ì…˜ ë³€ìˆ˜")]
+    public float avoidTime = 0; //deltaTime ë”í•  ë³€ìˆ˜
+    public float avoidJAnimTime = 1f; //ì‹¤ì œ íšŒí”¼-ì í”„ ì• ë‹ˆë©”ì´ì…˜ ì‹œê°„ ë³€ìˆ˜
+    public float avoidRAnimTime = 2f; //ì‹¤ì œ íšŒí”¼-êµ¬ë¥´ê¸° ì• ë‹ˆë©”ì´ì…˜ ì‹œê°„ ë³€ìˆ˜
 
-    [Header("°ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç º¯¼ö")]
-    public float attackTime = 0; //deltaTime ´õÇÒ º¯¼ö
-    public float atkResetTime = 2f; //°ø°İ ÃÊ±âÈ­ ½Ã°£ 2ÃÊ
+    [Header("ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ë³€ìˆ˜")]
+    public float attackTime = 0; //deltaTime ë”í•  ë³€ìˆ˜
+    public float atkResetTime = 2f; //ê³µê²© ì´ˆê¸°í™” ì‹œê°„ 2ì´ˆ
 
+    [Header("ê³µê²© ë³€ìˆ˜")]
+    public int originAtk;
+    public const float damageRange = 0.3f; //0~1 ì‚¬ì´ì˜ ê°’
+
+    [Header("íšŒë³µ ë³€ìˆ˜")]
+    public const float healHp = 3; //ì´ˆë‹¹ íšŒë³µí•˜ëŠ” ì˜í˜¼ì˜ ë¬´ê²Œ ìˆ˜
+
+    public Timer timer;
     public PlayerInfo plInfo;
+    public ActionFuntion actionFuntion;
     public Transform cameraTransform;
     public CharacterController characterController;
 
     public enum PL_STATE
     {
         IDLE,
-        MOVE, //´Ş¸®±â
-        WALK, //±â½À ±¸º¸
-        ACT, //»óÈ£ÀÛ¿ë
-        JUMP, //Á¡ÇÁ
-        ATTACKM1, //°ø°İ¸ğ¼Ç1
-        ATTACKM2, //°ø°İ¸ğ¼Ç2
-        ATTACKM3, //°ø°İ¸ğ¼Ç3
-        DAMAGED, //ÇÇ°İ
-        AVOIDJUMP, //È¸ÇÇ-Á¡ÇÁ
-        AVOIDROLL, //È¸ÇÇ-±¸¸£±â
-        DIE //»ç¸Á
+        MOVE, //ë‹¬ë¦¬ê¸°
+        WALK, //ê¸°ìŠµ êµ¬ë³´
+        ACT, //ìƒí˜¸ì‘ìš©
+        JUMP, //ì í”„
+        ATTACKM1, //ê³µê²©ëª¨ì…˜1
+        ATTACKM2, //ê³µê²©ëª¨ì…˜2
+        ATTACKM3, //ê³µê²©ëª¨ì…˜3
+        DAMAGED, //í”¼ê²©
+        AVOIDJUMP, //íšŒí”¼-ì í”„
+        AVOIDROLL, //íšŒí”¼-êµ¬ë¥´ê¸°
+        DIE //ì‚¬ë§
     }
     public PL_STATE plState;
+
+    public GameObject attackRange;
 
     void Start()
     {
         plInfo = GetComponent<PlayerInfo>();
+        timer = GameObject.Find("Timer").GetComponent<Timer>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
 
         plInfo.plMoveSpd = moveSpd;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
     }
 
 
@@ -65,6 +86,12 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = new Vector3(h, 0, v);
         moveDirection = cameraTransform.TransformDirection(moveDirection);
         moveDirection *= plInfo.plMoveSpd;
+
+        if (moveDirection != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * rotSpd);
+        }
+
 
         if (characterController.isGrounded)
         {
@@ -80,13 +107,9 @@ public class PlayerController : MonoBehaviour
         moveDirection.y = yVelocity;
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (IsAttacking())
+        if (Input.GetKey(KeyCode.Alpha1)) //1ë²ˆí‚¤ê°€ ë“¤ì–´ì˜¤ë©´
         {
-            if (plState == PL_STATE.IDLE)
-            {
-                plState = PL_STATE.ATTACKM1;
-            }
-            
+            Heal(); //íšŒë³µí•œë‹¤.
         }
 
         IsAvoiding();
@@ -98,6 +121,11 @@ public class PlayerController : MonoBehaviour
                         || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
                 {
                     plState = PL_STATE.MOVE;
+                }
+
+                if (IsAttacking())
+                {
+                    plState = PL_STATE.ATTACKM1;
                 }
 
                 break;
@@ -113,6 +141,10 @@ public class PlayerController : MonoBehaviour
                 {
                     plState = PL_STATE.WALK;
                 }
+                else if (IsAttacking())
+                {
+                    plState = PL_STATE.ATTACKM1;
+                }
                 else if (!Input.anyKey)
                 {
                     plState = PL_STATE.IDLE;
@@ -121,6 +153,15 @@ public class PlayerController : MonoBehaviour
 
             case PL_STATE.WALK:
                 plInfo.plMoveSpd = WalkMoveSpd();
+                //ì´ë™ì†ë„ë¥¼ ë°˜ìœ¼ë¡œ ì¤„ì¸ë‹¤.
+
+                if (IsAttacking())
+                {
+                    plState = PL_STATE.ATTACKM1;
+
+                    originAtk = plInfo.plAtk; //ì›ë˜ ê³µê²©ë ¥ ì„ì‹œì €ì¥
+                    plInfo.plAtk = (int)(plInfo.plAtk * 1.5f); //ê³µê²©ë ¥ 1.5ë°° ì¦ê°€ (ê³µê²©ë ¥ ì„¤ì •)
+                }
 
                 if (Input.GetKeyUp(KeyCode.LeftControl))
                 {
@@ -142,10 +183,16 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
 
-            case PL_STATE.ATTACKM1:
-                //¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
 
-                //¿¬Å¸ ÃÊ±âÈ­ ½Ã°£
+            case PL_STATE.ATTACKM1:
+                plInfo.plMoveSpd = 0; //ê³µê²©í•  ë•Œì—ëŠ” ì›€ì§ì´ì§€ ëª»í•˜ê²Œ í•œë‹¤.
+
+                //ì‹¤ì œ ë“¤ì–´ê°ˆ ëŒ€ë¯¸ì§€ ê³„ì‚°
+                attackRange.SetActive(true);
+                //ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰ ì½”ë“œ
+
+                //ì—°íƒ€ ì´ˆê¸°í™” ì‹œê°„
+
                 attackTime += Time.deltaTime;
                 if (IsAttacking())
                 {
@@ -162,19 +209,26 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         attackTime = 0;
+                        plInfo.plAtk = originAtk; //ì›ë˜ì˜ ëŒ€ë¯¸ì§€ë¡œ ë³€ê²½
+                        plInfo.plMoveSpd = moveSpd; //ê³µê²© ì¢…ë£Œ, ì›ë˜ ì†ë„ë¡œ ë³€ê²½
                         plState = PL_STATE.IDLE;
                         isNextAtk = false;
                         isAttack = false;
                     }
-                    
+                    attackRange.SetActive (false);
                 }
 
                 break;
 
             case PL_STATE.ATTACKM2:
-                //¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+                plInfo.plAtk = originAtk;
+                //ê³µê²©ë ¥ ì„¤ì •
 
-                //¿¬Å¸ ÃÊ±âÈ­ ½Ã°£
+                //ì‹¤ì œ ë“¤ì–´ê°ˆ ëŒ€ë¯¸ì§€ ê³„ì‚°
+                attackRange.SetActive(true);
+                //ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+
+                //ì—°íƒ€ ì´ˆê¸°í™” ì‹œê°„
                 attackTime += Time.deltaTime;
                 if (IsAttacking())
                 {
@@ -191,20 +245,27 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         attackTime = 0;
+                        plInfo.plMoveSpd = moveSpd; //ê³µê²© ì¢…ë£Œ, ì›ë˜ ì†ë„ë¡œ ë³€ê²½
                         plState = PL_STATE.IDLE;
                         isNextAtk = false;
                         isAttack = false;
                     }
-
+                    attackRange.SetActive(false);
                 }
 
 
                 break;
 
             case PL_STATE.ATTACKM3:
-                //¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+                plInfo.plAtk = originAtk;
+                //ê³µê²©ë ¥ ì„¤ì •
 
-                //¿¬Å¸ ÃÊ±âÈ­ ½Ã°£
+                //enemy.currentHp -= damangeCalc.DamageRandomCalc(plInfo.plAtk, damageRange);
+                //ì‹¤ì œ ë“¤ì–´ê°ˆ ëŒ€ë¯¸ì§€ ê³„ì‚°
+                attackRange.SetActive(true);
+                //ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+
+                //ì—°íƒ€ ì´ˆê¸°í™” ì‹œê°„
                 attackTime += Time.deltaTime;
                 if (IsAttacking())
                 {
@@ -221,32 +282,35 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         attackTime = 0;
+                        plInfo.plMoveSpd = moveSpd; //ê³µê²© ì¢…ë£Œ, ì›ë˜ ì†ë„ë¡œ ë³€ê²½
                         plState = PL_STATE.IDLE;
                         isNextAtk = false;
                         isAttack = false;
                     }
-
+                    attackRange.SetActive(false);
                 }
 
                 break;
 
             case PL_STATE.DAMAGED:
-
-                //ÇöÀç PLÀÇ HP(È¥·Â) 0ÀÌÇÏ¸é DIE
-                if (plInfo.curHp <= 0)
+                if (plInfo.curHp <= 0) //í˜„ì¬ PLì˜ HP(í˜¼ë ¥) 0ì´í•˜ë©´ DIE
                 {
                     plInfo.curHp = 0;
                     plState = PL_STATE.DIE;
+                }
+                else
+                {
+                    plState = PL_STATE.IDLE;
                 }
 
                 break;
 
             case PL_STATE.AVOIDJUMP:
-                isNoDamage = true; //¹«Àû ON
+                isNoDamage = true; //ë¬´ì  ON
 
-                //¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+                //ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
 
-                //¾Ö´Ï¸ŞÀÌ¼Ç ½Ã°£ ´ë±â
+                //ì• ë‹ˆë©”ì´ì…˜ ì‹œê°„ ëŒ€ê¸°
                 avoidTime += Time.deltaTime;
                 if (avoidTime > avoidJAnimTime)
                 {
@@ -257,11 +321,11 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PL_STATE.AVOIDROLL:
-                isNoDamage = false; //¹«Àû OFF
+                isNoDamage = false; //ë¬´ì  OFF
 
-                //¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+                //ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
 
-                //¾Ö´Ï¸ŞÀÌ¼Ç ½Ã°£ ´ë±â
+                //ì• ë‹ˆë©”ì´ì…˜ ì‹œê°„ ëŒ€ê¸°
                 avoidTime += Time.deltaTime;
                 if (avoidTime > avoidRAnimTime)
                 {
@@ -304,5 +368,36 @@ public class PlayerController : MonoBehaviour
         }
         else return false;
         
+    }
+
+    public void Heal()
+    {
+        if (timer.CountSeconds(1f))
+        {
+            if (plInfo.soulHp > 0) //ì˜í˜¼ì„ì— ë‹´ê¸´ ì˜í˜¼ì˜ ë¬´ê²Œê°€ 0ë³´ë‹¤ í¬ê³ 
+            {
+                if (plInfo.curHp < plInfo.maxHp) //í˜„ì¬ í”Œë ˆì´ì–´ì˜ í˜¼ë ¥(HP)ê°€ ìµœëŒ€ì¹˜ë³´ë‹¤ ì‘ìœ¼ë©´
+                {
+                    actionFuntion.FillHpUsingStone(healHp);//íšŒë³µ
+                }
+                else
+                {
+                    Debug.Log("ìµœëŒ€ ì²´ë ¥ ì´ìƒìœ¼ë¡œ íšŒë³µí•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
+                }
+            }
+            else
+            {
+                Debug.Log("ì˜í˜¼ì„ì´ ë¹„ì–´ìˆìŠµë‹ˆë‹¤!");
+            }
+        }
+        
+    }
+
+    public void BeAttacked(int damage)
+    {
+        plInfo.curHp -= damage;
+        //ì ì´ ê°€í•œ ëŒ€ë¯¸ì§€ì˜ ì–‘ì„ í”Œë ˆì´ì–´ í˜„ì¬ í˜¼ë ¥(HP)ì—ì„œ ì°¨ê°
+        plState = PL_STATE.DAMAGED;
+        //í”Œë ˆì´ì–´ ìƒíƒœ ë³€ê²½
     }
 }

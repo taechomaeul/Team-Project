@@ -3,103 +3,104 @@ using UnityEngine;
 
 public class EnemyInfo : MonoBehaviour
 {
-    [Header("µğ¹ö±×")]
-    [Tooltip("±âÁî¸ğ on/off ½ºÀ§Ä¡")]
-    [SerializeField] bool isDebug;
+    [Header("ì  ì •ë³´")]
+    [Tooltip("ì  ì •ë³´")]
+    [SerializeField] internal Enemy stat = new();
 
-    [Header("Å½Áö ´ë»ó")]
-    [Tooltip("Å½Áö ´ë»ó(ÇÃ·¹ÀÌ¾î)")]
-    public GameObject target;
-
-    [Serializable]
-    public class Stat
-    {
-        [Header("ÀÌµ¿")]
-        [Tooltip("ÀÌµ¿ ¼Óµµ")]
-        [SerializeField] internal float movingSpeed;
-
-        [Header("ÀÎ½Ä")]
-        [Tooltip("½Ã¾ß°¢")]
-        [SerializeField] internal float detectAngle;
-
-        [Tooltip("ÀÎ½Ä °Å¸®")]
-        [SerializeField] internal float detectRadius;
-
-        [Header("Ã¼·Â")]
-        [Tooltip("ÃÖ´ë Ã¼·Â")]
-        [SerializeField] internal float maxHp;
-
-        [Tooltip("ÇöÀç Ã¼·Â")]
-        [SerializeField] internal float currentHp;
-
-        [Header("°ø°İ")]
-        [Tooltip("µ¥¹ÌÁö")]
-        [SerializeField] internal float damage;
-
-        [Tooltip("°ø°İ ÁÖ±â")]
-        [SerializeField] internal float attackCycle;
-
-        [Tooltip("°ø°İ »ç°Å¸®")]
-        [SerializeField] internal float attackRange;
-    }
-
-    [Header("Àû ½ºÅÈ")]
-    [SerializeField] Stat stat;
-
-    [Header("ÇöÀç »óÅÂ")]
-    [Tooltip("Ãß°İ Áß")]
-    [SerializeField] bool isTracking;
-
-    [Tooltip("°ø°İ »ç°Å¸® ÁøÀÔ")]
-    [SerializeField] bool isInAttackRange;
-
-    [Tooltip("°ø°İ °¡´É")]
-    [SerializeField] bool canAttack;
-
-    [Tooltip("°ø°İ Áß")]
-    [SerializeField] bool isAttacking;
-
-    [Tooltip("ÇÇ°İ Áß")]
-    [SerializeField] bool isAttacked;
-
-    [Tooltip("»ç¸Á")]
-    [SerializeField] bool isDead;
-
-    // ¿ÜºÎ¿¡¼­ ¾²±â À§ÇÑ º¯¼ö ¹İÈ¯ ÇÔ¼öµé
-    #region Get Functions
-    public GameObject CurrentTarget() { return target; }
-    public bool GetIsDebug() { return isDebug; }
-    public bool GetIsTracking() { return isTracking; }
-    public bool GetIsInAttackRange() {  return isInAttackRange; }
-    public bool GetCanAttack() {  return canAttack; }
-    public bool GetIsAttacking() { return isAttacking; }
-    public bool GetIsAttacked() { return isAttacked; }
-    public bool GetIsDead() { return isDead; }
-
-    public float GetMovingSpeed() { return stat.movingSpeed; }
-    public float GetDetectAngle() { return stat.detectAngle; }
-    public float GetDetectRadius() { return stat.detectRadius; }
-    public float GetMaxHp() { return stat.maxHp; }
-    public float GetCurrentHp() { return stat.currentHp; }
-    public float GetDamage() { return stat.damage; }
-    public float GetAttackCycle() { return stat.attackCycle; }
-    public float GetAttackRange() { return stat.attackRange; }
-    #endregion
-
-    // º¯¼ö ¼¼ÆÃ ÇÔ¼öµé
-    #region Set Functions
-    public void SetIsTracking(bool tf) { isTracking = tf; }
-    public void SetIsInAttackRange(bool tf) { isInAttackRange = tf;}
-    public void SetCanAttack(bool tf) {  canAttack = tf; }
-    public void SetIsAttacking(bool  tf) { isAttacking = tf; }
-    public void SetIsAttacked(bool tf) { isAttacked = tf;}
-    public void SetIsDead(bool tf) { isDead = tf;}
-    public void SetCurrentHp(float hp) { stat.currentHp = hp; }
-    #endregion
-
-    // µ¥ÀÌÅÍ ÆÄÀÏ Ãß°¡µÇ¸é ¿©±â¼­ ¼öÄ¡ ÃÊ±âÈ­
+    // ë°ì´í„° íŒŒì¼ ì¶”ê°€ë˜ë©´ ì—¬ê¸°ì„œ ìˆ˜ì¹˜ ì´ˆê¸°í™”
     private void Awake()
     {
         stat.currentHp = stat.maxHp;
     }
+}
+
+[Serializable]
+internal class Enemy
+{
+    [Header("ë””ë²„ê·¸")]
+    [Tooltip("ê¸°ì¦ˆëª¨ on/off ìŠ¤ìœ„ì¹˜")]
+    [SerializeField] bool isDebug;
+
+    [Header("íƒì§€ ëŒ€ìƒ")]
+    [Tooltip("íƒì§€ ëŒ€ìƒ(í”Œë ˆì´ì–´)")]
+    [SerializeField] internal GameObject target;
+
+    [Header("ì´ë™")]
+    [Tooltip("ì´ë™ ì†ë„")]
+    [SerializeField] internal float movingSpeed;
+
+    [Header("ì¸ì‹")]
+    [Tooltip("ì‹œì•¼ê°")]
+    [SerializeField] internal float detectAngle;
+
+    [Tooltip("ì¸ì‹ ê±°ë¦¬")]
+    [SerializeField] internal float detectRadius;
+
+    [Header("ì²´ë ¥")]
+    [Tooltip("ìµœëŒ€ ì²´ë ¥")]
+    [SerializeField] internal int maxHp;
+
+    [Tooltip("í˜„ì¬ ì²´ë ¥")]
+    [SerializeField] internal int currentHp;
+
+    [Header("ê³µê²©")]
+    [Tooltip("ë°ë¯¸ì§€")]
+    [SerializeField] internal int damage;
+
+    [Tooltip("ê³µê²© ì£¼ê¸°")]
+    [SerializeField] internal float attackCycle;
+
+    [Tooltip("ê³µê²© ì‚¬ê±°ë¦¬")]
+    [SerializeField] internal float attackRange;
+
+    [Header("í˜„ì¬ ìƒíƒœ")]
+    [Tooltip("ì¶”ê²© ì¤‘")]
+    [SerializeField] bool isTracking;
+
+    [Tooltip("ê³µê²© ì‚¬ê±°ë¦¬ ì§„ì…")]
+    [SerializeField] bool isInAttackRange;
+
+    [Tooltip("ê³µê²© ê°€ëŠ¥")]
+    [SerializeField] bool canAttack;
+
+    [Tooltip("ê³µê²© ì¤‘")]
+    [SerializeField] bool isAttacking;
+
+    [Tooltip("í”¼ê²© ì¤‘")]
+    [SerializeField] bool isAttacked;
+
+    [Tooltip("ì‚¬ë§")]
+    [SerializeField] bool isDead;
+
+    // ì™¸ë¶€ì—ì„œ ì“°ê¸° ìœ„í•œ ë³€ìˆ˜ ë°˜í™˜ í•¨ìˆ˜ë“¤
+    #region Get Functions
+    public GameObject CurrentTarget() { return target; }
+    public bool GetIsDebug() { return isDebug; }
+    public bool GetIsTracking() { return isTracking; }
+    public bool GetIsInAttackRange() { return isInAttackRange; }
+    public bool GetCanAttack() { return canAttack; }
+    public bool GetIsAttacking() { return isAttacking; }
+    public bool GetIsAttacked() { return isAttacked; }
+    public bool GetIsDead() { return isDead; }
+
+    public float GetMovingSpeed() { return movingSpeed; }
+    public float GetDetectAngle() { return detectAngle; }
+    public float GetDetectRadius() { return detectRadius; }
+    public int GetMaxHp() { return maxHp; }
+    public int GetCurrentHp() { return currentHp; }
+    public int GetDamage() { return damage; }
+    public float GetAttackCycle() { return attackCycle; }
+    public float GetAttackRange() { return attackRange; }
+    #endregion
+
+    // ë³€ìˆ˜ ì„¸íŒ… í•¨ìˆ˜ë“¤
+    #region Set Functions
+    public void SetIsTracking(bool tf) { isTracking = tf; }
+    public void SetIsInAttackRange(bool tf) { isInAttackRange = tf; }
+    public void SetCanAttack(bool tf) { canAttack = tf; }
+    public void SetIsAttacking(bool tf) { isAttacking = tf; }
+    public void SetIsAttacked(bool tf) { isAttacked = tf; }
+    public void SetIsDead(bool tf) { isDead = tf; }
+    public void SetCurrentHp(int hp) { currentHp = hp; }
+    #endregion
 }

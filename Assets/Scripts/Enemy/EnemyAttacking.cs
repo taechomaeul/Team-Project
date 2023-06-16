@@ -4,135 +4,240 @@ using UnityEngine;
 
 public class EnemyAttacking : MonoBehaviour
 {
-    // Àû Á¤º¸
-    EnemyInfo enemyInfo;
-    // ÇöÀç °ø°İ ÁøÇàµµ
+    // ì  ì •ë³´
+    Enemy enemyInfo;
+    Boss bossInfo;
+    // í˜„ì¬ ê³µê²© ì§„í–‰ë„
     float attackProgress;
+    // ìŠ¤í‚¬ ë‚¨ì€ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„
+    float currentSkillCoolDown;
 
-    [Header("°ø°İ ÆÇÁ¤ ¹üÀ§")]
-    [Tooltip("°ø°İ ÆÇÁ¤ ¹üÀ§")]
+    // ë³´ìŠ¤ì¸ì§€ í™•ì¸
+    bool isBoss;
+
+    [Header("ê³µê²© íŒì • ë²”ìœ„")]
+    [Tooltip("í‰íƒ€ íŒì • ë²”ìœ„")]
     [SerializeField] GameObject attackRange;
-
+    [Tooltip("ìŠ¤í‚¬ íŒì • ë²”ìœ„")]
+    [SerializeField] GameObject skillRange;
 
     void Start()
     {
-        // enemyInfo ÃÊ±âÈ­
+        // enemyInfo ì´ˆê¸°í™”
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // ì¼ë°˜ ëª¬ìŠ¤í„°ë¼ë©´
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>().stat;
+                isBoss = false;
+            }
+            // ë³´ìŠ¤ë¼ë©´
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>().stat;
+                bossInfo = enemyInfo as Boss;
+                isBoss = true;
+                // ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥ ì´ˆê¸°í™”
+                bossInfo.SetCanSkill(true);
+                // ìŠ¤í‚¬ íŒì • off
+                skillRange.SetActive(false);
+            }
         }
-        // °ø°İ ÆÇÁ¤ off
+        // ê³µê²© íŒì • off
         attackRange.SetActive(false);
-        // °ø°İ ÁøÇàµµ ÃÊ±âÈ­
+        // ê³µê²© ì§„í–‰ë„ ì´ˆê¸°í™”
         attackProgress = 0f;
-        // °ø°İ °¡´É ÃÊ±âÈ­
+        // ìŠ¤í‚¬ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ì´ˆê¸°í™”
+        currentSkillCoolDown = 0f;
+        // ê³µê²© ê°€ëŠ¥ ì´ˆê¸°í™”
         enemyInfo.SetCanAttack(true);
-
     }
 
     void FixedUpdate()
     {
-        // »ì¾ÆÀÖ´Â »óÅÂ¶ó¸é
+        // ì‚´ì•„ìˆëŠ” ìƒíƒœë¼ë©´
         if (!enemyInfo.GetIsDead())
         {
-            // Å½Áö ´ë»óÀ» ÀÎ½ÄÇÏ°í ÀÖ´Â ÁßÀÌ¶ó¸é
+            // íƒì§€ ëŒ€ìƒì„ ì¸ì‹í•˜ê³  ìˆëŠ” ì¤‘ì´ë¼ë©´
             if (enemyInfo.GetIsTracking())
             {
-                // Å½Áö ´ë»óÀÌ °ø°İ »ç°Å¸® ¾È¿¡ Á¸ÀçÇÑ´Ù¸é
-                if (Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetAttackRange())
+                // íƒì§€ ëŒ€ìƒì´ ì‹œì•¼ê° ì•ˆì— ì¡´ì¬ && ê³µê²© ì‚¬ê±°ë¦¬ ì•ˆì— ì¡´ì¬í•œë‹¤ë©´
+                if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.target.transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f
+                    && Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetAttackRange())
                 {
-                    // °ø°İ »ç°Å¸® ÁøÀÔ -> true
+                    // ê³µê²© ì‚¬ê±°ë¦¬ ì§„ì… -> true
                     enemyInfo.SetIsInAttackRange(true);
-                    // °ø°İ °¡´ÉÀÌ true¶ó¸é
+                    // ê³µê²© ê°€ëŠ¥ì´ trueë¼ë©´
                     if (enemyInfo.GetCanAttack())
                     {
-                        // °ø°İ ÁßÀÌ true°¡ ¾Æ´Ï¶ó¸é
+                        // ê³µê²© ì¤‘ì´ trueê°€ ì•„ë‹ˆë¼ë©´
                         if (enemyInfo.GetIsAttacking() != true)
                         {
-                            // °ø°İ Áß -> true
+                            // ê³µê²© ì¤‘ -> true
                             enemyInfo.SetIsAttacking(true);
-                            // °ø°İ °¡´É -> false
+                            // ê³µê²© ê°€ëŠ¥ -> false
                             enemyInfo.SetCanAttack(false);
-                            // °ø°İ ½ÃÀÛ(°ø°İ ½ÃÀü ½Ã°£Àº ÀÓ½Ã·Î ÀÓÀÇ°ª ³ÖÀ½)
-                            StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+
+                            // ë³´ìŠ¤ë¼ë©´
+                            if (isBoss)
+                            {
+                                // ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥ í˜ì´ì¦ˆì—ì„œ ìŠ¤í‚¬ì„ ì“¸ ìˆ˜ ìˆì„ ë•Œ 25% í™•ë¥ ë¡œ
+                                if (Random.Range(0, 4) == 0 && bossInfo.GetCanSkill() && enemyInfo.currentHp <= bossInfo.GetSkillPhaseHp())
+                                {
+                                    // ìŠ¤í‚¬ ë°œë™
+                                    // ìŠ¤í‚¬ ë°œë™ ê°€ëŠ¥ -> false
+                                    bossInfo.SetCanSkill(false);
+
+                                    // ìŠ¤í‚¬ ì‹œì‘(ì„ì‹œë¡œ ì„ì˜ê°’ ë„£ìŒ)
+                                    StartCoroutine(Skill(bossInfo.GetSkillCoolDown() * 0.5f));
+                                    StartCoroutine(SkillTimer());
+                                }
+                                else
+                                {
+                                    // ì¼ë°˜ ê³µê²©
+                                    // ê³µê²© ì‹œì‘(ê³µê²© ì‹œì „ ì‹œê°„ì€ ì„ì‹œë¡œ ì„ì˜ê°’ ë„£ìŒ)
+                                    StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+                                }
+                            }
+                            // ì¼ë°˜ ëª¬ìŠ¤í„°ë¼ë©´
+                            else
+                            {
+                                // ê³µê²© ì‹œì‘(ê³µê²© ì‹œì „ ì‹œê°„ì€ ì„ì‹œë¡œ ì„ì˜ê°’ ë„£ìŒ)
+                                StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+                            }
+                            // ê³µê²© ê°€ëŠ¥ ê³„ì‚° íƒ€ì´ë¨¸ ì‹œì‘
                             StartCoroutine(AttackTimer());
                         }
                     }
                 }
-                // Å½Áö ´ë»óÀÌ °ø°İ »ç°Å¸® ¹ÛÀÌ¶ó¸é
+                // íƒì§€ ëŒ€ìƒì´ ê³µê²© ì‚¬ê±°ë¦¬ ë°–ì´ë¼ë©´
                 else
                 {
-                    // °ø°İ »ç°Å¸® ÁøÀÔ -> false
+                    // ê³µê²© ì‚¬ê±°ë¦¬ ì§„ì… -> false
                     enemyInfo.SetIsInAttackRange(false);
                 }
             }
         }
-        // Á×¾ú´Ù¸é
+        // ì£½ì—ˆë‹¤ë©´
         else
         {
-            // °ø°İ ¸ØÃã
+            // ê³µê²© ë©ˆì¶¤
             StopAllCoroutines();
-            // °ø°İ ÆÇÁ¤ off
+            // ê³µê²© íŒì • off
             attackRange.SetActive(false);
         }
     }
 
-    // °ø°İ(°ø°İ ½ÃÀü ½Ã°£)
+    // ê³µê²©(ê³µê²© ì‹œì „ ì‹œê°„)
     IEnumerator Attack(float attackTime)
     {
-        // °ø°İ ÁßÀÌ true¶ó¸é
+        // ê³µê²© ì¤‘ì´ trueë¼ë©´
         if (enemyInfo.GetIsAttacking())
         {
-            // °ø°İ ÆÇÁ¤ on
+            // ê³µê²© íŒì • on
             attackRange.SetActive(true);
-            // attackTime ¸¸Å­ ±â´Ù¸²(°ø°İ ¸ğ¼Ç ½ÃÀÛºÎÅÍ ³¡±îÁöÀÇ ½Ã°£)
+            // attackTime ë§Œí¼ ê¸°ë‹¤ë¦¼(ê³µê²© ëª¨ì…˜ ì‹œì‘ë¶€í„° ëê¹Œì§€ì˜ ì‹œê°„)
             yield return new WaitForSeconds(attackTime);
-            // °ø°İ ÆÇÁ¤ off
+            // ê³µê²© íŒì • off
             attackRange.SetActive(false);
-            // °ø°İ Áß -> false
+            // ê³µê²© ì¤‘ -> false
             enemyInfo.SetIsAttacking(false);
         }
-        // °ø°İ ÁßÀÌ false¶ó¸é
+        // ê³µê²© ì¤‘ì´ falseë¼ë©´
         else
         {
-            // °ø°İ ÄÚ·çÆ¾ Á¾·á
+            // ê³µê²© ì½”ë£¨í‹´ ì¢…ë£Œ
             yield return null;
         }
     }
 
-    // °ø°İ °¡´É °è»ê Å¸ÀÌ¸Ó
+    // ìŠ¤í‚¬ ì‹œì „(ìŠ¤í‚¬ ì‹œì „ ì‹œê°„)
+    IEnumerator Skill(float skillTime)
+    {
+        // ê³µê²© ì¤‘ì´ trueë¼ë©´
+        if (enemyInfo.GetIsAttacking())
+        {
+            // ìŠ¤í‚¬ íŒì • on
+            skillRange.SetActive(true);
+            // skillTime ë§Œí¼ ê¸°ë‹¤ë¦¼(ìŠ¤í‚¬ ëª¨ì…˜ ì‹œì‘ë¶€í„° ëê¹Œì§€ì˜ ì‹œê°„)
+            yield return new WaitForSeconds(skillTime);
+            // ìŠ¤í‚¬ íŒì • off
+            skillRange.SetActive(false);
+            // ê³µê²© ì¤‘ -> false
+            enemyInfo.SetIsAttacking(false);
+        }
+        // ê³µê²© ì¤‘ì´ falseë¼ë©´
+        else
+        {
+            // ê³µê²© ì½”ë£¨í‹´ ì¢…ë£Œ
+            yield return null;
+        }
+    }
+
+    // ê³µê²© ê°€ëŠ¥ ê³„ì‚° íƒ€ì´ë¨¸
     IEnumerator AttackTimer()
     {
         while (true)
         {
-            // °ø°İ ÁøÇàµµ°¡ °ø°İ ÁÖ±â¸¦ ³ÑÀ¸¸é
+            // ê³µê²© ì§„í–‰ë„ê°€ ê³µê²© ì£¼ê¸°ë¥¼ ë„˜ìœ¼ë©´
             if (attackProgress >= enemyInfo.GetAttackCycle())
             {
-                // °ø°İÁøÇàµµ ÃÊ±âÈ­
+                // ê³µê²©ì§„í–‰ë„ ì´ˆê¸°í™”
                 attackProgress = 0f;
-                // °ø°İ °¡´É -> true
+                // ê³µê²© ê°€ëŠ¥ -> true
                 enemyInfo.SetCanAttack(true);
-                // Å¸ÀÌ¸Ó ÄÚ·çÆ¾ Á¾·á
+                // íƒ€ì´ë¨¸ ì½”ë£¨í‹´ ì¢…ë£Œ
                 break;
             }
-            // ¸Å ÇÁ·¹ÀÓ °ø°İ ÁøÇàµµ¿¡ °æ°ú ½Ã°£ Ãß°¡
+            // ë§¤ í”„ë ˆì„ ê³µê²© ì§„í–‰ë„ì— ê²½ê³¼ ì‹œê°„ ì¶”ê°€
             attackProgress += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    // ìŠ¤í‚¬ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê³„ì‚° íƒ€ì´ë¨¸
+    IEnumerator SkillTimer()
+    {
+        while (true)
+        {
+            // ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ ì§€ë‚˜ë©´
+            if (currentSkillCoolDown >= bossInfo.GetSkillCoolDown())
+            {
+                // ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ì´ˆê¸°í™”
+                currentSkillCoolDown = 0f;
+                // ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥ -> true
+                bossInfo.SetCanSkill(true);
+                //íƒ€ì´ë¨¸ ì½”ë£¨í‹´ ì¢…ë£Œ
+                break;
+            }
+            // ë§¤ í”„ë ˆì„ ê²½ê³¼ ì‹œê°„ ì¶”ê°€
+            currentSkillCoolDown += Time.deltaTime;
             yield return null;
         }
     }
 
     private void OnDrawGizmos()
     {
-        // µğ¹ö±×¿ë enemyInfo ÃÊ±âÈ­
+        // ë””ë²„ê·¸ìš© enemyInfo ì´ˆê¸°í™”
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // ì¼ë°˜ ëª¬ìŠ¤í„°ë¼ë©´
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>().stat;
+            }
+            // ë³´ìŠ¤ë¼ë©´
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>().stat;
+            }
         }
 
-        // µğ¹ö±× ½ºÀ§Ä¡°¡ ÄÑÁ®ÀÖ´Ù¸é
+        // ë””ë²„ê·¸ ìŠ¤ìœ„ì¹˜ê°€ ì¼œì ¸ìˆë‹¤ë©´
         if (enemyInfo.GetIsDebug())
         {
-            // °ø°İ »ç°Å¸® ±âÁî¸ğ Ç¥½Ã(»¡°£»ö)
+            // ê³µê²© ì‚¬ê±°ë¦¬ ê¸°ì¦ˆëª¨ í‘œì‹œ(ë¹¨ê°„ìƒ‰)
             Handles.color = Color.red;
             Handles.DrawWireDisc(transform.position, transform.up, enemyInfo.GetAttackRange());
         }

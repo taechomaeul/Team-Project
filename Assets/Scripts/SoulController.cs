@@ -10,7 +10,6 @@ public class SoulController : MonoBehaviour
     public const float maxSoul = 666;
 
     public SoulInfo exampleSoul;
-    public Transform cameraTransform;
     public GameObject toolTip;
     public GameObject detailToolTip;
 
@@ -30,7 +29,7 @@ public class SoulController : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 5f);
+        Gizmos.DrawWireSphere(transform.position, 5f);
     }
 
     private void OnTriggerStay(Collider other)
@@ -49,7 +48,7 @@ public class SoulController : MonoBehaviour
             {
                 if (exampleSoul.havingHP == 0)
                 {
-                    Debug.Log("´õÀÌ»ó È¥·ÂÀ» ÃßÃâÇÒ ¼ö ¾ø½À´Ï´Ù!");
+                    Debug.Log("ë”ì´ìƒ í˜¼ë ¥ì„ ì¶”ì¶œí•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
                     detailToolTip.SetActive(false);
                 }
                 else
@@ -66,8 +65,8 @@ public class SoulController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha2) && isDetail)
             {
-                //ºùÀÇÇÏ±â
-                Debug.Log("ºùÀÇÇÏ±â!!!");
+                //ë¹™ì˜í•˜ê¸°
+                Debug.Log("ë¹™ì˜í•˜ê¸°!!!");
             }
         }
     }

@@ -1,87 +1,122 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovingAndDetecting : MonoBehaviour
 {
-    // Àû Á¤º¸
-    EnemyInfo enemyInfo;
-    // ¿ø·¡ À§Ä¡
+    // ì  ì •ë³´
+    Enemy enemyInfo;
+    // ì›ë˜ ìœ„ì¹˜
     Vector3 originPosition;
     Quaternion originRotation;
+    NavMeshAgent navMeshAgent;
 
     void Start()
     {
-        // enemyInfo ÃÊ±âÈ­
+        // enemyInfo ì´ˆê¸°í™”
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // ì¼ë°˜ ëª¬ìŠ¤í„°ë¼ë©´
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>().stat;
+            }
+            // ë³´ìŠ¤ë¼ë©´
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>().stat;
+            }
         }
-        // originPosition, originRotation ÃÊ±âÈ­
+        // originPosition, originRotation ì´ˆê¸°í™”
         originPosition = transform.position;
         originRotation = transform.rotation;
+
+        // NavMeshAgent ì„¸íŒ…
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        // NavMeshAgent ì´ë™ ì†ë„ ì¡°ì ˆ
+        navMeshAgent.speed = enemyInfo.GetMovingSpeed();
+        navMeshAgent.acceleration = 50;
+        // íšŒì „ ì†ë„ëŠ” íƒì§€ ëŒ€ìƒì— ê³ ì •ë˜ê²Œ ì„¤ì •
+        navMeshAgent.angularSpeed = 360;
+        // NavMeshAgent ì •ì§€ ê±°ë¦¬
+        navMeshAgent.stoppingDistance = enemyInfo.GetAttackRange();
     }
 
     private void FixedUpdate()
     {
-        // »ì¾ÆÀÖ´Â »óÅÂ¶ó¸é
+        // ì‚´ì•„ìˆëŠ” ìƒíƒœë¼ë©´
         if (!enemyInfo.GetIsDead())
         {
-            // Å½Áö ´ë»óÀÌ ½Ã¾ß°¢ ¾È¿¡ Á¸Àç && ÀÎ½Ä °Å¸® ¾È¿¡ Á¸ÀçÇÑ´Ù¸é
+            // íƒì§€ ëŒ€ìƒì´ ì‹œì•¼ê° ì•ˆì— ì¡´ì¬ && ì¸ì‹ ê±°ë¦¬ ì•ˆì— ì¡´ì¬í•œë‹¤ë©´
             if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.target.transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f
                 && Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetDetectRadius())
             {
-                // Ãß°İ ÁßÀÌ true°¡ ¾Æ´Ï¶ó¸é
+                // ì¶”ê²© ì¤‘ì´ trueê°€ ì•„ë‹ˆë¼ë©´
                 if (enemyInfo.GetIsTracking() != true)
                 {
-                    // Ãß°İ Áß -> true
+                    // ì¶”ê²© ì¤‘ -> true
                     enemyInfo.SetIsTracking(true);
                 }
-                //// Å½Áö ´ë»óÀ» ¹Ù¶óº½
-                //transform.LookAt(enemyInfo.target.transform.position);
             }
 
-            // Ãß°İ ÁßÀÌ¶ó¸é
+            // ì¶”ê²© ì¤‘ì´ë¼ë©´
             if (enemyInfo.GetIsTracking())
             {
-                // Å½Áö ´ë»óÀÌ ÀÎ½Ä °Å¸® ¹Û¿¡ ÀÖ´Ù¸é
+                // íƒì§€ ëŒ€ìƒì´ ì¸ì‹ ê±°ë¦¬ ë°–ì— ìˆë‹¤ë©´
                 if (Vector3.Distance(transform.position, enemyInfo.target.transform.position) > enemyInfo.GetDetectRadius())
                 {
-                    // Ãß°İ Áß -> false
+                    // ì¶”ê²© ì¤‘ -> false
                     enemyInfo.SetIsTracking(false);
-                    // ~~~~~ ÀÎ½Ä°Å¸®¸¦ µÎ °³·Î ³ª´²¼­ ÀÛÀº ¹üÀ§¿¡¼­ Ãß°İ ½ÃÀÛÇÏ°í Å« ¹üÀ§¿¡¼­ Ãß°İ ÁßÁöÇÏ°Ô ÇÏ¸é?
+                    // ~~~~~ ì¸ì‹ê±°ë¦¬ë¥¼ ë‘ ê°œë¡œ ë‚˜ëˆ ì„œ ì‘ì€ ë²”ìœ„ì—ì„œ ì¶”ê²© ì‹œì‘í•˜ê³  í° ë²”ìœ„ì—ì„œ ì¶”ê²© ì¤‘ì§€í•˜ê²Œ í•˜ë©´?
                 }
 
-                // °ø°İ ÁßÀÌ ¾Æ´Ï¶ó¸é
+                // ê³µê²© ì¤‘ì´ ì•„ë‹ˆë¼ë©´
                 if (!enemyInfo.GetIsAttacking())
                 {
-                    // Å½Áö ´ë»óÀ» ¹Ù¶óº½
-                    transform.LookAt(enemyInfo.target.transform.position);
-                }
-
-                // °ø°İ »ç°Å¸® ¹Û¿¡ ÀÖ°í °ø°İ ÁßÀÌ ¾Æ´Ï¶ó¸é
-                if (!enemyInfo.GetIsInAttackRange() && !enemyInfo.GetIsAttacking())
-                {
-                    // Ãß°İ(ÀÌÈÄ¿¡ NavMeshAgent »ç¿ëÇÏ°Ô µÇ¸é º¯°æ)
-                    transform.Translate(new Vector3(0, 0, enemyInfo.GetMovingSpeed() * Time.deltaTime));
-                }
-            }
-            // Ãß°İ ÁßÀÌ ¾Æ´Ï¶ó¸é
-            else
-            {
-                // °ø°İ »ç°Å¸® ¹Û¿¡ ÀÖ°í °ø°İ ÁßÀÌ ¾Æ´Ï¶ó¸é
-                if (!enemyInfo.GetIsInAttackRange() && !enemyInfo.GetIsAttacking())
-                {
-                    // ÇöÀç À§Ä¡ºÎÅÍ ¿ø·¡ À§Ä¡±îÁöÀÇ °Å¸®°¡ 0.1 ÀÌ»óÀÌ¶ó¸é
-                    if (Vector3.Distance(transform.position, originPosition) > 0.1f)
+                    // ê³µê²© ì‚¬ê±°ë¦¬ ì•ˆì´ë¼ë©´
+                    if (enemyInfo.GetIsInAttackRange())
                     {
-                        // Á¦ÀÚ¸®·Î µ¹¾Æ°¡±â(ÀÌÈÄ¿¡ NavMeshAgent »ç¿ëÇÏ°Ô µÇ¸é º¯°æ)
-                        transform.LookAt(originPosition);
-                        transform.Translate(new Vector3(0, 0, enemyInfo.GetMovingSpeed() * Time.deltaTime));
+                        // ì •ì§€
+                        //navMeshAgent.speed = 0;
+                        navMeshAgent.velocity= Vector3.zero;
                     }
-                    // ¿ø·¡ À§Ä¡¿¡ µµÂøÇß´Ù¸é
+                    // ê³µê²© ì‚¬ê±°ë¦¬ ë°–ì´ë¼ë©´
                     else
                     {
-                        // ¿ø·¡ È¸Àü ¹æÇâÀ¸·Î µ¹¾Æ°¨
+                        // íƒì§€ ëŒ€ìƒì„ ë°”ë¼ë´„
+                        transform.LookAt(enemyInfo.target.transform.position);
+                        // ì¶”ê²©
+                        //navMeshAgent.speed = enemyInfo.GetMovingSpeed();
+                        navMeshAgent.SetDestination(enemyInfo.target.transform.position);
+                    }
+                }
+                // ê³µê²© ì¤‘ì´ë¼ë©´
+                else
+                {
+                    // ì œìë¦¬ ì •ì§€
+                    //navMeshAgent.speed = 0;
+                    navMeshAgent.velocity = Vector3.zero;
+                }
+            }
+            // ì¶”ê²© ì¤‘ì´ ì•„ë‹ˆë¼ë©´
+            else
+            {
+                // ê³µê²© ì‚¬ê±°ë¦¬ ë°–ì— ìˆê³  ê³µê²© ì¤‘ì´ ì•„ë‹ˆë¼ë©´
+                if (!enemyInfo.GetIsInAttackRange() && !enemyInfo.GetIsAttacking())
+                {
+                    // í˜„ì¬ ìœ„ì¹˜ë¶€í„° ì›ë˜ ìœ„ì¹˜ê¹Œì§€ì˜ ê±°ë¦¬ê°€ navmesh ì •ì§€ ê±°ë¦¬ ì´ìƒì´ë¼ë©´
+                    if (Vector3.Distance(transform.position, originPosition) > navMeshAgent.stoppingDistance)
+                    {
+                        // ì œìë¦¬ë¡œ ëŒì•„ê°€ê¸°
+                        navMeshAgent.SetDestination(originPosition);
+                    }
+                    // ì›ë˜ ìœ„ì¹˜ì— ë„ì°©í–ˆë‹¤ë©´
+                    else
+                    {
+                        // ì •ì§€
+                        //navMeshAgent.velocity = Vector3.zero;
+                        // ì›ë˜ íšŒì „ ë°©í–¥ìœ¼ë¡œ ëŒì•„ê°
                         transform.rotation = originRotation;
                     }
                 }
@@ -91,21 +126,30 @@ public class EnemyMovingAndDetecting : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // µğ¹ö±×¿ë enemyInfo ÃÊ±âÈ­
+        // ë””ë²„ê·¸ìš© enemyInfo ì´ˆê¸°í™”
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // ì¼ë°˜ ëª¬ìŠ¤í„°ë¼ë©´
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>().stat;
+            }
+            // ë³´ìŠ¤ë¼ë©´
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>().stat;
+            }
         }
 
-        // µğ¹ö±× ½ºÀ§Ä¡°¡ ÄÑÁ®ÀÖ´Ù¸é
+        // ë””ë²„ê·¸ ìŠ¤ìœ„ì¹˜ê°€ ì¼œì ¸ìˆë‹¤ë©´
         if (enemyInfo.GetIsDebug())
         {
-            // ÁÂ¿ì ½Ã¾ß°¢ ±âÁî¸ğ Ç¥½Ã(º¸¶ó»ö)
+            // ì¢Œìš° ì‹œì•¼ê° ê¸°ì¦ˆëª¨ í‘œì‹œ(ë³´ë¼ìƒ‰)
             Debug.DrawRay(transform.position, (Quaternion.AngleAxis(enemyInfo.GetDetectAngle() * 0.5f, transform.up) * transform.forward) * enemyInfo.GetDetectRadius(), Color.magenta);
             Debug.DrawRay(transform.position, (Quaternion.AngleAxis(-enemyInfo.GetDetectAngle() * 0.5f, transform.up) * transform.forward) * enemyInfo.GetDetectRadius(), Color.magenta);
-            // ¹Ù¶óº¸´Â ¹æÇâ ±âÁî¸ğ Ç¥½Ã(³ë¶õ»ö)
+            // ë°”ë¼ë³´ëŠ” ë°©í–¥ ê¸°ì¦ˆëª¨ í‘œì‹œ(ë…¸ë€ìƒ‰)
             Debug.DrawRay(transform.position, transform.forward * enemyInfo.GetDetectRadius(), Color.yellow);
-            // ÀÎ½Ä °Å¸® ±âÁî¸ğ Ç¥½Ã(Èò»ö)
+            // ì¸ì‹ ê±°ë¦¬ ê¸°ì¦ˆëª¨ í‘œì‹œ(í°ìƒ‰)
             Handles.DrawWireDisc(transform.position, transform.up, enemyInfo.GetDetectRadius());
         }
     }

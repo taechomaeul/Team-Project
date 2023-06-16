@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    public float plAtk;
-    public float minAtkRange;
-    public float maxAtkRange;
+    public int plAtk;
     public float plMoveSpd;
     public float curHp;
     public float maxHp;
