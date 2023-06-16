@@ -10,7 +10,10 @@ public class EnemyInfo : MonoBehaviour
     // 데이터 파일 추가되면 여기서 수치 초기화
     private void Awake()
     {
+        // 체력 초기화
         stat.currentHp = stat.maxHp;
+        // 탐지 대상 초기화
+        stat.target = GameObject.Find("Player").transform.GetChild(0).gameObject;
     }
 }
 
