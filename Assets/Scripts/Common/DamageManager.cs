@@ -1,7 +1,34 @@
 using UnityEngine;
 
-public class DamageCalc : MonoBehaviour
-{ 
+public class DamageManager : MonoBehaviour
+{
+    // 싱글톤
+    static DamageManager instance = null;
+    public static DamageManager Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // 기준값(damage)에서 +- 범위(rangeValue) 사이의 랜덤한 값 반환, rangeValue는 0~1사이의 소수값을 가짐
     public int DamageRandomCalc(int damage, float rangeValue)
     {
