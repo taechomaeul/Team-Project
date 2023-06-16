@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     public Timer timer;
     public SkillInfo skillData;
     public PlayerInfo plInfo;
-    public DamageCalc damangeCalc;
     public ActionFuntion actionFuntion;
     public Transform cameraTransform;
     public CharacterController characterController;
@@ -65,7 +64,6 @@ public class PlayerController : MonoBehaviour
     {
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
-        damangeCalc = GetComponent<DamageCalc>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
@@ -76,8 +74,8 @@ public class PlayerController : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
     }
 
 
