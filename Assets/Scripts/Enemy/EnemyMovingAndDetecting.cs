@@ -2,20 +2,31 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovingAndDetecting : MonoBehaviour
 {
     // 적 정보
-    EnemyInfo enemyInfo;
+    Enemy enemyInfo;
     // 원래 위치
     Vector3 originPosition;
     Quaternion originRotation;
     NavMeshAgent navMeshAgent;
+
     void Start()
     {
         // enemyInfo 초기화
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // 일반 몬스터라면
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>().stat;
+            }
+            // 보스라면
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>().stat;
+            }
         }
         // originPosition, originRotation 초기화
         originPosition = transform.position;
@@ -25,8 +36,11 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         // NavMeshAgent 이동 속도 조절
         navMeshAgent.speed = enemyInfo.GetMovingSpeed();
+        navMeshAgent.acceleration = 50;
         // 회전 속도는 탐지 대상에 고정되게 설정
         navMeshAgent.angularSpeed = 360;
+        // NavMeshAgent 정지 거리
+        navMeshAgent.stoppingDistance = enemyInfo.GetAttackRange();
     }
 
     private void FixedUpdate()
@@ -60,12 +74,12 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                 // 공격 중이 아니라면
                 if (!enemyInfo.GetIsAttacking())
                 {
-
                     // 공격 사거리 안이라면
                     if (enemyInfo.GetIsInAttackRange())
                     {
                         // 정지
-                        navMeshAgent.speed = 0;
+                        //navMeshAgent.speed = 0;
+                        navMeshAgent.velocity= Vector3.zero;
                     }
                     // 공격 사거리 밖이라면
                     else
@@ -73,7 +87,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                         // 탐지 대상을 바라봄
                         transform.LookAt(enemyInfo.target.transform.position);
                         // 추격
-                        navMeshAgent.speed = enemyInfo.GetMovingSpeed();
+                        //navMeshAgent.speed = enemyInfo.GetMovingSpeed();
                         navMeshAgent.SetDestination(enemyInfo.target.transform.position);
                     }
                 }
@@ -81,7 +95,8 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                 else
                 {
                     // 제자리 정지
-                    navMeshAgent.speed = 0;
+                    //navMeshAgent.speed = 0;
+                    navMeshAgent.velocity = Vector3.zero;
                 }
             }
             // 추격 중이 아니라면
@@ -99,6 +114,8 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                     // 원래 위치에 도착했다면
                     else
                     {
+                        // 정지
+                        //navMeshAgent.velocity = Vector3.zero;
                         // 원래 회전 방향으로 돌아감
                         transform.rotation = originRotation;
                     }
@@ -112,7 +129,16 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         // 디버그용 enemyInfo 초기화
         if (enemyInfo == null)
         {
-            enemyInfo = GetComponent<EnemyInfo>();
+            // 일반 몬스터라면
+            if (GetComponent<BossInfo>() == null)
+            {
+                enemyInfo = GetComponent<EnemyInfo>().stat;
+            }
+            // 보스라면
+            else
+            {
+                enemyInfo = GetComponent<BossInfo>().stat;
+            }
         }
 
         // 디버그 스위치가 켜져있다면

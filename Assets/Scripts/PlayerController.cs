@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
     }
     public PL_STATE plState;
 
+    public GameObject attackRange;
+
     void Start()
     {
         plInfo = GetComponent<PlayerInfo>();
@@ -161,7 +163,7 @@ public class PlayerController : MonoBehaviour
                     plState = PL_STATE.ATTACKM1;
 
                     originAtk = plInfo.plAtk; //원래 공격력 임시저장
-                    plInfo.plAtk = (int) (plInfo.plAtk * 1.5f); //공격력 1.5배 증가 (공격력 설정)
+                    plInfo.plAtk = (int)(plInfo.plAtk * 1.5f); //공격력 1.5배 증가 (공격력 설정)
                 }
 
                 if (Input.GetKeyUp(KeyCode.LeftControl))
@@ -189,7 +191,7 @@ public class PlayerController : MonoBehaviour
                 plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
 
                 //실제 들어갈 대미지 계산
-
+                attackRange.SetActive(true);
                 //애니메이션 실행 코드
 
                 //연타 초기화 시간
@@ -216,7 +218,7 @@ public class PlayerController : MonoBehaviour
                         isNextAtk = false;
                         isAttack = false;
                     }
-                    
+                    attackRange.SetActive (false);
                 }
 
                 break;
@@ -226,7 +228,7 @@ public class PlayerController : MonoBehaviour
                 //공격력 설정
 
                 //실제 들어갈 대미지 계산
-
+                attackRange.SetActive(true);
                 //애니메이션 실행
 
                 //연타 초기화 시간
@@ -251,7 +253,7 @@ public class PlayerController : MonoBehaviour
                         isNextAtk = false;
                         isAttack = false;
                     }
-
+                    attackRange.SetActive(false);
                 }
 
 
@@ -263,7 +265,7 @@ public class PlayerController : MonoBehaviour
 
                 //enemy.currentHp -= damangeCalc.DamageRandomCalc(plInfo.plAtk, damageRange);
                 //실제 들어갈 대미지 계산
-
+                attackRange.SetActive(true);
                 //애니메이션 실행
 
                 //연타 초기화 시간
@@ -288,7 +290,7 @@ public class PlayerController : MonoBehaviour
                         isNextAtk = false;
                         isAttack = false;
                     }
-
+                    attackRange.SetActive(false);
                 }
 
                 break;
