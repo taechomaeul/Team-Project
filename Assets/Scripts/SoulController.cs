@@ -7,8 +7,8 @@ public class SoulController : MonoBehaviour
 {
 
     public bool isDetail = false;
-    public const float enemySoulPercent = 0.3f;
-    public const float maxSoul = 666;
+    public readonly float enemySoulPercent = 0.3f;
+    public readonly float maxSoul = 666;
 
     public SoulInfo exampleSoul;
     public GameObject toolTip;

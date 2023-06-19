@@ -5,12 +5,13 @@ using UnityEngine;
 public class ActionFuntion : MonoBehaviour
 {
     public float coolTime = 2f;
-    public const int increaseHp = 30;
-    public const float increaseAmount = 1.3f; // 30% 증가
+    public readonly int increaseHp = 30;
+    public readonly float increaseAmount = 1.3f; // 30% 증가
 
     public EnemyPrefab enemyPrefabInfo;
     public PlayerInfo plInfo;
     public PlayerController plController;
+    public PlayerLook playerLook;
     public Timer timer;
 
     private void Start()
@@ -18,6 +19,7 @@ public class ActionFuntion : MonoBehaviour
         enemyPrefabInfo = GetComponent<EnemyPrefab>();
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         plController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerLook = GameObject.Find("Sight").GetComponent<PlayerLook>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
     }
 
@@ -133,5 +135,19 @@ public class ActionFuntion : MonoBehaviour
             }
         }
 
+    }
+
+    public void PauseGameForAct()
+    {
+        plInfo.plMoveSpd = 0;
+        playerLook.sensitivity = 0;
+        plController.plState = PlayerController.PL_STATE.ACT;
+    }
+
+    public void RestartGame()
+    {
+        plInfo.plMoveSpd = plController.moveSpd;
+        playerLook.sensitivity = playerLook.readOnlySens;
+        plController.plState = PlayerController.PL_STATE.IDLE;
     }
 }
