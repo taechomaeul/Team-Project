@@ -237,9 +237,11 @@ public class EnemyAttacking : MonoBehaviour
         // 디버그 스위치가 켜져있다면
         if (enemyInfo.GetIsDebug())
         {
+#if UNITY_EDITOR
             // 공격 사거리 기즈모 표시(빨간색)
             Handles.color = Color.red;
             Handles.DrawWireDisc(transform.position, transform.up, enemyInfo.GetAttackRange());
+#endif
         }
     }
 }
