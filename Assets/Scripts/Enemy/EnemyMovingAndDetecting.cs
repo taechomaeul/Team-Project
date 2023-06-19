@@ -10,7 +10,13 @@ public class EnemyMovingAndDetecting : MonoBehaviour
     // 원래 위치
     Vector3 originPosition;
     Quaternion originRotation;
+
+    // NavMeshAgent
     NavMeshAgent navMeshAgent;
+
+    // 애니메이터 컨트롤
+    EnemyAnimationControll eac;
+    
 
     void Start()
     {
@@ -41,6 +47,9 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         navMeshAgent.angularSpeed = 360;
         // NavMeshAgent 정지 거리
         navMeshAgent.stoppingDistance = enemyInfo.GetAttackRange();
+
+        // 애니메이터 컨트롤 세팅
+        eac = GetComponent<EnemyAnimationControll>();
     }
 
     private void FixedUpdate()
@@ -57,6 +66,8 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                 {
                     // 추격 중 -> true
                     enemyInfo.SetIsTracking(true);
+                    // 이동 애니메이션
+                    eac.SetAnimationState(EnemyAnimationControll.Animation_State.Move);
                 }
             }
 
@@ -118,6 +129,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                         //navMeshAgent.velocity = Vector3.zero;
                         // 원래 회전 방향으로 돌아감
                         transform.rotation = originRotation;
+                        eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
                     }
                 }
             }

@@ -15,6 +15,9 @@ public class EnemyAttacking : MonoBehaviour
     // 보스인지 확인
     bool isBoss;
 
+    // 애니메이터 컨트롤
+    EnemyAnimationControll eac;
+
     [Header("공격 판정 범위")]
     [Tooltip("평타 판정 범위")]
     [SerializeField] GameObject attackRange;
@@ -52,6 +55,9 @@ public class EnemyAttacking : MonoBehaviour
         currentSkillCoolDown = 0f;
         // 공격 가능 초기화
         enemyInfo.SetCanAttack(true);
+
+        // 애니메이터 컨트롤 세팅
+        eac = GetComponent<EnemyAnimationControll>();
     }
 
     void FixedUpdate()
@@ -142,6 +148,7 @@ public class EnemyAttacking : MonoBehaviour
             // 공격 판정 on
             attackRange.SetActive(true);
             // attackTime 만큼 기다림(공격 모션 시작부터 끝까지의 시간)
+            
             yield return new WaitForSeconds(attackTime);
             // 공격 판정 off
             attackRange.SetActive(false);
