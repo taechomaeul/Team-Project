@@ -7,8 +7,8 @@ public class SoulController : MonoBehaviour
 {
 
     public bool isDetail = false;
-    public const float enemySoulPercent = 0.3f;
-    public const float maxSoul = 666;
+    public readonly float enemySoulPercent = 0.3f;
+    public readonly float maxSoul = 666;
 
     public SoulInfo exampleSoul;
     public GameObject toolTip;
@@ -25,7 +25,7 @@ public class SoulController : MonoBehaviour
 
         if (gameObject.tag == "Enemy")
         {
-            //exampleSoul.havingHP = (int)transform.GetComponentInChildren<EnemyInfo>().GetMaxHp() * enemySoulPercent;
+            exampleSoul.havingHP = (int)transform.GetComponentInChildren<EnemyInfo>().stat.GetMaxHp() * enemySoulPercent;
         }
         else
         {
@@ -82,7 +82,8 @@ public class SoulController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha2) && isDetail)
             {
-                actionFuntion.ChangePrefab(other.gameObject, gameObject); //PlayerModel, Enemy
+                Debug.Log(transform.parent.gameObject, gameObject);
+                actionFuntion.ChangePrefab(other.gameObject, transform.parent.gameObject); //PlayerModel, Enemy
                 detailToolTip.SetActive(false);
             }
         }

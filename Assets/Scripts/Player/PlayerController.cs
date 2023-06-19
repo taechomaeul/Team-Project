@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 10f;
     public float gravity = -20f;
     public float yVelocity = 0;
-    public const float moveSpd = 10f; //(고정) 움직임 속도, 현재 움직이는 속도는 plInfo에서 확인
+    public readonly float moveSpd = 10f; //(고정) 움직임 속도, 현재 움직이는 속도는 plInfo에서 확인
 
     [Header("플래그")]
     public bool isActivated = false;
@@ -31,10 +31,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("공격 변수")]
     public int originAtk;
-    public const float damageRange = 0.3f; //0~1 사이의 값
+    public readonly float damageRange = 0.3f; //0~1 사이의 값
 
     [Header("회복 변수")]
-    public const float healHp = 3; //초당 회복하는 영혼의 무게 수
+    public readonly float healHp = 3; //초당 회복하는 영혼의 무게 수
 
     public Timer timer;
     public SkillInfo skillData;
@@ -160,10 +160,9 @@ public class PlayerController : MonoBehaviour
 
                 if (IsAttacking())
                 {
-                    plState = PL_STATE.ATTACKM1;
-
                     originAtk = plInfo.plAtk; //원래 공격력 임시저장
                     plInfo.plAtk = (int)(plInfo.plAtk * 1.5f); //공격력 1.5배 증가 (공격력 설정)
+                    plState = PL_STATE.ATTACKM1;
                 }
 
                 if (Input.GetKeyUp(KeyCode.LeftControl))

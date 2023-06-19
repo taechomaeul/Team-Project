@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
-    public float sensitivity = 500f;
+    public float sensitivity;
+    public float readOnlySens = 500f;
     public float rotationX;
     public float rotationY;
 
@@ -14,6 +15,7 @@ public class PlayerLook : MonoBehaviour
     void Start()
     {
         plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
+        sensitivity = readOnlySens;
     }
 
     void Update()
