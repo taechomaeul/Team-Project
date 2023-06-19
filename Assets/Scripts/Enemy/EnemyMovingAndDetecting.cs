@@ -79,7 +79,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                     {
                         // 정지
                         //navMeshAgent.speed = 0;
-                        navMeshAgent.velocity= Vector3.zero;
+                        navMeshAgent.velocity = Vector3.zero;
                     }
                     // 공격 사거리 밖이라면
                     else
@@ -149,8 +149,10 @@ public class EnemyMovingAndDetecting : MonoBehaviour
             Debug.DrawRay(transform.position, (Quaternion.AngleAxis(-enemyInfo.GetDetectAngle() * 0.5f, transform.up) * transform.forward) * enemyInfo.GetDetectRadius(), Color.magenta);
             // 바라보는 방향 기즈모 표시(노란색)
             Debug.DrawRay(transform.position, transform.forward * enemyInfo.GetDetectRadius(), Color.yellow);
+#if UNITY_EDITOR
             // 인식 거리 기즈모 표시(흰색)
             Handles.DrawWireDisc(transform.position, transform.up, enemyInfo.GetDetectRadius());
+#endif
         }
     }
 }

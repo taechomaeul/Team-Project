@@ -90,7 +90,7 @@ public class EnemyAttacking : MonoBehaviour
                                     bossInfo.SetCanSkill(false);
 
                                     // 스킬 시작(임시로 임의값 넣음)
-                                    StartCoroutine(Skill(bossInfo.GetSkillCoolDown() * 0.5f));
+                                    StartCoroutine(CastSkill(bossInfo.GetSkillCoolDown() * 0.5f));
                                     StartCoroutine(SkillTimer());
                                 }
                                 else
@@ -129,7 +129,11 @@ public class EnemyAttacking : MonoBehaviour
         }
     }
 
-    // 공격(공격 시전 시간)
+    /// <summary>
+    /// 공격
+    /// </summary>
+    /// <param name="attackTime">공격 시전 시간</param>
+    /// <returns></returns>
     IEnumerator Attack(float attackTime)
     {
         // 공격 중이 true라면
@@ -152,12 +156,18 @@ public class EnemyAttacking : MonoBehaviour
         }
     }
 
-    // 스킬 시전(스킬 시전 시간)
-    IEnumerator Skill(float skillTime)
+    /// <summary>
+    /// 스킬 시전
+    /// </summary>
+    /// <param name="skillTime">스킬 시전 시간</param>
+    /// <returns></returns>
+    IEnumerator CastSkill(float skillTime)
     {
         // 공격 중이 true라면
         if (enemyInfo.GetIsAttacking())
         {
+            // 스킬 시전
+            StartCoroutine(Skill());
             // 스킬 판정 on
             skillRange.SetActive(true);
             // skillTime 만큼 기다림(스킬 모션 시작부터 끝까지의 시간)
@@ -175,7 +185,20 @@ public class EnemyAttacking : MonoBehaviour
         }
     }
 
-    // 공격 가능 계산 타이머
+    /// <summary>
+    /// 시전될 스킬 발동
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator Skill()
+    {
+        // 임시
+        yield return null;
+    }
+
+    /// <summary>
+    /// 공격 가능 계산 타이머
+    /// </summary>
+    /// <returns></returns>
     IEnumerator AttackTimer()
     {
         while (true)
@@ -196,7 +219,10 @@ public class EnemyAttacking : MonoBehaviour
         }
     }
 
-    // 스킬 재사용 대기시간 계산 타이머
+    /// <summary>
+    /// 스킬 재사용 대기시간 계산 타이머
+    /// </summary>
+    /// <returns></returns>
     IEnumerator SkillTimer()
     {
         while (true)
@@ -237,9 +263,11 @@ public class EnemyAttacking : MonoBehaviour
         // 디버그 스위치가 켜져있다면
         if (enemyInfo.GetIsDebug())
         {
+#if UNITY_EDITOR
             // 공격 사거리 기즈모 표시(빨간색)
             Handles.color = Color.red;
             Handles.DrawWireDisc(transform.position, transform.up, enemyInfo.GetAttackRange());
+#endif
         }
     }
 }
