@@ -95,27 +95,31 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * rotSpd);
         }
 
-
-        if (characterController.isGrounded)
+        if (!isActivated) //스크립트 활성화 중에는 힐, 스킬, 회피, 점프 불가능
         {
-            yVelocity = 0;
-            if (Input.GetKeyDown(KeyCode.Space))
+
+            if (characterController.isGrounded)
             {
-                yVelocity = jumpSpeed;
-                plState = PL_STATE.JUMP;
+                yVelocity = 0;
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    yVelocity = jumpSpeed;
+                    plState = PL_STATE.JUMP;
+                }
             }
-        }
 
-        yVelocity += (gravity * Time.deltaTime);
-        moveDirection.y = yVelocity;
-        characterController.Move(moveDirection * Time.deltaTime);
+            yVelocity += (gravity * Time.deltaTime);
+            moveDirection.y = yVelocity;
+            characterController.Move(moveDirection * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.Alpha1)) //1번키가 들어오면
-        {
-            Heal(); //회복한다.
+
+            if (Input.GetKey(KeyCode.Alpha1)) //1번키가 들어오면
+            {
+                Heal(); //회복한다.
+            }
+            isSkill();
+            IsAvoiding();
         }
-        isSkill();
-        IsAvoiding();
 
         switch (plState)
         {
@@ -176,6 +180,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PL_STATE.ACT:
+                isActivated = true;
                 break;
 
             case PL_STATE.JUMP:
