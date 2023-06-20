@@ -18,6 +18,10 @@ public class EnemyAttacking : MonoBehaviour
     // 애니메이터 컨트롤
     EnemyAnimationControll eac;
 
+    [Header("공격 종류 개수")]
+    [Tooltip("공격 종류 개수")]
+    [Range(1,4)][SerializeField] int numberOfAttackType;
+
     [Header("공격 판정 범위")]
     [Tooltip("평타 판정 범위")]
     [SerializeField] GameObject attackRange;
@@ -95,22 +99,22 @@ public class EnemyAttacking : MonoBehaviour
                                     // 스킬 발동 가능 -> false
                                     bossInfo.SetCanSkill(false);
 
-                                    // 스킬 시작(임시로 임의값 넣음)
-                                    StartCoroutine(CastSkill(bossInfo.GetSkillCoolDown() * 0.5f));
+                                    // 스킬 시작
+                                    StartCoroutine(CastSkill());
                                     StartCoroutine(SkillTimer());
                                 }
                                 else
                                 {
                                     // 일반 공격
                                     // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
-                                    StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+                                    StartCoroutine(Attack());
                                 }
                             }
                             // 일반 몬스터라면
                             else
                             {
                                 // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
-                                StartCoroutine(Attack(enemyInfo.GetAttackCycle() * 0.5f));
+                                StartCoroutine(Attack());
                             }
                             // 공격 가능 계산 타이머 시작
                             StartCoroutine(AttackTimer());
@@ -138,18 +142,26 @@ public class EnemyAttacking : MonoBehaviour
     /// <summary>
     /// 공격
     /// </summary>
-    /// <param name="attackTime">공격 시전 시간</param>
     /// <returns></returns>
-    IEnumerator Attack(float attackTime)
+    IEnumerator Attack()
     {
         // 공격 중이 true라면
         if (enemyInfo.GetIsAttacking())
         {
+            int attackType = Random.Range(0, numberOfAttackType)+2;
+
             // 공격 판정 on
             attackRange.SetActive(true);
+
+            // 공격 모션 시작
+            eac.SetAnimationState((EnemyAnimationControll.Animation_State)attackType);
+
             // attackTime 만큼 기다림(공격 모션 시작부터 끝까지의 시간)
+            yield return new WaitForSeconds(eac.GetAnimationDurationTime((EnemyAnimationControll.Animation_State)attackType));
+
+            // 공격 모션 끝
+            eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
             
-            yield return new WaitForSeconds(attackTime);
             // 공격 판정 off
             attackRange.SetActive(false);
             // 공격 중 -> false
@@ -166,9 +178,8 @@ public class EnemyAttacking : MonoBehaviour
     /// <summary>
     /// 스킬 시전
     /// </summary>
-    /// <param name="skillTime">스킬 시전 시간</param>
     /// <returns></returns>
-    IEnumerator CastSkill(float skillTime)
+    IEnumerator CastSkill()
     {
         // 공격 중이 true라면
         if (enemyInfo.GetIsAttacking())
@@ -177,8 +188,14 @@ public class EnemyAttacking : MonoBehaviour
             StartCoroutine(Skill());
             // 스킬 판정 on
             skillRange.SetActive(true);
+            // 스킬 모션 시작
+            eac.SetAnimationState(EnemyAnimationControll.Animation_State.Skill);
+
             // skillTime 만큼 기다림(스킬 모션 시작부터 끝까지의 시간)
-            yield return new WaitForSeconds(skillTime);
+            yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Skill));
+
+            // 스킬 모션 끝
+            eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
             // 스킬 판정 off
             skillRange.SetActive(false);
             // 공격 중 -> false

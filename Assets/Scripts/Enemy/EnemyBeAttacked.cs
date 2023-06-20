@@ -9,6 +9,8 @@ public class EnemyBeAttacked : MonoBehaviour
     // 영혼석
     public GameObject soulStone;
 
+    // 애니메이터 컨트롤
+    EnemyAnimationControll eac;
     void Start()
     {
         // enemyInfo 초기화
@@ -27,6 +29,9 @@ public class EnemyBeAttacked : MonoBehaviour
         }
         // 영혼석 off
         soulStone.SetActive(false);
+
+        // 애니메이터 컨트롤 세팅
+        eac = GetComponent<EnemyAnimationControll>();
     }
 
     // damage만큼 공격 받음
@@ -45,22 +50,12 @@ public class EnemyBeAttacked : MonoBehaviour
         // 이전 코루틴 중지
         StopAllCoroutines();
 
-        // 죽었다면
-        if (enemyInfo.GetIsDead())
-        {
-            // 사망 애니메이션 재생
+            // 피격, 사망 애니메이션 재생
             StartCoroutine(HitAnimation());
-        }
-        // 살아있다면
-        else
-        {
-            // 피격 애니메이션 재생(테스트용 임의시간값)
-            StartCoroutine(HitAnimation(1));
-        }
     }
 
-    // 피격 애니메이션(애니메이션 시간)
-    IEnumerator HitAnimation(float time)
+    // 피격, 사망 애니메이션
+    IEnumerator HitAnimation()
     {
         // 살아있다면
         if (!enemyInfo.GetIsDead())
@@ -68,12 +63,20 @@ public class EnemyBeAttacked : MonoBehaviour
             // 공격 중이 아니라면
             if (!enemyInfo.GetIsAttacking())
             {
+                // 피격 중 -> true
+                enemyInfo.SetIsAttacked(true);
+
                 // 피격 애니메이션 재생
-                //Debug.Log("ㅁㄴㅇㄹ");
+                eac.SetAnimationState(EnemyAnimationControll.Animation_State.Hit);
 
                 // 애니메이션 끝날 때까지 기다림
-                yield return new WaitForSeconds(time);
-                //Debug.Log("ㅁㄴㅇㄹ2");
+                yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Hit));
+
+                // 피격 애니메이션 끝
+                eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
+
+                // 피격 중 -> false
+                enemyInfo.SetIsAttacked(false);
             }
 
             // 탐지 대상을 인식하지 못하고 있다면
@@ -85,18 +88,13 @@ public class EnemyBeAttacked : MonoBehaviour
                 transform.LookAt(enemyInfo.target.transform.position);
             }
         }
-    }
-
-    IEnumerator HitAnimation()
-    {
-        // 죽었다면
-        if (enemyInfo.GetIsDead())
+        else
         {
             // 사망 애니메이션 재생
-            Debug.Log("사망 애니메이션");
+            eac.SetAnimationState(EnemyAnimationControll.Animation_State.Dead);
 
             // 애니메이션 끝날 때까지 기다림(임의값)
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Dead));
 
             // 영혼석 on
             soulStone.SetActive(true);
