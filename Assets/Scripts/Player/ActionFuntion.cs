@@ -148,6 +148,7 @@ public class ActionFuntion : MonoBehaviour
     {
         plInfo.plMoveSpd = plController.moveSpd;
         playerLook.sensitivity = playerLook.readOnlySens;
+        plController.isActivated = false;
         plController.plState = PlayerController.PL_STATE.IDLE;
     }
 }
