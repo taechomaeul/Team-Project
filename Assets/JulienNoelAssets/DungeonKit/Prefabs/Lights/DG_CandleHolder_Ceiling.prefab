@@ -227,7 +227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636395773042226976}
   m_LocalRotation: {x: 1.05879106e-22, y: -1.4953484e-15, z: 0.00000035762784, w: -1}
-  m_LocalPosition: {x: -0, y: -3.783, z: -0}
+  m_LocalPosition: {x: 0, y: -3.783, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -315,6 +315,7 @@ GameObject:
   m_Component:
   - component: {fileID: 708124088749776772}
   - component: {fileID: 1318272553019670334}
+  - component: {fileID: 3139987451742793568}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -399,6 +400,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &3139987451742793568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2782763741196586719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &1648276546316123588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -410,6 +431,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Candle (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771869, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771871, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}
@@ -560,6 +586,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Candle (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771869, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771871, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}
