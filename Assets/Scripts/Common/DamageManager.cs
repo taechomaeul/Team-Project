@@ -8,7 +8,7 @@ public class DamageManager : MonoBehaviour
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 return null;
             }
@@ -18,7 +18,7 @@ public class DamageManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -40,8 +40,7 @@ public class DamageManager : MonoBehaviour
             rangeValue = 0;
         }
         // 데미지 값 계산 후 반환
-        damage = (int)((1+ Random.Range(-rangeValue, rangeValue)) *damage);
-        Debug.Log(damage);
+        damage = (int)((1 + Random.Range(-rangeValue, rangeValue)) * damage);
         return damage;
     }
 }
