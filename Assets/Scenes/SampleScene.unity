@@ -340,7 +340,7 @@ MonoBehaviour:
     maxHp: 20
     currentHp: 0
     damage: 5
-    attackCycle: 3
+    attackCycle: 10
     attackRange: 2
     isTracking: 0
     isInAttackRange: 0
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dea24168fd130f42ba68721d7fe295e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plAtk: 0
+  plAtk: 10
   plMoveSpd: 0
   curHp: 0
   maxHp: 0
