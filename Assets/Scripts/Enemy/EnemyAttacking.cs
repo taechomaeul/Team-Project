@@ -20,7 +20,7 @@ public class EnemyAttacking : MonoBehaviour
 
     [Header("공격 종류 개수")]
     [Tooltip("공격 종류 개수")]
-    [Range(1,4)][SerializeField] int numberOfAttackType;
+    [Range(1, 4)][SerializeField] int numberOfAttackType;
 
     [Header("공격 판정 범위")]
     [Tooltip("평타 판정 범위")]
@@ -72,54 +72,66 @@ public class EnemyAttacking : MonoBehaviour
             // 탐지 대상을 인식하고 있는 중이라면
             if (enemyInfo.GetIsTracking())
             {
-                // 탐지 대상이 시야각 안에 존재 && 공격 사거리 안에 존재한다면
-                if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.target.transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f
-                    && Vector3.Distance(transform.position, enemyInfo.target.transform.position) <= enemyInfo.GetAttackRange())
+                //Debug.Log(enemyInfo.GetDistanceFromTarget());
+                // 탐지 대상이 공격 사거리 안에 존재한다면
+                if (enemyInfo.GetDistanceFromTarget() <= enemyInfo.GetAttackRange())
                 {
                     // 공격 사거리 진입 -> true
                     enemyInfo.SetIsInAttackRange(true);
-                    // 공격 가능이 true라면
-                    if (enemyInfo.GetCanAttack())
+
+                    // 탐지 대상이 시야각 안에 존재한다면
+                    if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.target.transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f)
                     {
-                        // 공격 중이 true가 아니라면
-                        if (enemyInfo.GetIsAttacking() != true)
+                        // 공격 가능이 true라면
+                        if (enemyInfo.GetCanAttack())
                         {
-                            // 공격 중 -> true
-                            enemyInfo.SetIsAttacking(true);
-                            // 공격 가능 -> false
-                            enemyInfo.SetCanAttack(false);
-
-                            // 보스라면
-                            if (isBoss)
+                            // 공격, 피격 중이 아니라면
+                            if (!enemyInfo.GetIsAttacking() || !enemyInfo.GetIsAttacked())
                             {
-                                // 스킬 사용 가능 페이즈에서 스킬을 쓸 수 있을 때 25% 확률로
-                                if (Random.Range(0, 4) == 0 && bossInfo.GetCanSkill() && enemyInfo.currentHp <= bossInfo.GetSkillPhaseHp())
-                                {
-                                    // 스킬 발동
-                                    // 스킬 발동 가능 -> false
-                                    bossInfo.SetCanSkill(false);
+                                // 공격 중 -> true
+                                enemyInfo.SetIsAttacking(true);
+                                // 공격 가능 -> false
+                                enemyInfo.SetCanAttack(false);
 
-                                    // 스킬 시작
-                                    StartCoroutine(CastSkill());
-                                    StartCoroutine(SkillTimer());
+                                // 보스라면
+                                if (isBoss)
+                                {
+                                    // 스킬 사용 가능 페이즈에서 스킬을 쓸 수 있을 때 25% 확률로
+                                    if (Random.Range(0, 4) == 0 && bossInfo.GetCanSkill() && enemyInfo.currentHp <= bossInfo.GetSkillPhaseHp())
+                                    {
+                                        // 스킬 발동
+                                        // 스킬 발동 가능 -> false
+                                        bossInfo.SetCanSkill(false);
+
+                                        // 스킬 시작
+                                        StartCoroutine(CastSkill());
+                                        StartCoroutine(SkillTimer());
+                                    }
+                                    else
+                                    {
+                                        // 일반 공격
+                                        // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
+                                        StartCoroutine(Attack());
+                                    }
                                 }
+                                // 일반 몬스터라면
                                 else
                                 {
-                                    // 일반 공격
                                     // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
                                     StartCoroutine(Attack());
                                 }
+                                // 공격 가능 계산 타이머 시작
+                                StartCoroutine(AttackTimer());
                             }
-                            // 일반 몬스터라면
-                            else
-                            {
-                                // 공격 시작(공격 시전 시간은 임시로 임의값 넣음)
-                                StartCoroutine(Attack());
-                            }
-                            // 공격 가능 계산 타이머 시작
-                            StartCoroutine(AttackTimer());
                         }
                     }
+                    // 탐지 대상이 시야각 안에 없다면
+                    //else
+                    //{
+                    //Debug.Log("adf");
+                    //transform.LookAt(Vector3.Lerp(transform.forward, enemyInfo.target.transform.position, Time.deltaTime));
+                    //transform.LookAt(enemyInfo.target.transform.position);
+                    //}
                 }
                 // 탐지 대상이 공격 사거리 밖이라면
                 else
@@ -148,7 +160,7 @@ public class EnemyAttacking : MonoBehaviour
         // 공격 중이 true라면
         if (enemyInfo.GetIsAttacking())
         {
-            int attackType = Random.Range(0, numberOfAttackType)+2;
+            int attackType = Random.Range(0, numberOfAttackType) + 2;
 
             // 공격 판정 on
             attackRange.SetActive(true);
@@ -161,7 +173,7 @@ public class EnemyAttacking : MonoBehaviour
 
             // 공격 모션 끝
             eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
-            
+
             // 공격 판정 off
             attackRange.SetActive(false);
             // 공격 중 -> false
@@ -225,21 +237,24 @@ public class EnemyAttacking : MonoBehaviour
     /// <returns></returns>
     IEnumerator AttackTimer()
     {
-        while (true)
+        if (!enemyInfo.GetCanAttack())
         {
-            // 공격 진행도가 공격 주기를 넘으면
-            if (attackProgress >= enemyInfo.GetAttackCycle())
+            while (true)
             {
-                // 공격진행도 초기화
-                attackProgress = 0f;
-                // 공격 가능 -> true
-                enemyInfo.SetCanAttack(true);
-                // 타이머 코루틴 종료
-                break;
+                // 공격 진행도가 공격 주기를 넘으면
+                if (attackProgress >= enemyInfo.GetAttackCycle())
+                {
+                    // 공격진행도 초기화
+                    attackProgress = 0f;
+                    // 공격 가능 -> true
+                    enemyInfo.SetCanAttack(true);
+                    // 타이머 코루틴 종료
+                    break;
+                }
+                // 매 프레임 공격 진행도에 경과 시간 추가
+                attackProgress += Time.deltaTime;
+                yield return null;
             }
-            // 매 프레임 공격 진행도에 경과 시간 추가
-            attackProgress += Time.deltaTime;
-            yield return null;
         }
     }
 

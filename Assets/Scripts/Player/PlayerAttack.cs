@@ -17,7 +17,6 @@ public class PlayerAttack : MonoBehaviour
         // 범위에 적이 닿았을 때
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("적 공격");
             // 랜덤 데미지 계산 후 적 체력 감소
             other.GetComponent<EnemyBeAttacked>().BeAttacked(DamageManager.Instance.DamageRandomCalc(plInfo.plAtk, atkRandomRatio));
         }
