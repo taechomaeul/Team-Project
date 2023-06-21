@@ -18,7 +18,7 @@ public class EnemyAnimationControll : MonoBehaviour
     }
     [Header("애니메이션")]
     [Tooltip("애니메이션 상태")]
-    [SerializeField] Animation_State animationState;
+    [SerializeField, ReadOnly] Animation_State animationState;
 
     // 모델에 달려있는 애니메이터
     Animator animator;

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using UnityEngine;
 
 public class EnemyInfo : MonoBehaviour
@@ -28,7 +29,7 @@ internal class Enemy
 
     [Header("탐지 대상")]
     [Tooltip("탐지 대상(플레이어)")]
-    [SerializeField] internal GameObject target;
+    internal GameObject target;
     // 컴포넌트 부착 대상
     internal Transform transfom;
 
@@ -62,22 +63,22 @@ internal class Enemy
 
     [Header("현재 상태")]
     [Tooltip("추격 중")]
-    [SerializeField] bool isTracking;
+    [SerializeField, ReadOnly] bool isTracking;
 
     [Tooltip("공격 사거리 진입")]
-    [SerializeField] bool isInAttackRange;
+    [SerializeField, ReadOnly] bool isInAttackRange;
 
     [Tooltip("공격 가능")]
-    [SerializeField] bool canAttack;
+    [SerializeField, ReadOnly] bool canAttack;
 
     [Tooltip("공격 중")]
-    [SerializeField] bool isAttacking;
+    [SerializeField, ReadOnly] bool isAttacking;
 
     [Tooltip("피격 중")]
-    [SerializeField] bool isAttacked;
+    [SerializeField, ReadOnly] bool isAttacked;
 
     [Tooltip("사망")]
-    [SerializeField] bool isDead;
+    [SerializeField, ReadOnly] bool isDead;
 
     // 외부에서 쓰기 위한 변수 반환 함수들
     #region Get Functions
@@ -108,6 +109,12 @@ internal class Enemy
         {
             return -1;
         }
+    }
+    public Vector3 GetDirectionVectorFromTarget()
+    {
+        Vector3 temp = transfom.position;
+        temp.y = 0;
+        return (target.transform.position - temp).normalized;
     }
     #endregion
 
