@@ -158,7 +158,7 @@ MonoBehaviour:
     maxHp: 20
     currentHp: 0
     damage: 5
-    attackCycle: 10
+    attackCycle: 5
     attackRange: 2
     isTracking: 0
     isInAttackRange: 0
