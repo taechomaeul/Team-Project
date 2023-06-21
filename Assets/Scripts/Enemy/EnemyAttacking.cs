@@ -20,7 +20,7 @@ public class EnemyAttacking : MonoBehaviour
 
     [Header("공격 종류 개수")]
     [Tooltip("공격 종류 개수")]
-    [Range(1, 4)][SerializeField] int numberOfAttackType;
+    [Range(1, 3)][SerializeField] int numberOfAttackType;
 
     [Header("공격 판정 범위")]
     [Tooltip("평타 판정 범위")]
