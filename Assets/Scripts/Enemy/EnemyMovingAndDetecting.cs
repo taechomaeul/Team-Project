@@ -13,7 +13,6 @@ public class EnemyMovingAndDetecting : MonoBehaviour
 
     // NavMeshAgent
     NavMeshAgent navMeshAgent;
-
     // 애니메이터 컨트롤
     EnemyAnimationControll eac;
 
@@ -45,12 +44,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         navMeshAgent.acceleration = 50;
         // 회전 속도는 탐지 대상에 고정되게 설정
         navMeshAgent.angularSpeed = 360;
-        // NavMeshAgent 정지 거리
-        //navMeshAgent.stoppingDistance = enemyInfo.GetAttackRange();
         navMeshAgent.stoppingDistance = 0.1f;
-
-        //navMeshAgent.updateRotation = false;
-
         // 애니메이터 컨트롤 세팅
         eac = GetComponent<EnemyAnimationControll>();
     }
@@ -87,7 +81,6 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                         // ~~~~~ 인식거리를 두 개로 나눠서 작은 범위에서 추격 시작하고 큰 범위에서 추격 중지하게 하면?
                     }
 
-
                     // 공격 사거리 안이라면
                     if (enemyInfo.GetIsInAttackRange())
                     {
@@ -99,14 +92,9 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                         // 공격 중이 아니라면
                         if (!enemyInfo.GetIsAttacking())
                         {
-                            //navMeshAgent.SetDestination(enemyInfo.target.transform.position);
-                            transform.LookAt(enemyInfo.target.transform);
+                            //transform.LookAt(enemyInfo.target.transform);
+                            transform.rotation = Quaternion.LookRotation(Vector3.Lerp(transform.forward,enemyInfo.GetDirectionVectorFromTarget(),Time.deltaTime * 10));
                             eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
-
-                        }
-                        // 공격 중이라면
-                        else
-                        {
                         }
                     }
                     // 공격 사거리 밖이라면
@@ -114,12 +102,10 @@ public class EnemyMovingAndDetecting : MonoBehaviour
                     {
                         if (!enemyInfo.GetIsAttacking())
                         {
-                            navMeshAgent.updateRotation = true;
-                            navMeshAgent.speed = enemyInfo.GetMovingSpeed();
-                            // 탐지 대상을 바라봄
-                            //transform.LookAt(enemyInfo.target.transform);
                             // 추격
                             navMeshAgent.SetDestination(enemyInfo.target.transform.position);
+                            navMeshAgent.updateRotation = true;
+                            navMeshAgent.speed = enemyInfo.GetMovingSpeed();
                             // 이동 애니메이션
                             eac.SetAnimationState(EnemyAnimationControll.Animation_State.Move);
                         }
