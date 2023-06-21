@@ -116,8 +116,6 @@ public class ActionFuntion : MonoBehaviour
                 GameObject enemyPrefab = enemyPrefabInfo.enemyPrefabs[i]; //이름이 같은 프리팹 선택
                 GameObject newPlayer = Instantiate(enemyPrefab, originPlayerPos, originPlayerRot); //생성
                 GameObject sight = Instantiate(enemyPrefabInfo.sightPrefab);
-                //후에 임시용 Range 표기 Prefab 삭제할 것
-                GameObject range = Instantiate(enemyPrefabInfo.atkRangePrefab);
 
                 newPlayer.name = "PlayerModel";
                 newPlayer.tag = "Player";
@@ -130,11 +128,6 @@ public class ActionFuntion : MonoBehaviour
                 sight.GetComponent<PlayerLook>().plInfo = player.GetComponent<PlayerInfo>();
                 sight.transform.localPosition = Vector3.zero;
                 sight.transform.localRotation = originSightRot;
-
-                //후에 임시용 Range표기 관련 내용 삭제할 것
-                range.transform.parent = newPlayer.transform;
-                sight.transform.localPosition = Vector3.zero;
-                sight.transform.localRotation = Quaternion.identity;
 
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().cameraTransform = sight.transform.GetChild(0);
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().characterController = newPlayer.GetComponent<CharacterController>();

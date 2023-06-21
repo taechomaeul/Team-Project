@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class ScriptColliderInfo : MonoBehaviour
@@ -18,11 +19,13 @@ public class ScriptColliderInfo : MonoBehaviour
     private ShowScript showScript;
     [SerializeField]
     private ActionFuntion actionFunction;
+    private ToggleManager toggleManager;
 
     private void Start()
     {
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
+        toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,6 +58,34 @@ public class ScriptColliderInfo : MonoBehaviour
         curIndex++;
     }
 
+    bool isStay = false;
+
+    private void Update()
+    {
+        if (isStay)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (curIndex < nextIndex)
+                {
+                    Debug.Log(curIndex);
+                    //StartCoroutine(WaitSecondsFunction(1f));
+                    showScript.LoadScript(curIndex);
+                    curIndex++;
+                }
+                else
+                {
+                    //StartCoroutine(WaitSecondsFunction(1f));
+                    scriptPanel.SetActive(false);
+
+                    actionFunction.RestartGame();
+                    isShowed = true;
+                }
+            }
+        }
+    }
+
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -68,24 +99,49 @@ public class ScriptColliderInfo : MonoBehaviour
                 ConditionMove();
                 showScript.isClick = false;
             }
-
-            if (Input.GetMouseButtonDown(0))
+            else
             {
+                isStay = true;
+            }
+
+            /*
+            else if (Input.GetMouseButtonDown(0))
+            {
+                //if (!EventSystem.current.IsPointerOverGameObject())
+                //{
+                //클릭 처리
                 if (curIndex < nextIndex)
                 {
+                Debug.Log(curIndex);
+                    //StartCoroutine(WaitSecondsFunction(1f));
                     showScript.LoadScript(curIndex);
                     curIndex++;
+                    Debug.Log("aaaaaaaaaaa");
                 }
                 else
                 {
+                    Debug.Log("dsfdsaf");
+                    //StartCoroutine(WaitSecondsFunction(1f));
                     scriptPanel.SetActive(false);
 
                     actionFunction.RestartGame();
                     isShowed = true;
                 }
-            }
+                //}
+                
+            }*/
         }
     }
+
+/*    IEnumerator WaitNSeconds(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
+
+    IEnumerator WaitSecondsFunction(float time)
+    {
+        yield return StartCoroutine(WaitNSeconds(time));
+    }*/
 
 
     private void OnTriggerExit(Collider other)
@@ -96,6 +152,13 @@ public class ScriptColliderInfo : MonoBehaviour
             //Destroy(gameObject.GetComponent<SphereCollider>());
             //Destroy(gameObject.GetComponent<BoxCollider>());
             showScript.isClick = false;
+
+            if (colliderName.Equals("T_PUZZLE") && !toggleManager.isClear)
+            {
+                Debug.Log("T_PUZZLE");
+                actionFunction.PauseGameForAct();
+                toggleManager.PlayToggleGame();
+            }
         }
 
     }
