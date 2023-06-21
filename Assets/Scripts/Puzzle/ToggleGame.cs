@@ -1,11 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ToggleGame : MonoBehaviour
 {
-    public bool flag1 = false;
+    public bool thisFlag = false;
 
     public Image fire;
 
@@ -20,9 +20,9 @@ public class ToggleGame : MonoBehaviour
         
     }
 
-    public void ChangeFlag1()
+    public void ChangeFlag()
     {
-        bool flag = flag1;
+        bool flag = thisFlag;
         Color color;
         if (flag == true)
         {
@@ -35,7 +35,7 @@ public class ToggleGame : MonoBehaviour
             color = Color.red;
             fire.color = color;
         }
-        flag1 = !flag;
+        thisFlag = !flag;
     }
 
 

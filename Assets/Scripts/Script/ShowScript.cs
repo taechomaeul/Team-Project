@@ -95,6 +95,16 @@ public class ShowScript : MonoBehaviour
         return e_Index;
     }
 
+    IEnumerator WaitNSeconds(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+    }
+
+    IEnumerator WaitSecondsFunction(float time)
+    {
+        yield return StartCoroutine(WaitNSeconds(time));
+    }
+
 
     public void LoadScript(int curIndex)
     {
@@ -109,8 +119,7 @@ public class ShowScript : MonoBehaviour
     /// <summary>
     /// 스크립트 대사를 읽어오는 함수
     /// </summary>
-    /// <param name="startIdx">현재 파트의 첫 시작 인덱스</param>
-    /// <param name="endIndex">다음 파트의 첫 시작 인덱스</param>
+    /// <param name="curIndex">현재 인덱스</param>
     /// <returns></returns>
     public IEnumerator LoadScriptDataFromCSV(int curIndex)
     {
@@ -127,7 +136,7 @@ public class ShowScript : MonoBehaviour
         Debug.Log($"Type: {GetScriptType(curIndex)}");
         Debug.Log($"{scriptText.text}");
 
-        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine(WaitSecondsFunction(1f));
     }
 
     public string GetScriptType(int index)

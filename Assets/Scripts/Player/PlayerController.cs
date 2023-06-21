@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * rotSpd);
         }
 
-        if (!isActivated) //스크립트 활성화 중에는 힐, 스킬, 회피, 점프 불가능
+        if (!isActivated) //스크립트 활성화 중에는 힐, 스킬, 회피, 점프 등 상태 변경 불가능
         {
 
             if (characterController.isGrounded)
@@ -120,236 +120,238 @@ public class PlayerController : MonoBehaviour
             }
             isSkill();
             IsAvoiding();
-        }
 
-        switch (plState)
-        {
-            case PL_STATE.IDLE:
-                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
-                        || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-                {
-                    plState = PL_STATE.MOVE;
-                }
-
-                if (IsAttacking())
-                {
-                    plState = PL_STATE.ATTACKM1;
-                }
-
-                break;
-
-            case PL_STATE.MOVE:
-                plInfo.plMoveSpd = moveSpd;
-
-                if (Input.GetKey(KeyCode.LeftControl))
-                {
-                    plState = PL_STATE.WALK;
-                }
-                else if (Input.GetKeyDown(KeyCode.C))
-                {
-                    plState = PL_STATE.WALK;
-                }
-                else if (IsAttacking())
-                {
-                    plState = PL_STATE.ATTACKM1;
-                }
-                else if (!Input.anyKey)
-                {
-                    plState = PL_STATE.IDLE;
-                }
-                break;
-
-            case PL_STATE.WALK:
-                plInfo.plMoveSpd = WalkMoveSpd();
-                //이동속도를 반으로 줄인다.
-
-                if (IsAttacking())
-                {
-                    originAtk = plInfo.plAtk; //원래 공격력 임시저장
-                    plInfo.plAtk = (int)(plInfo.plAtk * 1.5f); //공격력 1.5배 증가 (공격력 설정)
-                    plState = PL_STATE.ATTACKM1;
-                }
-
-                if (Input.GetKeyUp(KeyCode.LeftControl))
-                {
-                    plState = PL_STATE.MOVE;
-                }
-                else if (Input.GetKeyDown(KeyCode.C))
-                {
-                    plState = PL_STATE.IDLE;
-                }
-                break;
-
-            case PL_STATE.ACT:
-                isActivated = true;
-                break;
-
-            case PL_STATE.JUMP:
-                if (characterController.isGrounded)
-                {
-                    plState = PL_STATE.IDLE;
-                }
-                break;
-
-
-            case PL_STATE.ATTACKM1:
-                plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
-
-                //실제 들어갈 대미지 계산
-                attackRange.SetActive(true);
-                //애니메이션 실행 코드
-
-                //연타 초기화 시간
-
-                attackTime += Time.deltaTime;
-                if (IsAttacking())
-                {
-                    isNextAtk = true;
-                }
-                if (attackTime > atkResetTime)
-                {
-                    if (isNextAtk == true)
+            switch (plState)
+            {
+                case PL_STATE.IDLE:
+                    if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
+                            || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
                     {
-                        attackTime = 0;
-                        plState = PL_STATE.ATTACKM2;
-                        isNextAtk = false;
+                        plState = PL_STATE.MOVE;
                     }
-                    else
+
+                    if (IsAttacking())
                     {
-                        attackTime = 0;
-                        plInfo.plAtk = originAtk; //원래의 대미지로 변경
-                        plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
-                        plState = PL_STATE.IDLE;
-                        isNextAtk = false;
-                        isAttack = false;
-                    }
-                    attackRange.SetActive (false);
-                }
-
-                break;
-
-            case PL_STATE.ATTACKM2:
-                plInfo.plAtk = originAtk;
-                //공격력 설정
-
-                //실제 들어갈 대미지 계산
-                attackRange.SetActive(true);
-                //애니메이션 실행
-
-                //연타 초기화 시간
-                attackTime += Time.deltaTime;
-                if (IsAttacking())
-                {
-                    isNextAtk = true;
-                }
-                if (attackTime > atkResetTime)
-                {
-                    if (isNextAtk == true)
-                    {
-                        attackTime = 0;
-                        plState = PL_STATE.ATTACKM3;
-                        isNextAtk = false;
-                    }
-                    else
-                    {
-                        attackTime = 0;
-                        plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
-                        plState = PL_STATE.IDLE;
-                        isNextAtk = false;
-                        isAttack = false;
-                    }
-                    attackRange.SetActive(false);
-                }
-
-
-                break;
-
-            case PL_STATE.ATTACKM3:
-                plInfo.plAtk = originAtk;
-                //공격력 설정
-
-                //enemy.currentHp -= damangeCalc.DamageRandomCalc(plInfo.plAtk, damageRange);
-                //실제 들어갈 대미지 계산
-                attackRange.SetActive(true);
-                //애니메이션 실행
-
-                //연타 초기화 시간
-                attackTime += Time.deltaTime;
-                if (IsAttacking())
-                {
-                    isNextAtk = true;
-                }
-                if (attackTime > atkResetTime)
-                {
-                    if (isNextAtk == true)
-                    {
-                        attackTime = 0;
                         plState = PL_STATE.ATTACKM1;
-                        isNextAtk = false;
+                    }
+
+                    break;
+
+                case PL_STATE.MOVE:
+                    plInfo.plMoveSpd = moveSpd;
+
+                    if (Input.GetKey(KeyCode.LeftControl))
+                    {
+                        plState = PL_STATE.WALK;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.C))
+                    {
+                        plState = PL_STATE.WALK;
+                    }
+                    else if (IsAttacking())
+                    {
+                        plState = PL_STATE.ATTACKM1;
+                    }
+                    else if (!Input.anyKey)
+                    {
+                        plState = PL_STATE.IDLE;
+                    }
+                    break;
+
+                case PL_STATE.WALK:
+                    plInfo.plMoveSpd = WalkMoveSpd();
+                    //이동속도를 반으로 줄인다.
+
+                    if (IsAttacking())
+                    {
+                        originAtk = plInfo.plAtk; //원래 공격력 임시저장
+                        plInfo.plAtk = (int)(plInfo.plAtk * 1.5f); //공격력 1.5배 증가 (공격력 설정)
+                        plState = PL_STATE.ATTACKM1;
+                    }
+
+                    if (Input.GetKeyUp(KeyCode.LeftControl))
+                    {
+                        plState = PL_STATE.MOVE;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.C))
+                    {
+                        plState = PL_STATE.IDLE;
+                    }
+                    break;
+
+                case PL_STATE.ACT:
+                    isActivated = true;
+                    break;
+
+                case PL_STATE.JUMP:
+                    if (characterController.isGrounded)
+                    {
+                        plState = PL_STATE.IDLE;
+                    }
+                    break;
+
+
+                case PL_STATE.ATTACKM1:
+                    plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
+
+                    //실제 들어갈 대미지 계산
+                    attackRange.SetActive(true);
+                    //애니메이션 실행 코드
+
+                    //연타 초기화 시간
+
+                    attackTime += Time.deltaTime;
+                    if (IsAttacking())
+                    {
+                        isNextAtk = true;
+                    }
+                    if (attackTime > atkResetTime)
+                    {
+                        if (isNextAtk == true)
+                        {
+                            attackTime = 0;
+                            plState = PL_STATE.ATTACKM2;
+                            isNextAtk = false;
+                        }
+                        else
+                        {
+                            attackTime = 0;
+                            plInfo.plAtk = originAtk; //원래의 대미지로 변경
+                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                            plState = PL_STATE.IDLE;
+                            isNextAtk = false;
+                            isAttack = false;
+                        }
+                        attackRange.SetActive(false);
+                    }
+
+                    break;
+
+                case PL_STATE.ATTACKM2:
+                    plInfo.plAtk = originAtk;
+                    //공격력 설정
+
+                    //실제 들어갈 대미지 계산
+                    attackRange.SetActive(true);
+                    //애니메이션 실행
+
+                    //연타 초기화 시간
+                    attackTime += Time.deltaTime;
+                    if (IsAttacking())
+                    {
+                        isNextAtk = true;
+                    }
+                    if (attackTime > atkResetTime)
+                    {
+                        if (isNextAtk == true)
+                        {
+                            attackTime = 0;
+                            plState = PL_STATE.ATTACKM3;
+                            isNextAtk = false;
+                        }
+                        else
+                        {
+                            attackTime = 0;
+                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                            plState = PL_STATE.IDLE;
+                            isNextAtk = false;
+                            isAttack = false;
+                        }
+                        attackRange.SetActive(false);
+                    }
+
+
+                    break;
+
+                case PL_STATE.ATTACKM3:
+                    plInfo.plAtk = originAtk;
+                    //공격력 설정
+
+                    //enemy.currentHp -= damangeCalc.DamageRandomCalc(plInfo.plAtk, damageRange);
+                    //실제 들어갈 대미지 계산
+                    attackRange.SetActive(true);
+                    //애니메이션 실행
+
+                    //연타 초기화 시간
+                    attackTime += Time.deltaTime;
+                    if (IsAttacking())
+                    {
+                        isNextAtk = true;
+                    }
+                    if (attackTime > atkResetTime)
+                    {
+                        if (isNextAtk == true)
+                        {
+                            attackTime = 0;
+                            plState = PL_STATE.ATTACKM1;
+                            isNextAtk = false;
+                        }
+                        else
+                        {
+                            attackTime = 0;
+                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                            plState = PL_STATE.IDLE;
+                            isNextAtk = false;
+                            isAttack = false;
+                        }
+                        attackRange.SetActive(false);
+                    }
+
+                    break;
+
+                case PL_STATE.DAMAGED:
+                    if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
+                    {
+                        plInfo.curHp = 0;
+                        plState = PL_STATE.DIE;
                     }
                     else
                     {
-                        attackTime = 0;
-                        plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
                         plState = PL_STATE.IDLE;
-                        isNextAtk = false;
-                        isAttack = false;
                     }
-                    attackRange.SetActive(false);
-                }
 
-                break;
+                    break;
 
-            case PL_STATE.DAMAGED:
-                if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
-                {
-                    plInfo.curHp = 0;
-                    plState = PL_STATE.DIE;
-                }
-                else
-                {
-                    plState = PL_STATE.IDLE;
-                }
+                case PL_STATE.AVOIDJUMP:
+                    isNoDamage = true; //무적 ON
 
-                break;
+                    //애니메이션 실행
 
-            case PL_STATE.AVOIDJUMP:
-                isNoDamage = true; //무적 ON
+                    //애니메이션 시간 대기
+                    avoidTime += Time.deltaTime;
+                    if (avoidTime > avoidJAnimTime)
+                    {
+                        avoidTime = 0;
+                        plState = PL_STATE.AVOIDROLL;
+                    }
 
-                //애니메이션 실행
+                    break;
 
-                //애니메이션 시간 대기
-                avoidTime += Time.deltaTime;
-                if (avoidTime > avoidJAnimTime)
-                {
-                    avoidTime = 0;
-                    plState = PL_STATE.AVOIDROLL;
-                }
-                
-                break;
+                case PL_STATE.AVOIDROLL:
+                    isNoDamage = false; //무적 OFF
 
-            case PL_STATE.AVOIDROLL:
-                isNoDamage = false; //무적 OFF
+                    //애니메이션 실행
 
-                //애니메이션 실행
+                    //애니메이션 시간 대기
+                    avoidTime += Time.deltaTime;
+                    if (avoidTime > avoidRAnimTime)
+                    {
+                        avoidTime = 0;
+                        plState = PL_STATE.IDLE;
+                    }
+                    isAvoid = false;
+                    break;
 
-                //애니메이션 시간 대기
-                avoidTime += Time.deltaTime;
-                if (avoidTime > avoidRAnimTime)
-                {
-                    avoidTime = 0;
-                    plState = PL_STATE.IDLE;
-                }
-                isAvoid = false;
-                break;
+                case PL_STATE.DIE:
+                    Debug.Log("PLAYER DIE");
+                    break;
 
-            case PL_STATE.DIE:
-                Debug.Log("PLAYER DIE");
-                break;
-
-            default:
-                break;
+                default:
+                    break;
+            }
         }
+
+        
     }
 
     public float WalkMoveSpd()
