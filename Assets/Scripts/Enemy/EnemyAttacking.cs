@@ -197,7 +197,7 @@ public class EnemyAttacking : MonoBehaviour
         if (enemyInfo.GetIsAttacking())
         {
             // 스킬 시전
-            StartCoroutine(Skill());
+            //StartCoroutine(Skill());
             // 스킬 판정 on
             skillRange.SetActive(true);
             // 스킬 모션 시작
