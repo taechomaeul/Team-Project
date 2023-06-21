@@ -14,13 +14,15 @@ public class ScriptColliderInfo : MonoBehaviour
     public int nextIndex;
     public bool isShowed = false;
 
+    [SerializeField]
     private ShowScript showScript;
+    [SerializeField]
     private ActionFuntion actionFunction;
 
     private void Start()
     {
-        showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -88,10 +90,11 @@ public class ScriptColliderInfo : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && showScript.isClick)
+        if (other.CompareTag("Player") && isShowed)
         {
-            Destroy(gameObject.GetComponent<SphereCollider>());
-            Destroy(gameObject.GetComponent<BoxCollider>());
+            Destroy(gameObject);
+            //Destroy(gameObject.GetComponent<SphereCollider>());
+            //Destroy(gameObject.GetComponent<BoxCollider>());
             showScript.isClick = false;
         }
 

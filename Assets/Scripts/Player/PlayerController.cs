@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponentInChildren<CharacterController>();
 
         plInfo.plMoveSpd = moveSpd;
+        originAtk = plInfo.plAtk;
     }
 
     void OnDrawGizmosSelected()
