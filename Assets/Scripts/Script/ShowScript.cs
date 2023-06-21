@@ -21,6 +21,7 @@ public class ShowScript : MonoBehaviour
     public Text recordNameText;
     public Text recordText;
 
+    public bool isClick = false;
 
     void Start()
     {
@@ -62,10 +63,6 @@ public class ShowScript : MonoBehaviour
         }*/
     }
 
-    private void Update()
-    {
-
-    }
 
     public int GetIndex(string type)
     {
@@ -169,5 +166,12 @@ public class ShowScript : MonoBehaviour
         }
         yield return new WaitForSeconds(2f);
     }
+
+    public void IsClicked()
+    {
+        isClick = true;
+    }
+
+
 
 }

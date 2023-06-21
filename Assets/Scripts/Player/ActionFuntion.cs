@@ -12,7 +12,6 @@ public class ActionFuntion : MonoBehaviour
     public PlayerInfo plInfo;
     public PlayerController plController;
     public PlayerLook playerLook;
-    public Timer timer;
 
     private void Start()
     {
@@ -20,7 +19,6 @@ public class ActionFuntion : MonoBehaviour
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         plController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerLook = GameObject.Find("Sight").GetComponent<PlayerLook>();
-        timer = GameObject.Find("Timer").GetComponent<Timer>();
     }
 
     /// <summary>

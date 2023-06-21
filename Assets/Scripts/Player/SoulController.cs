@@ -31,7 +31,7 @@ public class SoulController : MonoBehaviour
         {
             exampleSoul.havingHP = 30; //예시로 만들어놓은 프리팹 적용용
         }
-        Debug.Log($"시체에서 추출할 수 있는 영혼의 양 : {exampleSoul.havingHP}");
+        //Debug.Log($"시체에서 추출할 수 있는 영혼의 양 : {exampleSoul.havingHP}");
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
     }
