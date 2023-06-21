@@ -14,6 +14,8 @@ public class EnemyInfo : MonoBehaviour
         stat.currentHp = stat.maxHp;
         // 탐지 대상 초기화
         stat.target = GameObject.Find("Player").transform.GetChild(0).gameObject;
+        // 컴포넌트 대상 트랜스폼 초기화
+        stat.transfom = transform;
     }
 }
 
@@ -27,6 +29,8 @@ internal class Enemy
     [Header("탐지 대상")]
     [Tooltip("탐지 대상(플레이어)")]
     [SerializeField] internal GameObject target;
+    // 컴포넌트 부착 대상
+    internal Transform transfom;
 
     [Header("이동")]
     [Tooltip("이동 속도")]
@@ -94,6 +98,17 @@ internal class Enemy
     public int GetDamage() { return damage; }
     public float GetAttackCycle() { return attackCycle; }
     public float GetAttackRange() { return attackRange; }
+    public float GetDistanceFromTarget()
+    {
+        if (transfom != null)
+        {
+            return Vector3.Distance(transfom.position, target.transform.position);
+        }
+        else
+        {
+            return -1;
+        }
+    }
     #endregion
 
     // 변수 세팅 함수들

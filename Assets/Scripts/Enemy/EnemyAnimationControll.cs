@@ -20,18 +20,6 @@ public class EnemyAnimationControll : MonoBehaviour
     [Tooltip("애니메이션 상태")]
     [SerializeField] Animation_State animationState;
 
-    [Header("애니메이션 플래그")]
-    [Tooltip("이동")]
-    [SerializeField] bool isMoving;
-    [Tooltip("공격1")]
-    [SerializeField] bool isAttacking1;
-    [Tooltip("공격2")]
-    [SerializeField] bool isAttacking2;
-    [Tooltip("피격")]
-    [SerializeField] bool isHit;
-    [Tooltip("사망")]
-    [SerializeField] bool isDead;
-
     // 모델에 달려있는 애니메이터
     Animator animator;
 
@@ -176,7 +164,7 @@ public class EnemyAnimationControll : MonoBehaviour
         RuntimeAnimatorController rac = animator.runtimeAnimatorController;
         AnimatorController ac = animator.runtimeAnimatorController as AnimatorController;
         AnimatorStateMachine sm = ac.layers[0].stateMachine;
-        
+
         //현재 상태의 애니메이션 찾고 재생시간 반환
         for (int i = 0; i < sm.states.Length; i++)
         {
