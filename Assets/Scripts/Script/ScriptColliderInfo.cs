@@ -4,70 +4,73 @@ using UnityEngine;
 
 public class ScriptColliderInfo : MonoBehaviour
 {
+    [Header("연결 필수")]
     public string colliderName;
+    public GameObject scriptPanel;
+
+    [Header("연결 X")]
+    public int index;
     public int curIndex;
     public int nextIndex;
+    public bool isShowed = false;
 
-    public GameObject toolTipPanel;
-    public GameObject scriptPanel;
-    public GameObject recordPanel; 
-    
-    public ShowScript showScript;
-    public ActionFuntion actionFunction;
-
-    public enum S_ENTRY_CONDITION
-    {
-        MOVE,
-        MOVE_AND_F,
-        BATTLE_END
-    }
-    public S_ENTRY_CONDITION condition;
+    [SerializeField]
+    private ShowScript showScript;
+    [SerializeField]
+    private ActionFuntion actionFunction;
 
     private void Start()
     {
-        showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (condition == S_ENTRY_CONDITION.MOVE) //진입조건이 Collider로 이동일 때
-            {
-                scriptPanel.SetActive(true);
+            //현재 Collider의 이름으로 인덱스를 받아온다
+            index = showScript.GetIndex(colliderName);
+            curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
+            nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기 
 
-                //현재 Collider의 이름으로 인덱스를 받아온다
-                int index = showScript.GetIndex(colliderName);
-                curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
-                nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기 
-
-                actionFunction.PauseGameForAct();
-
-                //인덱스로 스크립트를 불러온다
-                showScript.LoadScript(curIndex);
-                curIndex++;
-
-            }
-            else if (condition == S_ENTRY_CONDITION.MOVE_AND_F) //진입조건이 이동후 F버튼일 때
-            {
-                //MOVE와 같음
-                //이후 F버튼을 누르면 다시한번 인덱스의 스크립트를 받아온다
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    //F버튼 종류에 따라 나뉜다 (일지일수도, 빙의 등의 기능일수도)
-                }
-            }
+            ConditionMove();
         }
+
     }
 
+    IEnumerator IsBtnClick()
+    {
+        yield return new WaitUntil(() => showScript.isClick == true);
+        showScript.isClick = false;
+    }
+
+    public void ConditionMove()
+    {
+        scriptPanel.SetActive(true);
+        actionFunction.PauseGameForAct();
+
+        //인덱스로 스크립트를 불러온다
+        showScript.LoadScript(curIndex);
+        curIndex++;
+    }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            if (showScript.isClick)
+            {
+                curIndex = nextIndex;
+                nextIndex = showScript.GetEndIndex(index + 1);
+                StartCoroutine(IsBtnClick());
+
+                ConditionMove();
+                showScript.isClick = false;
+            }
+
             if (Input.GetMouseButtonDown(0))
-            {                
+            {
                 if (curIndex < nextIndex)
                 {
                     showScript.LoadScript(curIndex);
@@ -76,7 +79,9 @@ public class ScriptColliderInfo : MonoBehaviour
                 else
                 {
                     scriptPanel.SetActive(false);
+
                     actionFunction.RestartGame();
+                    isShowed = true;
                 }
             }
         }
@@ -85,9 +90,14 @@ public class ScriptColliderInfo : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && isShowed)
         {
-            Destroy(gameObject.GetComponent<SphereCollider>());
+            Destroy(gameObject);
+            //Destroy(gameObject.GetComponent<SphereCollider>());
+            //Destroy(gameObject.GetComponent<BoxCollider>());
+            showScript.isClick = false;
         }
+
     }
+
 }

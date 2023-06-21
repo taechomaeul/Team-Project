@@ -5,15 +5,19 @@ using UnityEngine.UI;
 
 public class SoulController : MonoBehaviour
 {
-
+    [Header("기타 변수")]
     public bool isDetail = false;
+    
+    [Header("고정 변수")]
     public readonly float enemySoulPercent = 0.3f;
     public readonly float maxSoul = 666;
 
-    public SoulInfo exampleSoul;
+    [Header("연결 필수")]
     public GameObject toolTip;
     public GameObject detailToolTip;
 
+    [Header("연결 X")]
+    public SoulInfo thisSoul;
     public ActionFuntion actionFuntion;
     public PlayerInfo plInfo;
 
@@ -21,17 +25,17 @@ public class SoulController : MonoBehaviour
     {
         toolTip.SetActive(false);
 
-        exampleSoul = GetComponent<SoulInfo>();
+        thisSoul = GetComponent<SoulInfo>();
 
         if (gameObject.tag == "Enemy")
         {
-            exampleSoul.havingHP = (int)transform.GetComponentInChildren<EnemyInfo>().stat.GetMaxHp() * enemySoulPercent;
+            thisSoul.havingHP = (int)transform.GetComponentInChildren<EnemyInfo>().stat.GetMaxHp() * enemySoulPercent;
         }
         else
         {
-            exampleSoul.havingHP = 30; //예시로 만들어놓은 프리팹 적용용
+            thisSoul.havingHP = 30; //예시로 만들어놓은 프리팹 적용용
         }
-        Debug.Log($"시체에서 추출할 수 있는 영혼의 양 : {exampleSoul.havingHP}");
+        //Debug.Log($"시체에서 추출할 수 있는 영혼의 양 : {thisSoul.havingHP}");
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
     }
@@ -63,7 +67,7 @@ public class SoulController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && isDetail)
             {
-                if (exampleSoul.havingHP == 0)
+                if (thisSoul.havingHP == 0)
                 {
                     Debug.Log("더이상 혼력을 추출할 수 없습니다!");
                     detailToolTip.SetActive(false);
@@ -71,12 +75,12 @@ public class SoulController : MonoBehaviour
                 else
                 {
                     detailToolTip.SetActive(false);
-                    actionFuntion.MoveSoulToStone(exampleSoul.havingHP);
+                    actionFuntion.MoveSoulToStone(thisSoul.havingHP);
                     if (plInfo.soulHp > maxSoul)
                     {
                         plInfo.soulHp = maxSoul;
                     }
-                    exampleSoul.havingHP = 0;
+                    thisSoul.havingHP = 0;
                 }
             }
 
