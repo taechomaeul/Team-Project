@@ -3,14 +3,20 @@ using UnityEngine;
 
 public class EnemyBeAttacked : MonoBehaviour
 {
+    [Header("시작 적 상태")]
+    [Tooltip("이미 사망한 상태")]
+    [SerializeField] bool wasDead = false;
+
+    [Header("영혼석")]
+    [Tooltip("영혼석 오브젝트")]
+    [SerializeField] GameObject soulStone;
+
     // 적 정보
     Enemy enemyInfo;
 
-    // 영혼석
-    public GameObject soulStone;
-
     // 애니메이터 컨트롤
     EnemyAnimationControll eac;
+
     void Start()
     {
         // enemyInfo 초기화
@@ -32,6 +38,12 @@ public class EnemyBeAttacked : MonoBehaviour
 
         // 애니메이터 컨트롤 세팅
         eac = GetComponent<EnemyAnimationControll>();
+
+        if (wasDead)
+        {
+            enemyInfo.SetIsDead(true);
+            eac.SetAnimationState(EnemyAnimationControll.Animation_State.Dead);
+        }
     }
 
     // damage만큼 공격 받음
