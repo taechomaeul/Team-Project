@@ -11,6 +11,8 @@ public class RecordInfo : MonoBehaviour
     public ShowScript showScript;
     public ActionFuntion actionFuntion;
 
+    private bool isConfirm = false;
+
     private void Start()
     {
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
@@ -33,11 +35,16 @@ public class RecordInfo : MonoBehaviour
             actionFuntion.PauseGameForAct();
             StartCoroutine(showScript.LoadRecordData(recordName));
             toolTipPanel.SetActive(false);
+            isConfirm = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         toolTipPanel.SetActive(false);
+        if (isConfirm)
+        {
+            Destroy(gameObject); //확인한 일지 삭제
+        }
     }
 }

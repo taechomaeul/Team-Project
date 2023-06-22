@@ -42,7 +42,6 @@ public class ToggleManager : MonoBehaviour
             isClear = true;
             Debug.Log("CLEAR!!!!!!!!!!!!!!!!");
             StartCoroutine(WaitClearFunction());
-            actionFuntion.RestartGame();
             enabled = false;
         }
     }
@@ -51,27 +50,27 @@ public class ToggleManager : MonoBehaviour
     {
         //img1.color = Color.white;
         //toggleGame = img1.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = fire1.transform.GetComponentInParent<ToggleGame>();
+        toggleGame = togglePanel.transform.GetChild(0).GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
         //img2.color = Color.white;
         //toggleGame = img2.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = fire2.transform.GetComponentInParent<ToggleGame>();
+        toggleGame = togglePanel.transform.GetChild(1).GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
         //img3.color = Color.white;
         //toggleGame = img3.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = fire3.transform.GetComponentInParent<ToggleGame>();
+        toggleGame = togglePanel.transform.GetChild(2).GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
         //img4.color = Color.white;
         //toggleGame = img4.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = fire4.transform.GetComponentInParent<ToggleGame>();
+        toggleGame = togglePanel.transform.GetChild(3).GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
         //img5.color = Color.white;
         //toggleGame = img5.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = fire5.transform.GetComponentInParent<ToggleGame>();
+        toggleGame = togglePanel.transform.GetChild(4).GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
         fire1.SetActive(false);
@@ -94,6 +93,7 @@ public class ToggleManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         togglePanel.SetActive(false);
         clearPanel.SetActive(false);
+        actionFuntion.RestartGame();
     }
 
     public void PlayToggleGame()
