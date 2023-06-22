@@ -15,9 +15,9 @@ public class ScriptColliderInfo : MonoBehaviour
     public int nextIndex;
     public bool isShowed = false;
 
-    [SerializeField]
+    private bool isStay = false;
+
     private ShowScript showScript;
-    [SerializeField]
     private ActionFuntion actionFunction;
     private ToggleManager toggleManager;
 
@@ -26,6 +26,43 @@ public class ScriptColliderInfo : MonoBehaviour
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
         toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
+    }
+    private void Update()
+    {
+        if (isStay)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (curIndex < nextIndex)
+                {
+                    showScript.LoadScript(curIndex);
+                    curIndex++;
+                }
+                else
+                {
+                    scriptPanel.SetActive(false);
+
+                    actionFunction.RestartGame();
+                    isShowed = true;
+                }
+            }
+        }
+    }
+    IEnumerator IsBtnClick()
+    {
+        yield return new WaitUntil(() => showScript.isClick == true);
+        showScript.isClick = false;
+    }
+
+    public void ConditionMove()
+    {
+        scriptPanel.SetActive(true);
+        //Debug.Log("PauseGameForAct");
+        actionFunction.PauseGameForAct();
+
+        //인덱스로 스크립트를 불러온다
+        showScript.LoadScript(curIndex);
+        curIndex++;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,50 +78,6 @@ public class ScriptColliderInfo : MonoBehaviour
         }
 
     }
-
-    IEnumerator IsBtnClick()
-    {
-        yield return new WaitUntil(() => showScript.isClick == true);
-        showScript.isClick = false;
-    }
-
-    public void ConditionMove()
-    {
-        scriptPanel.SetActive(true);
-        actionFunction.PauseGameForAct();
-
-        //인덱스로 스크립트를 불러온다
-        showScript.LoadScript(curIndex);
-        curIndex++;
-    }
-
-    bool isStay = false;
-
-    private void Update()
-    {
-        if (isStay)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (curIndex < nextIndex)
-                {
-                    Debug.Log(curIndex);
-                    //StartCoroutine(WaitSecondsFunction(1f));
-                    showScript.LoadScript(curIndex);
-                    curIndex++;
-                }
-                else
-                {
-                    //StartCoroutine(WaitSecondsFunction(1f));
-                    scriptPanel.SetActive(false);
-
-                    actionFunction.RestartGame();
-                    isShowed = true;
-                }
-            }
-        }
-    }
-
 
     private void OnTriggerStay(Collider other)
     {
@@ -112,16 +105,11 @@ public class ScriptColliderInfo : MonoBehaviour
                 //클릭 처리
                 if (curIndex < nextIndex)
                 {
-                Debug.Log(curIndex);
-                    //StartCoroutine(WaitSecondsFunction(1f));
                     showScript.LoadScript(curIndex);
                     curIndex++;
-                    Debug.Log("aaaaaaaaaaa");
                 }
                 else
                 {
-                    Debug.Log("dsfdsaf");
-                    //StartCoroutine(WaitSecondsFunction(1f));
                     scriptPanel.SetActive(false);
 
                     actionFunction.RestartGame();
@@ -132,16 +120,6 @@ public class ScriptColliderInfo : MonoBehaviour
             }*/
         }
     }
-
-/*    IEnumerator WaitNSeconds(float time)
-    {
-        yield return new WaitForSeconds(time);
-    }
-
-    IEnumerator WaitSecondsFunction(float time)
-    {
-        yield return StartCoroutine(WaitNSeconds(time));
-    }*/
 
 
     private void OnTriggerExit(Collider other)

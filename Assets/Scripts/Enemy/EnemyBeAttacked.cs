@@ -50,8 +50,8 @@ public class EnemyBeAttacked : MonoBehaviour
         // 이전 코루틴 중지
         StopAllCoroutines();
 
-            // 피격, 사망 애니메이션 재생
-            StartCoroutine(HitAnimation());
+        // 피격, 사망 애니메이션 재생
+        StartCoroutine(HitAnimation());
     }
 
     // 피격, 사망 애니메이션
