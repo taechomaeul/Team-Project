@@ -386,10 +386,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plAtk: 10
-  plMoveSpd: 0
   curHp: 0
   maxHp: 0
   soulHp: 0
+  plMoveSpd: 0
   curSkill:
     skillName: 
     thumnail: {fileID: 0}
@@ -398,6 +398,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 0}
     effectPos: {x: 0, y: 0, z: 0}
     effectRot: {x: 0, y: 0, z: 0, w: 0}
+  curPrefabIndex: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1011,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Sample
+      objectReference: {fileID: 0}
+    - target: {fileID: 2244122309189287927, guid: da835d76e9c410249afbc2fe6fae9bfb,
+        type: 3}
+      propertyPath: wasDead
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2244122309189287933, guid: da835d76e9c410249afbc2fe6fae9bfb,
         type: 3}
