@@ -24,6 +24,23 @@ public class EnemyAttack : MonoBehaviour
             enemyInfo = transform.parent.GetComponent<BossInfo>().stat;
             bossInfo = enemyInfo as Boss;
         }
+
+        if (GetComponent<SphereCollider>() != null)
+        {
+            GetComponent<SphereCollider>().isTrigger = true;
+        }
+        else if (GetComponent<BoxCollider>() != null)
+        {
+            GetComponent<BoxCollider>().isTrigger = true;
+        }
+        else if (GetComponent<CapsuleCollider>() != null)
+        {
+            GetComponent<CapsuleCollider>().isTrigger = true;
+        }
+        else if (GetComponent<MeshCollider>() != null)
+        {
+            GetComponent<MeshCollider>().isTrigger = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
