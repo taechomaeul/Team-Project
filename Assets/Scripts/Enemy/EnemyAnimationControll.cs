@@ -151,7 +151,7 @@ public class EnemyAnimationControll : MonoBehaviour
                 smState = "Attack3";
                 break;
             case Animation_State.Skill:
-                smState = "Skill";
+                smState = "CastSkill";
                 break;
             case Animation_State.Hit:
                 smState = "Hit";
@@ -165,13 +165,23 @@ public class EnemyAnimationControll : MonoBehaviour
         AnimatorController ac = animator.runtimeAnimatorController as AnimatorController;
         AnimatorStateMachine sm = ac.layers[0].stateMachine;
 
+        string skillClip = "";
+        float skillSpeed = 1;
+        float skillTime = 0;
+
         //현재 상태의 애니메이션 찾고 재생시간 반환
         for (int i = 0; i < sm.states.Length; i++)
         {
+            if (smState.Equals("CastSkill") && sm.states[i].state.name.Equals("Skill"))
+            {
+                skillClip = sm.states[i].state.motion.name;
+                skillSpeed = sm.states[i].state.speed;
+            }
             if (sm.states[i].state.name.Equals(smState))
             {
                 smClip = sm.states[i].state.motion.name;
                 smSpeed = sm.states[i].state.speed;
+
             }
         }
 
@@ -181,7 +191,19 @@ public class EnemyAnimationControll : MonoBehaviour
             {
                 time = rac.animationClips[i].length;
             }
+            else if (rac.animationClips[i].name.Equals(skillClip))
+            {
+                skillTime = rac.animationClips[i].length;
+            }
         }
-        return time / smSpeed;
+
+        if (smState.Equals("CastSkill"))
+        {
+            return (time / smSpeed) + (skillTime / skillSpeed);
+        }
+        else
+        {
+            return time / smSpeed;
+        }
     }
 }
