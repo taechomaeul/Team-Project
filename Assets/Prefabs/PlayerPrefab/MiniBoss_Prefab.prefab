@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1425086370163302258}
-  - component: {fileID: -2306338153760139323}
   - component: {fileID: 1425086370163302261}
   - component: {fileID: -3445145181234071637}
   m_Layer: 0
@@ -38,26 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &-2306338153760139323
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425086370163302266}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
 --- !u!136 &1425086370163302261
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -502,7 +481,7 @@ PrefabInstance:
     - target: {fileID: 9511314, guid: 8b6b9ab8b6f2cea43963ea69decb1863, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 131df9b809d2bae4d95dca421d54593b, type: 2}
+      objectReference: {fileID: 9100000, guid: 5234b8cd600572545a7f8183fffe944e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b6b9ab8b6f2cea43963ea69decb1863, type: 3}
 --- !u!4 &1425086370100223695 stripped

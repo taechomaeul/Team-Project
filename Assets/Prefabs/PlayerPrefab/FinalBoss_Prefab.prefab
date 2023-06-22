@@ -247,7 +247,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3102516749540191964}
-  - component: {fileID: -509117076501987284}
   - component: {fileID: 3102516749540191965}
   - component: {fileID: 4778055587594976326}
   m_Layer: 0
@@ -276,26 +275,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &-509117076501987284
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3102516749540191956}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
 --- !u!136 &3102516749540191965
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -496,7 +475,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 2b23749f2f42c104ca5c68fed4ad12a3, type: 2}
+      objectReference: {fileID: 9100000, guid: 5234b8cd600572545a7f8183fffe944e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25984235fd1db4f4e9e5463fde2f09df, type: 3}
 --- !u!4 &8517079869942540500 stripped

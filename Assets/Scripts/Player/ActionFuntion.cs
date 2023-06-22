@@ -131,6 +131,8 @@ public class ActionFuntion : MonoBehaviour
                 sight.transform.localRotation = originSightRot;
 
                 range.transform.parent = newPlayer.transform; //Atk Range 달아줌
+                range.transform.position = new Vector3(0, 0, 2);
+                range.transform.rotation = Quaternion.identity;
 
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().attackRange = range;
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().cameraTransform = sight.transform.GetChild(0);
