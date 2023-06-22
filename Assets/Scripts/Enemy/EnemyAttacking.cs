@@ -72,18 +72,17 @@ public class EnemyAttacking : MonoBehaviour
             // 탐지 대상을 인식하고 있는 중이라면
             if (enemyInfo.GetIsTracking())
             {
-                //Debug.Log(enemyInfo.GetDistanceFromTarget());
-                // 탐지 대상이 공격 사거리 안에 존재한다면
-                if (enemyInfo.GetDistanceFromTarget() <= enemyInfo.GetAttackRange())
+                // 공격 가능이 true라면
+                if (enemyInfo.GetCanAttack())
                 {
-                    // 공격 사거리 진입 -> true
-                    enemyInfo.SetIsInAttackRange(true);
-
-                    // 탐지 대상이 시야각 안에 존재한다면
-                    if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.target.transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f)
+                    // 탐지 대상이 공격 사거리 안에 존재한다면
+                    if (enemyInfo.GetDistanceFromTarget() <= enemyInfo.GetAttackRange())
                     {
-                        // 공격 가능이 true라면
-                        if (enemyInfo.GetCanAttack())
+                        // 공격 사거리 진입 -> true
+                        enemyInfo.SetIsInAttackRange(true);
+
+                        // 탐지 대상이 시야각 안에 존재한다면
+                        if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.target.transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f)
                         {
                             // 공격, 피격 중이 아니라면
                             if (!enemyInfo.GetIsAttacking() || !enemyInfo.GetIsAttacked())
@@ -97,7 +96,7 @@ public class EnemyAttacking : MonoBehaviour
                                 if (isBoss)
                                 {
                                     // 스킬 사용 가능 페이즈에서 스킬을 쓸 수 있을 때 25% 확률로
-                                    if (Random.Range(0, 4) == 0 && bossInfo.GetCanSkill() && enemyInfo.currentHp <= bossInfo.GetSkillPhaseHp())
+                                    if (Random.Range(0, 1) == 0 && bossInfo.GetCanSkill() && bossInfo.GetCurrentHp() <= bossInfo.GetMaxHp() * bossInfo.GetSkillPhaseHpRatio())
                                     {
                                         // 스킬 발동
                                         // 스킬 발동 가능 -> false
@@ -125,19 +124,12 @@ public class EnemyAttacking : MonoBehaviour
                             }
                         }
                     }
-                    // 탐지 대상이 시야각 안에 없다면
-                    //else
-                    //{
-                    //Debug.Log("adf");
-                    //transform.LookAt(Vector3.Lerp(transform.forward, enemyInfo.target.transform.position, Time.deltaTime));
-                    //transform.LookAt(enemyInfo.target.transform.position);
-                    //}
-                }
-                // 탐지 대상이 공격 사거리 밖이라면
-                else
-                {
-                    // 공격 사거리 진입 -> false
-                    enemyInfo.SetIsInAttackRange(false);
+                    // 탐지 대상이 공격 사거리 밖이라면
+                    else
+                    {
+                        // 공격 사거리 진입 -> false
+                        enemyInfo.SetIsInAttackRange(false);
+                    }
                 }
             }
         }
@@ -148,6 +140,7 @@ public class EnemyAttacking : MonoBehaviour
             StopAllCoroutines();
             // 공격 판정 off
             attackRange.SetActive(false);
+            skillRange.SetActive(false);
         }
     }
 
@@ -196,12 +189,13 @@ public class EnemyAttacking : MonoBehaviour
         // 공격 중이 true라면
         if (enemyInfo.GetIsAttacking())
         {
-            // 스킬 시전
-            //StartCoroutine(Skill());
+            // 스킬 모션 시작
+            eac.SetAnimationState(EnemyAnimationControll.Animation_State.CastSkill);
+
+            // 스킬 준비 시간 기다림
+            yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.CastSkill));
             // 스킬 판정 on
             skillRange.SetActive(true);
-            // 스킬 모션 시작
-            eac.SetAnimationState(EnemyAnimationControll.Animation_State.Skill);
 
             // skillTime 만큼 기다림(스킬 모션 시작부터 끝까지의 시간)
             yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Skill));
@@ -219,16 +213,6 @@ public class EnemyAttacking : MonoBehaviour
             // 공격 코루틴 종료
             yield return null;
         }
-    }
-
-    /// <summary>
-    /// 시전될 스킬 발동
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator Skill()
-    {
-        // 임시
-        yield return null;
     }
 
     /// <summary>
@@ -306,6 +290,11 @@ public class EnemyAttacking : MonoBehaviour
             // 공격 사거리 기즈모 표시(빨간색)
             Handles.color = Color.red;
             Handles.DrawWireDisc(transform.position, transform.up, enemyInfo.GetAttackRange());
+            if (isBoss)
+            {
+                Handles.color = Color.cyan;
+                Handles.DrawWireDisc(transform.position, transform.up, bossInfo.GetSkillCastRange());
+            }
 #endif
         }
     }
