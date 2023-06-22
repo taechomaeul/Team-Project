@@ -12,6 +12,7 @@ public class EnemyAnimationControll : MonoBehaviour
         Attack1,
         Attack2,
         Attack3,
+        CastSkill,
         Skill,
         Hit,
         Dead
@@ -78,7 +79,7 @@ public class EnemyAnimationControll : MonoBehaviour
                 animator.SetBool("isHit", false);
                 animator.SetBool("isDead", false);
                 break;
-            case Animation_State.Skill:
+            case Animation_State.CastSkill:
                 animator.SetBool("isSkillCasting", true);
                 animator.SetBool("isMoving", false);
                 animator.SetBool("isAttacking1", false);
@@ -150,6 +151,9 @@ public class EnemyAnimationControll : MonoBehaviour
             case Animation_State.Attack3:
                 smState = "Attack3";
                 break;
+            case Animation_State.CastSkill:
+                smState = "CastSkill";
+                break;
             case Animation_State.Skill:
                 smState = "Skill";
                 break;
@@ -165,11 +169,17 @@ public class EnemyAnimationControll : MonoBehaviour
         AnimatorController ac = animator.runtimeAnimatorController as AnimatorController;
         AnimatorStateMachine sm = ac.layers[0].stateMachine;
 
+        float skillLoopTime = 1;
+
         //현재 상태의 애니메이션 찾고 재생시간 반환
         for (int i = 0; i < sm.states.Length; i++)
         {
             if (sm.states[i].state.name.Equals(smState))
             {
+                if (smState.Equals("Skill"))
+                {
+                skillLoopTime = sm.states[i].state.transitions[0].exitTime;
+                }
                 smClip = sm.states[i].state.motion.name;
                 smSpeed = sm.states[i].state.speed;
             }
@@ -182,6 +192,14 @@ public class EnemyAnimationControll : MonoBehaviour
                 time = rac.animationClips[i].length;
             }
         }
-        return time / smSpeed;
+
+        if (smState.Equals("Skill"))
+        {
+            return (time / smSpeed) * skillLoopTime;
+        }
+        else
+        {
+            return time / smSpeed;
+        }
     }
 }

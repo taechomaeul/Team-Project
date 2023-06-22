@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using UnityEngine;
 
 public class EnemyInfo : MonoBehaviour
@@ -12,7 +11,7 @@ public class EnemyInfo : MonoBehaviour
     private void Awake()
     {
         // 체력 초기화
-        stat.currentHp = stat.maxHp;
+        stat.SetCurrentHp(stat.GetMaxHp());
         // 탐지 대상 초기화
         stat.target = GameObject.Find("Player").transform.GetChild(0).gameObject;
         // 컴포넌트 대상 트랜스폼 초기화
@@ -35,31 +34,31 @@ internal class Enemy
 
     [Header("이동")]
     [Tooltip("이동 속도")]
-    [SerializeField] internal float movingSpeed;
+    [SerializeField] float movingSpeed;
 
     [Header("인식")]
     [Tooltip("시야각")]
-    [SerializeField] internal float detectAngle;
+    [SerializeField] float detectAngle;
 
     [Tooltip("인식 거리")]
-    [SerializeField] internal float detectRadius;
+    [SerializeField] float detectRadius;
 
     [Header("체력")]
     [Tooltip("최대 체력")]
-    [SerializeField] internal int maxHp;
+    [SerializeField] int maxHp;
 
     [Tooltip("현재 체력")]
-    [SerializeField] internal int currentHp;
+    [SerializeField, ReadOnly(EReadOnlyType.EDITABLE_RUNTIME)] int currentHp;
 
     [Header("공격")]
     [Tooltip("데미지")]
-    [SerializeField] internal int damage;
+    [SerializeField] int damage;
 
     [Tooltip("공격 주기")]
-    [SerializeField] internal float attackCycle;
+    [SerializeField] float attackCycle;
 
     [Tooltip("공격 사거리")]
-    [SerializeField] internal float attackRange;
+    [SerializeField] float attackRange;
 
     [Header("현재 상태")]
     [Tooltip("추격 중")]
