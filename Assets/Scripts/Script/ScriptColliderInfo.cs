@@ -35,8 +35,11 @@ public class ScriptColliderInfo : MonoBehaviour
             {
                 if (curIndex < nextIndex)
                 {
-                    showScript.LoadScript(curIndex);
-                    curIndex++;
+                    if (colliderName != "SAVE_A")
+                    {
+                        showScript.LoadScript(curIndex);
+                        curIndex++;
+                    }
                 }
                 else
                 {
@@ -74,15 +77,32 @@ public class ScriptColliderInfo : MonoBehaviour
             curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
             nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기 
 
-            ConditionMove();
+            if (colliderName != "SAVE_A")
+            {
+                ConditionMove();
+            }
+
+            //ConditionMove();
         }
 
     }
 
     private void OnTriggerStay(Collider other)
     {
+
         if (other.CompareTag("Player"))
         {
+            if (colliderName.Equals("SAVE_A"))
+            {
+                SaveController saveController = GetComponent<SaveController>();
+                if (saveController.curAreaIndex == 1 && !isShowed)
+                {
+                    ConditionMove();
+                    isShowed = true;
+                }
+            }
+
+
             if (showScript.isClick)
             {
                 curIndex = nextIndex;
@@ -124,7 +144,7 @@ public class ScriptColliderInfo : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && isShowed)
+        if (other.CompareTag("Player") && isShowed && !gameObject.name.Contains("SavePoint"))
         {
             Destroy(gameObject);
             //Destroy(gameObject.GetComponent<SphereCollider>());
@@ -137,6 +157,15 @@ public class ScriptColliderInfo : MonoBehaviour
                 actionFunction.PauseGameForAct();
                 toggleManager.PlayToggleGame();
             }
+        }
+        else
+        {
+            //인덱스 초기화
+            index = showScript.GetIndex(colliderName);
+            curIndex = showScript.GetStartIndex(index);
+            nextIndex = showScript.GetEndIndex(index);
+
+            isShowed = false; //저장은 다시 할 수 있으므로 저장 완료 스크립트를 보여줘야 함
         }
 
     }

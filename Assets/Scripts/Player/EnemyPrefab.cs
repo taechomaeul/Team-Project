@@ -11,4 +11,8 @@ public class EnemyPrefab : MonoBehaviour
     [Header("시야 Prefab")]
     [Tooltip("Camera포함 시야 Prefab")]
     public GameObject sightPrefab;
+
+    [Header("공격범위 Prefab")]
+    [Tooltip("Player에 들어갈 공격범위 Sphere Prefab")]
+    public GameObject atkRangePrefab;
 }

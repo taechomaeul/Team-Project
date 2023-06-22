@@ -10,7 +10,7 @@ public class SoulController : MonoBehaviour
     
     [Header("고정 변수")]
     public readonly float enemySoulPercent = 0.3f;
-    public readonly float maxSoul = 666;
+    public readonly int maxSoul = 666;
 
     [Header("연결 필수")]
     public GameObject toolTip;
@@ -29,7 +29,7 @@ public class SoulController : MonoBehaviour
 
         if (gameObject.tag == "Enemy")
         {
-            thisSoul.havingHP = (int)transform.GetComponentInChildren<EnemyInfo>().stat.GetMaxHp() * enemySoulPercent;
+            thisSoul.havingHP = (int) (transform.GetComponentInChildren<EnemyInfo>().stat.GetMaxHp() * enemySoulPercent);
         }
         else
         {

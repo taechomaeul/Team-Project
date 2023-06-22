@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public readonly float damageRange = 0.3f; //0~1 사이의 값
 
     [Header("회복 변수")]
-    public readonly float healHp = 3; //초당 회복하는 영혼의 무게 수
+    public readonly int healHp = 3; //초당 회복하는 영혼의 무게 수
 
     public Timer timer;
     public SkillInfo skillData;

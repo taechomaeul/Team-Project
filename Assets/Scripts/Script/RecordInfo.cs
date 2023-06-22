@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class RecordInfo : MonoBehaviour
 {
+    [Header("연결 필수")]
     public string recordName;
-
     public GameObject toolTipPanel;
     public GameObject recordPanel;
-    public ShowScript showScript;
-    public ActionFuntion actionFuntion;
 
+    private ShowScript showScript;
+    private ActionFuntion actionFuntion;
     private bool isConfirm = false;
 
     private void Start()
