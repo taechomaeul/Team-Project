@@ -140,6 +140,7 @@ public class EnemyAttacking : MonoBehaviour
             StopAllCoroutines();
             // 공격 판정 off
             attackRange.SetActive(false);
+            skillRange.SetActive(false);
         }
     }
 
