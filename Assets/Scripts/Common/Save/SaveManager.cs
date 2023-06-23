@@ -19,6 +19,9 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    // 세이브 경로
+    private readonly string path = "Save";
+
     // 세이브 관련 클래스
     [Serializable]
     private class SaveClass
@@ -26,7 +29,7 @@ public class SaveManager : MonoBehaviour
         // 저장 위치
         private int savePosition;
         // 현재 체력
-         private int currentHp;
+        private int currentHp;
         // 현재 영혼 수
         private int currentSoulCount;
         // 현재 빙의체
@@ -64,9 +67,6 @@ public class SaveManager : MonoBehaviour
             Debug.Log(currentSkillIndex);
         }
     }
-
-    // 세이브 경로
-    private readonly string path = "Save";
 
 
 

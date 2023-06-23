@@ -2,16 +2,21 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    // 적 정보
+    Enemy enemyInfo;
+    Boss bossInfo;
+
+    // 인스펙터
     [Tooltip("스킬 여부")]
     [SerializeField] bool isSkill;
     [Tooltip("랜덤 수치 범위(%)")]
     [SerializeField][Range(0f, 100f)] float atkRandomRatio;
 
-    Enemy enemyInfo;
-    Boss bossInfo;
+
 
     private void Awake()
     {
+        // 적 정보 초기화
         // 일반 몬스터라면
         if (transform.parent.GetComponent<BossInfo>() == null)
         {
@@ -25,6 +30,7 @@ public class EnemyAttack : MonoBehaviour
             bossInfo = enemyInfo as Boss;
         }
 
+        // 충돌 trigger 설정
         if (GetComponent<SphereCollider>() != null)
         {
             GetComponent<SphereCollider>().isTrigger = true;
@@ -45,6 +51,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Player와 충돌했다면
         if (other.CompareTag("Player"))
         {
             // 스킬이라면
