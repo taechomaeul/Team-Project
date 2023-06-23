@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.009012734, g: 0.013102855, b: 0.02050359, a: 1}
+  m_IndirectSpecularColor: {r: 0.009012707, g: 0.013102867, b: 0.020503506, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6892,7 +6892,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198111401}
-  m_LocalRotation: {x: -0.0033530507, y: 0.98583585, z: -0.16650034, w: -0.019853158}
+  m_LocalRotation: {x: -0.0036729753, y: 0.9830207, z: -0.18238685, w: -0.019796444}
   m_LocalPosition: {x: 0.61000013, y: 1.05, z: 52.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9623,8 +9623,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283592297}
-  m_LocalRotation: {x: -0.02672632, y: 0.023298042, z: 0.00062306284, w: 0.99937105}
-  m_LocalPosition: {x: -0.38543138, y: 1.9230001, z: 31.02}
+  m_LocalRotation: {x: -0.024027577, y: 0.02322633, z: 0.0005583843, w: 0.9994413}
+  m_LocalPosition: {x: -0.38543138, y: 1.9230001, z: 30.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22080,7 +22080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 20a705aea2d80e0478fb89b6f43d8530, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
-  m_AmplitudeGain: 1
+  m_AmplitudeGain: 1.5
   m_FrequencyGain: 20
   mNoiseOffsets: {x: 217.23593, y: 270.42722, z: -138.63147}
 --- !u!1001 &728405231
@@ -28105,9 +28105,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -28132,8 +28132,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
-  m_LocalRotation: {x: -0.0033530507, y: 0.98583585, z: -0.16650034, w: -0.019853158}
-  m_LocalPosition: {x: 0.61000013, y: 1.05, z: 52.73}
+  m_LocalRotation: {x: -0.14335336, y: -0.043186452, z: -0.006261623, w: 0.98870903}
+  m_LocalPosition: {x: 2.17, y: 1.1000001, z: 30.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28559,7 +28559,7 @@ GameObject:
   - component: {fileID: 969547244}
   - component: {fileID: 969547243}
   m_Layer: 0
-  m_Name: TimeLine
+  m_Name: CycTimeLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62132,7 +62132,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001437816}
-  m_LocalRotation: {x: -0.14335336, y: -0.043186445, z: -0.006261623, w: 0.98870903}
+  m_LocalRotation: {x: -0.14077355, y: -0.043202586, z: -0.0061489297, w: 0.98907965}
   m_LocalPosition: {x: 2.17, y: 1.1000001, z: 30.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

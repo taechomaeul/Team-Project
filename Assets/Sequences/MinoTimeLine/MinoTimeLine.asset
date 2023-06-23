@@ -10,33 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 713e0022c0ffe974bb14d5e0611b0797, type: 3}
-  m_Name: TimeLine
+  m_Name: MinoTimeLine
   m_EditorClassIdentifier: 
   m_RootIndex: 0
   m_Manager:
-    rid: 8851635356024963072
+    rid: 5504720890240696320
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 8851635356024963072
+    - rid: 5504720890240696320
       type: {class: SequenceManager, ns: UnityEngine.Sequences, asm: Unity.Sequences}
       data:
         m_Data:
-        - rid: 8851635356024963073
+        - rid: 5504720890240696321
         m_AvailableIndices:
           rid: -2
-    - rid: 8851635356024963073
+    - rid: 5504720890240696321
       type: {class: TimelineSequence, ns: UnityEngine.Sequences, asm: Unity.Sequences}
       data:
-        m_Name: TimeLine
+        m_Name: MinoTimeLine
         m_Fps: 60
         m_Start: 0
         m_Duration: 2
         m_Parent: -1
         m_Children: 
-        m_Timeline: {fileID: 11400000, guid: be809b061ffd0db42b9572076d564360, type: 2}
+        m_Timeline: {fileID: 11400000, guid: 487716ee74dbb9243b02fc7db502ae01, type: 2}
         m_ChildrenTrack: {fileID: 0}
         m_DefaultChildrenTrackName: Sequences
         m_EditorialClipAsset: {fileID: 0}
