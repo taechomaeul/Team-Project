@@ -13,9 +13,9 @@ public class EnemyInfo : MonoBehaviour
         // 체력 초기화
         stat.SetCurrentHp(stat.GetMaxHp());
         // 탐지 대상 초기화
-        stat.target = GameObject.Find("Player").transform.GetChild(0).gameObject;
+        stat.SetTarget(GameObject.Find("Player").transform.GetChild(0).gameObject);
         // 컴포넌트 대상 트랜스폼 초기화
-        stat.transfom = transform;
+        stat.SetTransform(transform);
     }
 }
 
@@ -28,9 +28,9 @@ internal class Enemy
 
     [Header("탐지 대상")]
     [Tooltip("탐지 대상(플레이어)")]
-    internal GameObject target;
+     GameObject target;
     // 컴포넌트 부착 대상
-    internal Transform transfom;
+     Transform transform;
 
     [Header("이동")]
     [Tooltip("이동 속도")]
@@ -81,7 +81,8 @@ internal class Enemy
 
     // 외부에서 쓰기 위한 변수 반환 함수들
     #region Get Functions
-    public GameObject CurrentTarget() { return target; }
+    public GameObject GetCurrentTarget() { return target; }
+    public Transform GetTransform() { return transform; }
     public bool GetIsDebug() { return isDebug; }
     public bool GetIsTracking() { return isTracking; }
     public bool GetIsInAttackRange() { return isInAttackRange; }
@@ -100,9 +101,9 @@ internal class Enemy
     public float GetAttackRange() { return attackRange; }
     public float GetDistanceFromTarget()
     {
-        if (transfom != null)
+        if (GetTransform() != null)
         {
-            return Vector3.Distance(transfom.position, target.transform.position);
+            return Vector3.Distance(GetTransform().position, target.transform.position);
         }
         else
         {
@@ -111,7 +112,7 @@ internal class Enemy
     }
     public Vector3 GetDirectionVectorFromTarget()
     {
-        Vector3 temp = transfom.position;
+        Vector3 temp = GetTransform().position;
         temp.y = 0;
         return (target.transform.position - temp).normalized;
     }
@@ -119,6 +120,8 @@ internal class Enemy
 
     // 변수 세팅 함수들
     #region Set Functions
+    public void SetTarget(GameObject target) { this.target = target; }
+    public void SetTransform(Transform transform) { this.transform = transform; }
     public void SetIsTracking(bool tf) { isTracking = tf; }
     public void SetIsInAttackRange(bool tf) { isInAttackRange = tf; }
     public void SetCanAttack(bool tf) { canAttack = tf; }

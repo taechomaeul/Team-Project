@@ -97,7 +97,7 @@ public class EnemyBeAttacked : MonoBehaviour
                 // 추격 중 -> true
                 enemyInfo.SetIsTracking(true);
                 // 탐지 대상에게 회전함
-                transform.LookAt(enemyInfo.target.transform.position);
+                transform.LookAt(enemyInfo.GetCurrentTarget().transform.position);
             }
         }
         else
