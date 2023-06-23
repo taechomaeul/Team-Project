@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
 
     PlayerInfo plInfo;
 
-    private void Start()
+    private void Awake()
     {
         plInfo = player.GetComponent<PlayerInfo>();
     }
