@@ -18,14 +18,15 @@ public class ScriptColliderInfo : MonoBehaviour
     private bool isStay = false;
 
     private ShowScript showScript;
+    [SerializeField]
     private ActionFuntion actionFunction;
-    private ToggleManager toggleManager;
+    //private ToggleManager toggleManager;
 
     private void Start()
     {
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
-        toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
+        //toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
     }
     private void Update()
     {
@@ -154,11 +155,15 @@ public class ScriptColliderInfo : MonoBehaviour
             showScript.isClick = false;
             isShowed = false;
 
-            if (colliderName.Equals("T_PUZZLE") && !toggleManager.isClear)
+            if (colliderName.Equals("T_PUZZLE"))
             {
-                //Debug.Log("T_PUZZLE");
-                actionFunction.PauseGameForAct();
-                toggleManager.PlayToggleGame();
+                ToggleManager toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
+                if (!toggleManager.isClear)
+                {
+                    //Debug.Log("T_PUZZLE");
+                    actionFunction.PauseGameForAct();
+                    toggleManager.PlayToggleGame();
+                }
             }
         }
         else
