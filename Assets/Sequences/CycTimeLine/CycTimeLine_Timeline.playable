@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
   m_Name: AudioPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: c06fb3f40ca3d4049af4a99feef4c1f3, type: 3}
+  m_Clip: {fileID: 8300000, guid: f973a521ebe970e468736192e071adb1, type: 3}
   m_Loop: 1
   m_bufferingTime: 0.1
   m_ClipProperties:
@@ -728,7 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
   m_Name: AudioPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: 16b06b382a0f87949843b1f8c76f9674, type: 3}
+  m_Clip: {fileID: 8300000, guid: 5e3efbc8a52d6dd47a67b8653b80f7a9, type: 3}
   m_Loop: 0
   m_bufferingTime: 0.1
   m_ClipProperties:
@@ -761,7 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
   m_Name: AudioPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: ecad71c407845b949a98d929f41f7f6c, type: 3}
+  m_Clip: {fileID: 8300000, guid: d19b2ba8528633a4eb642dc82df52209, type: 3}
   m_Loop: 0
   m_bufferingTime: 0.1
   m_ClipProperties:
@@ -992,11 +992,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
   m_Name: AudioPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: e46ff05fd92208241a60eb5b3baa5a3c, type: 3}
+  m_Clip: {fileID: 8300000, guid: 0d29dcff653babf46a5a13337bb3d9a3, type: 3}
   m_Loop: 0
   m_bufferingTime: 0.1
   m_ClipProperties:
-    volume: 1
+    volume: 0.5
 --- !u!114 &2155466721724525810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1252,11 +1252,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
   m_Name: AudioPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: 230ddda7978a4c04ab9c0c226f0442a5, type: 3}
+  m_Clip: {fileID: 8300000, guid: 4dbd2c951b956e4448d9d25e88cb6afc, type: 3}
   m_Loop: 0
   m_bufferingTime: 0.1
   m_ClipProperties:
-    volume: 1
+    volume: 0.5
 --- !u!114 &4221968281043110137
 MonoBehaviour:
   m_ObjectHideFlags: 1
