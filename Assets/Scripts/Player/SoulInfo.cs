@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class SoulInfo : MonoBehaviour
 {
-    public float havingHP; //HP(혼력)의 양
+    public int havingHP; //HP(혼력)의 양
 }

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class EnemyAnimationControll : MonoBehaviour
 {
+    // 모델에 달려있는 애니메이터
+    Animator animator;
+
     // 애니메이션 목록
     [SerializeField]
     internal enum Animation_State
@@ -17,12 +20,13 @@ public class EnemyAnimationControll : MonoBehaviour
         Hit,
         Dead
     }
+
+    // 인스펙터
     [Header("애니메이션")]
     [Tooltip("애니메이션 상태")]
     [SerializeField, ReadOnly] Animation_State animationState;
 
-    // 모델에 달려있는 애니메이터
-    Animator animator;
+
 
     private void Awake()
     {
@@ -32,6 +36,7 @@ public class EnemyAnimationControll : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 상태별 애니메이터 컨트롤
         switch (animationState)
         {
             case Animation_State.Idle:
@@ -121,7 +126,7 @@ public class EnemyAnimationControll : MonoBehaviour
     /// 현재 상태의 애니메이션 재생시간 반환
     /// </summary>
     /// <param name="state">재생시간을 반환받을 애니메이션 상태</param>
-    /// <returns></returns>
+    /// <returns>애니메이션 재생 시간</returns>
     internal float GetAnimationDurationTime(Animation_State state)
     {
         // 재생시간
@@ -133,7 +138,7 @@ public class EnemyAnimationControll : MonoBehaviour
         // 상태머신 state의 배속
         float smSpeed = 1;
 
-        // 현재 상태
+        // 현재 상태 설정
         switch (state)
         {
             case Animation_State.Idle:
@@ -171,20 +176,22 @@ public class EnemyAnimationControll : MonoBehaviour
 
         float skillLoopTime = 1;
 
-        //현재 상태의 애니메이션 찾고 재생시간 반환
+        // 현재 상태의 애니메이션 찾고 재생시간 반환
+        // 상태와 연결된 애니메이션 이름과 상태 재생속도, 상태 반복 횟수 확인
         for (int i = 0; i < sm.states.Length; i++)
         {
             if (sm.states[i].state.name.Equals(smState))
             {
                 if (smState.Equals("Skill"))
                 {
-                skillLoopTime = sm.states[i].state.transitions[0].exitTime;
+                    skillLoopTime = sm.states[i].state.transitions[0].exitTime;
                 }
                 smClip = sm.states[i].state.motion.name;
                 smSpeed = sm.states[i].state.speed;
             }
         }
 
+        // 찾은 애니메이션 이름으로 애니메이션 재생 길이 확인
         for (int i = 0; i < rac.animationClips.Length; i++)
         {
             if (rac.animationClips[i].name.Equals(smClip))
@@ -193,6 +200,7 @@ public class EnemyAnimationControll : MonoBehaviour
             }
         }
 
+        // 애니메이션 재생 길이, 상태 재생 속도, 반복 횟수를 계산한 최종 상태 재생 길이 반환
         if (smState.Equals("Skill"))
         {
             return (time / smSpeed) * skillLoopTime;

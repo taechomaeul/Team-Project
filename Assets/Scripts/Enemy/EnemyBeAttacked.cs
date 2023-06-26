@@ -6,14 +6,23 @@ public class EnemyBeAttacked : MonoBehaviour
     // 적 정보
     Enemy enemyInfo;
 
-    // 영혼석
-    public GameObject soulStone;
-
     // 애니메이터 컨트롤
     EnemyAnimationControll eac;
+
+    // 인스펙터
+    [Header("시작 적 상태")]
+    [Tooltip("이미 사망한 상태")]
+    [SerializeField] bool wasDead = false;
+
+    [Header("영혼석")]
+    [Tooltip("영혼석 오브젝트")]
+    [SerializeField] GameObject soulStone;
+
+
+
     void Start()
     {
-        // enemyInfo 초기화
+        // 적 정보 초기화
         if (enemyInfo == null)
         {
             // 일반 몬스터라면
@@ -32,9 +41,19 @@ public class EnemyBeAttacked : MonoBehaviour
 
         // 애니메이터 컨트롤 세팅
         eac = GetComponent<EnemyAnimationControll>();
+
+        // 죽어있다면
+        if (wasDead)
+        {
+            enemyInfo.SetIsDead(true);
+            eac.SetAnimationState(EnemyAnimationControll.Animation_State.Dead);
+        }
     }
 
-    // damage만큼 공격 받음
+    /// <summary>
+    /// damage만큼 공격 받음
+    /// </summary>
+    /// <param name="damage">데미지</param>
     public void BeAttacked(int damage)
     {
         // 현재 체력에서 damage만큼 차감
@@ -85,16 +104,20 @@ public class EnemyBeAttacked : MonoBehaviour
                 // 추격 중 -> true
                 enemyInfo.SetIsTracking(true);
                 // 탐지 대상에게 회전함
-                transform.LookAt(enemyInfo.target.transform.position);
+                transform.LookAt(enemyInfo.GetCurrentTarget().transform.position);
             }
         }
+        // 죽었다면
         else
         {
             // 사망 애니메이션 재생
             eac.SetAnimationState(EnemyAnimationControll.Animation_State.Dead);
 
-            // 애니메이션 끝날 때까지 기다림(임의값)
+            // 애니메이션 끝날 때까지 기다림
             yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Dead));
+
+            // 충돌 판정 off
+            transform.GetComponent<CapsuleCollider>().enabled = false;
 
             // 영혼석 on
             soulStone.SetActive(true);

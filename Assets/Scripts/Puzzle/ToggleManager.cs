@@ -5,18 +5,11 @@ using UnityEngine.UI;
 
 public class ToggleManager : MonoBehaviour
 {
-    public ToggleGame toggleGame;
-    public ActionFuntion actionFuntion;
-
     [Header("연결 필수")]
+    public GameObject mainCanvas;
     public GameObject togglePanel;
     public GameObject clearPanel;
-
-    //public Image img1;
-    //public Image img2;
-    //public Image img3;
-    //public Image img4;
-    //public Image img5;
+    public GameObject toggleCamera;
 
     public GameObject fire1;
     public GameObject fire2;
@@ -24,20 +17,21 @@ public class ToggleManager : MonoBehaviour
     public GameObject fire4;
     public GameObject fire5;
 
+    [Header("플래그 변수")]
     public bool isClear = false;
+
+    private ToggleGame toggleGame;
+    private ActionFuntion actionFuntion;
 
     void Start()
     {
-        //actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
     }
 
     
     void Update()
     {
-        //if (img1.color == Color.red && img2.color == Color.red 
-        //    && img3.color == Color.red && img4.color == Color.red && img5.color == Color.red)
-        
-        if (fire1.activeSelf && fire2.activeSelf && fire3.activeSelf && fire4.activeSelf  && fire5.activeSelf)
+        if (fire1.activeSelf && fire2.activeSelf && fire3.activeSelf && fire4.activeSelf && fire5.activeSelf)
         {
             isClear = true;
             Debug.Log("CLEAR!!!!!!!!!!!!!!!!");
@@ -48,29 +42,24 @@ public class ToggleManager : MonoBehaviour
 
     public void ResetPuzzle()
     {
-        //img1.color = Color.white;
-        //toggleGame = img1.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = togglePanel.transform.GetChild(0).GetComponentInParent<ToggleGame>();
+        //toggleGame = togglePanel.transform.GetChild(0).GetComponentInParent<ToggleGame>();
+        toggleGame = fire1.transform.GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
-        //img2.color = Color.white;
-        //toggleGame = img2.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = togglePanel.transform.GetChild(1).GetComponentInParent<ToggleGame>();
+        //toggleGame = togglePanel.transform.GetChild(1).GetComponentInParent<ToggleGame>();
+        toggleGame = fire2.transform.GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
-        //img3.color = Color.white;
-        //toggleGame = img3.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = togglePanel.transform.GetChild(2).GetComponentInParent<ToggleGame>();
+        //toggleGame = togglePanel.transform.GetChild(2).GetComponentInParent<ToggleGame>();
+        toggleGame = fire3.transform.GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
-        //img4.color = Color.white;
-        //toggleGame = img4.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = togglePanel.transform.GetChild(3).GetComponentInParent<ToggleGame>();
+        //toggleGame = togglePanel.transform.GetChild(3).GetComponentInParent<ToggleGame>();
+        toggleGame = fire4.transform.GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
-        //img5.color = Color.white;
-        //toggleGame = img5.transform.GetComponentInParent<ToggleGame>();
-        toggleGame = togglePanel.transform.GetChild(4).GetComponentInParent<ToggleGame>();
+        //toggleGame = togglePanel.transform.GetChild(4).GetComponentInParent<ToggleGame>();
+        toggleGame = fire5.transform.GetComponentInParent<ToggleGame>();
         toggleGame.thisFlag = false;
 
         fire1.SetActive(false);
@@ -101,10 +90,14 @@ public class ToggleManager : MonoBehaviour
         togglePanel.SetActive(false);
         clearPanel.SetActive(false);
         actionFuntion.RestartGame();
+        toggleCamera.SetActive(false);
+        mainCanvas.SetActive(true);
     }
 
     public void PlayToggleGame()
     {
+        mainCanvas.SetActive(false);
+        toggleCamera.SetActive(true);
         togglePanel.SetActive(true);
     }
 }
