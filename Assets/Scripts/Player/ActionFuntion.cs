@@ -106,49 +106,16 @@ public class ActionFuntion : MonoBehaviour
         {
             if (enemyPrefabInfo.enemyPrefabs[i].name.Contains(enemyName))
             {
-                Vector3 originPlayerPos = player.transform.GetChild(0).GetChild(0).position; //player의 위치(PlayerModel이 움직임)
-                //Quaternion originPlayerRot = player.transform.parent.rotation; //캐릭터 방향
-                //Quaternion originSightRot = GameObject.Find("Sight").GetComponent<PlayerLook>().transform.rotation; //시야방향
-
-                //Destroy(player.gameObject);
-                Destroy(player.transform.GetChild(0).gameObject);
-                Debug.Log(player.transform.GetChild(0).gameObject);
+                Vector3 originPlayerPrefabPos = player.transform.Find("PlayerPrefab").localPosition;
+                Destroy(player.transform.Find("PlayerPrefab").gameObject);
 
                 //프리팹 생성 및 정보입력
-                /*GameObject enemyPrefab = enemyPrefabInfo.enemyPrefabs[i]; //이름이 같은 프리팹 선택
-                GameObject newPlayer = Instantiate(enemyPrefab, originPlayerPos, originPlayerRot); //생성
-                GameObject sight = Instantiate(enemyPrefabInfo.sightPrefab);
-                GameObject range = Instantiate(enemyPrefabInfo.atkRangePrefab);
-
-                newPlayer.name = "PlayerModel";
-                newPlayer.tag = "Player";
-                newPlayer.transform.parent = GameObject.FindGameObjectWithTag("Player").transform; //PlayerModel은 Player 자식개체로 들어간다
-                newPlayer.transform.position = originPlayerPos;
-                newPlayer.transform.rotation = originPlayerRot;
-
-                sight.name = "Sight";
-                sight.transform.parent = newPlayer.transform; //sight의 부모개체는 newPlayer.
-                sight.GetComponent<PlayerLook>().plInfo = player.GetComponent<PlayerInfo>();
-                sight.transform.localPosition = Vector3.zero;
-                sight.transform.localRotation = originSightRot;
-
-                range.transform.parent = newPlayer.transform; //Atk Range 달아줌
-                range.transform.position = new Vector3(0, 0, 2);
-                range.transform.rotation = Quaternion.identity;
-
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().attackRange = range;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().cameraTransform = sight.transform.GetChild(0);
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().characterController = newPlayer.GetComponent<CharacterController>();*/
-
                 GameObject enemyPrefab = enemyPrefabInfo.enemyPrefabs[i];
-                Debug.Log($"EnemyPrefab : {enemyPrefab.name}");
-                GameObject newPlayer = Instantiate(enemyPrefab, originPlayerPos, Quaternion.identity);
-                newPlayer.transform.parent = player.transform;
-                Debug.Log(newPlayer.transform.parent);
-                newPlayer.transform.position = originPlayerPos;
-                Debug.Log(newPlayer.transform.position);
+                GameObject newPlayer = Instantiate(enemyPrefab);
 
-                // newPlayer.transform.rotation = originPlayerRot;
+                newPlayer.transform.parent = player.transform;
+                newPlayer.transform.localPosition = originPlayerPrefabPos;
+                newPlayer.transform.localRotation = Quaternion.identity;
                 newPlayer.name = "PlayerPrefab";
 
             }
