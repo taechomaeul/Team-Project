@@ -11,19 +11,24 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void MoveToToggle()
+    public void MoveToPush()
     {
-        SceneManager.LoadScene("ToggleGameScene");
+        SceneManager.LoadScene("PushGameScene");
     }
 
     public void MoveTo1FScene()
     {
-        SceneManager.LoadScene("Map1FScene");
+        SceneManager.LoadScene("TestScene");
     }
 
     public void MoveTo2FScene()
     {
-        SceneManager.LoadScene("Map2FScene");
+        SceneManager.LoadScene("TestScene_2F");
+    }
+
+    public void MoveToEnding()
+    {
+        SceneManager.LoadScene("EndingScene");
     }
 
     public void QuitTheGame()
