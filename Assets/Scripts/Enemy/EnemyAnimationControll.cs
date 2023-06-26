@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyAnimationControll : MonoBehaviour
 {
     // 모델에 달려있는 애니메이터
-    Animator animator;
+    private Animator animator;
 
     // 애니메이션 목록
     [SerializeField]
@@ -24,7 +24,7 @@ public class EnemyAnimationControll : MonoBehaviour
     // 인스펙터
     [Header("애니메이션")]
     [Tooltip("애니메이션 상태")]
-    [SerializeField, ReadOnly] Animation_State animationState;
+    [SerializeField, ReadOnly] private Animation_State animationState;
 
 
 
@@ -40,79 +40,57 @@ public class EnemyAnimationControll : MonoBehaviour
         switch (animationState)
         {
             case Animation_State.Idle:
-                animator.SetBool("isMoving", false);
-                animator.SetBool("isAttacking1", false);
-                animator.SetBool("isAttacking2", false);
-                animator.SetBool("isAttacking3", false);
-                animator.SetBool("isSkillCasting", false);
-                animator.SetBool("isHit", false);
-                animator.SetBool("isDead", false);
+                SetAnimatorParam();
                 break;
             case Animation_State.Move:
-                animator.SetBool("isMoving", true);
-                animator.SetBool("isAttacking1", false);
-                animator.SetBool("isAttacking2", false);
-                animator.SetBool("isAttacking3", false);
-                animator.SetBool("isSkillCasting", false);
-                animator.SetBool("isHit", false);
-                animator.SetBool("isDead", false);
+                SetAnimatorParam("isMoving");
                 break;
             case Animation_State.Attack1:
-                animator.SetBool("isAttacking1", true);
-                animator.SetBool("isMoving", false);
-                animator.SetBool("isAttacking2", false);
-                animator.SetBool("isAttacking3", false);
-                animator.SetBool("isSkillCasting", false);
-                animator.SetBool("isHit", false);
-                animator.SetBool("isDead", false);
+                SetAnimatorParam("isAttacking1");
                 break;
             case Animation_State.Attack2:
-                animator.SetBool("isAttacking2", true);
-                animator.SetBool("isMoving", false);
-                animator.SetBool("isAttacking1", false);
-                animator.SetBool("isAttacking3", false);
-                animator.SetBool("isSkillCasting", false);
-                animator.SetBool("isHit", false);
-                animator.SetBool("isDead", false);
+                SetAnimatorParam("isAttacking2");
                 break;
             case Animation_State.Attack3:
-                animator.SetBool("isAttacking3", true);
-                animator.SetBool("isMoving", false);
-                animator.SetBool("isAttacking1", false);
-                animator.SetBool("isAttacking2", false);
-                animator.SetBool("isSkillCasting", false);
-                animator.SetBool("isHit", false);
-                animator.SetBool("isDead", false);
+                SetAnimatorParam("isAttacking3");
                 break;
             case Animation_State.CastSkill:
-                animator.SetBool("isSkillCasting", true);
-                animator.SetBool("isMoving", false);
-                animator.SetBool("isAttacking1", false);
-                animator.SetBool("isAttacking2", false);
-                animator.SetBool("isAttacking3", false);
-                animator.SetBool("isHit", false);
-                animator.SetBool("isDead", false);
+                SetAnimatorParam("isSkillCasting");
                 break;
             case Animation_State.Hit:
-                animator.SetBool("isHit", true);
-                animator.SetBool("isMoving", false);
-                animator.SetBool("isAttacking1", false);
-                animator.SetBool("isAttacking2", false);
-                animator.SetBool("isAttacking3", false);
-                animator.SetBool("isSkillCasting", false);
-                animator.SetBool("isDead", false);
+                SetAnimatorParam("isHit");
                 break;
             case Animation_State.Dead:
-                animator.SetBool("isDead", true);
-                animator.SetBool("isMoving", false);
-                animator.SetBool("isAttacking1", false);
-                animator.SetBool("isAttacking2", false);
-                animator.SetBool("isAttacking3", false);
-                animator.SetBool("isSkillCasting", false);
-                animator.SetBool("isHit", false);
+                SetAnimatorParam("isDead");
                 break;
         }
     }
+
+    /// <summary>
+    /// 애니메이터의 모든 파라미터 false
+    /// </summary>
+    void SetAnimatorParam()
+    {
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isRolling", false);
+        animator.SetBool("isAttacking1", false);
+        animator.SetBool("isAttacking2", false);
+        animator.SetBool("isAttacking3", false);
+        animator.SetBool("isHit", false);
+        animator.SetBool("isDead", false);
+    }
+
+    /// <summary>
+    /// 애니메이터에서 함수의 매개변수로 들어오는 파라미터만 true
+    /// </summary>
+    /// <param name="anim">true로 만들 애니메이터 파라미터</param>
+    void SetAnimatorParam(string anim)
+    {
+        SetAnimatorParam();
+        animator.SetBool(anim, true);
+    }
+
     /// <summary>
     /// 애니메이션 재생
     /// </summary>
@@ -132,43 +110,12 @@ public class EnemyAnimationControll : MonoBehaviour
         // 재생시간
         float time = 0;
         // 상태머신 state를 비교하기 위한 변수
-        string smState = "";
+        string smState = GetStringFromAnimationStateMachine(state);
         // 상태머신 state의 애니메이션 clip
         string smClip = "";
         // 상태머신 state의 배속
         float smSpeed = 1;
 
-        // 현재 상태 설정
-        switch (state)
-        {
-            case Animation_State.Idle:
-                smState = "Idle";
-                break;
-            case Animation_State.Move:
-                smState = "Move";
-                break;
-            case Animation_State.Attack1:
-                smState = "Attack1";
-                break;
-            case Animation_State.Attack2:
-                smState = "Attack2";
-                break;
-            case Animation_State.Attack3:
-                smState = "Attack3";
-                break;
-            case Animation_State.CastSkill:
-                smState = "CastSkill";
-                break;
-            case Animation_State.Skill:
-                smState = "Skill";
-                break;
-            case Animation_State.Hit:
-                smState = "Hit";
-                break;
-            case Animation_State.Dead:
-                smState = "Dead";
-                break;
-        }
         // 상태머신 관련 초기화
         RuntimeAnimatorController rac = animator.runtimeAnimatorController;
         AnimatorController ac = animator.runtimeAnimatorController as AnimatorController;
@@ -209,5 +156,48 @@ public class EnemyAnimationControll : MonoBehaviour
         {
             return time / smSpeed;
         }
+    }
+
+    /// <summary>
+    /// 애니메이션 상태에 해당하는 상태 머신의 이름을 string으로 반환
+    /// </summary>
+    /// <param name="state">string을 반환할 애니메이션 상태</param>
+    /// <returns></returns>
+    string GetStringFromAnimationStateMachine(Animation_State state)
+    {
+        string smState = "";
+
+        // 성능을 위해 하드코딩
+        switch (state)
+        {
+            case Animation_State.Idle:
+                smState = "Idle";
+                break;
+            case Animation_State.Move:
+                smState = "Move";
+                break;
+            case Animation_State.Attack1:
+                smState = "Attack1";
+                break;
+            case Animation_State.Attack2:
+                smState = "Attack2";
+                break;
+            case Animation_State.Attack3:
+                smState = "Attack3";
+                break;
+            case Animation_State.CastSkill:
+                smState = "CastSkill";
+                break;
+            case Animation_State.Skill:
+                smState = "Skill";
+                break;
+            case Animation_State.Hit:
+                smState = "Hit";
+                break;
+            case Animation_State.Dead:
+                smState = "Dead";
+                break;
+        }
+        return smState;
     }
 }
