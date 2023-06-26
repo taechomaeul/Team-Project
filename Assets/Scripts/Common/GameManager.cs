@@ -35,4 +35,14 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void PauseTheGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void ResumeTheGame()
+    {
+        Time.timeScale = 1f;
+    }
 }

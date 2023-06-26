@@ -5,21 +5,35 @@ using System;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class ShowScript : MonoBehaviour
 {
     public string scriptPath;
     public string recordPath;
+    public string tipPath;
 
     public List<Dictionary<string, object>> script;
     public List<Dictionary<string, object>> record;
+    public List<Dictionary<string, object>> tip;
 
     public int[] startIdxArr;
     public string[] pointArr;
 
+    [Header("스크립트용 연결")]
     public Text scriptText;
     public Text recordNameText;
     public Text recordText;
+
+    [Header("일지용 연결")]
+    [Tooltip("일지 제목 Prefab")]
+    public GameObject recordNamePrefab;
+    [Tooltip("일지 제목 Prefab")]
+    public GameObject tipNamePrefab;
+    [Tooltip("누군가의 일지 Panel")]
+    public GameObject someonePanel;
+    [Tooltip("나의 일지 Panel")]
+    public GameObject tipPanel;
 
     public bool isClick = false;
 
@@ -145,9 +159,60 @@ public class ShowScript : MonoBehaviour
         return type;
     }
 
+
+    public void LoadRecordName()
+    {
+        record = CSVReader.Read(recordPath);
+
+        for (int i = 0; i < record.Count; i++)
+        {
+            string recordName = record[i]["RECORD_NAME"].ToString(); //이름만 불러온다.
+            GameObject newRecord = Instantiate(recordNamePrefab); //prefab 생성
+            //Debug.Log($"gameObject name : {EventSystem.current.currentSelectedGameObject.name}");
+            if (EventSystem.current.currentSelectedGameObject.name.Contains("Someone")) //prefab 위치 고정 someonePanel
+            {
+                newRecord.transform.SetParent(someonePanel.transform);
+                //Debug.Log($"NewRecord.Transform.parent : {someonePanel.transform}");
+            }
+            else if (gameObject.name.Contains("Tip")) //prefab 위치 고정 tipPanel
+            {
+                newRecord.transform.SetParent(tipPanel.transform);
+                //Debug.Log($"NewRecord.Transform.parent : {tipPanel.transform}");
+            }
+
+            newRecord.name = recordName; //이름 변경
+            newRecord.transform.GetChild(0).GetComponent<Text>().text = recordName; //내용 변경
+        }
+    }
+
+    public void LoadTipName()
+    {
+        tip = CSVReader.Read(tipPath);
+
+        for (int i = 0; i < tip.Count; i++)
+        {
+            string tipName = tip[i]["TIP_NAME"].ToString(); //이름만 불러온다.
+            GameObject newRecord = Instantiate(tipNamePrefab); //prefab 생성
+            //Debug.Log($"gameObject name : {EventSystem.current.currentSelectedGameObject.name}");
+            if (EventSystem.current.currentSelectedGameObject.name.Contains("Tip")) //prefab 위치 고정 tipPanel
+            {
+                newRecord.transform.SetParent(tipPanel.transform);
+                //Debug.Log($"NewRecord.Transform.parent : {tipPanel.transform}");
+            }
+
+            newRecord.name = tipName; //이름 변경
+            newRecord.transform.GetChild(0).GetComponent<Text>().text = tipName; //내용 변경
+        }
+    }
+
     public IEnumerator LoadRecordData(string colliName)
     {
         yield return StartCoroutine(LoadRecordDataFromCSV(colliName));
+    }
+
+    public IEnumerator LoadRecordData(string colliName, Text context)
+    {
+        yield return StartCoroutine(LoadRecordDataFromCSV(colliName, context));
     }
 
     public IEnumerator LoadRecordDataFromCSV(string colliName)
@@ -181,6 +246,101 @@ public class ShowScript : MonoBehaviour
 
         }
         yield return new WaitForSeconds(2f);
+    }
+
+    public IEnumerator LoadRecordDataFromCSV(string colliName, Text context)
+    {
+        record = CSVReader.Read(recordPath);
+        context.text = colliName;
+        for (int i = 0; i < record.Count; i++)
+        {
+            if (colliName.Equals(record[i]["RECORD_NAME"]))
+            {
+                context.text = record[i]["CONTEXT"].ToString();
+                if (context.text.Contains("/"))
+                {
+                    string[] sText = context.text.Split("/");
+                    context.text = " ";
+                    for (int j = 0; j < sText.Length; j++)
+                    {
+                        if (j == sText.Length - 1)
+                        {
+                            context.text += sText[j]; // '/'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                        }
+                        else
+                        {
+                            context.text += (sText[j] + "\n");
+                        }
+                    }
+                    //Debug.Log($"{context.text}");
+                    break;
+                }
+            }
+
+        }
+        yield return new WaitForSeconds(2f);
+    }
+
+    public IEnumerator LoadTipData(string colliName, Text context)
+    {
+        yield return StartCoroutine(LoadTipDataFromCSV(colliName, context));
+    }
+
+    public IEnumerator LoadTipDataFromCSV(string colliName, Text context)
+    {
+        tip = CSVReader.Read(tipPath);
+        context.text = colliName;
+        for (int i = 0; i < tip.Count; i++)
+        {
+            if (colliName.Equals(tip[i]["TIP_NAME"]))
+            {
+                context.text = tip[i]["CONTEXT"].ToString();
+                if (context.text.Contains("/"))
+                {
+                    string[] sText = context.text.Split("/");
+                    context.text = " ";
+                    for (int j = 0; j < sText.Length; j++)
+                    {
+                        if (j == sText.Length - 1)
+                        {
+                            context.text += sText[j]; // '/'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                        }
+                        else
+                        {
+                            context.text += (sText[j] + "\n");
+                        }
+                    }
+                    //Debug.Log($"{context.text}");
+                    break;
+                }
+            }
+
+        }
+        yield return new WaitForSeconds(2f);
+    }
+
+    public void DeleteRecordContent()
+    {
+        if (someonePanel.transform.childCount != 0)
+        {
+            for (int i = 0; i < record.Count; i++)
+            {
+                //Debug.Log($"Delete : {someonePanel.transform.GetChild(i).gameObject}");
+                Destroy(someonePanel.transform.GetChild(i).gameObject);
+            }
+        }
+    }
+
+    public void DeleteTipContent()
+    {
+        if (tipPanel.transform.childCount != 0)
+        {
+            for (int i = 0; i < tip.Count; i++)
+            {
+                //Debug.Log($"Delete : {tipPanel.transform.GetChild(i).gameObject}");
+                Destroy(tipPanel.transform.GetChild(i).gameObject);
+            }
+        }
     }
 
     public void IsClicked()
