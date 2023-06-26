@@ -72,11 +72,10 @@ public class EnemyAnimationControll : MonoBehaviour
     void SetAnimatorParam()
     {
         animator.SetBool("isMoving", false);
-        animator.SetBool("isJumping", false);
-        animator.SetBool("isRolling", false);
         animator.SetBool("isAttacking1", false);
         animator.SetBool("isAttacking2", false);
         animator.SetBool("isAttacking3", false);
+        animator.SetBool("isSkillCasting", false);
         animator.SetBool("isHit", false);
         animator.SetBool("isDead", false);
     }

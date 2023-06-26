@@ -41,8 +41,9 @@ public class PlayerController : MonoBehaviour
     public PlayerInfo plInfo;
     public ActionFuntion actionFuntion;
     public Transform cameraTransform;
-    //public Animator anim;
     public CharacterController characterController;
+
+    private PlayerAnimatorControll pac;
 
     public enum PL_STATE
     {
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
         //anim = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
+        pac = GetComponent<PlayerAnimatorControll>();
 
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
@@ -128,6 +130,7 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.IDLE:
                     //애니메이션 연결
                     //anim.SetInteger("State", 0);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Idle);
 
                     if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
                             || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
@@ -145,6 +148,7 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.MOVE:
                     //애니메이션 연결
                     //anim.SetInteger("State", 1);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
 
                     plInfo.plMoveSpd = moveSpd;
 
@@ -169,6 +173,7 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.WALK:
                     //애니메이션 연결
                     //anim.SetInteger("State", 2);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
 
                     plInfo.plMoveSpd = WalkMoveSpd();
                     //이동속도를 반으로 줄인다.
@@ -197,6 +202,7 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.JUMP:
                     //애니메이션 연결
                     //anim.SetInteger("State", 4);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Jump);
 
 
                     if (characterController.isGrounded)
@@ -209,7 +215,8 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.ATTACKM1:
                     //애니메이션 연결
                     //anim.SetInteger("State", 5);
-
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);
+                    //공격 애니메이션 길이: pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
 
                     plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
 
@@ -249,7 +256,8 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.ATTACKM2:
                     //애니메이션 연결
                     //anim.SetInteger("State", 6);
-
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
+                    //공격 애니메이션 길이: pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
                     plInfo.plAtk = originAtk;
                     //공격력 설정
@@ -289,7 +297,8 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.ATTACKM3:
                     //애니메이션 연결
                     //anim.SetInteger("State", 7);
-
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack3);
+                    //공격 애니메이션 길이: pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
 
                     plInfo.plAtk = originAtk;
                     //공격력 설정
@@ -329,6 +338,8 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.DAMAGED:
                     //애니메이션 연결
                     //anim.SetInteger("State", 8);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
+                    //피격 애니메이션 길이: pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit);
 
                     if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
                     {
@@ -345,6 +356,8 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.AVOIDJUMP:
                     //애니메이션 연결
                     //anim.SetInteger("State", 9);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid1);
+                    avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
 
                     isNoDamage = true; //무적 ON
 
@@ -363,6 +376,8 @@ public class PlayerController : MonoBehaviour
 
                     //애니메이션 연결
                     //anim.SetInteger("State", 10);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid2);
+                    avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
 
                     //애니메이션 시간 대기
                     avoidTime += Time.deltaTime;
@@ -377,6 +392,7 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.DIE:
                     //애니메이션 연결
                     //anim.SetInteger("State", 11);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Dead);
                     Debug.Log("PLAYER DIE");
                     break;
 

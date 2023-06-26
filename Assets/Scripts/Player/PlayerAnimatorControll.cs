@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -7,6 +5,10 @@ public class PlayerAnimatorControll : MonoBehaviour
 {
     // 모델에 달려있는 애니메이터
     private Animator animator;
+    // 애니메이터 관련 컨트롤러와 상태머신
+    RuntimeAnimatorController rac;
+    AnimatorController ac;
+    AnimatorStateMachine sm;
 
     // 애니메이션 목록
     internal enum Animation_State
@@ -24,6 +26,17 @@ public class PlayerAnimatorControll : MonoBehaviour
         Dead
     }
 
+    // 애니메이터 파라미터 목록
+    private readonly string[] animatorParams = {
+        "isMoving",
+        "isJumping",
+        "isRolling",
+        "isAttacking1",
+        "isAttacking2",
+        "isHit",
+        "isDead"
+    };
+
     // 인스펙터
     [Header("애니메이션")]
     [Tooltip("애니메이션 상태")]
@@ -34,10 +47,14 @@ public class PlayerAnimatorControll : MonoBehaviour
     private void Awake()
     {
         // 플레이어 모델에 애니메이터가 존재한다면
-        if (transform.GetChild(0).GetChild(0).GetComponent<Animator>()!=null)
+        if (transform.GetChild(0).GetChild(0).GetComponent<Animator>() != null)
         {
             // animator 초기화
-            animator = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
+            // 상태머신 관련 초기화
+            rac = animator.runtimeAnimatorController;
+            ac = animator.runtimeAnimatorController as AnimatorController;
+            sm = ac.layers[0].stateMachine;
         }
     }
 
@@ -50,34 +67,32 @@ public class PlayerAnimatorControll : MonoBehaviour
                 SetAnimatorParam();
                 break;
             case Animation_State.Move:
-                SetAnimatorParam("isMoving");
+                SetAnimatorParam(animatorParams[0]);
                 break;
             case Animation_State.Walk:
-                // 걷기
                 break;
             case Animation_State.Jump:
-                SetAnimatorParam("isJumping");
+                SetAnimatorParam(animatorParams[1]);
                 break;
             case Animation_State.Attack1:
-                SetAnimatorParam("isAttacking1");
+                SetAnimatorParam(animatorParams[3]);
                 break;
             case Animation_State.Attack2:
-                SetAnimatorParam("isAttacking2");
+                SetAnimatorParam(animatorParams[4]);
                 break;
             case Animation_State.Attack3:
-                SetAnimatorParam("isAttacking3");
+                SetAnimatorParam(animatorParams[5]);
                 break;
             case Animation_State.Hit:
-                SetAnimatorParam("isHit");
+                SetAnimatorParam(animatorParams[6]);
                 break;
             case Animation_State.Avoid1:
-                SetAnimatorParam("isRolling");
+                SetAnimatorParam(animatorParams[2]);
                 break;
             case Animation_State.Avoid2:
-                // 회피2
                 break;
             case Animation_State.Dead:
-                SetAnimatorParam("isDead");
+                SetAnimatorParam(animatorParams[7]);
                 break;
         }
     }
@@ -87,14 +102,10 @@ public class PlayerAnimatorControll : MonoBehaviour
     /// </summary>
     void SetAnimatorParam()
     {
-                animator.SetBool("isMoving", false);
-                animator.SetBool("isJumping", false);
-                animator.SetBool("isRolling", false);
-                animator.SetBool("isAttacking1", false);
-                animator.SetBool("isAttacking2", false);
-                animator.SetBool("isAttacking3", false );
-                animator.SetBool("isHit", false);
-                animator.SetBool("isDead", false);
+        for (int i = 0; i < ac.parameters.Length; i++)
+        {
+            animator.SetBool(ac.parameters[i].name, false);
+        }
     }
 
     /// <summary>
@@ -103,8 +114,20 @@ public class PlayerAnimatorControll : MonoBehaviour
     /// <param name="anim">true로 만들 애니메이터 파라미터</param>
     void SetAnimatorParam(string anim)
     {
-        SetAnimatorParam();
-        animator.SetBool(anim, true);
+        for (int i = 0; i < ac.parameters.Length; i++)
+        {
+            if (ac.parameters[i].name.Equals(anim))
+            {
+                animator.SetBool(anim, true);
+            }
+            else
+            {
+                if (!(anim.Equals(animatorParams[1]) && ac.parameters[i].name.Equals(animatorParams[0])))
+                {
+                    animator.SetBool(ac.parameters[i].name, false);
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -132,12 +155,8 @@ public class PlayerAnimatorControll : MonoBehaviour
         // 상태머신 state의 배속
         float smSpeed = 1;
 
-        // 상태머신 관련 초기화
-        RuntimeAnimatorController rac = animator.runtimeAnimatorController;
-        AnimatorController ac = animator.runtimeAnimatorController as AnimatorController;
-        AnimatorStateMachine sm = ac.layers[0].stateMachine;
+        float loopTime = 1;
 
-        float skillLoopTime = 1;
 
         // 현재 상태의 애니메이션 찾고 재생시간 반환
         // 상태와 연결된 애니메이션 이름과 상태 재생속도, 상태 반복 횟수 확인
@@ -145,10 +164,8 @@ public class PlayerAnimatorControll : MonoBehaviour
         {
             if (sm.states[i].state.name.Equals(smState))
             {
-                if (smState.Equals("Skill"))
-                {
-                    skillLoopTime = sm.states[i].state.transitions[0].exitTime;
-                }
+                loopTime = sm.states[i].state.transitions[0].exitTime;
+
                 smClip = sm.states[i].state.motion.name;
                 smSpeed = sm.states[i].state.speed;
             }
@@ -164,14 +181,7 @@ public class PlayerAnimatorControll : MonoBehaviour
         }
 
         // 애니메이션 재생 길이, 상태 재생 속도, 반복 횟수를 계산한 최종 상태 재생 길이 반환
-        if (smState.Equals("Skill"))
-        {
-            return (time / smSpeed) * skillLoopTime;
-        }
-        else
-        {
-            return time / smSpeed;
-        }
+        return (time / smSpeed) * loopTime;
     }
 
     /// <summary>
@@ -190,7 +200,6 @@ public class PlayerAnimatorControll : MonoBehaviour
                 smStateString = "Move";
                 break;
             case Animation_State.Walk:
-                
                 break;
             case Animation_State.Jump:
                 smStateString = "Jump";
@@ -208,9 +217,10 @@ public class PlayerAnimatorControll : MonoBehaviour
                 smStateString = "Hit";
                 break;
             case Animation_State.Avoid1:
-                smStateString = "Roll";
+                smStateString = "Roll1";
                 break;
             case Animation_State.Avoid2:
+                smStateString = "Roll2";
                 break;
             case Animation_State.Dead:
                 smStateString = "Dead";
