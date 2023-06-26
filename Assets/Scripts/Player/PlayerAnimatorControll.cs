@@ -33,6 +33,7 @@ public class PlayerAnimatorControll : MonoBehaviour
         "isRolling",
         "isAttacking1",
         "isAttacking2",
+        "isAttacking3",
         "isHit",
         "isDead"
     };

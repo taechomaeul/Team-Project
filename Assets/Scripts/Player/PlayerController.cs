@@ -215,8 +215,8 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.ATTACKM1:
                     //애니메이션 연결
                     //anim.SetInteger("State", 5);
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);
-                    //공격 애니메이션 길이: pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);                    
+                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
 
                     plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
 
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 6);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
-                    //공격 애니메이션 길이: pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
+                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
                     plInfo.plAtk = originAtk;
                     //공격력 설정
@@ -298,7 +298,7 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 7);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack3);
-                    //공격 애니메이션 길이: pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
+                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
 
                     plInfo.plAtk = originAtk;
                     //공격력 설정
