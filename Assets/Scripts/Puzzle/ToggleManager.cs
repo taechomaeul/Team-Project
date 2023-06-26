@@ -78,8 +78,15 @@ public class ToggleManager : MonoBehaviour
     public IEnumerator ClearToggleGame()
     {
         yield return new WaitForSeconds(1f);
+
+        fire1.SetActive(false);
+        fire2.SetActive(false);
+        fire3.SetActive(false);
+        fire4.SetActive(false);
+        fire5.SetActive(false);
+
         clearPanel.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f);     
         togglePanel.SetActive(false);
         clearPanel.SetActive(false);
         actionFuntion.RestartGame();
