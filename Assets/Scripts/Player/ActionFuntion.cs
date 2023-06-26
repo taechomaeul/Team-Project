@@ -28,7 +28,7 @@ public class ActionFuntion : MonoBehaviour
     /// 영혼석의 무게(HP)은 최대 수치(soulHp = 666)를 넘길 수 없다.
     /// </summary>
     /// <param name="hp">영혼석에 담긴 영혼의 무게(HP)</param>
-    public void MoveSoulToStone(float hp)
+    public void MoveSoulToStone(int hp)
     {
         plInfo.soulHp += hp;
     }
@@ -43,11 +43,11 @@ public class ActionFuntion : MonoBehaviour
     /// 영혼석의 숫자(N)에는 빼서 최대 체력을 넘지 않게 & 올바르게 뺀 값(N-1)을 영혼석에 저장한다.
     /// </summary>
     /// <param name="hp">초당 회복하는 HP</param>
-    public void FillHpUsingStone(float hp)
+    public void FillHpUsingStone(int hp)
     {
         if (plInfo.maxHp - plInfo.curHp < hp) //만약 최대체력-현재체력 보다 회복하려는 숫자가 더 크다면
         {
-            float subHp = plInfo.maxHp - plInfo.curHp;
+            int subHp = plInfo.maxHp - plInfo.curHp;
             plInfo.curHp += subHp;
             plInfo.soulHp -= subHp;
             return;
@@ -82,7 +82,7 @@ public class ActionFuntion : MonoBehaviour
     {
         if (plInfo.maxHp - plInfo.curHp < increaseHp) //만약 최대체력-현재체력 보다 회복하려는 숫자가 더 크다면
         {
-            float subHp = plInfo.maxHp - plInfo.curHp;
+            int subHp = plInfo.maxHp - plInfo.curHp;
             plInfo.curHp += subHp;
             return;
             //회복하려는 숫자가 아니라 뺀 숫자만큼의 크기를 더하고 뺀다.
@@ -106,32 +106,18 @@ public class ActionFuntion : MonoBehaviour
         {
             if (enemyPrefabInfo.enemyPrefabs[i].name.Contains(enemyName))
             {
-                Vector3 originPlayerPos = player.transform.position; //player의 위치(PlayerModel이 움직임)
-                Quaternion originPlayerRot = player.transform.parent.rotation; //캐릭터 방향
-                Quaternion originSightRot = GameObject.Find("Sight").GetComponent<PlayerLook>().transform.rotation; //시야방향
-
-                Destroy(player.gameObject);
+                Vector3 originPlayerPrefabPos = player.transform.Find("PlayerPrefab").localPosition;
+                Destroy(player.transform.Find("PlayerPrefab").gameObject);
 
                 //프리팹 생성 및 정보입력
-                GameObject enemyPrefab = enemyPrefabInfo.enemyPrefabs[i]; //이름이 같은 프리팹 선택
-                GameObject newPlayer = Instantiate(enemyPrefab, originPlayerPos, originPlayerRot); //생성
-                GameObject sight = Instantiate(enemyPrefabInfo.sightPrefab);
+                GameObject enemyPrefab = enemyPrefabInfo.enemyPrefabs[i];
+                GameObject newPlayer = Instantiate(enemyPrefab);
 
-                newPlayer.name = "PlayerModel";
-                newPlayer.tag = "Player";
-                newPlayer.transform.parent = GameObject.FindGameObjectWithTag("Player").transform; //PlayerModel은 Player 자식개체로 들어간다
-                newPlayer.transform.position = originPlayerPos;
-                newPlayer.transform.rotation = originPlayerRot;
+                newPlayer.transform.parent = player.transform;
+                newPlayer.transform.localPosition = originPlayerPrefabPos;
+                newPlayer.transform.localRotation = Quaternion.identity;
+                newPlayer.name = "PlayerPrefab";
 
-                sight.name = "Sight";
-                sight.transform.parent = newPlayer.transform; //sight의 부모개체는 newPlayer.
-                sight.GetComponent<PlayerLook>().plInfo = player.GetComponent<PlayerInfo>();
-                sight.transform.localPosition = Vector3.zero;
-                sight.transform.localRotation = originSightRot;
-
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().cameraTransform = sight.transform.GetChild(0);
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().characterController = newPlayer.GetComponent<CharacterController>();
-                
             }
         }
 

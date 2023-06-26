@@ -21,6 +21,6 @@ public class PlayerUIManager : MonoBehaviour
     void Update()
     {
         soulHpText.text = $"x{playerController.plInfo.soulHp}";
-        hpSlider.value = playerController.plInfo.curHp / playerController.plInfo.maxHp;
+        hpSlider.value = (float) playerController.plInfo.curHp / playerController.plInfo.maxHp;
     }
 }
