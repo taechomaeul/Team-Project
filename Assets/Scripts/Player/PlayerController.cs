@@ -27,7 +27,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("공격 애니메이션 변수")]
     public float attackTime = 0; //deltaTime 더할 변수
-    public float atkResetTime = 2f; //공격 초기화 시간 2초
+    public float atkResetTime; //공격 초기화 시간 변수
+
+    [Header("피격 애니메이션 변수")]
+    public float damagedTime = 0; //deltaTime 더할 변수
+    public float dmgResetTime; //피격 초기화 시간 변수
 
     [Header("공격 변수")]
     public int originAtk;
@@ -219,13 +223,9 @@ public class PlayerController : MonoBehaviour
                     atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
 
                     plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
-
-                    //실제 들어갈 대미지 계산
                     attackRange.SetActive(true);
-                    //애니메이션 실행 코드
 
                     //연타 초기화 시간
-
                     attackTime += Time.deltaTime;
                     if (IsAttacking())
                     {
@@ -259,12 +259,8 @@ public class PlayerController : MonoBehaviour
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
                     atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
-                    plInfo.plAtk = originAtk;
-                    //공격력 설정
-
-                    //실제 들어갈 대미지 계산
+                    plInfo.plAtk = originAtk; //공격력 설정
                     attackRange.SetActive(true);
-                    //애니메이션 실행
 
                     //연타 초기화 시간
                     attackTime += Time.deltaTime;
@@ -303,10 +299,7 @@ public class PlayerController : MonoBehaviour
                     plInfo.plAtk = originAtk;
                     //공격력 설정
 
-                    //enemy.currentHp -= damangeCalc.DamageRandomCalc(plInfo.plAtk, damageRange);
-                    //실제 들어갈 대미지 계산
                     attackRange.SetActive(true);
-                    //애니메이션 실행
 
                     //연타 초기화 시간
                     attackTime += Time.deltaTime;
@@ -339,7 +332,7 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 8);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
-                    //피격 애니메이션 길이: pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit);
+                    dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
 
                     if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
                     {
@@ -348,6 +341,14 @@ public class PlayerController : MonoBehaviour
                     }
                     else
                     {
+                        plState = PL_STATE.IDLE;
+                    }
+
+                    //애니메이션 시간 대기
+                    damagedTime += Time.deltaTime;
+                    if (damagedTime > dmgResetTime)
+                    {
+                        damagedTime = 0;
                         plState = PL_STATE.IDLE;
                     }
 
@@ -393,6 +394,10 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 11);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Dead);
+
+                    //플래그 ON, 속도 X
+                    isDead = true;
+                    plInfo.plMoveSpd = 0;
                     Debug.Log("PLAYER DIE");
                     break;
 
@@ -453,6 +458,10 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 피격 당했을 경우, 플레이어의 상태를 바꾸고 대미지를 차감하는 함수
+    /// </summary>
+    /// <param name="damage">적이 가한 대미지 양</param>
     public void BeAttacked(int damage)
     {
         plInfo.curHp -= damage;
@@ -461,6 +470,10 @@ public class PlayerController : MonoBehaviour
         //플레이어 상태 변경
     }
 
+    /// <summary>
+    /// 스킬 쿨타임에 따른 스킬 사용 가능 여부 확인 후, 스킬을 실행하는 함수
+    /// E키를 눌렀을 때 SkillCool이 초기화(false)가 되었다면 스킬 사용 가능
+    /// </summary>
     public void isSkill()
     {
         if (Input.GetKeyDown(KeyCode.E) && !isSkillCool) //E키 입력이 들어왔는데 CoolTime이 없다면

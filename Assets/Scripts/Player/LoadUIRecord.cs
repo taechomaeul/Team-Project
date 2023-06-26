@@ -14,24 +14,22 @@ public class LoadUIRecord : MonoBehaviour
     }
 
     /// <summary>
-    /// 일지에서 record 불러오기용 함수
+    /// 일지에서 record(누군가의 일지) 불러오기용 함수
     /// </summary>
     public void LoadRecord()
     {
         string colliName = gameObject.name;
-        //Debug.Log($"ColliName : {colliName}");
         GameObject context = gameObject.transform.parent.parent.parent.parent.parent.GetChild(1).GetChild(0).gameObject;
-        //Debug.Log(context.name);
         StartCoroutine(showScript.LoadRecordData(colliName, context.GetComponent<Text>()));
     }
-    //버튼 이동시 instatiate한 것들 없애는 코드 만들어야 합니다!!
 
+    /// <summary>
+    /// 일지에서 Tip(나의 일지) 불러오기용 함수
+    /// </summary>
     public void LoadTip()
     {
         string colliName = gameObject.name;
-        //Debug.Log($"ColliName : {colliName}");
         GameObject context = gameObject.transform.parent.parent.parent.parent.parent.GetChild(1).GetChild(0).gameObject;
-        //Debug.Log(context.name);
         StartCoroutine(showScript.LoadTipData(colliName, context.GetComponent<Text>()));
     }
 

@@ -12,9 +12,8 @@ public class PlayerUIManager : MonoBehaviour
     [Tooltip("일지 Panel")]
     public GameObject journalPanel;
 
-    [Header("연결 X")]
-    public PlayerController playerController;
-    public GameManager gameManager;
+    private PlayerController playerController;
+    private GameManager gameManager;
 
     void Start()
     {

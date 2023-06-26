@@ -319,25 +319,29 @@ public class ShowScript : MonoBehaviour
         yield return new WaitForSeconds(2f);
     }
 
+    /// <summary>
+    /// 일지에서 하위 메뉴버튼을 이동하면서 Record의 중복생성을 막기 위한 함수
+    /// </summary>
     public void DeleteRecordContent()
     {
         if (someonePanel.transform.childCount != 0)
         {
             for (int i = 0; i < record.Count; i++)
             {
-                //Debug.Log($"Delete : {someonePanel.transform.GetChild(i).gameObject}");
                 Destroy(someonePanel.transform.GetChild(i).gameObject);
             }
         }
     }
 
+    /// <summary>
+    /// 일지에서 하위 메뉴버튼을 이동하면서 Tip의 중복생성을 막기 위한 함수
+    /// </summary>
     public void DeleteTipContent()
     {
         if (tipPanel.transform.childCount != 0)
         {
             for (int i = 0; i < tip.Count; i++)
             {
-                //Debug.Log($"Delete : {tipPanel.transform.GetChild(i).gameObject}");
                 Destroy(tipPanel.transform.GetChild(i).gameObject);
             }
         }

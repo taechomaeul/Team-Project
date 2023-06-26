@@ -14,20 +14,17 @@ public class ScriptColliderInfo : MonoBehaviour
     public int curIndex;
     public int nextIndex;
     public bool isShowed = false;
-
     private bool isStay = false;
 
     private ShowScript showScript;
-    [SerializeField]
     private ActionFuntion actionFunction;
-    //private ToggleManager toggleManager;
 
     private void Start()
     {
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
-        //toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
     }
+
     private void Update()
     {
         if (isStay)
@@ -52,6 +49,11 @@ public class ScriptColliderInfo : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 버튼 클릭 시까지 대기했다가 (누군가의) 일지가 OFF 되면 스크립트를 출력하게 도와주는 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator IsBtnClick()
     {
         yield return new WaitUntil(() => showScript.isClick == true);
@@ -61,7 +63,6 @@ public class ScriptColliderInfo : MonoBehaviour
     public void ConditionMove()
     {
         scriptPanel.SetActive(true);
-        //Debug.Log("PauseGameForAct");
         actionFunction.PauseGameForAct();
 
         //인덱스로 스크립트를 불러온다
@@ -77,28 +78,24 @@ public class ScriptColliderInfo : MonoBehaviour
             index = showScript.GetIndex(colliderName);
             curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
             nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기
-            //Debug.Log($"Enter/ Index: {index} | curIndex: {curIndex} | nextIndex: {nextIndex}");
             showScript.isClick = false;
 
             if (colliderName != "SAVE_A")
             {
                 ConditionMove();
             }
-
-            //ConditionMove();
         }
 
     }
 
     private void OnTriggerStay(Collider other)
     {
-
         if (other.CompareTag("Player"))
         {
-            if (colliderName.Equals("SAVE_A"))
+            if (colliderName.Equals("SAVE_A")) //세이브 포인트에서 스크립트를 출력할 때
             {
                 SaveController saveController = GetComponent<SaveController>();
-                if (saveController.curAreaIndex != 0 && !isShowed)
+                if (saveController.curAreaIndex != 0 && !isShowed) //세이브 포인트의 인덱스가 0이라면 출력하지 않음
                 {
                     ConditionMove();
                     isShowed = true;
@@ -119,28 +116,6 @@ public class ScriptColliderInfo : MonoBehaviour
             {
                 isStay = true;
             }
-
-            /*
-            else if (Input.GetMouseButtonDown(0))
-            {
-                //if (!EventSystem.current.IsPointerOverGameObject())
-                //{
-                //클릭 처리
-                if (curIndex < nextIndex)
-                {
-                    showScript.LoadScript(curIndex);
-                    curIndex++;
-                }
-                else
-                {
-                    scriptPanel.SetActive(false);
-
-                    actionFunction.RestartGame();
-                    isShowed = true;
-                }
-                //}
-                
-            }*/
         }
     }
 
@@ -150,19 +125,16 @@ public class ScriptColliderInfo : MonoBehaviour
         if (other.CompareTag("Player") && isShowed && !gameObject.name.Contains("SavePoint"))
         {
             Destroy(gameObject);
-            //Destroy(gameObject.GetComponent<SphereCollider>());
-            //Destroy(gameObject.GetComponent<BoxCollider>());
             showScript.isClick = false;
             isShowed = false;
 
             if (colliderName.Equals("T_PUZZLE"))
             {
                 ToggleManager toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
-                if (!toggleManager.isClear)
+                if (!toggleManager.isClear) //토글 게임이 클리어 상태가 아닐 경우에만 토글 게임을 진행할 수 있어야 한다
                 {
-                    //Debug.Log("T_PUZZLE");
-                    actionFunction.PauseGameForAct();
-                    toggleManager.PlayToggleGame();
+                    actionFunction.PauseGameForAct(); //토글 게임 진행을 위해서 움직임(카메라, 플레이어) 이동을 멈춘다.
+                    toggleManager.PlayToggleGame(); //토글 게임 시작
                 }
             }
         }
