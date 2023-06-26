@@ -165,7 +165,14 @@ public class ShowScript : MonoBehaviour
                     recordText.text = " ";
                     for (int j = 0; j < sText.Length; j++)
                     {
-                        recordText.text += (sText[j] + "\n");
+                        if (j == sText.Length - 1)
+                        {
+                            recordText.text += sText[j]; // '/'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                        }
+                        else
+                        {
+                            recordText.text += (sText[j] + "\n");
+                        }
                     }
                     //Debug.Log($"{recordText.text}");
                     break;

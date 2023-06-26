@@ -42,8 +42,8 @@ public class SaveController : MonoBehaviour
                 saveFPanel.SetActive(false);
 
                 //플래그로 인덱스 불러온 후 저장
-                curAreaIndex = int.Parse(gameObject.transform.name.Split('_')[1]); //현재 저장하려는 위치의 이름에서 인덱스 가져오자 ex Save01 -> 1
-                //Debug.Log(curAreaIndex);
+                curAreaIndex = int.Parse(gameObject.transform.name.Split('_')[1]); //현재 저장하려는 위치의 이름에서 인덱스 가져오자 ex SavePoint_1 -> 1
+                Debug.Log($"curAreaIndex : {curAreaIndex}");
                 //saveManager.SaveCurrentData(GameObject.FindGameObjectWithTag("Player").transform, plInfo.curHp, plInfo.curPrefabIndex, plInfo.curSkill.skillName);
                 //영혼석의 현재 무게도 저장해야 합니다..!!
 

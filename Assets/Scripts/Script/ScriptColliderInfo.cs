@@ -18,14 +18,15 @@ public class ScriptColliderInfo : MonoBehaviour
     private bool isStay = false;
 
     private ShowScript showScript;
+    [SerializeField]
     private ActionFuntion actionFunction;
-    private ToggleManager toggleManager;
+    //private ToggleManager toggleManager;
 
     private void Start()
     {
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
-        toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
+        //toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
     }
     private void Update()
     {
@@ -75,7 +76,9 @@ public class ScriptColliderInfo : MonoBehaviour
             //현재 Collider의 이름으로 인덱스를 받아온다
             index = showScript.GetIndex(colliderName);
             curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
-            nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기 
+            nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기
+            //Debug.Log($"Enter/ Index: {index} | curIndex: {curIndex} | nextIndex: {nextIndex}");
+            showScript.isClick = false;
 
             if (colliderName != "SAVE_A")
             {
@@ -95,7 +98,7 @@ public class ScriptColliderInfo : MonoBehaviour
             if (colliderName.Equals("SAVE_A"))
             {
                 SaveController saveController = GetComponent<SaveController>();
-                if (saveController.curAreaIndex == 1 && !isShowed)
+                if (saveController.curAreaIndex != 0 && !isShowed)
                 {
                     ConditionMove();
                     isShowed = true;
@@ -150,20 +153,25 @@ public class ScriptColliderInfo : MonoBehaviour
             //Destroy(gameObject.GetComponent<SphereCollider>());
             //Destroy(gameObject.GetComponent<BoxCollider>());
             showScript.isClick = false;
+            isShowed = false;
 
-            if (colliderName.Equals("T_PUZZLE") && !toggleManager.isClear)
+            if (colliderName.Equals("T_PUZZLE"))
             {
-                Debug.Log("T_PUZZLE");
-                actionFunction.PauseGameForAct();
-                toggleManager.PlayToggleGame();
+                ToggleManager toggleManager = GameObject.Find("ToggleManager").GetComponent<ToggleManager>();
+                if (!toggleManager.isClear)
+                {
+                    //Debug.Log("T_PUZZLE");
+                    actionFunction.PauseGameForAct();
+                    toggleManager.PlayToggleGame();
+                }
             }
         }
         else
         {
             //인덱스 초기화
-            index = showScript.GetIndex(colliderName);
-            curIndex = showScript.GetStartIndex(index);
-            nextIndex = showScript.GetEndIndex(index);
+            index = 0;
+            curIndex = 0;
+            nextIndex = 0;
 
             isShowed = false; //저장은 다시 할 수 있으므로 저장 완료 스크립트를 보여줘야 함
         }
