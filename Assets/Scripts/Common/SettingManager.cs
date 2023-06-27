@@ -19,6 +19,9 @@ public class SettingManager : MonoBehaviour
     [Tooltip("SFX 볼륨")]
     public Slider sfxSlider;
 
+    [Tooltip("해상도")]
+    public Dropdown resolutionsDropdown;
+
     private void Awake()
     {
         // DontDestroyOnLoad
@@ -38,10 +41,21 @@ public class SettingManager : MonoBehaviour
     void InitSettings()
     {
         resolutions.AddRange(Screen.resolutions);
+        resolutionsDropdown.options.Clear();
         for(int i =0;i< resolutions.Count;i++)
         {
-            Debug.Log($"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}hz");
+            //Debug.Log($"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}hz");
+            Dropdown.OptionData option = new()
+            {
+                text = $"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}hz"
+            };
+            resolutionsDropdown.options.Add(option);
+            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            {
+                resolutionsDropdown.value = i;
+            }
         }
+        resolutionsDropdown.RefreshShownValue();
     }
 
 
@@ -94,4 +108,8 @@ public class SettingManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void SetResolution(int index)
+    {
+
+    }
 }
