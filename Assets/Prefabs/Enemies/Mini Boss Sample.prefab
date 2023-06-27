@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1425086370163302265}
   - component: {fileID: 1425086370163302264}
   - component: {fileID: 1425086370163302267}
+  - component: {fileID: 6033345870888237938}
   m_Layer: 0
   m_Name: Mini Boss Sample
   m_TagString: Enemy
@@ -111,6 +112,8 @@ MonoBehaviour:
     skillCastRange: 5
     skillPhaseHpRatio: 70
     canSkill: 0
+    isInSkillRange: 0
+    isSkillCasting: 0
 --- !u!114 &1425086370163302262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +166,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2943373cdaa2b45b5d884b2df68d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wasDead: 0
   soulStone: {fileID: 1425086370649866092}
+--- !u!114 &6033345870888237938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425086370163302266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf97702923aeb3a45aefbd5f2939ff6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectAttack1: {fileID: 0}
+  effectAttack2: {fileID: 0}
+  effectAttack3: {fileID: 0}
+  effectSkill: {fileID: 0}
+  delayAttack1: 0
+  delayAttack2: 0
+  delayAttack3: 0
+  delaySkill: 0
 --- !u!1 &1425086370244495716
 GameObject:
   m_ObjectHideFlags: 0

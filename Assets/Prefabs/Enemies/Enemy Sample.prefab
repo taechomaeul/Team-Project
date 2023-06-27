@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 2244122309189287928}
   - component: {fileID: 2244122309189287927}
   - component: {fileID: 2244122309189287934}
+  - component: {fileID: 3808683435004919718}
   m_Layer: 0
   m_Name: Enemy Sample
   m_TagString: Enemy
@@ -240,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2943373cdaa2b45b5d884b2df68d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wasDead: 0
   soulStone: {fileID: 2244122308626663159}
 --- !u!136 &2244122309189287934
 CapsuleCollider:
@@ -255,6 +257,26 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3808683435004919718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2244122309189287926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf97702923aeb3a45aefbd5f2939ff6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectAttack1: {fileID: 0}
+  effectAttack2: {fileID: 0}
+  effectAttack3: {fileID: 0}
+  effectSkill: {fileID: 0}
+  delayAttack1: 0
+  delayAttack2: 0
+  delayAttack3: 0
+  delaySkill: 0
 --- !u!1 &2244122309395477055
 GameObject:
   m_ObjectHideFlags: 0
