@@ -11,8 +11,8 @@ public class ColliderController : MonoBehaviour
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
 
         
-        OffRecordCollider();
-        OffScriptCollider();
+        StartCoroutine(OffRecordCollider());
+        StartCoroutine(OffScriptCollider());
     }
 
     
@@ -61,12 +61,13 @@ public class ColliderController : MonoBehaviour
         // **************************
         yield return null;
         bool[] checkScript = showScript.GetCheckScriptComplete();
-        // 이 부분에 bool값을 로드한 함수(스크립트용)를 불러와주세요!
+        // 이 부분에 bool값을 로드한 함수(스크립트용)를 불러와주세요! 
 
         for (int i = 0; i < scriptObject.Length; i++)
         {
             string cName = sCollider.transform.GetChild(i).GetComponent<ScriptColliderInfo>().colliderName; //collider 이름으로
             int index = showScript.GetIndex(cName); //index를 불러온 뒤
+            //-> 해당 script의 인덱스는 IDX입니다. START_IDX 아닙니다!!
 
             if (checkScript[index]) //해당 인덱스에 있는 체크 값이 true라면 ColliderObject를 끈다
             {
