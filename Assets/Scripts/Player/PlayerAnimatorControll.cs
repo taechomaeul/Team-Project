@@ -41,22 +41,13 @@ public class PlayerAnimatorControll : MonoBehaviour
     // 인스펙터
     [Header("애니메이션")]
     [Tooltip("애니메이션 상태")]
-    [SerializeField] private Animation_State animationState;
+    [SerializeField, ReadOnly] private Animation_State animationState;
 
 
 
     private void Awake()
     {
-        // 플레이어 모델에 애니메이터가 존재한다면
-        if (transform.GetChild(0).GetChild(0).GetComponent<Animator>() != null)
-        {
-            // animator 초기화
-            animator = GetComponentInChildren<Animator>();
-            // 상태머신 관련 초기화
-            rac = animator.runtimeAnimatorController;
-            ac = animator.runtimeAnimatorController as AnimatorController;
-            sm = ac.layers[0].stateMachine;
-        }
+        InitAnimator();
     }
 
     private void FixedUpdate()
@@ -228,5 +219,22 @@ public class PlayerAnimatorControll : MonoBehaviour
                 break;
         }
         return smStateString;
+    }
+
+    /// <summary>
+    /// 플레이어 모델 애니메이터 연결
+    /// </summary>
+    internal void InitAnimator()
+    {
+        // 플레이어 모델에 애니메이터가 존재한다면
+        if (transform.GetComponentInChildren<Animator>() != null)
+        {
+            // animator 초기화
+            animator = GetComponentInChildren<Animator>();
+            // 상태머신 관련 초기화
+            rac = animator.runtimeAnimatorController;
+            ac = animator.runtimeAnimatorController as AnimatorController;
+            sm = ac.layers[0].stateMachine;
+        }
     }
 }

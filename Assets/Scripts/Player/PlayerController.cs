@@ -518,4 +518,9 @@ public class PlayerController : MonoBehaviour
         isSkillCool = false; //스킬쿨 해제
         //Debug.Log("CoolTIme Reset Complete!");
     }
+
+    public void InitAnimator()
+    {
+        pac.InitAnimator();
+    }
 }
