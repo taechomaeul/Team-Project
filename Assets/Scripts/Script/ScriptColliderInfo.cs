@@ -76,14 +76,25 @@ public class ScriptColliderInfo : MonoBehaviour
         {
             //현재 Collider의 이름으로 인덱스를 받아온다
             index = showScript.GetIndex(colliderName);
-            curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
-            nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기
-            showScript.isClick = false;
 
-            if (colliderName != "SAVE_A")
+            if (showScript.checkScriptComplete[index]) //true가 아닐 때만 스크립트 읽기
             {
-                ConditionMove();
+                Destroy(gameObject);
             }
+
+            else
+            {
+                curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
+                nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기
+                showScript.isClick = false;
+
+                if (colliderName != "SAVE_A")
+                {
+                    ConditionMove();
+                }
+            }
+
+            
         }
 
     }
@@ -103,7 +114,7 @@ public class ScriptColliderInfo : MonoBehaviour
             }
 
 
-            if (showScript.isClick)
+            if (showScript.isClick) //일지 닫기 버튼 클릭
             {
                 curIndex = nextIndex;
                 nextIndex = showScript.GetEndIndex(index + 1);
@@ -127,6 +138,10 @@ public class ScriptColliderInfo : MonoBehaviour
             Destroy(gameObject);
             showScript.isClick = false;
             isShowed = false;
+
+            //스크립트 체크 완료
+            showScript.checkScriptComplete[index] = true;
+            Debug.Log($"CheckRecordComplete[{index}] : {showScript.checkScriptComplete[index]}");
 
             if (colliderName.Equals("T_PUZZLE"))
             {

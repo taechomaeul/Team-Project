@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToMidBossScene()
     {
-        //SceneManager.LoadScene("");
+        SceneManager.LoadScene("AnimMiddleBossCutScenes");
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToFinalBossScene()
     {
-        //SceneManager.LoadScene("");
+        SceneManager.LoadScene("AnimMainBossCutScenes");
     }
 
     public void QuitTheGame()

@@ -47,6 +47,11 @@ public class RecordInfo : MonoBehaviour
         if (isConfirm)
         {
             Destroy(gameObject); //확인한 일지 삭제
+
+            //Record 체크 완료
+            int recordIndex = showScript.curCheckIndex;
+            showScript.checkScriptComplete[recordIndex] = true;
+            Debug.Log($"CheckRecordComplete[{recordIndex}] : {showScript.checkScriptComplete[recordIndex]}");
         }
     }
 }

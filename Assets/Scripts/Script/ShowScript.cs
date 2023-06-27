@@ -20,6 +20,16 @@ public class ShowScript : MonoBehaviour
     public int[] startIdxArr;
     public string[] pointArr;
 
+    public int curCheckIndex;
+
+    [Header("완료체크 확인 배열")]
+    [Tooltip("스크립트 Collider 체크 변수/이미 보여줬다면 True, 아니라면 False")]
+    public bool[] checkScriptComplete;
+    [Tooltip("나의 일지(Tip) Collider 체크 변수/이미 보여줬다면 True, 아니라면 False")]
+    public bool[] checkTipComplete;
+    [Tooltip("누군가의 일지(Record) Collider 체크 변수/이미 보여줬다면 True, 아니라면 False")]
+    public bool[] checkRecordComplete;
+
     [Header("스크립트용 연결")]
     public Text scriptText;
     public Text recordNameText;
@@ -40,10 +50,16 @@ public class ShowScript : MonoBehaviour
     void Start()
     {
         script = CSVReader.Read(scriptPath);
+        record = CSVReader.Read(recordPath);
+        tip = CSVReader.Read(tipPath);
         DOTween.Init();
 
         startIdxArr = new int[script.Count];
         pointArr = new string[script.Count];
+
+        checkScriptComplete = new bool[script.Count];
+        checkRecordComplete = new bool[record.Count];
+        checkTipComplete = new bool[tip.Count];
 
         //StartIdx 배열 생성
         for (int i=0; i< script.Count; i++)
@@ -53,10 +69,23 @@ public class ShowScript : MonoBehaviour
             {
                 startIdxArr[i] = int.Parse(script[i]["START_IDX"].ToString());
                 pointArr[i] = script[i]["POINT"].ToString();
+                checkScriptComplete[i] = false; //체크 함수 초기화
                 //Debug.Log($"pointArr[{i}] : {pointArr[i]}");
             }
             
         }
+
+        //체크 배열 초기화
+        for (int i = 0; i < record.Count; i++)
+        {
+            checkRecordComplete[i] = false;
+        }
+
+        for (int i = 0; i < tip.Count; i++)
+        {
+            checkTipComplete[i] = false;
+        }
+
 
         //중복제거
         startIdxArr = startIdxArr.Distinct().ToArray();
@@ -162,22 +191,17 @@ public class ShowScript : MonoBehaviour
 
     public void LoadRecordName()
     {
-        record = CSVReader.Read(recordPath);
-
         for (int i = 0; i < record.Count; i++)
         {
             string recordName = record[i]["RECORD_NAME"].ToString(); //이름만 불러온다.
             GameObject newRecord = Instantiate(recordNamePrefab); //prefab 생성
-            //Debug.Log($"gameObject name : {EventSystem.current.currentSelectedGameObject.name}");
             if (EventSystem.current.currentSelectedGameObject.name.Contains("Someone")) //prefab 위치 고정 someonePanel
             {
                 newRecord.transform.SetParent(someonePanel.transform);
-                //Debug.Log($"NewRecord.Transform.parent : {someonePanel.transform}");
             }
             else if (gameObject.name.Contains("Tip")) //prefab 위치 고정 tipPanel
             {
                 newRecord.transform.SetParent(tipPanel.transform);
-                //Debug.Log($"NewRecord.Transform.parent : {tipPanel.transform}");
             }
 
             newRecord.name = recordName; //이름 변경
@@ -187,17 +211,13 @@ public class ShowScript : MonoBehaviour
 
     public void LoadTipName()
     {
-        tip = CSVReader.Read(tipPath);
-
         for (int i = 0; i < tip.Count; i++)
         {
             string tipName = tip[i]["TIP_NAME"].ToString(); //이름만 불러온다.
             GameObject newRecord = Instantiate(tipNamePrefab); //prefab 생성
-            //Debug.Log($"gameObject name : {EventSystem.current.currentSelectedGameObject.name}");
             if (EventSystem.current.currentSelectedGameObject.name.Contains("Tip")) //prefab 위치 고정 tipPanel
             {
                 newRecord.transform.SetParent(tipPanel.transform);
-                //Debug.Log($"NewRecord.Transform.parent : {tipPanel.transform}");
             }
 
             newRecord.name = tipName; //이름 변경
@@ -217,12 +237,14 @@ public class ShowScript : MonoBehaviour
 
     public IEnumerator LoadRecordDataFromCSV(string colliName)
     {
-        record = CSVReader.Read(recordPath);
         recordNameText.text = colliName;
         for (int i = 0; i < record.Count; i++)
         {
             if (colliName.Equals(record[i]["RECORD_NAME"]))
             {
+                //이쯤에서 *************************
+                curCheckIndex = i;
+
                 recordText.text = record[i]["CONTEXT"].ToString();
                 if (recordText.text.Contains("/"))
                 {
@@ -250,7 +272,6 @@ public class ShowScript : MonoBehaviour
 
     public IEnumerator LoadRecordDataFromCSV(string colliName, Text context)
     {
-        record = CSVReader.Read(recordPath);
         context.text = colliName;
         for (int i = 0; i < record.Count; i++)
         {
@@ -288,7 +309,6 @@ public class ShowScript : MonoBehaviour
 
     public IEnumerator LoadTipDataFromCSV(string colliName, Text context)
     {
-        tip = CSVReader.Read(tipPath);
         context.text = colliName;
         for (int i = 0; i < tip.Count; i++)
         {
