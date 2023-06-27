@@ -47,6 +47,8 @@ public class EnemyBeAttacked : MonoBehaviour
         {
             enemyInfo.SetIsDead(true);
             eac.SetAnimationState(EnemyAnimationControll.Animation_State.Dead);
+            transform.GetComponent<CapsuleCollider>().enabled = false;
+            soulStone.SetActive(true);
         }
     }
 
