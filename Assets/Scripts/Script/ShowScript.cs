@@ -174,7 +174,14 @@ public class ShowScript : MonoBehaviour
             scriptText.text = "";
             for (int j = 0; j < sText.Length; j++)
             {
-                scriptText.text += (sText[j] + "\n");
+                if (j == sText.Length - 1)
+                {
+                    scriptText.text += sText[j]; // '/'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                }
+                else
+                {
+                    scriptText.text += (sText[j] + "\n");
+                }
             }
         }
         Debug.Log($"Type: {GetScriptType(curIndex)}");
@@ -254,7 +261,7 @@ public class ShowScript : MonoBehaviour
                 if (recordText.text.Contains("/"))
                 {
                     string[] sText = recordText.text.Split("/");
-                    recordText.text = " ";
+                    recordText.text = "";
                     for (int j = 0; j < sText.Length; j++)
                     {
                         if (j == sText.Length - 1)
@@ -329,7 +336,7 @@ public class ShowScript : MonoBehaviour
                 if (context.text.Contains("/"))
                 {
                     string[] sText = context.text.Split("/");
-                    context.text = " ";
+                    context.text = "";
                     for (int j = 0; j < sText.Length; j++)
                     {
                         if (j == sText.Length - 1)
