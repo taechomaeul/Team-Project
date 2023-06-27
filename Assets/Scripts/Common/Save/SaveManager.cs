@@ -138,6 +138,15 @@ public class SaveManager : MonoBehaviour
         }
 
         /// <summary>
+        /// 스크립트 체크 설정
+        /// </summary>
+        /// <param name="scriptDataCheckArray">저장할 스크립트 체크 배열</param>
+        internal void SetScriptData(bool[] scriptDataCheckArray)
+        {
+            scriptData = scriptDataCheckArray;
+        }
+
+        /// <summary>
         /// 팁 체크 설정
         /// </summary>
         /// <param name="index">값을 변경할 팁의 인덱스</param>
@@ -152,6 +161,15 @@ public class SaveManager : MonoBehaviour
             {
                 Debug.Log("잘못된 인덱스 접근");
             }
+        }
+
+        /// <summary>
+        /// 팁 체크 설정
+        /// </summary>
+        /// <param name="tipDataCheckArray">저장할 팁 체크 배열</param>
+        internal void SetTipData(bool[] tipDataCheckArray)
+        {
+            tipData = tipDataCheckArray;
         }
 
         /// <summary>
@@ -170,8 +188,18 @@ public class SaveManager : MonoBehaviour
                 Debug.Log("잘못된 인덱스 접근");
             }
         }
+
+        /// <summary>
+        /// 일지 체크 설정
+        /// </summary>
+        /// <param name="recordDataCheckArray">저장할 일지 체크 배열</param>
+        internal void SetRecordData(bool[] recordDataCheckArray)
+        {
+            recordData = recordDataCheckArray;
+        }
         #endregion
 
+        #region Get 함수들
         /// <summary>
         /// 마지막 저장 지점 확인
         /// </summary>
@@ -198,6 +226,43 @@ public class SaveManager : MonoBehaviour
         {
             return currentSoulCount;
         }
+
+        /// <summary>
+        /// 현재 빙의체 인덱스 확인
+        /// </summary>
+        /// <returns>현재 빙의체 인덱스</returns>
+        internal int GetCurrentBodyIndex()
+        {
+            return currentBodyIndex;
+        }
+
+        /// <summary>
+        /// 현재 스킬 인덱스 확인
+        /// </summary>
+        /// <returns>현재 스킬 인덱스</returns>
+        internal int GetCurrentSkillIndex()
+        {
+            return currentSkillIndex;
+        }
+
+        /// <summary>
+        /// 현재 공격력 확인
+        /// </summary>
+        /// <returns>현재 공격력</returns>
+        internal int GetCurrentAttack()
+        {
+            return currentAttack;
+        }
+
+        /// <summary>
+        /// 현재 이동 속도 확인
+        /// </summary>
+        /// <returns>현재 이동 속도</returns>
+        internal float GetCurrentSpeed()
+        {
+            return currentSpeed;
+        }
+        #endregion
     }
 
 
@@ -289,6 +354,7 @@ public class SaveManager : MonoBehaviour
             saveClass = JsonUtility.FromJson<SaveClass>(saveJson);
             Debug.Log("세이브 파일 불러옴");
             Debug.Log(saveJson);
+            ApplyLoadData();
         }
         // 세이브 파일이 존재하지 않는 경우
         else
@@ -298,9 +364,8 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public IEnumerator Test()
+    private void ApplyLoadData()
     {
-        yield return new WaitForSeconds(1);
-        LoadSaveData();
+        // 불러온 데이터 여기에 적용
     }
 }
