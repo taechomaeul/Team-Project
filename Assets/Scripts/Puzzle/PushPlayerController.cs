@@ -8,7 +8,7 @@ public class PushPlayerController : MonoBehaviour
     public float rotSpd = 5f;
     public const float moveSpd = 10f; //(고정) 움직임 속도, 현재 움직이는 속도는 plInfo에서 확인
 
-    [Header("기타 변수")]
+    [Header("기타 변수 / 연결 X")]
     public Transform childTransform;
     public PlayerInfo plInfo;
     public CharacterController characterController;
