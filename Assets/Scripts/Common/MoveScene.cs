@@ -19,14 +19,22 @@ public class MoveScene : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            switch (colliderName)
+            switch (colliderName) //충돌한 Collider 이름이 특정 씬 이름과 같다면, 씬 이동.
             {
-                case "TestScene_2F":
-                    gameManager.MoveTo2FScene();
+                case "AnimMiddleBossCutScenes":
+                    gameManager.MoveToMidBossScene();
                     break;
 
                 case "PushGameScene":
                     gameManager.MoveToPush();
+                    break;
+
+                case "TestScene_2F":
+                    gameManager.MoveTo2FScene();
+                    break;
+
+                case "AnimMainBossCutScenes":
+                    gameManager.MoveToFinalBossScene();
                     break;
 
                 case "EndingScene":

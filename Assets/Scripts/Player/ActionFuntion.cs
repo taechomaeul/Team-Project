@@ -118,6 +118,8 @@ public class ActionFuntion : MonoBehaviour
                 newPlayer.transform.localRotation = Quaternion.identity;
                 newPlayer.name = "PlayerPrefab";
 
+                // 플레이어 모델 애니메이터 연결
+                plController.InitAnimator();
             }
         }
 

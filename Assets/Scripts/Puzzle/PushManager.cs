@@ -6,6 +6,7 @@ public class PushManager : MonoBehaviour
 {
     public GameObject playerPrefab;
     public GameObject player;
+    public Vector3 originPos;
     public bool isClear = false;
     void Start()
     {
@@ -21,6 +22,7 @@ public class PushManager : MonoBehaviour
         Destroy(player);
         GameObject newPlayer = Instantiate(playerPrefab);
 
+        newPlayer.transform.localPosition = originPos;
         GameObject[] boxes = GameObject.FindGameObjectsWithTag("Box");
 
         foreach (GameObject item in boxes)
