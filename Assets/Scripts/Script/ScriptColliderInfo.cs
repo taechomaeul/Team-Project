@@ -141,7 +141,7 @@ public class ScriptColliderInfo : MonoBehaviour
 
             //스크립트 체크 완료
             showScript.checkScriptComplete[index] = true;
-            Debug.Log($"CheckRecordComplete[{index}] : {showScript.checkScriptComplete[index]}");
+            Debug.Log($"CheckScriptComplete[{index}] : {showScript.checkScriptComplete[index]}");
 
             if (colliderName.Equals("T_PUZZLE"))
             {

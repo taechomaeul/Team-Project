@@ -9,9 +9,9 @@ public class RecordInfo : MonoBehaviour
     public GameObject toolTipPanel;
     public GameObject recordPanel;
 
-    [SerializeField]
+    //[SerializeField]
     private ShowScript showScript;
-    [SerializeField]
+    //[SerializeField]
     private ActionFuntion actionFuntion;
     private bool isConfirm = false;
 

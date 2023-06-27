@@ -47,7 +47,7 @@ public class ShowScript : MonoBehaviour
 
     public bool isClick = false;
 
-    void Start()
+    void Awake()
     {
         script = CSVReader.Read(scriptPath);
         record = CSVReader.Read(recordPath);
@@ -57,10 +57,6 @@ public class ShowScript : MonoBehaviour
         startIdxArr = new int[script.Count];
         pointArr = new string[script.Count];
 
-        checkScriptComplete = new bool[script.Count];
-        checkRecordComplete = new bool[record.Count];
-        checkTipComplete = new bool[tip.Count];
-
         //StartIdx 배열 생성
         for (int i=0; i< script.Count; i++)
         {           
@@ -69,13 +65,27 @@ public class ShowScript : MonoBehaviour
             {
                 startIdxArr[i] = int.Parse(script[i]["START_IDX"].ToString());
                 pointArr[i] = script[i]["POINT"].ToString();
-                checkScriptComplete[i] = false; //체크 함수 초기화
-                //Debug.Log($"pointArr[{i}] : {pointArr[i]}");
             }
             
         }
 
+
+        //중복제거
+        startIdxArr = startIdxArr.Distinct().ToArray();
+        pointArr = pointArr.Distinct().ToArray();
+        scriptText.text = " ";
+        recordText.text = " ";
+
+        checkScriptComplete = new bool[startIdxArr.Length];
+        checkRecordComplete = new bool[record.Count];
+        checkTipComplete = new bool[tip.Count];
+
         //체크 배열 초기화
+        for (int i = 0; i < startIdxArr.Length; i++)
+        {
+            checkScriptComplete[i] = false;
+        }
+
         for (int i = 0; i < record.Count; i++)
         {
             checkRecordComplete[i] = false;
@@ -86,24 +96,6 @@ public class ShowScript : MonoBehaviour
             checkTipComplete[i] = false;
         }
 
-
-        //중복제거
-        startIdxArr = startIdxArr.Distinct().ToArray();
-        pointArr = pointArr.Distinct().ToArray();
-        scriptText.text = " ";
-        recordText.text = " ";
-
-        /*//전체 출력 (확인용)
-        for (int i=0; i < startIdxArr.Length; i++)
-        {
-            int s_Index = startIdxArr[i];
-            int e_Index;
-
-            if (i == startIdxArr.Length-1) { e_Index = script.Count; }
-            else { e_Index = startIdxArr[i + 1]; }
-
-            StartCoroutine(LoadScriptData(s_Index, e_Index));
-        }*/
     }
 
 
@@ -138,6 +130,16 @@ public class ShowScript : MonoBehaviour
         return e_Index;
     }
 
+    public bool[] GetCheckRecordComplete()
+    {
+        return checkRecordComplete;
+    }
+
+    public bool[] GetCheckScriptComplete()
+    {
+        return checkScriptComplete;
+    }
+
     IEnumerator WaitNSeconds(float time)
     {
         yield return new WaitForSecondsRealtime(time);
@@ -147,7 +149,6 @@ public class ShowScript : MonoBehaviour
     {
         yield return StartCoroutine(WaitNSeconds(time));
     }
-
 
     public void LoadScript(int curIndex)
     {
@@ -187,7 +188,6 @@ public class ShowScript : MonoBehaviour
         string type = script[index]["SYSTEM/SCRIPT"].ToString();
         return type;
     }
-
 
     public void LoadRecordName()
     {
@@ -235,6 +235,11 @@ public class ShowScript : MonoBehaviour
         yield return StartCoroutine(LoadRecordDataFromCSV(colliName, context));
     }
 
+    /// <summary>
+    /// 메인화면에서 일지 보여주는 용도의 함수
+    /// </summary>
+    /// <param name="colliName"></param>
+    /// <returns></returns>
     public IEnumerator LoadRecordDataFromCSV(string colliName)
     {
         recordNameText.text = colliName;
@@ -242,7 +247,7 @@ public class ShowScript : MonoBehaviour
         {
             if (colliName.Equals(record[i]["RECORD_NAME"]))
             {
-                //이쯤에서 *************************
+                //checkindex 넘겨주기 위해서 고정
                 curCheckIndex = i;
 
                 recordText.text = record[i]["CONTEXT"].ToString();
@@ -270,6 +275,12 @@ public class ShowScript : MonoBehaviour
         yield return new WaitForSeconds(2f);
     }
 
+    /// <summary>
+    /// 일지(J)에서 내용을 보여주기 위한 용도의 함수
+    /// </summary>
+    /// <param name="colliName"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public IEnumerator LoadRecordDataFromCSV(string colliName, Text context)
     {
         context.text = colliName;
@@ -371,7 +382,5 @@ public class ShowScript : MonoBehaviour
     {
         isClick = true;
     }
-
-
 
 }
