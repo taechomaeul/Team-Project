@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class SkillController : MonoBehaviour
 {
+    [Header("연결 필수")]
     public GameObject toolTip;
     public GameObject skillUI;
-    public PlayerInfo plInfo;
-    public SkillInfo skillInfo;
+
+    private PlayerInfo plInfo;
+    private SkillInfo skillInfo;
 
     void Start()
     {
@@ -31,7 +33,7 @@ public class SkillController : MonoBehaviour
     /// 툴팁을 비활성화하고, 부딪힌 오브젝트의 뒤에서 숫자만 가져와 분류를 한 뒤(스킬1, 2, 3)
     /// 스킬 정보를 넘겨주고 UI 이미지를 바꾼다.
     /// </summary>
-    /// <param name="other"></param>
+    /// <param name="other">Collider와 부딪한 물체(Player)</param>
     private void OnTriggerStay(Collider other)
     {
         if (other.transform.CompareTag("Player"))
