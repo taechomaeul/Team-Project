@@ -20,7 +20,7 @@ public class EnemyAttacking : MonoBehaviour
     // 애니메이터 컨트롤
     EnemyAnimationControll eac;
     // 이펙트 컨트롤
-    EnemyEffectControll eec;
+    EnemyEffectAndSoundControll eec;
 
     // 인스펙터
     [Header("공격 종류 개수")]
@@ -72,7 +72,7 @@ public class EnemyAttacking : MonoBehaviour
         // 애니메이터 컨트롤 세팅
         eac = GetComponent<EnemyAnimationControll>();
         // 이펙트 컨트롤 세팅
-        eec = GetComponent<EnemyEffectControll>();
+        eec = GetComponent<EnemyEffectAndSoundControll>();
     }
 
     void FixedUpdate()
