@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -29,31 +28,33 @@ public class SaveManager : MonoBehaviour
     // 저장 데이터 클래스
     internal SaveClass saveClass = new();
 
+    ShowScript ss;
+    ColliderController cc;
+
     // 세이브 관련 클래스
     [Serializable]
     internal class SaveClass
     {
         // 저장 위치
-        [SerializeField] private int? lastSavePosition = null;
+        [SerializeField] private int lastSavePosition;
         // 현재 체력
-        [SerializeField] private int? currentHp = null;
+        [SerializeField] private int currentHp;
         // 현재 영혼
-        [SerializeField] private int? currentSoulCount = null;
+        [SerializeField] private int currentSoulCount;
         // 현재 빙의체
-        [SerializeField] private int? currentBodyIndex = null;
+        [SerializeField] private int currentBodyIndex;
         // 현재 가지고 있는 스킬
-        [SerializeField] private int? currentSkillIndex = null;
+        [SerializeField] private int currentSkillIndex;
         // 현재 공격력?
-        [SerializeField] private int? currentAttack = null;
+        [SerializeField] private int currentAttack;
         // 현재 속도?
-        [SerializeField] private float? currentSpeed = null;
-#nullable enable
+        [SerializeField] private float currentSpeed;
         // 스크립트 체크
-        [SerializeField] private bool[]? scriptData = null;
+        [SerializeField] private bool[] scriptData;
         // 팁 체크
-        [SerializeField] private bool[]? tipData = null;
+        [SerializeField] private bool[] tipData;
         // 일지 체크
-        [SerializeField] private bool[]? recordData = null;
+        [SerializeField] private bool[] recordData;
 
 
 
@@ -228,7 +229,7 @@ public class SaveManager : MonoBehaviour
         /// 마지막 저장 지점 확인
         /// </summary>
         /// <returns>마지막 저장 지점 인덱스 or null</returns>
-        internal int? GetLastSavePosition()
+        internal int GetLastSavePosition()
         {
             return lastSavePosition;
         }
@@ -237,7 +238,7 @@ public class SaveManager : MonoBehaviour
         /// 현재 체력 확인
         /// </summary>
         /// <returns>현재 체력 or null</returns>
-        internal int? GetCurrentHp()
+        internal int GetCurrentHp()
         {
             return currentHp;
         }
@@ -246,7 +247,7 @@ public class SaveManager : MonoBehaviour
         /// 현재 영혼 확인
         /// </summary>
         /// <returns>현재 영혼 or null</returns>
-        internal int? GetCurrentSoulCount()
+        internal int GetCurrentSoulCount()
         {
             return currentSoulCount;
         }
@@ -255,7 +256,7 @@ public class SaveManager : MonoBehaviour
         /// 현재 빙의체 인덱스 확인
         /// </summary>
         /// <returns>현재 빙의체 인덱스 or null</returns>
-        internal int? GetCurrentBodyIndex()
+        internal int GetCurrentBodyIndex()
         {
             return currentBodyIndex;
         }
@@ -264,7 +265,7 @@ public class SaveManager : MonoBehaviour
         /// 현재 스킬 인덱스 확인
         /// </summary>
         /// <returns>현재 스킬 인덱스 or null</returns>
-        internal int? GetCurrentSkillIndex()
+        internal int GetCurrentSkillIndex()
         {
             return currentSkillIndex;
         }
@@ -273,7 +274,7 @@ public class SaveManager : MonoBehaviour
         /// 현재 공격력 확인
         /// </summary>
         /// <returns>현재 공격력 or null</returns>
-        internal int? GetCurrentAttack()
+        internal int GetCurrentAttack()
         {
             return currentAttack;
         }
@@ -282,7 +283,7 @@ public class SaveManager : MonoBehaviour
         /// 현재 이동 속도 확인
         /// </summary>
         /// <returns>현재 이동 속도 or null</returns>
-        internal float? GetCurrentSpeed()
+        internal float GetCurrentSpeed()
         {
             return currentSpeed;
         }
@@ -291,7 +292,7 @@ public class SaveManager : MonoBehaviour
         /// 스크립트 체크 확인
         /// </summary>
         /// <returns>스크립트 체크 or null</returns>
-        internal bool[]? GetScriptData()
+        internal bool[] GetScriptData()
         {
             return scriptData;
         }
@@ -300,7 +301,7 @@ public class SaveManager : MonoBehaviour
         /// 팁 체크 확인
         /// </summary>
         /// <returns>팁 체크</returns>
-        internal bool[]? GetTipData()
+        internal bool[] GetTipData()
         {
             return tipData;
         }
@@ -309,7 +310,7 @@ public class SaveManager : MonoBehaviour
         /// 일지 체크 확인
         /// </summary>
         /// <returns>일지 체크</returns>
-        internal bool[]? GetRecordData()
+        internal bool[] GetRecordData()
         {
             return recordData;
         }
@@ -334,6 +335,8 @@ public class SaveManager : MonoBehaviour
         if (playerInfo == null)
         {
             playerInfo = FindObjectOfType<PlayerInfo>();
+            cc = FindObjectOfType<ColliderController>();
+            ss = FindObjectOfType<ShowScript>();
         }
         // 첫 시작 위치 저장
         saveClass.SetLastSavePosition(0);
@@ -343,24 +346,28 @@ public class SaveManager : MonoBehaviour
     /// 클래스에 저장할 데이터 초기화
     /// </summary>
     /// <param name="lastSavePosition">저장 위치</param>
-    public void SetSaveClass(int lastSavePosition)
+    private void SetSaveClass(int lastSavePosition)
     {
+        Debug.Log(playerInfo.curHp);
         saveClass.SetLastSavePosition(lastSavePosition);
         saveClass.SetCurrentHp(playerInfo.curHp);
-        saveClass.SetCurrentBodyIndex(playerInfo.curPrefabIndex);
         saveClass.SetCurrentSoulCount(playerInfo.soulHp);
+        saveClass.SetCurrentBodyIndex(playerInfo.curPrefabIndex);
+        saveClass.SetCurrentSkillIndex(5);
         saveClass.SetCurrentAttack(playerInfo.plAtk);
         saveClass.SetCurrentSpeed(playerInfo.plMoveSpd);
+        saveClass.SetScriptData(ss.checkScriptComplete);
+        saveClass.SetTipData(ss.checkTipComplete);
+        saveClass.SetRecordData(ss.checkRecordComplete);
     }
 
     /// <summary>
     /// 현재 데이터 저장
     /// </summary>
-    /// <param name="lastSavePosition">저장 위치</param>
+    /// <param name="lastSavePosition">저장 위치 인덱스</param>
     /// <returns>작업 결과</returns>
-    internal IEnumerator SaveCurrentData(int lastSavePosition)
+    internal void SaveCurrentData(int lastSavePosition)
     {
-        bool result;
         try
         {
             if (playerInfo == null)
@@ -385,23 +392,35 @@ public class SaveManager : MonoBehaviour
             fs.Write(data, 0, data.Length);
             fs.Close();
             Debug.Log("세이브 파일 생성됨");
-            result = true;
         }
         catch (Exception e)
         {
             Debug.LogError(e);
-            result = false;
         }
-        yield return result;
+    }
+
+    /// <summary>
+    /// 데이터 수치를 게임에 적용
+    /// </summary>
+    private void ApplyLoadedData()
+    {
+        // 세이브 위치ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ
+        playerInfo.curHp = saveClass.GetCurrentHp();
+        playerInfo.soulHp = saveClass.GetCurrentSoulCount();
+        playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
+        // 스킬 인덱스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        playerInfo.plAtk = saveClass.GetCurrentAttack();
+        playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
+        cc.OffRecordCollider(saveClass.GetRecordData());
+        cc.OffScriptCollider(saveClass.GetScriptData());
     }
 
     /// <summary>
     /// 세이브 데이터 불러오기
     /// </summary>
     /// <returns>작업 결과</returns>
-    public IEnumerator LoadSaveData()
+    public void LoadSaveData()
     {
-        bool result;
         try
         {
             // 세이브 경로에서 파일 정보 가져오기
@@ -419,22 +438,20 @@ public class SaveManager : MonoBehaviour
                 // Json 형태의 정보 변환
                 string saveJson = Encoding.UTF8.GetString(data);
                 saveClass = JsonUtility.FromJson<SaveClass>(saveJson);
+                // 불러온 데이터 적용
+                ApplyLoadedData();
                 Debug.Log("세이브 파일 불러옴");
-                result = true;
             }
             // 세이브 파일이 존재하지 않는 경우
             else
             {
                 // 추가 필요
                 Debug.Log("세이브 데이터가 존재하지 않음");
-                result = false;
             }
         }
         catch (Exception e)
         {
             Debug.LogError(e);
-            result = false;
         }
-        yield return result;
     }
 }
