@@ -205,9 +205,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5918424203261817087}
         m_TargetAssemblyTypeName: LoadUIRecord, Assembly-CSharp
-        m_MethodName: LoadTip
+        m_MethodName: LoadRecord
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
