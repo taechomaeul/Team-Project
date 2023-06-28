@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndingScene.unity
     guid: 2d60ce200fc6e7a4da619ea12c072084
+  - enabled: 1
+    path: Assets/Scenes/AnimMiddleBossCutScenes.unity
+    guid: 3ac232075b5f36c4aa9b4d29a9e4542b
+  - enabled: 1
+    path: Assets/Scenes/AnimMainBossCutScenes.unity
+    guid: ac807a7b545b77841b42410d0a728230
   m_configObjects: {}
