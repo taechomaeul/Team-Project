@@ -1,8 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
-public class EnemyEffectControll : MonoBehaviour
+public class EnemyEffectAndSoundControll : MonoBehaviour
 {
+    AudioMixer audioMixer;
+
     [Header("이펙트 오브젝트")]
     [Tooltip("공격1")]
     [SerializeField] private GameObject effectAttack1;
@@ -29,7 +32,24 @@ public class EnemyEffectControll : MonoBehaviour
     [Tooltip("스킬")]
     [SerializeField] private float delaySkill;
 
+    [Header("공격 사운드")]
+    [Tooltip("공격1")]
+    [SerializeField] private AudioClip soundAttack1;
 
+    [Tooltip("공격2")]
+    [SerializeField] private AudioClip soundAttack2;
+
+    [Tooltip("공격3")]
+    [SerializeField] private AudioClip soundAttack3;
+
+    [Tooltip("스킬")]
+    [SerializeField] private AudioClip soundSkill;
+
+
+
+    private void Awake()
+    {
+    }
 
     internal void TrunOnEffectAttack(int attackType)
     {
@@ -56,6 +76,7 @@ public class EnemyEffectControll : MonoBehaviour
     {
         yield return new WaitForSeconds(delayAttack1);
         effectAttack1.SetActive(true);
+
     }
 
     private IEnumerator Attack2()
