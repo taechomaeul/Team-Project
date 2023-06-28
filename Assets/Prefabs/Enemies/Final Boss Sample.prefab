@@ -254,6 +254,7 @@ GameObject:
   - component: {fileID: 3102516749540191961}
   - component: {fileID: 3102516749540191962}
   - component: {fileID: 3102516749540191963}
+  - component: {fileID: 3918628994398871695}
   m_Layer: 0
   m_Name: Final Boss Sample
   m_TagString: Enemy
@@ -349,6 +350,8 @@ MonoBehaviour:
     skillCastRange: 15
     skillPhaseHpRatio: 70
     canSkill: 0
+    isInSkillRange: 0
+    isSkillCasting: 0
 --- !u!114 &3102516749540191960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,7 +404,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2943373cdaa2b45b5d884b2df68d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wasDead: 0
   soulStone: {fileID: 3102516749943650217}
+--- !u!114 &3918628994398871695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3102516749540191956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf97702923aeb3a45aefbd5f2939ff6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectAttack1: {fileID: 0}
+  effectAttack2: {fileID: 0}
+  effectAttack3: {fileID: 0}
+  effectSkill: {fileID: 0}
+  delayAttack1: 0
+  delayAttack2: 0
+  delayAttack3: 0
+  delaySkill: 0
 --- !u!1 &3102516749943650217
 GameObject:
   m_ObjectHideFlags: 0

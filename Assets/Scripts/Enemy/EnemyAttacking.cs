@@ -19,6 +19,8 @@ public class EnemyAttacking : MonoBehaviour
 
     // 애니메이터 컨트롤
     EnemyAnimationControll eac;
+    // 이펙트 컨트롤
+    EnemyEffectAndSoundControll eec;
 
     // 인스펙터
     [Header("공격 종류 개수")]
@@ -69,6 +71,8 @@ public class EnemyAttacking : MonoBehaviour
 
         // 애니메이터 컨트롤 세팅
         eac = GetComponent<EnemyAnimationControll>();
+        // 이펙트 컨트롤 세팅
+        eec = GetComponent<EnemyEffectAndSoundControll>();
     }
 
     void FixedUpdate()
@@ -221,13 +225,16 @@ public class EnemyAttacking : MonoBehaviour
         if (enemyInfo.GetIsAttacking())
         {
             // 공격 타입 랜덤 설정
-            int attackType = Random.Range(0, numberOfAttackType) + 2;
+            int attackType = Random.Range(0, numberOfAttackType);
 
             // 공격 판정 on
             attackRange.SetActive(true);
 
             // 공격 모션 시작
-            eac.SetAnimationState((EnemyAnimationControll.Animation_State)attackType);
+            eac.SetAnimationState((EnemyAnimationControll.Animation_State)attackType + 2);
+
+            // 공격 이펙트 시작
+            eec.TrunOnEffectAttack(attackType);
 
             // attackTime 만큼 기다림(공격 모션 시작부터 끝까지의 시간)
             yield return new WaitForSeconds(eac.GetAnimationDurationTime((EnemyAnimationControll.Animation_State)attackType));
@@ -264,6 +271,9 @@ public class EnemyAttacking : MonoBehaviour
 
             // 스킬 판정 on
             skillRange.SetActive(true);
+
+            // 스킬 이펙트 시작
+            eec.TrunOnEffectSkill();
 
             // skillTime 만큼 기다림(스킬 모션 시작부터 끝까지의 시간)
             yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Skill));
