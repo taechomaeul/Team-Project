@@ -1,5 +1,5 @@
 SkillName,Thumnail,CoolTime,DuringTime
 괴력,boss1_image,0,0
 힘증가,powerUp_image,30,10
-민첩증가,speedUp_image,30,10
 체력회복,hpUp_image,30,0
+민첩증가,speedUp_image,30,10
