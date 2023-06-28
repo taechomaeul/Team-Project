@@ -6,11 +6,13 @@ using UnityEngine.UI;
 
 public class LoadUIRecord : MonoBehaviour
 {
-    private ShowScript showScript;
+    private ShowRecord showRecord;
+    private ShowTip showTip;
 
     void Start()
     {
-        showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
+        showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
+        showTip = GameObject.Find("ActionFunction").GetComponent<ShowTip>();
     }
 
     /// <summary>
@@ -20,7 +22,7 @@ public class LoadUIRecord : MonoBehaviour
     {
         string colliName = gameObject.name;
         GameObject context = gameObject.transform.parent.parent.parent.parent.parent.GetChild(1).GetChild(0).gameObject;
-        StartCoroutine(showScript.LoadRecordData(colliName, context.GetComponent<Text>()));
+        StartCoroutine(showRecord.LoadRecordData(colliName, context.GetComponent<Text>()));
     }
 
     /// <summary>
@@ -30,7 +32,7 @@ public class LoadUIRecord : MonoBehaviour
     {
         string colliName = gameObject.name;
         GameObject context = gameObject.transform.parent.parent.parent.parent.parent.GetChild(1).GetChild(0).gameObject;
-        StartCoroutine(showScript.LoadTipData(colliName, context.GetComponent<Text>()));
+        StartCoroutine(showTip.LoadTipData(colliName, context.GetComponent<Text>()));
     }
 
 }

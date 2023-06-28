@@ -10,15 +10,15 @@ public class RecordInfo : MonoBehaviour
     public GameObject recordPanel;
 
     //[SerializeField]
-    private ShowScript showScript;
+    private ShowRecord showRecord;
     //[SerializeField]
     private ActionFuntion actionFuntion;
     private bool isConfirm = false;
 
     private void Start()
     {
-        showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,7 +35,7 @@ public class RecordInfo : MonoBehaviour
         {
             recordPanel.SetActive(true);
             actionFuntion.PauseGameForAct();
-            StartCoroutine(showScript.LoadRecordData(recordName));
+            StartCoroutine(showRecord.LoadRecordData(recordName));
             toolTipPanel.SetActive(false);
             isConfirm = true;
         }
@@ -49,9 +49,9 @@ public class RecordInfo : MonoBehaviour
             Destroy(gameObject); //확인한 일지 삭제
 
             //Record 체크 완료
-            int recordIndex = showScript.curCheckIndex;
-            showScript.checkScriptComplete[recordIndex] = true;
-            Debug.Log($"CheckRecordComplete[{recordIndex}] : {showScript.checkScriptComplete[recordIndex]}");
+            int recordIndex = showRecord.curCheckIndex;
+            showRecord.checkRecordComplete[recordIndex] = true;
+            Debug.Log($"CheckRecordComplete[{recordIndex}] : {showRecord.checkRecordComplete[recordIndex]}");
         }
     }
 }
