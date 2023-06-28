@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class ColliderController : MonoBehaviour
 {
+    private ShowRecord showRecord;
     private ShowScript showScript;
 
     void Start()
     {
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
+        showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
 
-        
+
+
         StartCoroutine(OffRecordCollider());
         StartCoroutine(OffScriptCollider());
     }
@@ -27,7 +30,7 @@ public class ColliderController : MonoBehaviour
 
         // **************************
         yield return null;
-        bool[] checkRecord = showScript.GetCheckRecordComplete();
+        bool[] checkRecord = showRecord.GetCheckRecordComplete();
         // 이 부분에 bool값을 로드한 함수(누군가의 일지용)를 불러와주세요!
         //Debug.Log("checkRecord Length: " + checkRecord.Length);
 
@@ -39,7 +42,7 @@ public class ColliderController : MonoBehaviour
         }
         else
         {
-            recordStart = showScript.record.Count - recordObject.Length;
+            recordStart = showRecord.record.Count - recordObject.Length;
             Debug.Log($"2F RecordStart : {recordStart}");
         }
 
