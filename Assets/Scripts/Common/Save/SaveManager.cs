@@ -350,7 +350,7 @@ public class SaveManager : MonoBehaviour
     /// 클래스에 저장할 데이터 초기화
     /// </summary>
     /// <param name="lastSavePosition">저장 위치</param>
-    private void SetSaveClass(int lastSavePosition)
+    public void SetSaveClass(int lastSavePosition)
     {
         Debug.Log(playerInfo.curHp);
         saveClass.SetLastSavePosition(lastSavePosition);
