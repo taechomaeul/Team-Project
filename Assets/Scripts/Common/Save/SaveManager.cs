@@ -29,6 +29,8 @@ public class SaveManager : MonoBehaviour
     internal SaveClass saveClass = new();
 
     ShowScript ss;
+    ShowRecord sr;
+    ShowTip st;
     ColliderController cc;
 
     // 세이브 관련 클래스
@@ -337,6 +339,8 @@ public class SaveManager : MonoBehaviour
             playerInfo = FindObjectOfType<PlayerInfo>();
             cc = FindObjectOfType<ColliderController>();
             ss = FindObjectOfType<ShowScript>();
+            sr = FindObjectOfType<ShowRecord>();
+            st = FindObjectOfType<ShowTip>();
         }
         // 첫 시작 위치 저장
         saveClass.SetLastSavePosition(0);
@@ -357,8 +361,8 @@ public class SaveManager : MonoBehaviour
         saveClass.SetCurrentAttack(playerInfo.plAtk);
         saveClass.SetCurrentSpeed(playerInfo.plMoveSpd);
         saveClass.SetScriptData(ss.checkScriptComplete);
-        saveClass.SetTipData(ss.checkTipComplete);
-        saveClass.SetRecordData(ss.checkRecordComplete);
+        saveClass.SetTipData(st.checkTipComplete);
+        saveClass.SetRecordData(sr.checkRecordComplete);
     }
 
     /// <summary>

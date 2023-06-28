@@ -5,10 +5,12 @@ using UnityEngine;
 public class ColliderController : MonoBehaviour
 {
     private ShowScript showScript;
+    private ShowRecord showRecord;
 
     void Awake()
     {
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
+        showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
     }
 
     public void OffRecordCollider(bool[] checkRecord)
@@ -28,7 +30,7 @@ public class ColliderController : MonoBehaviour
         }
         else
         {
-            recordStart = showScript.record.Count - recordObject.Length;
+            recordStart = showRecord.record.Count - recordObject.Length;
             Debug.Log($"2F RecordStart : {recordStart}");
         }
 
