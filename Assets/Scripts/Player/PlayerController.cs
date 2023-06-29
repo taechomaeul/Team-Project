@@ -91,8 +91,8 @@ public class PlayerController : MonoBehaviour
 
     //void OnDrawGizmosSelected()
     //{
-        //Gizmos.color = Color.blue;
-        //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
+    //Gizmos.color = Color.blue;
+    //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
     //}
 
 
@@ -233,7 +233,10 @@ public class PlayerController : MonoBehaviour
 
                     if (!coroutineCheck)
                     {
-                        StopCoroutine(gcadt);
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
                         StartCoroutine(gcadt);
                         coroutineCheck = true;
@@ -243,7 +246,6 @@ public class PlayerController : MonoBehaviour
                     {
                         float? temp = gcadt.Current as float?;
                         atkResetTime = (float)temp;
-
 
                         attackRange.SetActive(true);
 
@@ -289,7 +291,10 @@ public class PlayerController : MonoBehaviour
 
                     if (!coroutineCheck)
                     {
-                        StopCoroutine(gcadt);
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
                         StartCoroutine(gcadt);
                         coroutineCheck = true;
@@ -345,7 +350,10 @@ public class PlayerController : MonoBehaviour
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                     if (!coroutineCheck)
                     {
-                        StopCoroutine(gcadt);
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                         StartCoroutine(gcadt);
                         coroutineCheck = true;
@@ -402,7 +410,10 @@ public class PlayerController : MonoBehaviour
                     //dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
                     if (!coroutineCheck)
                     {
-                        StopCoroutine(gcadt);
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit);
                         StartCoroutine(gcadt);
                         coroutineCheck = true;
@@ -446,7 +457,10 @@ public class PlayerController : MonoBehaviour
                     //avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
                     if (!coroutineCheck)
                     {
-                        StopCoroutine(gcadt);
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
                         StartCoroutine(gcadt);
                         coroutineCheck = true;
@@ -460,15 +474,15 @@ public class PlayerController : MonoBehaviour
 
                         isNoDamage = true; //무적 ON
 
-                    //애니메이션 시간 대기
-                    avoidTime += Time.deltaTime;
-                    if (avoidTime > avoidJAnimTime)
-                    {
-                        avoidTime = 0;
+                        //애니메이션 시간 대기
+                        avoidTime += Time.deltaTime;
+                        if (avoidTime > avoidJAnimTime)
+                        {
+                            avoidTime = 0;
                             coroutineCheck = false;
                             waitTimeCheck = false;
                             plState = PL_STATE.AVOIDROLL;
-                    }
+                        }
                     }
 
 
@@ -483,7 +497,10 @@ public class PlayerController : MonoBehaviour
                     //avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
                     if (!coroutineCheck)
                     {
-                        StopCoroutine(gcadt);
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
                         StartCoroutine(gcadt);
                         coroutineCheck = true;
@@ -497,13 +514,13 @@ public class PlayerController : MonoBehaviour
 
                         //애니메이션 시간 대기
                         avoidTime += Time.deltaTime;
-                    if (avoidTime > avoidRAnimTime)
-                    {
-                        avoidTime = 0;
+                        if (avoidTime > avoidRAnimTime)
+                        {
+                            avoidTime = 0;
                             coroutineCheck = false;
                             waitTimeCheck = false;
                             plState = PL_STATE.IDLE;
-                    }
+                        }
                     }
 
                     isAvoid = false;
