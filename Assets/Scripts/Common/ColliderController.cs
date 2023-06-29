@@ -13,14 +13,13 @@ public class ColliderController : MonoBehaviour
         showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
     }
 
+    /// <summary>
+    /// 이미 본 일지를 확인하는 배열인 CheckRecord를 이용하여 Collider 오브젝트를 off하는 함수
+    /// </summary>
+    /// <param name="checkRecord">이미 본 일지를 확인하는 배열</param>
     public void OffRecordCollider(bool[] checkRecord)
     {
         GameObject[] recordObject = new GameObject[GameObject.Find("RecordGroup").transform.childCount];
-
-        // **************************
-        //bool[] checkRecord = showScript.GetCheckRecordComplete();
-        // 이 부분에 bool값을 로드한 함수(누군가의 일지용)를 불러와주세요!
-        //Debug.Log("checkRecord Length: " + checkRecord.Length);
 
         int recordStart;
         if (GameObject.Find("RecordGroup").transform.GetChild(0).name.Contains("누명자"))
@@ -44,14 +43,14 @@ public class ColliderController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 이미 본 스크립트를 확인하는 배열인 CheckRecord를 이용하여 Collider 오브젝트를 off하는 함수
+    /// </summary>
+    /// <param name="checkScript">이미 본 스클립트를 확인하는 배열</param>
     public void OffScriptCollider(bool[] checkScript)
     {
         GameObject sCollider = GameObject.Find("ScriptCollider");
         GameObject[] scriptObject = new GameObject[sCollider.transform.childCount];
-
-        // **************************
-        //bool[] checkScript = showScript.GetCheckScriptComplete();
-        // 이 부분에 bool값을 로드한 함수(스크립트용)를 불러와주세요! 
 
         for (int i = 0; i < scriptObject.Length; i++)
         {

@@ -55,6 +55,7 @@ public class PlayerAnimatorControll : MonoBehaviour
 
     private void Awake()
     {
+        playerController = GetComponent<PlayerController>();
         InitAnimator();
     }
 
@@ -102,9 +103,9 @@ public class PlayerAnimatorControll : MonoBehaviour
     /// </summary>
     void SetAnimatorParam()
     {
-        for (int i = 0; i < animatorParams.Length; i++)
+        for (int i = 0; i < animator.parameters.Length; i++)
         {
-            animator.SetBool(animator.GetParameter(0).name, false);
+            animator.SetBool(animator.parameters[i].name, false);
         }
     }
 
@@ -114,18 +115,18 @@ public class PlayerAnimatorControll : MonoBehaviour
     /// <param name="anim">true로 만들 애니메이터 파라미터</param>
     void SetAnimatorParam(string anim)
     {
-        for (int i = 0; i < animatorParams.Length; i++)
+        for (int i = 0; i < animator.parameters.Length; i++)
         {
             //if (ac.parameters[i].name.Equals(anim))
-            if (animator.GetParameter(i).name.Equals(anim))
+            if (animator.parameters[i].name.Equals(anim))
             {
                 animator.SetBool(anim, true);
             }
             else
             {
-                if (!(anim.Equals(animatorParams[1]) && animator.GetParameter(i).name.Equals(animatorParams[0])))
+                if (!(anim.Equals(animatorParams[1]) && animator.parameters[i].name.Equals(animatorParams[0])))
                 {
-                    animator.SetBool(animator.GetParameter(0).name, false);
+                    animator.SetBool(animator.parameters[i].name, false);
                 }
             }
         }
