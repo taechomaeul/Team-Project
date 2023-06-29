@@ -9,6 +9,7 @@ TagManager:
   - Box
   - ClearTrigger
   - SkillBox
+  - Index
   layers:
   - Default
   - TransparentFX
