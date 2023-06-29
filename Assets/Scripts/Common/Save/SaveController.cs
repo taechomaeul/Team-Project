@@ -13,15 +13,11 @@ public class SaveController : MonoBehaviour
     public int curAreaIndex;
     public bool isSaveCompleted = false;
 
-    private PlayerInfo plInfo;
-    private ActionFuntion actionFunction;
     private SaveManager saveManager;
 
 
     void Start()
     {
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
-        actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
     }
 
