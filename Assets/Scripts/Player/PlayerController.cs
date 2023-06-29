@@ -40,13 +40,11 @@ public class PlayerController : MonoBehaviour
     [Header("회복 변수")]
     public readonly int healHp = 3; //초당 회복하는 영혼의 무게 수
 
-    public Timer timer;
-    public SkillInfo skillData;
-    public PlayerInfo plInfo;
-    public ActionFuntion actionFuntion;
-    public Transform cameraTransform;
-    public CharacterController characterController;
-
+    private Timer timer;
+    private PlayerInfo plInfo;
+    private ActionFuntion actionFuntion;
+    private Transform cameraTransform;
+    private CharacterController characterController;
     private PlayerAnimatorControll pac;
     private SaveManager saveManager;
 
@@ -74,11 +72,9 @@ public class PlayerController : MonoBehaviour
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
-        skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
         saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
-        //anim = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         pac = GetComponent<PlayerAnimatorControll>();
 
         
@@ -95,13 +91,6 @@ public class PlayerController : MonoBehaviour
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
     }
-
-    void OnDrawGizmosSelected()
-    {
-        //Gizmos.color = Color.blue;
-        //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
-    }
-
 
     void FixedUpdate()
     {
@@ -146,7 +135,6 @@ public class PlayerController : MonoBehaviour
             {
                 case PL_STATE.IDLE:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 0);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Idle);
 
                     if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
@@ -164,7 +152,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.MOVE:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 1);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
 
                     plInfo.plMoveSpd = moveSpd;
@@ -189,7 +176,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.WALK:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 2);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
 
                     plInfo.plMoveSpd = WalkMoveSpd();
@@ -218,7 +204,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.JUMP:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 4);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Jump);
 
 
@@ -231,7 +216,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.ATTACKM1:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 5);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);                    
                     atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
 
@@ -268,7 +252,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.ATTACKM2:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 6);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
                     atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
@@ -305,7 +288,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.ATTACKM3:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 7);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack3);
                     atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
 
@@ -343,7 +325,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.DAMAGED:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 8);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
                     dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
 
@@ -369,7 +350,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.AVOIDJUMP:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 9);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid1);
                     avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
 
@@ -389,7 +369,6 @@ public class PlayerController : MonoBehaviour
                     isNoDamage = false; //무적 OFF
 
                     //애니메이션 연결
-                    //anim.SetInteger("State", 10);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid2);
                     avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
 
@@ -405,7 +384,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.DIE:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 11);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Dead);
 
                     //플래그 ON, 속도 X
