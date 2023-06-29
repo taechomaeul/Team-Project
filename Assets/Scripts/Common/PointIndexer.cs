@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class PointIndexer : MonoBehaviour
 {
-
     private void Awake()
     {
         var obj = FindObjectsOfType<PointIndexer>();
-        if (obj.Length == 1)
+        if (obj.Length == 1) //PointIndexer 중복 방지
         {
-            Debug.Log("DontDestroyOnLoad");
+            //Debug.Log("DontDestroyOnLoad");
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Debug.Log("Destroy");
+            //Debug.Log("Destroy");
             Destroy(gameObject);
         }
     }

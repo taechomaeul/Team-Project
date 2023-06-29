@@ -8,28 +8,30 @@ public class AnimSceneMoveController : MonoBehaviour
 {
     private PlayableDirector playableDirector;
     private GameManager gameManager;
+    private SaveManager saveManager;
 
     void Start()
     {
         playableDirector = GetComponent<PlayableDirector>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        //Debug.Log($"PlayableDirector.Duration : {playableDirector.duration}");
+        saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
     }
 
     void Update()
     {
-        //Debug.Log($"CurTIme : {playableDirector.time}");
         if (playableDirector.time >= playableDirector.duration)
         {
             Scene scene = SceneManager.GetActiveScene(); //현재 씬이름을 불러오기 위한 변수 선언
-            //Debug.Log($"Scene Name : {scene.name}");
             if (scene.name.Equals("AnimMainBossCutScenes"))
             {
+                //최종보스 연출 후 시작할 위치로 index 변경
+                saveManager.SetSaveClass(9);
                 gameManager.MoveTo2FScene();
             }
             else if (scene.name.Equals("AnimMiddleBossCutScenes"))
             {
+                //중간보스 연출 후 시작할 위치로 index 변경
+                saveManager.SetSaveClass(8);
                 gameManager.MoveTo1FScene();
             }
 

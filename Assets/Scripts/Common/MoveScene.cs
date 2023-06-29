@@ -23,13 +23,7 @@ public class MoveScene : MonoBehaviour
         {
             switch (colliderName) //충돌한 Collider 이름이 특정 씬 이름과 같다면, 씬 이동.
             {
-                case "TestScene_1F":
-                    gameManager.MoveTo1FScene();
-                    break;
-
                 case "AnimMiddleBossCutScenes":
-                    //index 변경
-                    saveManager.SetSaveClass(8);
                     gameManager.MoveToMidBossScene();
                     break;
 
@@ -38,12 +32,11 @@ public class MoveScene : MonoBehaviour
                     break;
 
                 case "TestScene_2F":
+                    //saveManager.SetSaveClass(5);
                     gameManager.MoveTo2FScene();
                     break;
 
                 case "AnimMainBossCutScenes":
-                    //index 변경
-                    saveManager.SetSaveClass(9);
                     gameManager.MoveToFinalBossScene();
                     break;
 

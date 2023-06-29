@@ -5,32 +5,31 @@ using System;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
-using UnityEngine.EventSystems;
 
 public class ShowScript : MonoBehaviour
 {
+    [Header("스크립트 파일 경로")]
     public string scriptPath;
 
-    public List<Dictionary<string, object>> script;
-
-    public int[] startIdxArr;
-    public string[] pointArr;
+    [Header("스크립트용 연결")]
+    public Text scriptText;
 
     [Header("완료체크 확인 배열")]
     [Tooltip("스크립트 Collider 체크 변수/이미 보여줬다면 True, 아니라면 False")]
     public bool[] checkScriptComplete;
 
-    [Header("스크립트용 연결")]
-    public Text scriptText;
+    private List<Dictionary<string, object>> script;
+    private int[] startIdxArr;
+    private string[] pointArr;
 
     public bool isClick = false;
 
     void Awake()
     {
         script = CSVReader.Read(scriptPath);
-
         DOTween.Init();
 
+        //배열 초기화
         startIdxArr = new int[script.Count];
         pointArr = new string[script.Count];
 
@@ -46,16 +45,15 @@ public class ShowScript : MonoBehaviour
             
         }
 
-
         //중복제거
         startIdxArr = startIdxArr.Distinct().ToArray();
         pointArr = pointArr.Distinct().ToArray();
-        scriptText.text = " ";
+        scriptText.text = "";
 
+        //스크립트 체크 배열 함수 선언
         checkScriptComplete = new bool[startIdxArr.Length];
 
-
-        //체크 배열 초기화
+        //스크립트 체크 배열 초기화
         for (int i = 0; i < startIdxArr.Length; i++)
         {
             checkScriptComplete[i] = false;
@@ -63,14 +61,18 @@ public class ShowScript : MonoBehaviour
 
     }
 
-
-    public int GetIndex(string type)
+    /// <summary>
+    /// Point 인덱스를 불러오는 함수
+    /// </summary>
+    /// <param name="type">파트(Collider) 이름</param>
+    /// <returns></returns>
+    public int GetIndex(string part)
     {
         int index = 0;
 
         for (int i=0; i<startIdxArr.Length; i++)
         {
-            if (type.Equals(pointArr[i]))
+            if (part.Equals(pointArr[i]))
             {
                 index = i;
                 break;
@@ -80,11 +82,21 @@ public class ShowScript : MonoBehaviour
         return index;
     }
 
+    /// <summary>
+    /// 인덱스 시작 지점을 불러오는 함수
+    /// </summary>
+    /// <param name="index">Point(파트) 인덱스</param>
+    /// <returns></returns>
     public int GetStartIndex(int index)
     {
         return startIdxArr[index];
     }
 
+    /// <summary>
+    /// 인덱스 종료 지점(다음 Point 인덱스의 첫 지점)을 불러오는 함수 
+    /// </summary>
+    /// <param name="index">Point(파트) 인덱스</param>
+    /// <returns></returns>
     public int GetEndIndex(int index)
     {
         int e_Index;
@@ -93,21 +105,6 @@ public class ShowScript : MonoBehaviour
         else { e_Index = startIdxArr[index + 1]; }
 
         return e_Index;
-    }
-
-    public bool[] GetCheckScriptComplete()
-    {
-        return checkScriptComplete;
-    }
-
-    IEnumerator WaitNSeconds(float time)
-    {
-        yield return new WaitForSecondsRealtime(time);
-    }
-
-    IEnumerator WaitSecondsFunction(float time)
-    {
-        yield return StartCoroutine(WaitNSeconds(time));
     }
 
     public void LoadScript(int curIndex)
@@ -150,6 +147,11 @@ public class ShowScript : MonoBehaviour
         yield return StartCoroutine(WaitSecondsFunction(1f));
     }
 
+    /// <summary>
+    /// 스크립트의 타입을 가져오는 함수
+    /// </summary>
+    /// <param name="index">스크립트 인덱스</param>
+    /// <returns></returns>
     public string GetScriptType(int index)
     {
         string type = script[index]["SYSTEM/SCRIPT"].ToString();
@@ -159,6 +161,16 @@ public class ShowScript : MonoBehaviour
     public void IsClicked()
     {
         isClick = true;
+    }
+
+    IEnumerator WaitNSeconds(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+    }
+
+    IEnumerator WaitSecondsFunction(float time)
+    {
+        yield return StartCoroutine(WaitNSeconds(time));
     }
 
 }
