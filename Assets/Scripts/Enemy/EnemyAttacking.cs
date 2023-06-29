@@ -236,11 +236,12 @@ public class EnemyAttacking : MonoBehaviour
             // 공격 이펙트 시작
             eec.TrunOnEffectAttack(attackType);
 
-            //StartCoroutine(eac.GetCurrentAnimationDurationTime((EnemyAnimationControll.Animation_State)attackType));
-
-
             // attackTime 만큼 기다림(공격 모션 시작부터 끝까지의 시간)
-            yield return new WaitForSeconds(eac.GetAnimationDurationTime((EnemyAnimationControll.Animation_State)attackType));
+            //yield return new WaitForSeconds(eac.GetAnimationDurationTime((EnemyAnimationControll.Animation_State)attackType));
+            IEnumerator gcadt = eac.GetCurrentAnimationDurationTime((EnemyAnimationControll.Animation_State)attackType);
+            yield return StartCoroutine(gcadt);
+            float? waitTime = gcadt.Current as float?;
+            yield return new WaitForSeconds((float)waitTime);
 
             // 공격 모션 끝
             eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
@@ -270,7 +271,11 @@ public class EnemyAttacking : MonoBehaviour
             eac.SetAnimationState(EnemyAnimationControll.Animation_State.CastSkill);
 
             // 스킬 준비 시간 기다림
-            yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.CastSkill));
+            //yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.CastSkill));
+            IEnumerator gcadt = eac.GetCurrentAnimationDurationTime(EnemyAnimationControll.Animation_State.CastSkill);
+            yield return StartCoroutine(gcadt);
+            float? waitTime = gcadt.Current as float?;
+            yield return new WaitForSeconds((float)waitTime);
 
             // 스킬 판정 on
             skillRange.SetActive(true);
@@ -279,7 +284,15 @@ public class EnemyAttacking : MonoBehaviour
             eec.TrunOnEffectSkill();
 
             // skillTime 만큼 기다림(스킬 모션 시작부터 끝까지의 시간)
-            yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Skill));
+            //yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Skill));
+            gcadt = eac.GetCurrentAnimationDurationTime(EnemyAnimationControll.Animation_State.Skill);
+            yield return StartCoroutine(gcadt);
+            waitTime = gcadt.Current as float?;
+            if (gameObject.name.Contains("Final"))
+            {
+                waitTime *= 3;
+            }
+            yield return new WaitForSeconds((float)waitTime);
 
             // 스킬 모션 끝
             eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
