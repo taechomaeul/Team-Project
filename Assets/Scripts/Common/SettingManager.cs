@@ -92,13 +92,14 @@ public class SettingManager : MonoBehaviour
     /// </summary>
     public void Btn_UndoSetting()
     {
+        // 사운드
         bgmSlider.value = originBgmValue;
         sfxSlider.value = originSfxValue;
         audioMixer.SetFloat("bgmVolume", Mathf.Log10(originBgmValue) * 20);
         audioMixer.SetFloat("sfxVolume", Mathf.Log10(originSfxValue) * 20);
+        // 해상도
         resolutionsDropdown.value = originResolutionIndex;
         fullscreenToggle.isOn = originFullscreenMode;
-        Debug.Log(originBgmValue);
         Debug.Log("origin 적용");
     }
     #endregion

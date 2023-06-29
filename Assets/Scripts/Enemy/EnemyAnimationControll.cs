@@ -1,4 +1,7 @@
+using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor.Animations;
+#endif
 using UnityEngine;
 
 public class EnemyAnimationControll : MonoBehaviour
@@ -99,8 +102,9 @@ public class EnemyAnimationControll : MonoBehaviour
         animationState = state;
     }
 
+#if UNITY_EDITOR
     /// <summary>
-    /// 현재 상태의 애니메이션 재생시간 반환
+    /// 현재 상태의 애니메이션 재생시간 반환, 런타임에서 동작 못함
     /// </summary>
     /// <param name="state">재생시간을 반환받을 애니메이션 상태</param>
     /// <returns>애니메이션 재생 시간</returns>
@@ -110,6 +114,7 @@ public class EnemyAnimationControll : MonoBehaviour
         float time = 0;
         // 상태머신 state를 비교하기 위한 변수
         string smState = GetStringFromAnimationStateMachine(state);
+        Debug.Log(smState);
         // 상태머신 state의 애니메이션 clip
         string smClip = "";
         // 상태머신 state의 배속
@@ -119,7 +124,7 @@ public class EnemyAnimationControll : MonoBehaviour
         RuntimeAnimatorController rac = animator.runtimeAnimatorController;
         AnimatorController ac = animator.runtimeAnimatorController as AnimatorController;
         AnimatorStateMachine sm = ac.layers[0].stateMachine;
-
+        
         float skillLoopTime = 1;
 
         // 현재 상태의 애니메이션 찾고 재생시간 반환
@@ -156,6 +161,7 @@ public class EnemyAnimationControll : MonoBehaviour
             return time / smSpeed;
         }
     }
+#endif
 
     /// <summary>
     /// 애니메이션 상태에 해당하는 상태 머신의 이름을 string으로 반환
@@ -198,5 +204,26 @@ public class EnemyAnimationControll : MonoBehaviour
                 break;
         }
         return smState;
+    }
+
+    /// <summary>
+    /// 현재 상태의 애니메이션 재생시간 반환
+    /// </summary>
+    /// <param name="state">현재 상태</param>
+    /// <returns>현재 상태의 애니메이션 재생시간</returns>
+    internal IEnumerator GetCurrentAnimationDurationTime(Animation_State state)
+    {
+        while (true)
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(GetStringFromAnimationStateMachine(state)))
+            {
+                break;
+            }
+            else
+            {
+                yield return null;
+            }   
+        }
+        yield return animator.GetCurrentAnimatorStateInfo(0).length;
     }
 }

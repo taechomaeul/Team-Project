@@ -12,4 +12,5 @@ public class PlayerInfo : MonoBehaviour
     [SerializeField]
     public Skill curSkill;
     public int curPrefabIndex;
+    public int curPositionIndex;
 }
