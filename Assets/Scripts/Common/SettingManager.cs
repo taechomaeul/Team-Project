@@ -15,6 +15,9 @@ public class SettingManager : MonoBehaviour
     private int resolutionIndex;
     private FullScreenMode fullScreenMode;
 
+    // 밝기 관련
+    private Light lightComponent;
+
     // 변경 전 값
     private float originBgmValue;
     private float originSfxValue;
@@ -26,17 +29,26 @@ public class SettingManager : MonoBehaviour
     [Tooltip("오디오 믹서")]
     public AudioMixer audioMixer;
 
+    [Tooltip("밝기용 라이트")]
+    public GameObject brightnessLight;
+
     [Header("값 설정 UI")]
     [Tooltip("BGM 볼륨")]
     public Slider bgmSlider;
 
-    [Tooltip("SFX 볼륨")]
+    [Tooltip("SFX 볼륨 조절 슬라이더")]
     public Slider sfxSlider;
 
     [Tooltip("해상도")]
     public Dropdown resolutionsDropdown;
+
     [Tooltip("전체화면")]
     public Toggle fullscreenToggle;
+
+    [Tooltip("밝기 조절 슬라이더")]
+    public Slider brightnessSlider;
+
+
 
     private void Awake()
     {
@@ -49,6 +61,8 @@ public class SettingManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(brightnessLight);
+            lightComponent = brightnessLight.GetComponent<Light>();
             LoadSettings();
         }
     }
@@ -61,6 +75,7 @@ public class SettingManager : MonoBehaviour
     {
         LoadSoundSetting();
         LoadResolutionSetting();
+        LoadBrightnessSetting();
     }
 
     /// <summary>
@@ -68,8 +83,9 @@ public class SettingManager : MonoBehaviour
     /// </summary>
     public void Btn_SettingApply()
     {
-        SaveResolutionSetting(resolutionsDropdown.value);
         SaveSoundSetting();
+        SaveResolutionSetting(resolutionsDropdown.value);
+        SaveBrightnessSetting();
         Debug.Log("저장");
     }
 
@@ -83,7 +99,7 @@ public class SettingManager : MonoBehaviour
         originSfxValue = sfxVolume;
         originResolutionIndex = resolutionsDropdown.value;
         originFullscreenMode = fullscreenToggle.isOn;
-        Debug.Log(bgmVolume);
+        originBrightness = brightnessSlider.value;
         Debug.Log("origin 저장");
     }
 
@@ -100,6 +116,8 @@ public class SettingManager : MonoBehaviour
         // 해상도
         resolutionsDropdown.value = originResolutionIndex;
         fullscreenToggle.isOn = originFullscreenMode;
+        // 밝기
+        brightnessSlider.value = originBrightness;
         Debug.Log("origin 적용");
     }
     #endregion
@@ -246,4 +264,21 @@ public class SettingManager : MonoBehaviour
     }
     #endregion
 
+    #region 밝기
+    public void Slider_SetBrightness()
+    {
+        lightComponent.intensity = brightnessSlider.value;
+    }
+
+    public void SaveBrightnessSetting()
+    {
+        PlayerPrefs.SetFloat("brightness",brightnessSlider.value);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadBrightnessSetting()
+    {
+        brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 0.5f);
+    }
+    #endregion
 }
