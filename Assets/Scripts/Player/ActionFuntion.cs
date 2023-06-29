@@ -106,6 +106,9 @@ public class ActionFuntion : MonoBehaviour
         {
             if (enemyPrefabInfo.enemyPrefabs[i].name.Contains(enemyName))
             {
+                //플레이어 정보에 빙의체 인덱스 저장
+                plInfo.curPrefabIndex = i;
+
                 Vector3 originPlayerPrefabPos = player.transform.Find("PlayerPrefab").localPosition;
                 Destroy(player.transform.Find("PlayerPrefab").gameObject);
 
