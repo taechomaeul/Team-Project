@@ -3971,13 +3971,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliderName: MIDBOSS_PUZEND
   scriptPanel: {fileID: 2000590235}
+  scriptText: {fileID: 953691706}
+  scriptPath: Script/ScriptData
   index: 0
   curIndex: 0
   nextIndex: 0
   isShowed: 0
-  isClick: 0
-  scriptText: {fileID: 953691706}
-  scriptPath: Script/ScriptData
 --- !u!4 &609725513 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5802242637424138803, guid: f5e97ab90d7a81f46bf749848c74097d,
@@ -13917,13 +13916,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliderName: MIDBOSS_PUZ
   scriptPanel: {fileID: 2000590235}
+  scriptText: {fileID: 953691706}
+  scriptPath: Script/ScriptData
   index: 0
   curIndex: 0
   nextIndex: 0
   isShowed: 0
-  isClick: 0
-  scriptText: {fileID: 953691706}
-  scriptPath: Script/ScriptData
 --- !u!1001 &1936614487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15489,10 +15487,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1016422806501531169, guid: 3a14b590aa962414b81cd520a9bc48e2,
         type: 3}

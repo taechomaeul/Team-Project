@@ -225,16 +225,19 @@ public class EnemyAttacking : MonoBehaviour
         if (enemyInfo.GetIsAttacking())
         {
             // 공격 타입 랜덤 설정
-            int attackType = Random.Range(0, numberOfAttackType);
+            int attackType = Random.Range(0, numberOfAttackType)+2;
 
             // 공격 판정 on
             attackRange.SetActive(true);
 
             // 공격 모션 시작
-            eac.SetAnimationState((EnemyAnimationControll.Animation_State)attackType + 2);
+            eac.SetAnimationState((EnemyAnimationControll.Animation_State)attackType);
 
             // 공격 이펙트 시작
             eec.TrunOnEffectAttack(attackType);
+
+            //StartCoroutine(eac.GetCurrentAnimationDurationTime((EnemyAnimationControll.Animation_State)attackType));
+
 
             // attackTime 만큼 기다림(공격 모션 시작부터 끝까지의 시간)
             yield return new WaitForSeconds(eac.GetAnimationDurationTime((EnemyAnimationControll.Animation_State)attackType));

@@ -51,15 +51,15 @@ public class EnemyEffectAndSoundControll : MonoBehaviour
     {
         switch (attackType)
         {
-            case 0:
+            case 2:
                 //StartCoroutine(Attack1());
                 effectAttack1.SetActive(true);
                 break;
-            case 1:
+            case 3:
                 //StartCoroutine(Attack2());
                 effectAttack2.SetActive(true);
                 break;
-            case 2:
+            case 4:
                 //StartCoroutine(Attack3());
                 effectAttack3.SetActive(true);
                 break;
