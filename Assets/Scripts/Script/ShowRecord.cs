@@ -33,7 +33,7 @@ public class ShowRecord : MonoBehaviour
     {
         record = CSVReader.Read(recordPath);
         DOTween.Init();
-        recordText.text = " ";
+        recordText.text = "";
 
         checkRecordComplete = new bool[record.Count];
 
@@ -135,7 +135,7 @@ public class ShowRecord : MonoBehaviour
                 if (context.text.Contains("/"))
                 {
                     string[] sText = context.text.Split("/");
-                    context.text = " ";
+                    context.text = "";
                     for (int j = 0; j < sText.Length; j++)
                     {
                         if (j == sText.Length - 1)
