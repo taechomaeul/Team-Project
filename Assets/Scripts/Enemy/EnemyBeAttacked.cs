@@ -91,7 +91,11 @@ public class EnemyBeAttacked : MonoBehaviour
                 eac.SetAnimationState(EnemyAnimationControll.Animation_State.Hit);
 
                 // 애니메이션 끝날 때까지 기다림
-                yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Hit));
+                //yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Hit));
+                IEnumerator gcadt = eac.GetCurrentAnimationDurationTime(EnemyAnimationControll.Animation_State.Hit);
+                yield return StartCoroutine(gcadt);
+                float? waitTime = gcadt.Current as float?;
+                yield return new WaitForSeconds((float)waitTime);
 
                 // 피격 애니메이션 끝
                 eac.SetAnimationState(EnemyAnimationControll.Animation_State.Idle);
@@ -116,7 +120,11 @@ public class EnemyBeAttacked : MonoBehaviour
             eac.SetAnimationState(EnemyAnimationControll.Animation_State.Dead);
 
             // 애니메이션 끝날 때까지 기다림
-            yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Dead));
+            //yield return new WaitForSeconds(eac.GetAnimationDurationTime(EnemyAnimationControll.Animation_State.Dead));
+            IEnumerator gcadt = eac.GetCurrentAnimationDurationTime(EnemyAnimationControll.Animation_State.Dead);
+            yield return StartCoroutine(gcadt);
+            float? waitTime = gcadt.Current as float?;
+            yield return new WaitForSeconds((float)waitTime);
 
             // 충돌 판정 off
             transform.GetComponent<CapsuleCollider>().enabled = false;

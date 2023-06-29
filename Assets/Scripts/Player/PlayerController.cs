@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -48,6 +47,11 @@ public class PlayerController : MonoBehaviour
     public CharacterController characterController;
 
     private PlayerAnimatorControll pac;
+    private SaveManager saveManager;
+
+    private bool coroutineCheck;
+    private bool waitTimeCheck;
+    IEnumerator gcadt;
 
     public enum PL_STATE
     {
@@ -76,18 +80,34 @@ public class PlayerController : MonoBehaviour
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
+        saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
         //anim = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         pac = GetComponent<PlayerAnimatorControll>();
 
+        
+        plInfo.curPositionIndex = saveManager.saveClass.GetLastSavePosition();
+
+        transform.GetChild(0).GetComponent<CharacterController>().enabled = false;
+        transform.rotation = GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).rotation;
+        transform.GetChild(0).localPosition = GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).position;
+        transform.GetChild(0).GetComponent<CharacterController>().enabled = true;
+
+        Debug.Log($"Index{plInfo.curPositionIndex} : " + GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).position);
+        Debug.Log($"transform.GetChild(0).position : {transform.GetChild(0).position}");
+
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
+
+        coroutineCheck = false;
+        waitTimeCheck = false;
     }
 
-    void OnDrawGizmosSelected()
-    {
+    //void OnDrawGizmosSelected()
+    //{
         //Gizmos.color = Color.blue;
         //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
-    }
+    //}
+
 
 
     void FixedUpdate()
@@ -126,7 +146,7 @@ public class PlayerController : MonoBehaviour
             {
                 Heal(); //회복한다.
             }
-            isSkill();
+            IsSkill();
             IsAvoiding();
 
             switch (plState)
@@ -219,37 +239,58 @@ public class PlayerController : MonoBehaviour
                 case PL_STATE.ATTACKM1:
                     //애니메이션 연결
                     //anim.SetInteger("State", 5);
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);                    
-                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
-
                     plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
-                    attackRange.SetActive(true);
 
-                    //연타 초기화 시간
-                    attackTime += Time.deltaTime;
-                    if (IsAttacking())
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);
+                    //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
+
+                    if (!coroutineCheck)
                     {
-                        isNextAtk = true;
+                        StopCoroutine(gcadt);
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
+                        StartCoroutine(gcadt);
+                        coroutineCheck = true;
                     }
-                    if (attackTime > atkResetTime)
+
+                    if (waitTimeCheck)
                     {
-                        if (isNextAtk == true)
+                        float? temp = gcadt.Current as float?;
+                        atkResetTime = (float)temp;
+
+
+                        attackRange.SetActive(true);
+
+                        //연타 초기화 시간
+                        attackTime += Time.deltaTime;
+                        if (IsAttacking())
                         {
-                            attackTime = 0;
-                            plState = PL_STATE.ATTACKM2;
-                            isNextAtk = false;
+                            isNextAtk = true;
                         }
-                        else
+                        if (attackTime > atkResetTime)
                         {
-                            attackTime = 0;
-                            plInfo.plAtk = originAtk; //원래의 대미지로 변경
-                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
-                            plState = PL_STATE.IDLE;
-                            isNextAtk = false;
-                            isAttack = false;
+                            if (isNextAtk == true)
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plState = PL_STATE.ATTACKM2;
+                                isNextAtk = false;
+                            }
+                            else
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plInfo.plAtk = originAtk; //원래의 대미지로 변경
+                                plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                                plState = PL_STATE.IDLE;
+                                isNextAtk = false;
+                                isAttack = false;
+                            }
+                            attackRange.SetActive(false);
                         }
-                        attackRange.SetActive(false);
                     }
+
 
                     break;
 
@@ -257,35 +298,55 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 6);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
-                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
+                    //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
-                    plInfo.plAtk = originAtk; //공격력 설정
-                    attackRange.SetActive(true);
+                    if (!coroutineCheck)
+                    {
+                        StopCoroutine(gcadt);
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
+                        StartCoroutine(gcadt);
+                        coroutineCheck = true;
+                    }
 
-                    //연타 초기화 시간
-                    attackTime += Time.deltaTime;
-                    if (IsAttacking())
+                    if (waitTimeCheck)
                     {
-                        isNextAtk = true;
-                    }
-                    if (attackTime > atkResetTime)
-                    {
-                        if (isNextAtk == true)
+                        float? temp = gcadt.Current as float?;
+                        atkResetTime = (float)temp;
+
+
+                        plInfo.plAtk = originAtk; //공격력 설정
+                        attackRange.SetActive(true);
+
+                        //연타 초기화 시간
+                        attackTime += Time.deltaTime;
+                        if (IsAttacking())
                         {
-                            attackTime = 0;
-                            plState = PL_STATE.ATTACKM3;
-                            isNextAtk = false;
+                            isNextAtk = true;
                         }
-                        else
+                        if (attackTime > atkResetTime)
                         {
-                            attackTime = 0;
-                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
-                            plState = PL_STATE.IDLE;
-                            isNextAtk = false;
-                            isAttack = false;
+                            if (isNextAtk == true)
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plState = PL_STATE.ATTACKM3;
+                                isNextAtk = false;
+                            }
+                            else
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                                plState = PL_STATE.IDLE;
+                                isNextAtk = false;
+                                isAttack = false;
+                            }
+                            attackRange.SetActive(false);
                         }
-                        attackRange.SetActive(false);
                     }
+
 
 
                     break;
@@ -294,37 +355,56 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 7);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack3);
-                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
-
-                    plInfo.plAtk = originAtk;
-                    //공격력 설정
-
-                    attackRange.SetActive(true);
-
-                    //연타 초기화 시간
-                    attackTime += Time.deltaTime;
-                    if (IsAttacking())
+                    //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
+                    if (!coroutineCheck)
                     {
-                        isNextAtk = true;
+                        StopCoroutine(gcadt);
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
+                        StartCoroutine(gcadt);
+                        coroutineCheck = true;
                     }
-                    if (attackTime > atkResetTime)
+
+                    if (waitTimeCheck)
                     {
-                        if (isNextAtk == true)
+                        float? temp = gcadt.Current as float?;
+                        atkResetTime = (float)temp;
+
+
+                        plInfo.plAtk = originAtk;
+                        //공격력 설정
+
+                        attackRange.SetActive(true);
+
+                        //연타 초기화 시간
+                        attackTime += Time.deltaTime;
+                        if (IsAttacking())
                         {
-                            attackTime = 0;
-                            plState = PL_STATE.ATTACKM1;
-                            isNextAtk = false;
+                            isNextAtk = true;
                         }
-                        else
+                        if (attackTime > atkResetTime)
                         {
-                            attackTime = 0;
-                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
-                            plState = PL_STATE.IDLE;
-                            isNextAtk = false;
-                            isAttack = false;
+                            if (isNextAtk == true)
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plState = PL_STATE.ATTACKM1;
+                                isNextAtk = false;
+                            }
+                            else
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                                plState = PL_STATE.IDLE;
+                                isNextAtk = false;
+                                isAttack = false;
+                            }
+                            attackRange.SetActive(false);
                         }
-                        attackRange.SetActive(false);
                     }
+
 
                     break;
 
@@ -332,25 +412,43 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 8);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
-                    dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
-
-                    if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
+                    //dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
+                    if (!coroutineCheck)
                     {
-                        plInfo.curHp = 0;
-                        plState = PL_STATE.DIE;
-                    }
-                    else
-                    {
-                        plState = PL_STATE.IDLE;
+                        StopCoroutine(gcadt);
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit);
+                        StartCoroutine(gcadt);
+                        coroutineCheck = true;
                     }
 
-                    //애니메이션 시간 대기
-                    damagedTime += Time.deltaTime;
-                    if (damagedTime > dmgResetTime)
+                    if (waitTimeCheck)
                     {
-                        damagedTime = 0;
-                        plState = PL_STATE.IDLE;
+                        float? temp = gcadt.Current as float?;
+                        dmgResetTime = (float)temp;
+
+
+                        //애니메이션 시간 대기
+                        damagedTime += Time.deltaTime;
+                        if (damagedTime > dmgResetTime)
+                        {
+                            damagedTime = 0;
+                            if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
+                            {
+                                plInfo.curHp = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plState = PL_STATE.DIE;
+                            }
+                            else
+                            {
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plState = PL_STATE.IDLE;
+                            }
+                        }
+
                     }
+
 
                     break;
 
@@ -358,17 +456,34 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 9);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid1);
-                    avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
+                    //avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
+                    if (!coroutineCheck)
+                    {
+                        StopCoroutine(gcadt);
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
+                        StartCoroutine(gcadt);
+                        coroutineCheck = true;
+                    }
 
-                    isNoDamage = true; //무적 ON
+                    if (waitTimeCheck)
+                    {
+                        float? temp = gcadt.Current as float?;
+                        avoidJAnimTime = (float)temp;
+
+
+                        isNoDamage = true; //무적 ON
 
                     //애니메이션 시간 대기
                     avoidTime += Time.deltaTime;
                     if (avoidTime > avoidJAnimTime)
                     {
                         avoidTime = 0;
-                        plState = PL_STATE.AVOIDROLL;
+                            coroutineCheck = false;
+                            waitTimeCheck = false;
+                            plState = PL_STATE.AVOIDROLL;
                     }
+                    }
+
 
                     break;
 
@@ -378,15 +493,32 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 10);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid2);
-                    avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
+                    //avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
+                    if (!coroutineCheck)
+                    {
+                        StopCoroutine(gcadt);
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
+                        StartCoroutine(gcadt);
+                        coroutineCheck = true;
+                    }
 
-                    //애니메이션 시간 대기
-                    avoidTime += Time.deltaTime;
+                    if (waitTimeCheck)
+                    {
+                        float? temp = gcadt.Current as float?;
+                        avoidRAnimTime = (float)temp;
+
+
+                        //애니메이션 시간 대기
+                        avoidTime += Time.deltaTime;
                     if (avoidTime > avoidRAnimTime)
                     {
                         avoidTime = 0;
-                        plState = PL_STATE.IDLE;
+                            coroutineCheck = false;
+                            waitTimeCheck = false;
+                            plState = PL_STATE.IDLE;
                     }
+                    }
+
                     isAvoid = false;
                     break;
 
@@ -406,7 +538,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        
+
     }
 
     public float WalkMoveSpd()
@@ -432,7 +564,7 @@ public class PlayerController : MonoBehaviour
             return true;
         }
         else return false;
-        
+
     }
 
     public void Heal()
@@ -455,7 +587,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("영혼석이 비어있습니다!");
             }
         }
-        
+
     }
 
     /// <summary>
@@ -474,7 +606,7 @@ public class PlayerController : MonoBehaviour
     /// 스킬 쿨타임에 따른 스킬 사용 가능 여부 확인 후, 스킬을 실행하는 함수
     /// E키를 눌렀을 때 SkillCool이 초기화(false)가 되었다면 스킬 사용 가능
     /// </summary>
-    public void isSkill()
+    public void IsSkill()
     {
         if (Input.GetKeyDown(KeyCode.E) && !isSkillCool) //E키 입력이 들어왔는데 CoolTime이 없다면
         {
@@ -535,5 +667,11 @@ public class PlayerController : MonoBehaviour
     public void InitAnimator()
     {
         pac.InitAnimator();
+    }
+
+
+    public void WaitTimeCheckChange(bool tf)
+    {
+        waitTimeCheck = tf;
     }
 }

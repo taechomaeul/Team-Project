@@ -1,14 +1,22 @@
+using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor.Animations;
+#endif
 using UnityEngine;
 
 public class PlayerAnimatorControll : MonoBehaviour
 {
     // 모델에 달려있는 애니메이터
     private Animator animator;
+
+    private PlayerController playerController;
+
+#if UNITY_EDITOR
     // 애니메이터 관련 컨트롤러와 상태머신
     RuntimeAnimatorController rac;
     AnimatorController ac;
     AnimatorStateMachine sm;
+#endif
 
     // 애니메이션 목록
     internal enum Animation_State
@@ -94,9 +102,9 @@ public class PlayerAnimatorControll : MonoBehaviour
     /// </summary>
     void SetAnimatorParam()
     {
-        for (int i = 0; i < ac.parameters.Length; i++)
+        for (int i = 0; i < animatorParams.Length; i++)
         {
-            animator.SetBool(ac.parameters[i].name, false);
+            animator.SetBool(animator.GetParameter(0).name, false);
         }
     }
 
@@ -106,17 +114,18 @@ public class PlayerAnimatorControll : MonoBehaviour
     /// <param name="anim">true로 만들 애니메이터 파라미터</param>
     void SetAnimatorParam(string anim)
     {
-        for (int i = 0; i < ac.parameters.Length; i++)
+        for (int i = 0; i < animatorParams.Length; i++)
         {
-            if (ac.parameters[i].name.Equals(anim))
+            //if (ac.parameters[i].name.Equals(anim))
+            if (animator.GetParameter(i).name.Equals(anim))
             {
                 animator.SetBool(anim, true);
             }
             else
             {
-                if (!(anim.Equals(animatorParams[1]) && ac.parameters[i].name.Equals(animatorParams[0])))
+                if (!(anim.Equals(animatorParams[1]) && animator.GetParameter(i).name.Equals(animatorParams[0])))
                 {
-                    animator.SetBool(ac.parameters[i].name, false);
+                    animator.SetBool(animator.GetParameter(0).name, false);
                 }
             }
         }
@@ -131,8 +140,9 @@ public class PlayerAnimatorControll : MonoBehaviour
         animationState = state;
     }
 
+#if UNITY_EDITOR
     /// <summary>
-    /// 현재 상태의 애니메이션 재생시간 반환
+    /// 현재 상태의 애니메이션 재생시간 반환, 런타임에서 동작 못함
     /// </summary>
     /// <param name="state">재생시간을 반환받을 애니메이션 상태</param>
     /// <returns>애니메이션 재생 시간</returns>
@@ -174,6 +184,30 @@ public class PlayerAnimatorControll : MonoBehaviour
 
         // 애니메이션 재생 길이, 상태 재생 속도, 반복 횟수를 계산한 최종 상태 재생 길이 반환
         return (time / smSpeed) * loopTime;
+    }
+#endif
+
+    /// <summary>
+    /// 현재 상태의 애니메이션 재생시간 반환
+    /// </summary>
+    /// <param name="state">현재 상태</param>
+    /// <returns>현재 상태의 애니메이션 재생시간</returns>
+    internal IEnumerator GetCurrentAnimationDurationTime(Animation_State state)
+    {
+        while (true)
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(GetStringFromAnimationStateMachine(state)))
+            {
+                break;
+            }
+            else
+            {
+                playerController.WaitTimeCheckChange(false);
+                yield return null;
+            }
+        }
+        yield return animator.GetCurrentAnimatorStateInfo(0).length;
+        playerController.WaitTimeCheckChange(true);
     }
 
     /// <summary>
@@ -231,10 +265,12 @@ public class PlayerAnimatorControll : MonoBehaviour
         {
             // animator 초기화
             animator = GetComponentInChildren<Animator>();
+#if UNITY_EDITOR
             // 상태머신 관련 초기화
             rac = animator.runtimeAnimatorController;
             ac = animator.runtimeAnimatorController as AnimatorController;
             sm = ac.layers[0].stateMachine;
+#endif
         }
     }
 }

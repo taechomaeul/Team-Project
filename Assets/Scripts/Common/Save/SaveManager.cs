@@ -406,9 +406,9 @@ public class SaveManager : MonoBehaviour
     /// <summary>
     /// 데이터 수치를 게임에 적용
     /// </summary>
-    private void ApplyLoadedData()
+    public void ApplyLoadedData()
     {
-        // 세이브 위치ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ
+        playerInfo.curPositionIndex = saveClass.GetLastSavePosition();
         playerInfo.curHp = saveClass.GetCurrentHp();
         playerInfo.soulHp = saveClass.GetCurrentSoulCount();
         playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
