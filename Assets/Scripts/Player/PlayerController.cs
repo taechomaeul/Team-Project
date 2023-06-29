@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController characterController;
 
     private PlayerAnimatorControll pac;
+    private SaveManager saveManager;
 
     public enum PL_STATE
     {
@@ -76,8 +77,20 @@ public class PlayerController : MonoBehaviour
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
+        saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
         //anim = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         pac = GetComponent<PlayerAnimatorControll>();
+
+        
+        plInfo.curPositionIndex = saveManager.saveClass.GetLastSavePosition();
+
+        transform.GetChild(0).GetComponent<CharacterController>().enabled = false;
+        transform.rotation = GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).rotation;
+        transform.GetChild(0).localPosition = GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).position;
+        transform.GetChild(0).GetComponent<CharacterController>().enabled = true;
+
+        Debug.Log($"Index{plInfo.curPositionIndex} : " + GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).position);
+        Debug.Log($"transform.GetChild(0).position : {transform.GetChild(0).position}");
 
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;

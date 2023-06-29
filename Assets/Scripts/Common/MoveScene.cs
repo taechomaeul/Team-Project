@@ -9,10 +9,12 @@ public class MoveScene : MonoBehaviour
     public string colliderName;
 
     private GameManager gameManager;
+    private SaveManager saveManager;
 
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,6 +28,8 @@ public class MoveScene : MonoBehaviour
                     break;
 
                 case "AnimMiddleBossCutScenes":
+                    //index 변경
+                    saveManager.SetSaveClass(8);
                     gameManager.MoveToMidBossScene();
                     break;
 
@@ -38,6 +42,8 @@ public class MoveScene : MonoBehaviour
                     break;
 
                 case "AnimMainBossCutScenes":
+                    //index 변경
+                    saveManager.SetSaveClass(9);
                     gameManager.MoveToFinalBossScene();
                     break;
 
