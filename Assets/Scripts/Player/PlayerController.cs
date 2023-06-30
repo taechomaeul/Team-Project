@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
         saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
-        //anim = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         pac = GetComponent<PlayerAnimatorControll>();
 
         Scene scene = SceneManager.GetActiveScene();
@@ -112,6 +111,14 @@ public class PlayerController : MonoBehaviour
 
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
+
+        
+        if (string.IsNullOrEmpty(plInfo.curSkill.skillName))
+        {
+            plInfo.curSkill = skillData.skills[4];
+            //Debug.Log(plInfo.curSkill.skillName);
+        }
+
 
         coroutineCheck = false;
         waitTimeCheck = false;
