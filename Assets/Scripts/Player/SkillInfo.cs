@@ -25,7 +25,7 @@ public class SkillInfo : MonoBehaviour
     public List<Dictionary<string, object>> data;
 
     //읽어온 csv파일 데이터 저장
-    private void Start()
+    private void Awake()
     {
         data = CSVReader.Read(dataPath);
         
