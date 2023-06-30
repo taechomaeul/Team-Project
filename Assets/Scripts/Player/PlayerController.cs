@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -84,16 +85,30 @@ public class PlayerController : MonoBehaviour
         //anim = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         pac = GetComponent<PlayerAnimatorControll>();
 
-        
+        Scene scene = SceneManager.GetActiveScene();
+        GameObject indexer = GameObject.Find("Indexes").gameObject;
+        if (scene.name.Contains("1F"))
+        {
+            indexer.transform.position = new Vector3(-0.41f, 1f, -56.52f);
+        }
+        else if (scene.name.Contains("2F"))
+        {
+            indexer.transform.position = new Vector3(-4.42f, 1f, -41.29f);
+        }
+
         plInfo.curPositionIndex = saveManager.saveClass.GetLastSavePosition();
 
-        transform.GetChild(0).GetComponent<CharacterController>().enabled = false;
-        transform.rotation = GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).rotation;
-        transform.GetChild(0).localPosition = GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).position;
-        transform.GetChild(0).GetComponent<CharacterController>().enabled = true;
+        Transform playerPos = transform.GetChild(0);
+        //Transform sight = transform.GetChild(0).GetChild(1);
 
-        Debug.Log($"Index{plInfo.curPositionIndex} : " + GameObject.Find("Indexes").transform.GetChild(plInfo.curPositionIndex).position);
-        Debug.Log($"transform.GetChild(0).position : {transform.GetChild(0).position}");
+        playerPos.GetComponent<CharacterController>().enabled = false;
+        playerPos.localPosition = indexer.transform.GetChild(plInfo.curPositionIndex).localPosition;
+        /*transform.rotation = indexer.transform.GetChild(plInfo.curPositionIndex).rotation;
+        sight.rotation = indexer.transform.GetChild(plInfo.curPositionIndex).GetChild(0).rotation;*/
+        playerPos.GetComponent<CharacterController>().enabled = true;
+
+        //Debug.Log($"Index{plInfo.curPositionIndex} : " + indexer.transform.GetChild(plInfo.curPositionIndex).position);
+        //Debug.Log($"transform.GetChild(0).position : {transform.GetChild(0).position}");
 
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;

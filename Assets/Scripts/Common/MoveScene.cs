@@ -32,7 +32,7 @@ public class MoveScene : MonoBehaviour
                     break;
 
                 case "TestScene_2F":
-                    //saveManager.SetSaveClass(5);
+                    saveManager.SetSaveClass(5);
                     gameManager.MoveTo2FScene();
                     break;
 
