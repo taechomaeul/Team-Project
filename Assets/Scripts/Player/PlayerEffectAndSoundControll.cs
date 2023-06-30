@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyEffectAndSoundControll : MonoBehaviour
+public class PlayerEffectAndSoundControll : MonoBehaviour
 {
     [Header("재생할 이펙트 오브젝트")]
     [Tooltip("공격1")]
@@ -17,27 +19,27 @@ public class EnemyEffectAndSoundControll : MonoBehaviour
 
 
 
-    internal void TrunOnEffectAttack(int attackType)
+    internal void TurnOnEffectAttack(int attackType)
     {
         switch (attackType)
         {
-            case 2:
+            case 4:
                 effectAttack1.SetActive(true);
                 break;
-            case 3:
+            case 5:
                 effectAttack2.SetActive(true);
                 break;
-            case 4:
+            case 6:
                 effectAttack3.SetActive(true);
                 break;
         }
     }
 
-    internal void TrunOnEffectSkill()
+    internal void TurnOnEffectSkill()
     {
-        if(effectSkill!=null)
+        if (effectSkill != null)
         {
-        effectSkill.SetActive(true);
+            effectSkill.SetActive(true);
         }
     }
 }

@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController characterController;
 
     private PlayerAnimatorControll pac;
+    private PlayerEffectAndSoundControll peasc;
     private SaveManager saveManager;
 
     private bool coroutineCheck;
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponentInChildren<CharacterController>();
         saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
         pac = GetComponent<PlayerAnimatorControll>();
+        peasc = GetComponent<PlayerEffectAndSoundControll>();
 
         Scene scene = SceneManager.GetActiveScene();
         GameObject indexer = GameObject.Find("Indexes").gameObject;
@@ -264,6 +266,7 @@ public class PlayerController : MonoBehaviour
                     plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
 
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack1);
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
 
                     if (!coroutineCheck)
@@ -322,6 +325,7 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 6);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack2);
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
                     if (!coroutineCheck)
@@ -382,6 +386,7 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 7);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack3);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack3);
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                     if (!coroutineCheck)
                     {
@@ -650,6 +655,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && !isSkillCool) //E키 입력이 들어왔는데 CoolTime이 없다면
         {
             isSkillCool = true;
+            peasc.TurnOnEffectSkill();
             switch (plInfo.curSkill.skillName)
             {
                 case "힘증가":
