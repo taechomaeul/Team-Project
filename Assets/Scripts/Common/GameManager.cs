@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveTo1FScene()
     {
-        SceneManager.LoadScene("TestScene");
+        SceneManager.LoadScene("TestScene_1F");
     }
 
     /// <summary>
