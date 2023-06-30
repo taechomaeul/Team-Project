@@ -76,6 +76,7 @@ public class SettingManager : MonoBehaviour
         LoadSoundSetting();
         LoadResolutionSetting();
         LoadBrightnessSetting();
+        Debug.Log("설정 값 불러오기 완료");
     }
 
     /// <summary>
@@ -86,7 +87,7 @@ public class SettingManager : MonoBehaviour
         SaveSoundSetting();
         SaveResolutionSetting(resolutionsDropdown.value);
         SaveBrightnessSetting();
-        Debug.Log("저장");
+        Debug.Log("설정 값 저장");
     }
 
     /// <summary>
@@ -95,10 +96,13 @@ public class SettingManager : MonoBehaviour
     /// </summary>
     public void Btn_SetOriginValues()
     {
+        // 사운드
         originBgmValue = bgmVolume;
         originSfxValue = sfxVolume;
+        // 해상도
         originResolutionIndex = resolutionsDropdown.value;
         originFullscreenMode = fullscreenToggle.isOn;
+        // 밝기
         originBrightness = brightnessSlider.value;
         Debug.Log("origin 저장");
     }
@@ -130,7 +134,7 @@ public class SettingManager : MonoBehaviour
     /// </summary>
     public void Slider_SetBgmVolume()
     {
-        // 로그의 형태를 가지기 때문에 값으로 0 불가
+        // 오디오믹서의 설정 값이 로그의 형태를 가지기 때문에 볼륨 값으로 0 불가
         if (bgmSlider.value != 0)
         {
             bgmVolume = bgmSlider.value;
@@ -148,7 +152,7 @@ public class SettingManager : MonoBehaviour
     /// </summary>
     public void Slider_SetSfxVolume()
     {
-        // 로그의 형태를 가지기 때문에 값으로 0 불가
+        // 오디오믹서의 설정 값이 로그의 형태를 가지기 때문에 볼륨 값으로 0 불가
         if (sfxSlider.value != 0)
         {
             sfxVolume = sfxSlider.value;
@@ -198,18 +202,6 @@ public class SettingManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 선택한 해상도와 화면 모드로 변경
-    /// </summary>
-    /// <param name="index">선택한 해상도 인덱스</param>
-    private void SaveResolutionSetting(int index)
-    {
-        Screen.SetResolution(resolutions[index].width, resolutions[index].height, fullScreenMode);
-        PlayerPrefs.SetInt("resolutionIndex", index);
-        PlayerPrefs.SetInt("fullScreen", (int)fullScreenMode);
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
     /// 해상도 UI 설정
     /// </summary>
     private void InitResolutionUI()
@@ -231,12 +223,27 @@ public class SettingManager : MonoBehaviour
                 resolutionIndex = i;
             }
         }
-
+        // 현재 해상도로 드랍다운 인덱스 설정
         resolutionsDropdown.value = resolutionIndex;
+        // 드랍다운 새로고침
         resolutionsDropdown.RefreshShownValue();
 
         // 전체 화면이면 토글에도 체크
         fullscreenToggle.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow);
+    }
+
+    /// <summary>
+    /// 선택한 해상도와 화면 모드로 변경
+    /// </summary>
+    /// <param name="index">선택한 해상도 인덱스</param>
+    private void SaveResolutionSetting(int index)
+    {
+        // 선택한 해상도, 화면 모드로 변경
+        Screen.SetResolution(resolutions[index].width, resolutions[index].height, fullScreenMode);
+        // 값 저장
+        PlayerPrefs.SetInt("resolutionIndex", index);
+        PlayerPrefs.SetInt("fullScreen", (int)fullScreenMode);
+        PlayerPrefs.Save();
     }
 
     /// <summary>
@@ -264,18 +271,29 @@ public class SettingManager : MonoBehaviour
     }
     #endregion
 
+
     #region 밝기
+    /// <summary>
+    /// 밝기 설정
+    /// </summary>
     public void Slider_SetBrightness()
     {
         lightComponent.intensity = brightnessSlider.value;
     }
 
+    /// <summary>
+    /// 밝기 설정 적용
+    /// </summary>
     public void SaveBrightnessSetting()
     {
-        PlayerPrefs.SetFloat("brightness",brightnessSlider.value);
+        // 값 저장
+        PlayerPrefs.SetFloat("brightness", brightnessSlider.value);
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    ///  저장된 밝기 설정 불러오기
+    /// </summary>
     public void LoadBrightnessSetting()
     {
         brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 0.5f);
