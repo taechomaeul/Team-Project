@@ -58,6 +58,7 @@ public class ColliderController : MonoBehaviour
             int index = showScript.GetIndex(cName); //index를 불러온 뒤
             //-> 해당 script의 인덱스는 IDX입니다. START_IDX 아닙니다!!
 
+            Debug.Log($"scriptObj [{i}] : scriptObj : {scriptObject[i].name}");
             if (checkScript[index]) //해당 인덱스에 있는 체크 값이 true라면 ColliderObject를 끈다
             {
                 scriptObject[i].SetActive(false);

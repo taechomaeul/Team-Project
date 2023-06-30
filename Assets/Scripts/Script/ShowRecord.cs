@@ -68,6 +68,11 @@ public class ShowRecord : MonoBehaviour
         }
     }
 
+    public void GetCheckRecordArr(bool[] ccRecordArr)
+    {
+        checkRecordComplete = ccRecordArr;
+    }
+
     public IEnumerator LoadRecordData(string colliName)
     {
         yield return StartCoroutine(LoadRecordDataFromCSV(colliName));

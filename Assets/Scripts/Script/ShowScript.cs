@@ -107,6 +107,11 @@ public class ShowScript : MonoBehaviour
         return e_Index;
     }
 
+    public void GetCheckScriptArr(bool[] ccScriptArr)
+    {
+        checkScriptComplete = ccScriptArr;
+    }
+
     public void LoadScript(int curIndex)
     {
         StartCoroutine(LoadScriptData(curIndex));
