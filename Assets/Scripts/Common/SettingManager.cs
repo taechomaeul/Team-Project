@@ -61,8 +61,8 @@ public class SettingManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
-            DontDestroyOnLoad(brightnessLight);
-            lightComponent = brightnessLight.GetComponent<Light>();
+            //DontDestroyOnLoad(brightnessLight);
+            //lightComponent = brightnessLight.GetComponent<Light>();
             LoadSettings();
         }
     }
@@ -75,7 +75,7 @@ public class SettingManager : MonoBehaviour
     {
         LoadSoundSetting();
         LoadResolutionSetting();
-        LoadBrightnessSetting();
+        //LoadBrightnessSetting();
         Debug.Log("설정 값 불러오기 완료");
     }
 
@@ -212,11 +212,16 @@ public class SettingManager : MonoBehaviour
         // 드랍다운 메뉴 항목 채우기
         for (int i = 0; i < resolutions.Count; i++)
         {
-            Dropdown.OptionData option = new()
+            // UI 조절에 시간이 없는 관계로 16:9 비율만
+            if (resolutions[i].width / 16 * 9 == resolutions[i].height)
             {
-                text = $"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}hz"
-            };
-            resolutionsDropdown.options.Add(option);
+                Debug.Log($"{resolutions[i].width} x {resolutions[i].height}");
+                Dropdown.OptionData option = new()
+                {
+                    text = $"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}hz"
+                };
+                resolutionsDropdown.options.Add(option);
+            }
 
             if (resolutionIndex == -1 && resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
             {
