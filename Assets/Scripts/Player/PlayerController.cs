@@ -126,14 +126,6 @@ public class PlayerController : MonoBehaviour
         waitTimeCheck = false;
     }
 
-    //void OnDrawGizmosSelected()
-    //{
-    //Gizmos.color = Color.blue;
-    //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
-    //}
-
-
-
     void FixedUpdate()
     {
         float h = Input.GetAxis("Horizontal");

@@ -39,10 +39,10 @@ public class ShowRecord : MonoBehaviour
 
 
         //체크 배열 초기화
-        for (int i = 0; i < record.Count; i++)
+        /*for (int i = 0; i < record.Count; i++)
         {
             checkRecordComplete[i] = false;
-        }
+        }*/
 
 
     }
