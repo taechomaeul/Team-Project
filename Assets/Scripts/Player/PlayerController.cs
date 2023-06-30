@@ -266,7 +266,6 @@ public class PlayerController : MonoBehaviour
                     plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
 
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);
-                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack1);
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
 
                     if (!coroutineCheck)
@@ -277,6 +276,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
                         StartCoroutine(gcadt);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack1);
                         coroutineCheck = true;
                     }
 
@@ -325,7 +325,6 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 6);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
-                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack2);
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
                     if (!coroutineCheck)
@@ -336,6 +335,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
                         StartCoroutine(gcadt);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack2);
                         coroutineCheck = true;
                     }
 
@@ -386,7 +386,6 @@ public class PlayerController : MonoBehaviour
                     //애니메이션 연결
                     //anim.SetInteger("State", 7);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack3);
-                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack3);
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                     if (!coroutineCheck)
                     {
@@ -396,6 +395,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                         StartCoroutine(gcadt);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack3);
                         coroutineCheck = true;
                     }
 
