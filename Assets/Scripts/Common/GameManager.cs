@@ -79,4 +79,35 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
     }
+
+    /// <summary>
+    /// 기존 게임을 불러오기 위한 함수
+    /// </summary>
+    public void LoadGame()
+    {
+        SaveManager saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
+        int savePoint = saveManager.saveClass.GetLastSavePosition();
+
+        if (savePoint == 0)
+        {
+            GameObject goToNewGamePanel = GameObject.Find("Canvas").transform.GetChild(0).GetChild(3).gameObject;
+            goToNewGamePanel.SetActive(true);
+        }
+
+        else
+        {
+            int[] floorArr = { 0, 1, 1, 1, 1, 1, 2, 2, 2, 1, 2 };
+
+            if (floorArr[savePoint] == 1)
+            {
+                MoveTo1FScene();
+            }
+            else if (floorArr[savePoint] == 2)
+            {
+                MoveTo2FScene();
+            }
+        }
+
+        
+    }
 }
