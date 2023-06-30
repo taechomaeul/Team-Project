@@ -3,8 +3,8 @@ using UnityEngine;
 public class BossSkill_Rush : MonoBehaviour
 {
     // 적 정보
-    Enemy enemyInfo;
-    Boss bossInfo;
+    private Enemy enemyInfo;
+    private Boss bossInfo;
 
 
 
