@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController characterController;
 
     private PlayerAnimatorControll pac;
+    private PlayerEffectAndSoundControll peasc;
     private SaveManager saveManager;
 
     private bool coroutineCheck;
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponentInChildren<CharacterController>();
         saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
         pac = GetComponent<PlayerAnimatorControll>();
+        peasc = GetComponent<PlayerEffectAndSoundControll>();
 
         Scene scene = SceneManager.GetActiveScene();
         GameObject indexer = GameObject.Find("Indexes").gameObject;
@@ -274,6 +276,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
                         StartCoroutine(gcadt);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack1);
                         coroutineCheck = true;
                     }
 
@@ -332,6 +335,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
                         StartCoroutine(gcadt);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack2);
                         coroutineCheck = true;
                     }
 
@@ -391,6 +395,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                         StartCoroutine(gcadt);
+                    peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack3);
                         coroutineCheck = true;
                     }
 
@@ -650,6 +655,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && !isSkillCool) //E키 입력이 들어왔는데 CoolTime이 없다면
         {
             isSkillCool = true;
+            peasc.TurnOnEffectSkill();
             switch (plInfo.curSkill.skillName)
             {
                 case "힘증가":

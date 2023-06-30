@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -335,24 +336,46 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // 스크립트, 일지 등등 관리 변수 초기화
+        // 첫 시작 위치 저장
+        saveClass.SetLastSavePosition(0);
+    }
+
+    // 새로운 씬에서 찾기
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 플레이어 정보, 스크립트, 일지 등등 관리 변수 초기화
         if (playerInfo == null)
         {
             playerInfo = FindObjectOfType<PlayerInfo>();
+        }
+        if (FindObjectOfType<ColliderController>() == null)
+        {
             cc = FindObjectOfType<ColliderController>();
+        }
+        if (FindObjectOfType<ShowScript>() == null)
+        {
             ss = FindObjectOfType<ShowScript>();
-            sr = FindObjectOfType<ShowRecord>();
+        }
+        if (FindObjectOfType<ShowTip>() == null)
+        {
             st = FindObjectOfType<ShowTip>();
         }
-        // 첫 시작 위치 저장
-        saveClass.SetLastSavePosition(0);
+        if (FindObjectOfType<ShowRecord>() == null)
+        {
+            sr = FindObjectOfType<ShowRecord>();
+        }
     }
 
     /// <summary>
     /// 세이브 클래스에 저장할 데이터 초기화
     /// </summary>
     /// <param name="lastSavePosition">저장 위치 인덱스</param>
-    public void SetSaveClass(int lastSavePosition)
+    public void SaveCurrentDataToClass(int lastSavePosition)
     {
         saveClass.SetLastSavePosition(lastSavePosition);
         saveClass.SetCurrentHp(playerInfo.curHp);
@@ -372,7 +395,7 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     /// <param name="lastSavePosition">저장 위치 인덱스</param>
     /// <returns>작업 결과</returns>
-    internal bool SaveCurrentData(int lastSavePosition)
+    internal bool SaveCurrentDataToFile(int lastSavePosition)
     {
         try
         {
@@ -382,7 +405,7 @@ public class SaveManager : MonoBehaviour
             }
 
             // 세이브 데이터 Json으로 변환
-            SetSaveClass(lastSavePosition);
+            SaveCurrentDataToClass(lastSavePosition);
             string saveJson = JsonUtility.ToJson(saveClass);
 
             // 세이브 폴더 생성
@@ -462,6 +485,33 @@ public class SaveManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError(e);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 세이브 파일이 존재하는지 확인
+    /// </summary>
+    /// <returns>존재: true, 없음 또는 오류: false</returns>
+    public bool SaveFileExistCheck()
+    {
+        try
+        {
+            // 세이브 경로에서 파일 정보 가져오기
+            FileInfo fi = new($"{path}/saveData.json");
+            // 세이브 파일이 존재할 경우
+            if (fi.Exists)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
             return false;
         }
     }
