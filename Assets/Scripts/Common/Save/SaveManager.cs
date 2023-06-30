@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -335,17 +336,39 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // 스크립트, 일지 등등 관리 변수 초기화
+        // 첫 시작 위치 저장
+        saveClass.SetLastSavePosition(0);
+    }
+
+    // 새로운 씬에서 찾기
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 플레이어 정보, 스크립트, 일지 등등 관리 변수 초기화
         if (playerInfo == null)
         {
             playerInfo = FindObjectOfType<PlayerInfo>();
+        }
+        if (FindObjectOfType<ColliderController>() == null)
+        {
             cc = FindObjectOfType<ColliderController>();
+        }
+        if (FindObjectOfType<ShowScript>() == null)
+        {
             ss = FindObjectOfType<ShowScript>();
-            sr = FindObjectOfType<ShowRecord>();
+        }
+        if (FindObjectOfType<ShowTip>() == null)
+        {
             st = FindObjectOfType<ShowTip>();
         }
-        // 첫 시작 위치 저장
-        saveClass.SetLastSavePosition(0);
+        if (FindObjectOfType<ShowRecord>() == null)
+        {
+            sr = FindObjectOfType<ShowRecord>();
+        }
     }
 
     /// <summary>
