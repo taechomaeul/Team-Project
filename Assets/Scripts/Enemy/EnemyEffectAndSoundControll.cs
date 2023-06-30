@@ -69,7 +69,10 @@ public class EnemyEffectAndSoundControll : MonoBehaviour
     internal void TrunOnEffectSkill()
     {
         //StartCoroutine(Skill());
+        if(effectSkill!=null)
+        {
         effectSkill.SetActive(true);
+        }
     }
 
     //private IEnumerator Attack1()
