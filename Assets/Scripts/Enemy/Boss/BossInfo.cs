@@ -12,8 +12,6 @@ public class BossInfo : MonoBehaviour
 
     private void Awake()
     {
-        // 데이터 파일 추가되면 여기서 수치 초기화
-
         // 체력 초기화
         stat.SetCurrentHp(stat.GetMaxHp());
         // 탐지 대상 초기화
@@ -23,6 +21,8 @@ public class BossInfo : MonoBehaviour
     }
 }
 
+
+
 // 보스 관련 클래스
 [Serializable]
 internal class Boss : Enemy
@@ -30,26 +30,26 @@ internal class Boss : Enemy
     // 인스펙터
     [Header("스킬")]
     [Tooltip("스킬 공격력")]
-    [SerializeField] int skillDamage;
+    [SerializeField] private int skillDamage;
 
     [Tooltip("스킬 재사용 대기시간")]
-    [SerializeField] float skillCoolDown;
+    [SerializeField] private float skillCoolDown;
 
     [Tooltip("스킬 시전 사거리")]
-    [SerializeField] float skillCastRange;
+    [SerializeField] private float skillCastRange;
 
     [Tooltip("패턴 시작 체력 비율(%)")]
-    [SerializeField][Range(0f, 100f)] float skillPhaseHpRatio;
+    [SerializeField][Range(0f, 100f)] private float skillPhaseHpRatio;
 
     [Header("현재 상태")]
     [Tooltip("스킬 사용 가능")]
-    [SerializeField, ReadOnly] bool canSkill;
+    [SerializeField, ReadOnly] private bool canSkill;
 
     [Tooltip("스킬 사거리 진입")]
-    [SerializeField, ReadOnly] bool isInSkillRange;
+    [SerializeField, ReadOnly] private bool isInSkillRange;
 
     [Tooltip("스킬 시전 중")]
-    [SerializeField, ReadOnly] bool isSkillCasting;
+    [SerializeField, ReadOnly] private bool isSkillCasting;
 
 
 
