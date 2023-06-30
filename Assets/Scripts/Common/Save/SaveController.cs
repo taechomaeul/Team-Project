@@ -13,12 +13,9 @@ public class SaveController : MonoBehaviour
     public int curAreaIndex;
     public bool isSaveCompleted = false;
 
-    private SaveManager saveManager;
-
-
     void Start()
     {
-        saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,7 +37,7 @@ public class SaveController : MonoBehaviour
                 //플래그로 인덱스 불러온 후 저장
                 curAreaIndex = int.Parse(gameObject.transform.name.Split('_')[1]); //현재 저장하려는 위치의 이름에서 인덱스 가져오자 ex SavePoint_1 -> 1
                 Debug.Log($"curAreaIndex : {curAreaIndex}");
-                saveManager.SaveCurrentDataToClass(curAreaIndex);
+                SaveManager.Instance.SaveCurrentDataToFile(curAreaIndex);
 
                 isSaveCompleted = true; //저장 완료 플래그
             }

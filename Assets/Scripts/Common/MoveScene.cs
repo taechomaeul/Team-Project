@@ -9,12 +9,10 @@ public class MoveScene : MonoBehaviour
     public string colliderName;
 
     private GameManager gameManager;
-    private SaveManager saveManager;
 
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,7 +30,7 @@ public class MoveScene : MonoBehaviour
                     break;
 
                 case "TestScene_2F":
-                    saveManager.SaveCurrentDataToClass(5);
+                    SaveManager.Instance.SaveCurrentDataToClass(5);
                     gameManager.MoveTo2FScene();
                     break;
 

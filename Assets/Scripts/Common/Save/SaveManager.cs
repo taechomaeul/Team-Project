@@ -358,8 +358,8 @@ public class SaveManager : MonoBehaviour
         saveClass.SetCurrentHp(playerInfo.curHp);
         saveClass.SetCurrentSoulCount(playerInfo.soulHp);
         saveClass.SetCurrentBodyIndex(playerInfo.curPrefabIndex);
-        // 스킬 인덱스 저장 - 임시
-        saveClass.SetCurrentSkillIndex(5);
+        saveClass.SetCurrentSkillIndex(playerInfo.curSkill.skillIndex);
+        //saveClass.SetCurrentSkillIndex(4);
         saveClass.SetCurrentAttack(playerInfo.plAtk);
         saveClass.SetCurrentSpeed(playerInfo.plMoveSpd);
         saveClass.SetScriptData(ss.checkScriptComplete);
@@ -416,7 +416,7 @@ public class SaveManager : MonoBehaviour
         playerInfo.curHp = saveClass.GetCurrentHp();
         playerInfo.soulHp = saveClass.GetCurrentSoulCount();
         playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
-        // 스킬 인덱스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        playerInfo.curSkill.skillIndex = saveClass.GetCurrentSkillIndex();
         playerInfo.plAtk = saveClass.GetCurrentAttack();
         playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
         cc.OffRecordCollider(saveClass.GetRecordData());

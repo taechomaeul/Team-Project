@@ -85,10 +85,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadGame()
     {
-        SaveManager saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
-        int savePoint = saveManager.saveClass.GetLastSavePosition();
+        SaveManager.Instance.LoadSaveData();
+        int savePoint = SaveManager.Instance.saveClass.GetLastSavePosition();
+        Debug.Log($"SavePoint : {savePoint}");
 
-        if (savePoint == 0)
+        if (!SaveManager.Instance.SaveFileExistCheck())
         {
             GameObject goToNewGamePanel = GameObject.Find("Canvas").transform.GetChild(0).GetChild(3).gameObject;
             goToNewGamePanel.SetActive(true);
