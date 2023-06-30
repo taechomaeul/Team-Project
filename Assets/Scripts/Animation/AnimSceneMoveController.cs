@@ -25,13 +25,13 @@ public class AnimSceneMoveController : MonoBehaviour
             if (scene.name.Equals("AnimMainBossCutScenes"))
             {
                 //최종보스 연출 후 시작할 위치로 index 변경
-                saveManager.SetSaveClass(9);
+                saveManager.SaveCurrentDataToClass(9);
                 gameManager.MoveTo2FScene();
             }
             else if (scene.name.Equals("AnimMiddleBossCutScenes"))
             {
                 //중간보스 연출 후 시작할 위치로 index 변경
-                saveManager.SetSaveClass(8);
+                saveManager.SaveCurrentDataToClass(8);
                 gameManager.MoveTo1FScene();
             }
 
