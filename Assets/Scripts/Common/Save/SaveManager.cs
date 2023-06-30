@@ -486,7 +486,7 @@ public class SaveManager : MonoBehaviour
                 return false;
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.Log(e);
             return false;
