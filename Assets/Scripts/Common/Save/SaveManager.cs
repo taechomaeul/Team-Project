@@ -437,13 +437,13 @@ public class SaveManager : MonoBehaviour
     {
         if (playerInfo != null)
         {
-        playerInfo.curPositionIndex = saveClass.GetLastSavePosition();
-        playerInfo.curHp = saveClass.GetCurrentHp();
-        playerInfo.soulHp = saveClass.GetCurrentSoulCount();
-        playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
-        playerInfo.curSkill.skillIndex = saveClass.GetCurrentSkillIndex();
-        playerInfo.plAtk = saveClass.GetCurrentAttack();
-        playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
+            playerInfo.curPositionIndex = saveClass.GetLastSavePosition();
+            playerInfo.curHp = saveClass.GetCurrentHp();
+            playerInfo.soulHp = saveClass.GetCurrentSoulCount();
+            playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
+            playerInfo.curSkill.skillIndex = saveClass.GetCurrentSkillIndex();
+            playerInfo.plAtk = saveClass.GetCurrentAttack();
+            playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
         }
         else
         {

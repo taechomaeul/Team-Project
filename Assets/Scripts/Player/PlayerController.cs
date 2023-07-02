@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
 
     private PlayerAnimatorControll pac;
     private PlayerEffectAndSoundControll peasc;
-    private SaveManager saveManager;
 
     private bool coroutineCheck;
     private bool waitTimeCheck;
@@ -82,7 +81,6 @@ public class PlayerController : MonoBehaviour
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
-        saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
         pac = GetComponent<PlayerAnimatorControll>();
         peasc = GetComponent<PlayerEffectAndSoundControll>();
 
@@ -99,13 +97,15 @@ public class PlayerController : MonoBehaviour
 
         // 불러온 데이터 적용
         SaveManager.Instance.ApplyLoadedData();
-        plInfo.curPositionIndex = saveManager.saveClass.GetLastSavePosition();
+        plInfo.curPositionIndex = SaveManager.Instance.saveClass.GetLastSavePosition();
 
         Transform playerPos = transform.GetChild(0);
+        Debug.Log($"PlayerPos : {playerPos.localPosition}");
         //Transform sight = transform.GetChild(0).GetChild(1);
 
         playerPos.GetComponent<CharacterController>().enabled = false;
         playerPos.localPosition = indexer.transform.GetChild(plInfo.curPositionIndex).localPosition;
+        Debug.Log($"PlayerPos Pos AFTER : {playerPos.localPosition}");
         /*transform.rotation = indexer.transform.GetChild(plInfo.curPositionIndex).rotation;
         sight.rotation = indexer.transform.GetChild(plInfo.curPositionIndex).GetChild(0).rotation;*/
         playerPos.GetComponent<CharacterController>().enabled = true;
@@ -568,7 +568,12 @@ public class PlayerController : MonoBehaviour
                     //플래그 ON, 속도 X
                     isDead = true;
                     plInfo.plMoveSpd = 0;
-                    Debug.Log("PLAYER DIE");
+                    //Debug.Log("PLAYER DIE");
+
+                    //Die Panel ON
+                    PlayerUIManager uiManager = GameObject.Find("UIManager").GetComponent<PlayerUIManager>();
+                    uiManager.OnPlayerDiePanel();
+
                     break;
 
                 default:
