@@ -12,6 +12,14 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 타이틀(로비)으로 이동하는 함수
+    /// </summary>
+    public void MoveToTitleScene()
+    {
+        SceneManager.LoadScene("TitleScene");
+    }
+
+    /// <summary>
     /// PushGame으로 이동하는 함수
     /// </summary>
     public void MoveToPush()
@@ -59,6 +67,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("AnimMainBossCutScenes");
     }
 
+    /// <summary>
+    /// 게임종료 함수
+    /// </summary>
     public void QuitTheGame()
     {
         Application.Quit();
@@ -85,10 +96,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadGame()
     {
-        SaveManager saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
-        int savePoint = saveManager.saveClass.GetLastSavePosition();
+        SaveManager.Instance.LoadSaveData();
+        int savePoint = SaveManager.Instance.saveClass.GetLastSavePosition();
+        Debug.Log($"SavePoint : {savePoint}");
 
-        if (savePoint == 0)
+        if (!SaveManager.Instance.SaveFileExistCheck())
         {
             GameObject goToNewGamePanel = GameObject.Find("Canvas").transform.GetChild(0).GetChild(3).gameObject;
             goToNewGamePanel.SetActive(true);

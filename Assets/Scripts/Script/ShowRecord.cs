@@ -36,15 +36,18 @@ public class ShowRecord : MonoBehaviour
         recordText.text = "";
 
         checkRecordComplete = new bool[record.Count];
+        //Debug.Log($"record Count : {record.Count}");
 
-
-        //체크 배열 초기화
-        for (int i = 0; i < record.Count; i++)
+        if (SaveManager.Instance.saveClass.GetRecordData().Length == 0)
         {
-            checkRecordComplete[i] = false;
+            //체크 배열 초기화
+            //Debug.Log("일지 체크 배열 초기화");
+            for (int i = 0; i < record.Count; i++)
+            {
+                checkRecordComplete[i] = false;
+            }
+            SaveManager.Instance.saveClass.SetRecordData(checkRecordComplete);
         }
-
-
     }
 
     public bool[] GetCheckRecordComplete()
@@ -66,6 +69,11 @@ public class ShowRecord : MonoBehaviour
             newRecord.name = recordName; //이름 변경
             newRecord.transform.GetChild(0).GetComponent<Text>().text = recordName; //내용 변경
         }
+    }
+
+    public void GetCheckRecordArr(bool[] ccRecordArr)
+    {
+        checkRecordComplete = ccRecordArr;
     }
 
     public IEnumerator LoadRecordData(string colliName)

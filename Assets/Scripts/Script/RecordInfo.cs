@@ -46,7 +46,8 @@ public class RecordInfo : MonoBehaviour
         toolTipPanel.SetActive(false);
         if (isConfirm)
         {
-            Destroy(gameObject); //확인한 일지 삭제
+            gameObject.SetActive(false);
+            //Destroy(gameObject); //확인한 일지 삭제
 
             //Record 체크 완료
             int recordIndex = showRecord.curCheckIndex;

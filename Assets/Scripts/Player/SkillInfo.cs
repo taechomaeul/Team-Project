@@ -6,6 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Skill
 {
+    public int skillIndex;
     public string skillName;
     public string skillDescription;
     public Sprite thumnail; //Image or sprite
@@ -37,6 +38,8 @@ public class SkillInfo : MonoBehaviour
         for (int i=0; i < data.Count; i++) //스킬 정보 읽어오기 (문자)
         {
             skills[i] = new Skill();
+            //Debug.Log($"Skills.skillIndex : {i}");
+            skills[i].skillIndex = i;
             skills[i].skillName = data[i]["SkillName"].ToString();
             skills[i].skillDescription = data[i]["Description"].ToString();
             if (skills[i].skillDescription.Contains("/"))

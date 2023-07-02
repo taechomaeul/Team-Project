@@ -30,11 +30,17 @@ public class ShowTip : MonoBehaviour
         DOTween.Init();
 
         checkTipComplete = new bool[tip.Count];
+        //Debug.Log($"Tip Count : {tip.Count}");
 
-        //체크 배열 초기화
-        for (int i = 0; i < tip.Count; i++)
+        if (SaveManager.Instance.saveClass.GetTipData().Length == 0)
         {
-            checkTipComplete[i] = false;
+            //Debug.Log("체크 배열 초기화");
+            //체크 배열 초기화
+            for (int i = 0; i < tip.Count; i++)
+            {
+                checkTipComplete[i] = false;
+            }
+            SaveManager.Instance.saveClass.SetTipData(checkTipComplete);
         }
 
     }

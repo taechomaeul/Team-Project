@@ -97,6 +97,8 @@ public class PlayerController : MonoBehaviour
             indexer.transform.position = new Vector3(-4.42f, 1f, -41.29f);
         }
 
+        // 불러온 데이터 적용
+        SaveManager.Instance.ApplyLoadedData();
         plInfo.curPositionIndex = saveManager.saveClass.GetLastSavePosition();
 
         Transform playerPos = transform.GetChild(0);
@@ -125,14 +127,6 @@ public class PlayerController : MonoBehaviour
         coroutineCheck = false;
         waitTimeCheck = false;
     }
-
-    //void OnDrawGizmosSelected()
-    //{
-    //Gizmos.color = Color.blue;
-    //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
-    //}
-
-
 
     void FixedUpdate()
     {
