@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
         pac = GetComponent<PlayerAnimatorControll>();
         peasc = GetComponent<PlayerEffectAndSoundControll>();
 
+        //현재 씬에 따라 인덱서 위치를 지정 (인덱서 위치는 Player 기본 위치)
         Scene scene = SceneManager.GetActiveScene();
         GameObject indexer = GameObject.Find("Indexes").gameObject;
         if (scene.name.Contains("1F"))
@@ -116,7 +117,7 @@ public class PlayerController : MonoBehaviour
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
 
-        
+        //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [4]번 스킬 내용을 적용
         if (string.IsNullOrEmpty(plInfo.curSkill.skillName))
         {
             plInfo.curSkill = skillData.skills[4];
@@ -171,7 +172,6 @@ public class PlayerController : MonoBehaviour
             {
                 case PL_STATE.IDLE:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 0);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Idle);
 
                     if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
@@ -189,7 +189,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.MOVE:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 1);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
 
                     plInfo.plMoveSpd = moveSpd;
@@ -214,7 +213,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.WALK:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 2);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
 
                     plInfo.plMoveSpd = WalkMoveSpd();
@@ -243,7 +241,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.JUMP:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 4);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Jump);
 
 
@@ -256,7 +253,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.ATTACKM1:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 5);
                     plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
 
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);
@@ -317,7 +313,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.ATTACKM2:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 6);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
@@ -378,7 +373,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.ATTACKM3:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 7);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack3);
                     //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                     if (!coroutineCheck)
@@ -439,7 +433,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.DAMAGED:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 8);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
                     //dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
                     if (!coroutineCheck)
@@ -486,7 +479,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.AVOIDJUMP:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 9);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid1);
                     //avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
                     if (!coroutineCheck)
@@ -526,7 +518,6 @@ public class PlayerController : MonoBehaviour
                     isNoDamage = false; //무적 OFF
 
                     //애니메이션 연결
-                    //anim.SetInteger("State", 10);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid2);
                     //avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
                     if (!coroutineCheck)
@@ -562,7 +553,6 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.DIE:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 11);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Dead);
 
                     //플래그 ON, 속도 X
@@ -584,11 +574,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 기습 공격을 위한 속도 설정
+    /// 움직이는 속도를 반으로 줄인다.
+    /// </summary>
+    /// <returns>반으로 나눈 속도를 반환</returns>
     public float WalkMoveSpd()
     {
         return moveSpd / 2;
     }
 
+    /// <summary>
+    /// 왼쪽 Shift 버튼 입력이 들어오면 회피 중인 상태로 바꿔주는 함수
+    /// </summary>
     public void IsAvoiding()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -598,6 +596,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 마우스 클릭 입력이 들어오면 공격 중인 상태로 바꿔주는 함수
+    /// </summary>
+    /// <returns>공격 중이면 True, 아니면 false</returns>
     public bool IsAttacking()
     {
         if (Input.GetMouseButtonDown(0)
@@ -610,6 +612,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 체력 회복 함수
+    /// </summary>
     public void Heal()
     {
         if (timer.CountSeconds(1f))
@@ -712,7 +717,6 @@ public class PlayerController : MonoBehaviour
     {
         pac.InitAnimator();
     }
-
 
     public void WaitTimeCheckChange(bool tf)
     {

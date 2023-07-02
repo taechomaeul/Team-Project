@@ -37,16 +37,25 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 플레이어 사망 패널 켜는 함수
+    /// </summary>
     public void OnPlayerDiePanel()
     {
         playerDiePanel.SetActive(true);
     }
 
+    /// <summary>
+    /// 플레이어 사망 패널 끄는 함수
+    /// </summary>
     public void OffPlayerDiePanel()
     {
         playerDiePanel.SetActive(false);
     }
 
+    /// <summary>
+    /// 최근 저장 위치에서 부활하는 함수 (씬 재로드)
+    /// </summary>
     public void ResetToLastSave()
     {
         gameManager.LoadGame();

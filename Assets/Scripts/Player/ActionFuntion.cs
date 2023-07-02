@@ -128,6 +128,9 @@ public class ActionFuntion : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 카메라와 플레이어 움직임을 멈추는 함수
+    /// </summary>
     public void PauseGameForAct()
     {
         plInfo.plMoveSpd = 0;
@@ -135,6 +138,9 @@ public class ActionFuntion : MonoBehaviour
         plController.plState = PlayerController.PL_STATE.ACT;
     }
 
+    /// <summary>
+    /// 카메라와 플레이어 움직임을 되돌리는 함수
+    /// </summary>
     public void RestartGame()
     {
         plInfo.plMoveSpd = plController.moveSpd;

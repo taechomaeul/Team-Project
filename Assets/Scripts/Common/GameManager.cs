@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    
-    void Start()
-    {
-        
-    }
-
     /// <summary>
     /// 타이틀(로비)으로 이동하는 함수
     /// </summary>
@@ -100,14 +94,15 @@ public class GameManager : MonoBehaviour
         int savePoint = SaveManager.Instance.saveClass.GetLastSavePosition();
         Debug.Log($"SavePoint : {savePoint}");
 
-        if (!SaveManager.Instance.SaveFileExistCheck())
+        if (!SaveManager.Instance.SaveFileExistCheck()) //저장된 세이브 파일이 없다면
         {
             GameObject goToNewGamePanel = GameObject.Find("Canvas").transform.GetChild(0).GetChild(3).gameObject;
-            goToNewGamePanel.SetActive(true);
+            goToNewGamePanel.SetActive(true); //새게임으로 가도록 유도하는 패널 ON
         }
 
         else
         {
+            //인덱스에 따른 1층 위치
             int[] floorArr = { 0, 1, 1, 1, 1, 1, 2, 2, 2, 1, 2 };
 
             if (floorArr[savePoint] == 1)

@@ -6,14 +6,23 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Skill
 {
+    [Tooltip("스킬 인덱스")]
     public int skillIndex;
+    [Tooltip("스킬 이름")]
     public string skillName;
+    [Tooltip("스킬 설명")]
     public string skillDescription;
-    public Sprite thumnail; //Image or sprite
+    [Tooltip("스킬 이미지")]
+    public Sprite thumnail;
+    [Tooltip("스킬 쿨타임")]
     public float coolTime;
+    [Tooltip("스킬 지속시간")]
     public float duringTime;
+    [Tooltip("스킬 이펙트 Prefab")]
     public GameObject effectPrefab;
+    [Tooltip("스킬 이펙트 위치 값")]
     public Vector3 effectPos;
+    [Tooltip("스킬 이펙트 회전 값")]
     public Quaternion effectRot;
 }
 
@@ -31,14 +40,11 @@ public class SkillInfo : MonoBehaviour
         data = CSVReader.Read(dataPath);
         
         skills = new Skill[data.Count];
-
         cSkillInfo = GetComponent<ChangableSkillInfo>();
-
 
         for (int i=0; i < data.Count; i++) //스킬 정보 읽어오기 (문자)
         {
             skills[i] = new Skill();
-            //Debug.Log($"Skills.skillIndex : {i}");
             skills[i].skillIndex = i;
             skills[i].skillName = data[i]["SkillName"].ToString();
             skills[i].skillDescription = data[i]["Description"].ToString();
@@ -58,8 +64,7 @@ public class SkillInfo : MonoBehaviour
                     }
                 }
             }
-            //Debug.Log($"Skill Description : {skills[i].skillDescription}");
-            skills[i].thumnail = cSkillInfo.sImage[i];
+            skills[i].thumnail = cSkillInfo.sImage[i]; //기존에 등록해놨던 스킬 이미지로 적용
             skills[i].coolTime = float.Parse(data[i]["CoolTime"].ToString());
             skills[i].duringTime = float.Parse(data[i]["DuringTime"].ToString());
             //skills[i].effectPrefab = cSkillInfo.effectPrefabs[i];

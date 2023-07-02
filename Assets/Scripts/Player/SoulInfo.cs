@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class SoulInfo : MonoBehaviour
 {
-    public int havingHP; //HP(혼력)의 양
+    [Tooltip("HP(혼력)의 양")]
+    public int havingHP;
 }

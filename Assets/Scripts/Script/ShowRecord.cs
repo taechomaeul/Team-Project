@@ -36,12 +36,9 @@ public class ShowRecord : MonoBehaviour
         recordText.text = "";
 
         checkRecordComplete = new bool[record.Count];
-        //Debug.Log($"record Count : {record.Count}");
-
         if (SaveManager.Instance.saveClass.GetRecordData().Length == 0)
         {
             //체크 배열 초기화
-            //Debug.Log("일지 체크 배열 초기화");
             for (int i = 0; i < record.Count; i++)
             {
                 checkRecordComplete[i] = false;
@@ -50,11 +47,19 @@ public class ShowRecord : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 일지 Collider 확인 배열을 넘기기 위한 함수
+    /// </summary>
+    /// <returns></returns>
     public bool[] GetCheckRecordComplete()
     {
         return checkRecordComplete;
     }
 
+    /// <summary>
+    /// 누군가의 일지(Record) 이름 버튼을 불러오는 함수
+    /// 버튼 Prefab을 일지 개수만큼 만들어서 위치를 알맞게 고정시켜준다.
+    /// </summary>
     public void LoadRecordName()
     {
         for (int i = 0; i < record.Count; i++)
@@ -71,6 +76,10 @@ public class ShowRecord : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 일지 Collider 확인 배열을 받아오는 함수
+    /// </summary>
+    /// <param name="ccRecordArr">ColliderController의 일지 체크 배열</param>
     public void GetCheckRecordArr(bool[] ccRecordArr)
     {
         checkRecordComplete = ccRecordArr;

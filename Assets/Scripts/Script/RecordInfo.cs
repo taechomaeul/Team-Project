@@ -5,13 +5,14 @@ using UnityEngine;
 public class RecordInfo : MonoBehaviour
 {
     [Header("연결 필수")]
+    [Tooltip("일지 이름")]
     public string recordName;
+    [Tooltip("툴팁(F) 패널")]
     public GameObject toolTipPanel;
+    [Tooltip("일지 출력 패널")]
     public GameObject recordPanel;
 
-    //[SerializeField]
     private ShowRecord showRecord;
-    //[SerializeField]
     private ActionFuntion actionFuntion;
     private bool isConfirm = false;
 
@@ -46,8 +47,7 @@ public class RecordInfo : MonoBehaviour
         toolTipPanel.SetActive(false);
         if (isConfirm)
         {
-            gameObject.SetActive(false);
-            //Destroy(gameObject); //확인한 일지 삭제
+            Destroy(gameObject); //확인한 일지 삭제
 
             //Record 체크 완료
             int recordIndex = showRecord.curCheckIndex;

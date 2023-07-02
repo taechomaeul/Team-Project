@@ -382,7 +382,6 @@ public class SaveManager : MonoBehaviour
         saveClass.SetCurrentSoulCount(playerInfo.soulHp);
         saveClass.SetCurrentBodyIndex(playerInfo.curPrefabIndex);
         saveClass.SetCurrentSkillIndex(playerInfo.curSkill.skillIndex);
-        //saveClass.SetCurrentSkillIndex(4);
         saveClass.SetCurrentAttack(playerInfo.plAtk);
         saveClass.SetCurrentSpeed(playerInfo.plMoveSpd);
         saveClass.SetScriptData(ss.checkScriptComplete);
@@ -451,11 +450,9 @@ public class SaveManager : MonoBehaviour
         }
 
         if (cc != null)
-        {
-            
+        {   
             ss.GetCheckScriptArr(saveClass.GetScriptData());
             sr.GetCheckRecordArr(saveClass.GetRecordData());
-
         }
         else
         {
