@@ -452,8 +452,7 @@ public class SaveManager : MonoBehaviour
 
         if (cc != null)
         {
-            // cc.OffRecordCollider(saveClass.GetRecordData());
-            // cc.OffScriptCollider(saveClass.GetScriptData());
+            
             ss.GetCheckScriptArr(saveClass.GetScriptData());
             sr.GetCheckRecordArr(saveClass.GetRecordData());
 
@@ -462,6 +461,9 @@ public class SaveManager : MonoBehaviour
         {
             Debug.Log("cc is not exist");
         }
+
+        cc.OffRecordCollider(saveClass.GetRecordData());
+        cc.OffScriptCollider(saveClass.GetScriptData());
     }
 
     /// <summary>

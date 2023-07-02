@@ -36,15 +36,18 @@ public class ShowRecord : MonoBehaviour
         recordText.text = "";
 
         checkRecordComplete = new bool[record.Count];
+        //Debug.Log($"record Count : {record.Count}");
 
-
-        //체크 배열 초기화
-        /*for (int i = 0; i < record.Count; i++)
+        if (SaveManager.Instance.saveClass.GetRecordData().Length == 0)
         {
-            checkRecordComplete[i] = false;
-        }*/
-
-
+            //체크 배열 초기화
+            //Debug.Log("일지 체크 배열 초기화");
+            for (int i = 0; i < record.Count; i++)
+            {
+                checkRecordComplete[i] = false;
+            }
+            SaveManager.Instance.saveClass.SetRecordData(checkRecordComplete);
+        }
     }
 
     public bool[] GetCheckRecordComplete()

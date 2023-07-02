@@ -52,12 +52,18 @@ public class ShowScript : MonoBehaviour
 
         //스크립트 체크 배열 함수 선언
         checkScriptComplete = new bool[startIdxArr.Length];
+        //Debug.Log($"startIdxArr Length : {startIdxArr.Length}");
 
-        /*//스크립트 체크 배열 초기화
-        for (int i = 0; i < startIdxArr.Length; i++)
+        if (SaveManager.Instance.saveClass.GetScriptData().Length == 0)
         {
-            checkScriptComplete[i] = false;
-        }*/
+            //스크립트 체크 배열 초기화
+            //Debug.Log("스크립트 체크 배열 초기화");
+            for (int i = 0; i < startIdxArr.Length; i++)
+            {
+                checkScriptComplete[i] = false;
+            }
+            SaveManager.Instance.saveClass.SetScriptData(checkScriptComplete);
+        }
 
     }
 

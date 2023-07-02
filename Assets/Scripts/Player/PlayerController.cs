@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
         {
             indexer.transform.position = new Vector3(-4.42f, 1f, -41.29f);
         }
+
         // 불러온 데이터 적용
         SaveManager.Instance.ApplyLoadedData();
         plInfo.curPositionIndex = saveManager.saveClass.GetLastSavePosition();
