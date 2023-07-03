@@ -19,8 +19,8 @@ public class ShowScript : MonoBehaviour
     public bool[] checkScriptComplete;
 
     private List<Dictionary<string, object>> script;
-    private int[] startIdxArr;
-    private string[] pointArr;
+    private int[] startIdxArr; //인덱스(파트)의 시작 인덱스만을 모은 배열
+    private string[] pointArr; //인덱스(파트) 이름만을 모은 배열
 
     public bool isClick = false;
 
@@ -113,6 +113,10 @@ public class ShowScript : MonoBehaviour
         return e_Index;
     }
 
+    /// <summary>
+    /// 스크립트 Collider 확인 배열을 받아오는 함수
+    /// </summary>
+    /// <param name="ccScriptArr"></param>
     public void GetCheckScriptArr(bool[] ccScriptArr)
     {
         checkScriptComplete = ccScriptArr;
@@ -129,7 +133,7 @@ public class ShowScript : MonoBehaviour
     }
 
     /// <summary>
-    /// 스크립트 대사를 읽어오는 함수
+    /// 스크립트 대사를 한줄씩 읽어오는 함수
     /// </summary>
     /// <param name="curIndex">현재 인덱스</param>
     /// <returns></returns>

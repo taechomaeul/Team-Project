@@ -20,7 +20,9 @@ public class ShowRecord : MonoBehaviour
     public bool[] checkRecordComplete;
 
     [Header("스크립트용 연결")]
+    [Tooltip("일지 제목 출력 텍스트")]
     public Text recordNameText;
+    [Tooltip("일지 내용 출력 텍스트")]
     public Text recordText;
 
     [Header("일지용 연결")]
@@ -98,8 +100,8 @@ public class ShowRecord : MonoBehaviour
     /// <summary>
     /// 메인화면에서 일지 보여주는 용도의 함수
     /// </summary>
-    /// <param name="colliName"></param>
-    /// <returns></returns>
+    /// <param name="colliName">Collider(POINT) 이름</param>
+    /// <returns>일지 이름과 일치하는 Context(전체 텍스트) 반환</returns>
     public IEnumerator LoadRecordDataFromCSV(string colliName)
     {
         recordNameText.text = colliName;
@@ -138,9 +140,9 @@ public class ShowRecord : MonoBehaviour
     /// <summary>
     /// 일지(J)에서 내용을 보여주기 위한 용도의 함수
     /// </summary>
-    /// <param name="colliName"></param>
-    /// <param name="context"></param>
-    /// <returns></returns>
+    /// <param name="colliName">Collider(POINT) 이름</param>
+    /// <param name="context">일지 출력 텍스트</param>
+    /// <returns>context에 일지 이름과 일치하는 전체 텍스트 입력 후 반환</returns>
     public IEnumerator LoadRecordDataFromCSV(string colliName, Text context)
     {
         context.text = colliName;

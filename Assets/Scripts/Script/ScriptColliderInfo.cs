@@ -6,7 +6,9 @@ using UnityEngine;
 public class ScriptColliderInfo : MonoBehaviour
 {
     [Header("연결 필수")]
+    [Tooltip("스크립트 파트(POINT) 이름")]
     public string colliderName;
+    [Tooltip("스크립트 출력 패널")]
     public GameObject scriptPanel;
 
     [Header("연결 X")]
@@ -60,6 +62,10 @@ public class ScriptColliderInfo : MonoBehaviour
         showScript.isClick = false;
     }
 
+    /// <summary>
+    /// 조건에 따라 움직임 제어하는 함수
+    /// 스크립트 패널 ON, 움직임 X, 스크립트 텍스트 불러오기
+    /// </summary>
     public void ConditionMove()
     {
         scriptPanel.SetActive(true);
