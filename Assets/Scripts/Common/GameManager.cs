@@ -103,14 +103,16 @@ public class GameManager : MonoBehaviour
         else
         {
             //인덱스에 따른 1층 위치
-            int[] floorArr = { 0, 1, 1, 1, 1, 1, 2, 2, 2, 1, 2 };
+            int[] floorArr = { 1, 1, 1, 1, 1, 2, 2, 2, 1, 2 };
 
             if (floorArr[savePoint] == 1)
             {
+                Debug.Log($"MOVE {floorArr[savePoint]}F, savePoint : {savePoint}");
                 MoveTo1FScene();
             }
             else if (floorArr[savePoint] == 2)
             {
+                Debug.Log($"MOVE {floorArr[savePoint]}F, savePoint : {savePoint}");
                 MoveTo2FScene();
             }
         }

@@ -19,8 +19,12 @@ public class ShowScript : MonoBehaviour
     public bool[] checkScriptComplete;
 
     private List<Dictionary<string, object>> script;
+    [SerializeField]
     private int[] startIdxArr; //인덱스(파트)의 시작 인덱스만을 모은 배열
+    [SerializeField]
     private string[] pointArr; //인덱스(파트) 이름만을 모은 배열
+    [SerializeField]
+    private string[] langArr; //언어 이름만을 모은 배열
 
     public bool isClick = false;
 
@@ -30,11 +34,24 @@ public class ShowScript : MonoBehaviour
         DOTween.Init();
 
         //배열 초기화
-        startIdxArr = new int[script.Count];
-        pointArr = new string[script.Count];
+        langArr = new string[script.Count];
+
+        //언어 배열 생성
+        for (int i = 0; i < script.Count; i++)
+        {
+            langArr[i] = script[i]["Language"].ToString();
+        }
+
+        //중복제거
+        langArr = langArr.Distinct().ToArray();
+
+
+        //배열 초기화
+        startIdxArr = new int[script.Count / langArr.Length];
+        pointArr = new string[script.Count / langArr.Length];
 
         //StartIdx 배열 생성
-        for (int i=0; i< script.Count; i++)
+        for (int i=0; i< script.Count / langArr.Length; i++)
         {           
             int result;
             if (int.TryParse(script[i]["START_IDX"].ToString(), out result))
@@ -75,8 +92,7 @@ public class ShowScript : MonoBehaviour
     public int GetIndex(string part)
     {
         int index = 0;
-
-        for (int i=0; i<startIdxArr.Length; i++)
+        for (int i = 0 ; i < startIdxArr.Length; i++)
         {
             if (part.Equals(pointArr[i]))
             {
@@ -122,14 +138,14 @@ public class ShowScript : MonoBehaviour
         checkScriptComplete = ccScriptArr;
     }
 
-    public void LoadScript(int curIndex)
+    public void LoadScript(int curIndex, int langOffset)
     {
-        StartCoroutine(LoadScriptData(curIndex));
+        StartCoroutine(LoadScriptData(curIndex, langOffset));
     }
 
-    public IEnumerator LoadScriptData(int curIndex)
+    public IEnumerator LoadScriptData(int curIndex, int langOffset)
     {
-        yield return StartCoroutine(LoadScriptDataFromCSV(curIndex));
+        yield return StartCoroutine(LoadScriptDataFromCSV(curIndex, langOffset));
     }
 
     /// <summary>
@@ -137,9 +153,9 @@ public class ShowScript : MonoBehaviour
     /// </summary>
     /// <param name="curIndex">현재 인덱스</param>
     /// <returns></returns>
-    public IEnumerator LoadScriptDataFromCSV(int curIndex)
+    public IEnumerator LoadScriptDataFromCSV(int curIndex, int langOffset)
     {
-        scriptText.text = script[curIndex]["CONTEXT"].ToString();
+        scriptText.text = script[curIndex + langOffset]["CONTEXT"].ToString();
         if (scriptText.text.Contains("/"))
         {
             string[] sText = scriptText.text.Split("/");
@@ -156,7 +172,7 @@ public class ShowScript : MonoBehaviour
                 }
             }
         }
-        Debug.Log($"Type: {GetScriptType(curIndex)}");
+        Debug.Log($"Type: {GetScriptType(curIndex + langOffset)}");
         Debug.Log($"{scriptText.text}");
 
         yield return StartCoroutine(WaitSecondsFunction(1f));
