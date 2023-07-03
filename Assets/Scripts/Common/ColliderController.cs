@@ -19,23 +19,22 @@ public class ColliderController : MonoBehaviour
     /// <param name="checkRecord">이미 본 일지를 확인하는 배열</param>
     public void OffRecordCollider(bool[] checkRecord)
     {
-        GameObject[] recordObject = new GameObject[GameObject.Find("RecordGroup").transform.childCount];
+        GameObject rCollider = GameObject.Find("RecordGroup");
+        GameObject[] recordObject = new GameObject[rCollider.transform.childCount];
 
         int recordStart;
-        if (GameObject.Find("RecordGroup").transform.GetChild(0).name.Contains("누명자"))
+        if (rCollider.transform.GetChild(0).name.Contains("누명자"))
         {
             recordStart = 0;
-            Debug.Log($"1F RecordStart : {recordStart}");
         }
         else
         {
             recordStart = showRecord.record.Count - recordObject.Length;
-            Debug.Log($"2F RecordStart : {recordStart}");
         }
 
         for (int i = recordStart; i < recordObject.Length + recordStart; i++)
         {
-            //Debug.Log($"CheckRecord [{i}] (OFF RECORD COLLIDER) : {checkRecord[i]}");
+            recordObject[i] = rCollider.transform.GetChild(i).gameObject;
             if (checkRecord[i]) //true라면 ColliderObject를 끈다
             {
                 recordObject[i].SetActive(false);
@@ -56,7 +55,8 @@ public class ColliderController : MonoBehaviour
         {
             string cName = sCollider.transform.GetChild(i).GetComponent<ScriptColliderInfo>().colliderName; //collider 이름으로
             int index = showScript.GetIndex(cName); //index를 불러온 뒤
-            //-> 해당 script의 인덱스는 IDX입니다. START_IDX 아닙니다!!
+            //-> 해당 script의 인덱스는 IDX입니다. (START_IDX  X)
+            scriptObject[i] = sCollider.transform.GetChild(i).gameObject;
 
             if (checkScript[index]) //해당 인덱스에 있는 체크 값이 true라면 ColliderObject를 끈다
             {

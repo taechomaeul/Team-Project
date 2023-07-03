@@ -10,7 +10,6 @@ using UnityEngine.EventSystems;
 public class ShowTip : MonoBehaviour
 {
     public string tipPath;
-
     public List<Dictionary<string, object>> tip;
 
     [Header("완료체크 확인 배열")]
@@ -25,20 +24,26 @@ public class ShowTip : MonoBehaviour
 
     void Awake()
     {
-
         tip = CSVReader.Read(tipPath);
         DOTween.Init();
 
         checkTipComplete = new bool[tip.Count];
-
-        //체크 배열 초기화
-        for (int i = 0; i < tip.Count; i++)
+        if (SaveManager.Instance.saveClass.GetTipData().Length == 0)
         {
-            checkTipComplete[i] = false;
+            //체크 배열 초기화
+            for (int i = 0; i < tip.Count; i++)
+            {
+                checkTipComplete[i] = false;
+            }
+            SaveManager.Instance.saveClass.SetTipData(checkTipComplete);
         }
 
     }
 
+    /// <summary>
+    /// 나의 일지(Tip) 이름 버튼을 불러오는 함수
+    /// 버튼 Prefab을 팁 개수만큼 만들어서 위치를 알맞게 고정시켜준다.
+    /// </summary>
     public void LoadTipName()
     {
         for (int i = 0; i < tip.Count; i++)

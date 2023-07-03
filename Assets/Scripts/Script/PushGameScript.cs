@@ -8,10 +8,13 @@ public class PushGameScript : MonoBehaviour
 {
 
     [Header("연결 필수")]
+    [Tooltip("Collider 이름")]
     public string colliderName;
+    [Tooltip("스크립트 출력 패널")]
     public GameObject scriptPanel;
 
     [Header("스크립트용 연결")]
+    [Tooltip("스크립트 출력 텍스트")]
     public Text scriptText;
 
     [Header("데이터 연결")]
@@ -19,9 +22,9 @@ public class PushGameScript : MonoBehaviour
     public List<Dictionary<string, object>> script;
 
     [Header("---연결 X---")]
-    public int index;
-    public int curIndex;
-    public int nextIndex;
+    private int index;
+    private int curIndex;
+    private int nextIndex;
     private readonly float moveSpd = 10f;
     public bool isShowed = false;
     private bool isStay = false;
@@ -81,13 +84,18 @@ public class PushGameScript : MonoBehaviour
         }
     }
 
-    public int GetIndex(string type)
+    /// <summary>
+    /// 스크립트 출력을 위한 인덱스를 불러오는 함수
+    /// </summary>
+    /// <param name="part">인덱스 포지션(POINT)</param>
+    /// <returns></returns>
+    public int GetIndex(string part)
     {
         int index = 0;
 
         for (int i = 0; i < startIdxArr.Length; i++)
         {
-            if (type.Equals(pointArr[i]))
+            if (part.Equals(pointArr[i]))
             {
                 index = i;
                 break;
@@ -97,11 +105,22 @@ public class PushGameScript : MonoBehaviour
         return index;
     }
 
+    /// <summary>
+    /// 인덱스(파트)의 시작 인덱스(전체)를 가져오는 함수
+    /// </summary>
+    /// <param name="index">인덱스(파트)</param>
+    /// <returns></returns>
     public int GetStartIndex(int index)
     {
         return startIdxArr[index];
     }
 
+    /// <summary>
+    /// 인덱스(파트)의 끝 인덱스(전체)를 가져오는 함수
+    /// 끝 인덱스는 다음 인덱스의 시작 인덱스와 같다.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
     public int GetEndIndex(int index)
     {
         int e_Index;
@@ -172,6 +191,11 @@ public class PushGameScript : MonoBehaviour
         yield return StartCoroutine(WaitSecondsFunction(1f));
     }
 
+    /// <summary>
+    /// 스크립트 출력 타입 함수
+    /// </summary>
+    /// <param name="index">스크립트 인덱스</param>
+    /// <returns></returns>
     public string GetScriptType(int index)
     {
         string type = script[index]["SYSTEM/SCRIPT"].ToString();
@@ -220,12 +244,17 @@ public class PushGameScript : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// 스크립트 출력을 위한 움직임 정지 함수
+    /// </summary>
     public void PauseGameForAct()
     {
         plInfo.plMoveSpd = 0;
     }
 
+    /// <summary>
+    /// 게임 재개 함수
+    /// </summary>
     public void RestartGame()
     {
         plInfo.plMoveSpd = moveSpd;

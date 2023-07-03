@@ -8,9 +8,9 @@ public class EnemyPrefab : MonoBehaviour
     [Tooltip("EnemyPrefabs: 미리 등록해야하는 Prefab")]
     public GameObject[] enemyPrefabs;
 
-    [Tooltip("enemyImages: 미리 등록해야하는 Image")]
+    [Tooltip("enemyImages: 미리 등록해야하는 Image / 순서 중요!")]
     public Sprite[] enemyImages;
 
-    [Tooltip("enemyPrefabNames: 미리 등록해야하는 Name")]
+    [Tooltip("enemyPrefabNames: 미리 등록해야하는 Name / 순서 중요!")]
     public string[] enemyPrefabNames;
 }

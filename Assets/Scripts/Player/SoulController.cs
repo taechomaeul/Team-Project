@@ -58,16 +58,18 @@ public class SoulController : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F)) //Collider 안에 들어와있고 F버튼을 누른다면
             {
+                //툴팁을 종료하고, 상세툴팁(빙의/흡수 등)을 켠다.
                 toolTip.SetActive(false);
                 detailToolTip.SetActive(true);
                 isDetail = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha1) && isDetail)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && isDetail) //디테일이 켜진 채로 1번이 눌렸다면
             {
-                if (thisSoul.havingHP == 0)
+                //혼력(HP)을 흡수한다.
+                if (thisSoul.havingHP == 0) //0일 경우에는 더이상 추출할 수 없다.
                 {
                     Debug.Log("더이상 혼력을 추출할 수 없습니다!");
                     detailToolTip.SetActive(false);
@@ -76,7 +78,7 @@ public class SoulController : MonoBehaviour
                 {
                     detailToolTip.SetActive(false);
                     actionFuntion.MoveSoulToStone(thisSoul.havingHP);
-                    if (plInfo.soulHp > maxSoul)
+                    if (plInfo.soulHp > maxSoul) // 플레이어의 영혼석의 무게는 최대 무게를(666) 넘을 수 없다.
                     {
                         plInfo.soulHp = maxSoul;
                     }

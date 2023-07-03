@@ -27,23 +27,23 @@ public class ScriptColliderInfo : MonoBehaviour
 
     private void Update()
     {
-        if (isStay)
+        if (isStay) //Collider Stay 상태에 들어오고
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0)) //마우스 왼쪽 클릭 버튼 입력이 들어오면
             {
-                if (curIndex < nextIndex)
+                if (curIndex < nextIndex) //현재 인덱스가 다음 인덱스의 시작보다 작으면
                 {
-                    if (colliderName != "SAVE_A")
+                    if (colliderName != "SAVE_A") //세이브가 아닐 때만
                     {
-                        showScript.LoadScript(curIndex);
+                        showScript.LoadScript(curIndex); //다음 스크립트를 불러온다
                         curIndex++;
                     }
                 }
                 else
                 {
-                    scriptPanel.SetActive(false);
+                    scriptPanel.SetActive(false); //현재 인덱스가 다음 인덱스와 같아지면 스크립트 패널을 끄고
 
-                    actionFunction.RestartGame();
+                    actionFunction.RestartGame(); //카메라와 캐릭터 움직임을 원래 속도로 변경한다.
                     isShowed = true;
                 }
             }
@@ -77,9 +77,10 @@ public class ScriptColliderInfo : MonoBehaviour
             //현재 Collider의 이름으로 인덱스를 받아온다
             index = showScript.GetIndex(colliderName);
 
+            Debug.Log($"GetIndex : {index}");
             if (showScript.checkScriptComplete[index]) //true가 아닐 때만 스크립트 읽기
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
 
             else
@@ -141,7 +142,7 @@ public class ScriptColliderInfo : MonoBehaviour
 
             //스크립트 체크 완료
             showScript.checkScriptComplete[index] = true;
-            Debug.Log($"CheckScriptComplete[{index}] : {showScript.checkScriptComplete[index]}");
+            //Debug.Log($"CheckScriptComplete[{index}] : {showScript.checkScriptComplete[index]}");
 
             if (colliderName.Equals("T_PUZZLE"))
             {

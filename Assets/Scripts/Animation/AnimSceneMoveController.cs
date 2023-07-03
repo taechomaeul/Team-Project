@@ -8,13 +8,11 @@ public class AnimSceneMoveController : MonoBehaviour
 {
     private PlayableDirector playableDirector;
     private GameManager gameManager;
-    private SaveManager saveManager;
 
     void Start()
     {
         playableDirector = GetComponent<PlayableDirector>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
     }
 
     void Update()
@@ -25,13 +23,13 @@ public class AnimSceneMoveController : MonoBehaviour
             if (scene.name.Equals("AnimMainBossCutScenes"))
             {
                 //최종보스 연출 후 시작할 위치로 index 변경
-                saveManager.SaveCurrentDataToClass(9);
+                SaveManager.Instance.saveClass.SetLastSavePosition(9);
                 gameManager.MoveTo2FScene();
             }
             else if (scene.name.Equals("AnimMiddleBossCutScenes"))
             {
                 //중간보스 연출 후 시작할 위치로 index 변경
-                saveManager.SaveCurrentDataToClass(8);
+                SaveManager.Instance.saveClass.SetLastSavePosition(8);
                 gameManager.MoveTo1FScene();
             }
 

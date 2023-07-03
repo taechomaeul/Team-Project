@@ -27,7 +27,7 @@ public class SaveManager : MonoBehaviour
     private readonly string path = "Save";
 
     // 저장 데이터 클래스
-    internal SaveClass saveClass = new();
+    [SerializeField] internal SaveClass saveClass = new();
 
     // 스크립트와 일지 등등 관리
     ShowScript ss;
@@ -353,19 +353,19 @@ public class SaveManager : MonoBehaviour
         {
             playerInfo = FindObjectOfType<PlayerInfo>();
         }
-        if (FindObjectOfType<ColliderController>() == null)
+        if (cc == null)
         {
             cc = FindObjectOfType<ColliderController>();
         }
-        if (FindObjectOfType<ShowScript>() == null)
+        if (ss == null)
         {
             ss = FindObjectOfType<ShowScript>();
         }
-        if (FindObjectOfType<ShowTip>() == null)
+        if (st == null)
         {
             st = FindObjectOfType<ShowTip>();
         }
-        if (FindObjectOfType<ShowRecord>() == null)
+        if (sr == null)
         {
             sr = FindObjectOfType<ShowRecord>();
         }
@@ -381,8 +381,7 @@ public class SaveManager : MonoBehaviour
         saveClass.SetCurrentHp(playerInfo.curHp);
         saveClass.SetCurrentSoulCount(playerInfo.soulHp);
         saveClass.SetCurrentBodyIndex(playerInfo.curPrefabIndex);
-        // 스킬 인덱스 저장 - 임시
-        saveClass.SetCurrentSkillIndex(5);
+        saveClass.SetCurrentSkillIndex(playerInfo.curSkill.skillIndex);
         saveClass.SetCurrentAttack(playerInfo.plAtk);
         saveClass.SetCurrentSpeed(playerInfo.plMoveSpd);
         saveClass.SetScriptData(ss.checkScriptComplete);
@@ -435,13 +434,31 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void ApplyLoadedData()
     {
-        playerInfo.curPositionIndex = saveClass.GetLastSavePosition();
-        playerInfo.curHp = saveClass.GetCurrentHp();
-        playerInfo.soulHp = saveClass.GetCurrentSoulCount();
-        playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
-        // 스킬 인덱스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        playerInfo.plAtk = saveClass.GetCurrentAttack();
-        playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
+        if (playerInfo != null)
+        {
+            playerInfo.curPositionIndex = saveClass.GetLastSavePosition();
+            playerInfo.curHp = saveClass.GetCurrentHp();
+            playerInfo.soulHp = saveClass.GetCurrentSoulCount();
+            playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
+            playerInfo.curSkill.skillIndex = saveClass.GetCurrentSkillIndex();
+            playerInfo.plAtk = saveClass.GetCurrentAttack();
+            playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
+        }
+        else
+        {
+            Debug.Log("player is not exist");
+        }
+
+        if (cc != null)
+        {   
+            ss.GetCheckScriptArr(saveClass.GetScriptData());
+            sr.GetCheckRecordArr(saveClass.GetRecordData());
+        }
+        else
+        {
+            Debug.Log("cc is not exist");
+        }
+
         cc.OffRecordCollider(saveClass.GetRecordData());
         cc.OffScriptCollider(saveClass.GetScriptData());
     }
@@ -469,8 +486,7 @@ public class SaveManager : MonoBehaviour
                 // Json 형태의 정보 변환
                 string saveJson = Encoding.UTF8.GetString(data);
                 saveClass = JsonUtility.FromJson<SaveClass>(saveJson);
-                // 불러온 데이터 적용
-                ApplyLoadedData();
+
                 Debug.Log("세이브 파일 불러옴");
                 return true;
             }

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class OnlyShowScript : MonoBehaviour
 {
+    [Tooltip("스크립트 포인트(POINT) 이름")]
     public string pointName;
+    [Tooltip("스크립트 출력 패널")]
     public GameObject scriptPanel;
+    [Tooltip("튜토리얼 엔딩 출력 패널")]
     public GameObject endingPanel;
 
     private ShowScript showScript;

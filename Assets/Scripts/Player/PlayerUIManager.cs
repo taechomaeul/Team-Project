@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerUIManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerUIManager : MonoBehaviour
     public Text soulHpText;
     [Tooltip("일지 Panel")]
     public GameObject journalPanel;
+    [Tooltip("플레이어 사망 패널")]
+    public GameObject playerDiePanel;
 
     private PlayerInfo plInfo;
     private GameManager gameManager;
@@ -32,5 +35,30 @@ public class PlayerUIManager : MonoBehaviour
             journalPanel.SetActive(true); //일지 패널 활성화
             gameManager.PauseTheGame(); //게임 진행 중지
         }
+    }
+
+    /// <summary>
+    /// 플레이어 사망 패널 켜는 함수
+    /// </summary>
+    public void OnPlayerDiePanel()
+    {
+        playerDiePanel.SetActive(true);
+    }
+
+    /// <summary>
+    /// 플레이어 사망 패널 끄는 함수
+    /// </summary>
+    public void OffPlayerDiePanel()
+    {
+        playerDiePanel.SetActive(false);
+    }
+
+    /// <summary>
+    /// 최근 저장 위치에서 부활하는 함수 (씬 재로드)
+    /// </summary>
+    public void ResetToLastSave()
+    {
+        gameManager.LoadGame();
+        playerDiePanel.SetActive(false);
     }
 }
