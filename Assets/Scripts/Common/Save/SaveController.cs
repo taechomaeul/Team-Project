@@ -7,6 +7,7 @@ using UnityEngine;
 public class SaveController : MonoBehaviour
 {
     [Header("연결 필수")]
+    [Tooltip("세이브(F) 툴팁 패널")]
     public GameObject saveFPanel;
 
     [Header("연결 X")]
