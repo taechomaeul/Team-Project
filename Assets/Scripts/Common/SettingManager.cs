@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
 {
-
     // 사운드 관련
     private float bgmVolume;
     private float sfxVolume;
@@ -17,6 +16,9 @@ public class SettingManager : MonoBehaviour
 
     // 밝기 관련
     private Light lightComponent;
+
+    // 언어
+    private int languageIndex;
 
     // 변경 전 값
     private float originBgmValue;
@@ -32,21 +34,27 @@ public class SettingManager : MonoBehaviour
     [Tooltip("밝기용 라이트")]
     public GameObject brightnessLight;
 
-    [Header("값 설정 UI")]
-    [Tooltip("BGM 볼륨")]
-    public Slider bgmSlider;
+    //[Header("값 설정 UI")]
+    //[Tooltip("BGM 볼륨")]
+    //public Slider bgmSlider;
 
-    [Tooltip("SFX 볼륨 조절 슬라이더")]
-    public Slider sfxSlider;
+    //[Tooltip("SFX 볼륨 조절 슬라이더")]
+    //public Slider sfxSlider;
 
-    [Tooltip("해상도")]
-    public Dropdown resolutionsDropdown;
+    //[Tooltip("해상도")]
+    //public Dropdown resolutionsDropdown;
 
-    [Tooltip("전체화면")]
-    public Toggle fullscreenToggle;
+    //[Tooltip("전체화면")]
+    //public Toggle fullscreenToggle;
 
-    [Tooltip("밝기 조절 슬라이더")]
-    public Slider brightnessSlider;
+    //[Tooltip("밝기 조절 슬라이더")]
+    //public Slider brightnessSlider;
+
+    private Slider bgmSlider;
+    private Slider sfxSlider;
+    private Dropdown resolutionsDropdown;
+    private Toggle fullscreenToggle;
+    private Slider brightnessSlider;
 
 
 
@@ -61,10 +69,20 @@ public class SettingManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
-            //DontDestroyOnLoad(brightnessLight);
-            //lightComponent = brightnessLight.GetComponent<Light>();
-            LoadSettings();
+            DontDestroyOnLoad(brightnessLight);
+            lightComponent = brightnessLight.GetComponent<Light>();
         }
+    }
+
+    public void InitUIObjectAndLoadValues(Slider bgmSlider, Slider sfxSlider, Dropdown resolutionsDropdown, Toggle fullscreenToggle, Slider brightnessSlider)
+    {
+        this.bgmSlider = bgmSlider;
+        this.sfxSlider = sfxSlider;
+        this.resolutionsDropdown = resolutionsDropdown;
+        this.fullscreenToggle = fullscreenToggle;
+        this.brightnessSlider = brightnessSlider;
+        LoadSettings();
+        SetOriginValues();
     }
 
     #region 시스템
@@ -75,7 +93,7 @@ public class SettingManager : MonoBehaviour
     {
         LoadSoundSetting();
         LoadResolutionSetting();
-        //LoadBrightnessSetting();
+        LoadBrightnessSetting();
         Debug.Log("설정 값 불러오기 완료");
     }
 
@@ -94,7 +112,7 @@ public class SettingManager : MonoBehaviour
     /// 환경 설정 화면 열 때 동작
     /// 원래 값들 저장
     /// </summary>
-    public void Btn_SetOriginValues()
+    private void SetOriginValues()
     {
         // 사운드
         originBgmValue = bgmVolume;
@@ -302,6 +320,23 @@ public class SettingManager : MonoBehaviour
     public void LoadBrightnessSetting()
     {
         brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 0.5f);
+    }
+    #endregion
+
+    #region 언어
+    public void SetLanguage(int index)
+    {
+        languageIndex = index;
+    }
+
+    public string GetLanguageIndexToString()
+    {
+        return languageIndex switch
+        {
+            0 => "kr",
+            1 => "en",
+            _ => "kr",
+        };
     }
     #endregion
 }
