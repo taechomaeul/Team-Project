@@ -15,6 +15,8 @@ public class OnlyShowScript : MonoBehaviour
     private int index;
     private int curIndex;
     private int nextIndex;
+    [SerializeField]
+    private int langOffset;
 
     void Start()
     {
@@ -24,6 +26,16 @@ public class OnlyShowScript : MonoBehaviour
         curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
         nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기
 
+        string lang = "EN"; //settingManager에서 끌어올 수 있게 만들어줌
+        if (lang.Equals("KR"))
+        {
+            langOffset = 0;
+        }
+        else if (lang.Equals("ER"))
+        {
+            langOffset = showScript.checkScriptComplete.Length;
+        }
+        
         ConditionMove();
     }
 
@@ -33,7 +45,7 @@ public class OnlyShowScript : MonoBehaviour
         {
             if (curIndex < nextIndex)
             {
-                showScript.LoadScript(curIndex);
+                showScript.LoadScript(curIndex, langOffset);
                 curIndex++;
             }
             else
@@ -49,7 +61,7 @@ public class OnlyShowScript : MonoBehaviour
         scriptPanel.SetActive(true);
 
         //인덱스로 스크립트를 불러온다
-        showScript.LoadScript(curIndex);
+        showScript.LoadScript(curIndex, langOffset);
         curIndex++;
     }
 }

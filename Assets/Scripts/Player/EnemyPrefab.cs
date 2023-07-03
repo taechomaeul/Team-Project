@@ -12,5 +12,7 @@ public class EnemyPrefab : MonoBehaviour
     public Sprite[] enemyImages;
 
     [Tooltip("enemyPrefabNames: 미리 등록해야하는 Name / 순서 중요!")]
-    public string[] enemyPrefabNames;
+    public string[] enemyPrefabNames_KR;
+    [Tooltip("enemyPrefabNames: 미리 등록해야하는 Name / 순서 중요!")]
+    public string[] enemyPrefabNames_EN;
 }

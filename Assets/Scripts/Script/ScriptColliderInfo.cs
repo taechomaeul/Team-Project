@@ -17,6 +17,8 @@ public class ScriptColliderInfo : MonoBehaviour
     public int nextIndex;
     public bool isShowed = false;
     private bool isStay = false;
+    [SerializeField]
+    private int langOffset;
 
     private ShowScript showScript;
     private ActionFuntion actionFunction;
@@ -25,6 +27,16 @@ public class ScriptColliderInfo : MonoBehaviour
     {
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
+
+        string lang = "EN"; //settingManager에서 끌어올 수 있게 만들어줌
+        if (lang.Equals("KR"))
+        {
+            langOffset = 0;
+        }
+        else if (lang.Equals("ER"))
+        {
+            langOffset = showScript.checkScriptComplete.Length;
+        }
     }
 
     private void Update()
@@ -37,7 +49,7 @@ public class ScriptColliderInfo : MonoBehaviour
                 {
                     if (colliderName != "SAVE_A") //세이브가 아닐 때만
                     {
-                        showScript.LoadScript(curIndex); //다음 스크립트를 불러온다
+                        showScript.LoadScript(curIndex, langOffset); //다음 스크립트를 불러온다
                         curIndex++;
                     }
                 }
@@ -72,7 +84,7 @@ public class ScriptColliderInfo : MonoBehaviour
         actionFunction.PauseGameForAct();
 
         //인덱스로 스크립트를 불러온다
-        showScript.LoadScript(curIndex);
+        showScript.LoadScript(curIndex, langOffset);
         curIndex++;
     }
 
