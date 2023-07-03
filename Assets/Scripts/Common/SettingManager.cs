@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
 {
+    #region 수치 조절용 변수들
     // 사운드 관련
     private float bgmVolume;
     private float sfxVolume;
@@ -26,7 +27,31 @@ public class SettingManager : MonoBehaviour
     private int originResolutionIndex;
     private bool originFullscreenMode;
     private float originBrightness;
+    private int originLanguageIndex;
+    #endregion
 
+
+    #region UI 요소
+    // BGM 조절 슬라이더
+    private Slider bgmSlider;
+
+    // SFX 조절 슬라이더
+    private Slider sfxSlider;
+
+    // 해상도 조절 드랍다운
+    private Dropdown resolutionsDropdown;
+
+    // 전체화면 조절 토글
+    private Toggle fullscreenToggle;
+
+    // 밝기 조절 슬라이더
+    private Slider brightnessSlider;
+
+    // 언어 선택 드랍다운
+    private Dropdown languageDropdown;
+    #endregion
+
+    // 인스펙터
     [Header("설정")]
     [Tooltip("오디오 믹서")]
     public AudioMixer audioMixer;
@@ -34,27 +59,6 @@ public class SettingManager : MonoBehaviour
     [Tooltip("밝기용 라이트")]
     public GameObject brightnessLight;
 
-    //[Header("값 설정 UI")]
-    //[Tooltip("BGM 볼륨")]
-    //public Slider bgmSlider;
-
-    //[Tooltip("SFX 볼륨 조절 슬라이더")]
-    //public Slider sfxSlider;
-
-    //[Tooltip("해상도")]
-    //public Dropdown resolutionsDropdown;
-
-    //[Tooltip("전체화면")]
-    //public Toggle fullscreenToggle;
-
-    //[Tooltip("밝기 조절 슬라이더")]
-    //public Slider brightnessSlider;
-
-    private Slider bgmSlider;
-    private Slider sfxSlider;
-    private Dropdown resolutionsDropdown;
-    private Toggle fullscreenToggle;
-    private Slider brightnessSlider;
 
 
 
@@ -74,18 +78,31 @@ public class SettingManager : MonoBehaviour
         }
     }
 
-    public void InitUIObjectAndLoadValues(Slider bgmSlider, Slider sfxSlider, Dropdown resolutionsDropdown, Toggle fullscreenToggle, Slider brightnessSlider)
+
+    #region 시스템
+    /// <summary>
+    /// SettingManagerConnect에서 UI요소 초기화
+    /// </summary>
+    /// <param name="bgmSlider">BGM 슬라이더</param>
+    /// <param name="sfxSlider">SFX 슬라이더</param>
+    /// <param name="resolutionsDropdown">해상도 드랍다운</param>
+    /// <param name="fullscreenToggle">전체화면 체크 토글</param>
+    /// <param name="brightnessSlider">밝기 슬라이더</param>
+    /// <param name="languageDropdown">언어 드랍다운</param>
+    public void InitUIObjectAndLoadValues(
+        Slider bgmSlider, Slider sfxSlider, Dropdown resolutionsDropdown,
+        Toggle fullscreenToggle, Slider brightnessSlider, Dropdown languageDropdown)
     {
         this.bgmSlider = bgmSlider;
         this.sfxSlider = sfxSlider;
         this.resolutionsDropdown = resolutionsDropdown;
         this.fullscreenToggle = fullscreenToggle;
         this.brightnessSlider = brightnessSlider;
+        this.languageDropdown = languageDropdown;
         LoadSettings();
         SetOriginValues();
     }
 
-    #region 시스템
     /// <summary>
     /// 최초 실행시 설정 불러오기
     /// </summary>
@@ -94,18 +111,8 @@ public class SettingManager : MonoBehaviour
         LoadSoundSetting();
         LoadResolutionSetting();
         LoadBrightnessSetting();
+        LoadLanguageSetting();
         Debug.Log("설정 값 불러오기 완료");
-    }
-
-    /// <summary>
-    /// 설정 내용 적용하는 확인 버튼용
-    /// </summary>
-    public void Btn_SettingApply()
-    {
-        SaveSoundSetting();
-        SaveResolutionSetting(resolutionsDropdown.value);
-        SaveBrightnessSetting();
-        Debug.Log("설정 값 저장");
     }
 
     /// <summary>
@@ -122,7 +129,21 @@ public class SettingManager : MonoBehaviour
         originFullscreenMode = fullscreenToggle.isOn;
         // 밝기
         originBrightness = brightnessSlider.value;
+        // 언어
+        originLanguageIndex = languageIndex;
         Debug.Log("origin 저장");
+    }
+
+    /// <summary>
+    /// 설정 내용 적용하는 확인 버튼용
+    /// </summary>
+    public void Btn_SettingApply()
+    {
+        SaveSoundSetting();
+        SaveResolutionSetting(resolutionsDropdown.value);
+        SaveBrightnessSetting();
+        SaveLanguageSetting();
+        Debug.Log("설정 값 저장");
     }
 
     /// <summary>
@@ -140,10 +161,11 @@ public class SettingManager : MonoBehaviour
         fullscreenToggle.isOn = originFullscreenMode;
         // 밝기
         brightnessSlider.value = originBrightness;
+        // 언어
+        languageDropdown.value = originLanguageIndex;
         Debug.Log("origin 적용");
     }
     #endregion
-
 
 
     #region 사운드
@@ -323,13 +345,31 @@ public class SettingManager : MonoBehaviour
     }
     #endregion
 
+
     #region 언어
+    /// <summary>
+    /// 언어 선택
+    /// </summary>
+    /// <param name="index">언어 선택 드랍다운 인덱스</param>
     public void SetLanguage(int index)
     {
         languageIndex = index;
     }
 
-    public string GetLanguageIndexToString()
+    /// <summary>
+    /// 설정된 언어 인덱스 가져오기
+    /// </summary>
+    /// <returns>언어 인덱스</returns>
+    public int GetCurrentLanguageIndex()
+    {
+        return languageIndex;
+    }
+
+    /// <summary>
+    /// 설정된 언어 인덱스 string으로 가져오기
+    /// </summary>
+    /// <returns>언어 string</returns>
+    public string GetCurrentLanguageIndexToString()
     {
         return languageIndex switch
         {
@@ -337,6 +377,33 @@ public class SettingManager : MonoBehaviour
             1 => "en",
             _ => "kr",
         };
+    }
+
+    /// <summary>
+    /// 언어 선택용 드랍다운 초기화
+    /// </summary>
+    private void InitLanguageUI()
+    {
+        languageDropdown.value = languageIndex;
+        languageDropdown.RefreshShownValue();
+    }
+
+    /// <summary>
+    /// 언어 설정 저장
+    /// </summary>
+    private void SaveLanguageSetting()
+    {
+        PlayerPrefs.SetInt("language", languageIndex);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// 저장된 언어 설정 불러오기
+    /// </summary>
+    private void LoadLanguageSetting()
+    {
+        languageIndex = PlayerPrefs.GetInt("language", 0);
+        InitLanguageUI();
     }
     #endregion
 }
