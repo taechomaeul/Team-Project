@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class SkillController : MonoBehaviour
 {
     [Header("연결 필수")]
+    [Tooltip("툴팁(F) 패널")]
     public GameObject toolTip;
+    [Tooltip("메인 UI 화면에 나오는 스킬 UI 이미지 오브젝트")]
     public GameObject skillUI;
 
     private PlayerInfo plInfo;
