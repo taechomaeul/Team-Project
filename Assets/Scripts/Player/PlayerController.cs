@@ -129,13 +129,21 @@ public class PlayerController : MonoBehaviour
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
 
-        //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [4]번 스킬 내용을 적용
         if (string.IsNullOrEmpty(plInfo.curSkill.skillName))
         {
-            plInfo.curSkill = skillData.skills[4];
-            //Debug.Log(plInfo.curSkill.skillName);
+            if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "KR")
+            {
+                plInfo.curSkill = skillData.skills[4];
+                Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
+                //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [4]번 스킬 내용을 적용
+            }
+            else if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "EN")
+            {
+                plInfo.curSkill = skillData.skills[9];
+                Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
+                //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [9]번 스킬 내용을 적용
+            }
         }
-
 
         coroutineCheck = false;
         waitTimeCheck = false;

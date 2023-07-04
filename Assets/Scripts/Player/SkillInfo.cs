@@ -35,7 +35,7 @@ public class SkillInfo : MonoBehaviour
     public string dataPath;
     public List<Dictionary<string, object>> data;
 
-    private string[] langArr; //언어 이름만을 모은 배열
+    public string[] langArr; //언어 이름만을 모은 배열
 
     //읽어온 csv파일 데이터 저장
     private void Awake()
@@ -54,44 +54,44 @@ public class SkillInfo : MonoBehaviour
         //중복제거
         langArr = langArr.Distinct().ToArray();
 
-        skills = new Skill[data.Count / langArr.Length];
+        skills = new Skill[data.Count];
         cSkillInfo = GetComponent<ChangableSkillInfo>();
 
-        int index = 0;
         for (int i=0; i < data.Count; i++) //스킬 정보 읽어오기 (문자)
         {
-            string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
-            
-            if (lang.Equals(data[i]["Language"]))
+            skills[i] = new Skill();
+            skills[i].skillIndex = i;
+            skills[i].skillName = data[i]["SkillName"].ToString();
+            skills[i].skillDescription = data[i]["Description"].ToString();
+            if (skills[i].skillDescription.Contains("/"))
             {
-                skills[index] = new Skill();
-                skills[index].skillIndex = index;
-                skills[index].skillName = data[i]["SkillName"].ToString();
-                skills[index].skillDescription = data[i]["Description"].ToString();
-                if (skills[index].skillDescription.Contains("/"))
+                string[] sText = skills[i].skillDescription.Split("/");
+                skills[i].skillDescription = "";
+                for (int j = 0; j < sText.Length; j++)
                 {
-                    string[] sText = skills[index].skillDescription.Split("/");
-                    skills[index].skillDescription = "";
-                    for (int j = 0; j < sText.Length; j++)
+                    if (j == sText.Length - 1)
                     {
-                        if (j == sText.Length - 1)
-                        {
-                            skills[index].skillDescription += sText[j]; // '/'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
-                        }
-                        else
-                        {
-                            skills[index].skillDescription += (sText[j] + "\n");
-                        }
+                        skills[i].skillDescription += sText[j]; // '/'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                    }
+                    else
+                    {
+                        skills[i].skillDescription += (sText[j] + "\n");
                     }
                 }
-                skills[index].thumnail = cSkillInfo.sImage[index]; //기존에 등록해놨던 스킬 이미지로 적용
-                skills[index].coolTime = float.Parse(data[i]["CoolTime"].ToString());
-                skills[index].duringTime = float.Parse(data[i]["DuringTime"].ToString());
-                //skills[i].effectPrefab = cSkillInfo.effectPrefabs[i];
-                //skills[i].effectPos = cSkillInfo.effectPos;
-                //skills[i].effectRot = cSkillInfo.effectRot;
-                index++;
             }
+            if (i >= data.Count / langArr.Length) // i가 5보다 크면
+            {
+                skills[i].thumnail = cSkillInfo.sImage[i-data.Count/langArr.Length]; //0번부터 다시 돌아가서 적용
+            }
+            else
+            {
+                skills[i].thumnail = cSkillInfo.sImage[i]; //기존에 등록해놨던 스킬 이미지로 적용
+            }
+            skills[i].coolTime = float.Parse(data[i]["CoolTime"].ToString());
+            skills[i].duringTime = float.Parse(data[i]["DuringTime"].ToString());
+            //skills[i].effectPrefab = cSkillInfo.effectPrefabs[i];
+            //skills[i].effectPos = cSkillInfo.effectPos;
+            //skills[i].effectRot = cSkillInfo.effectRot;
         }
     }
 

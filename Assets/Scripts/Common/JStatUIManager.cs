@@ -38,12 +38,15 @@ public class JStatUIManager : MonoBehaviour
     private readonly int maxSoul = 666;
 
     private PlayerInfo plInfo;
+    private SkillInfo skillInfo;
     private EnemyPrefab enemyPrefabInfo;
+
 
     void Start()
     {
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         enemyPrefabInfo = GameObject.Find("ActionFunction").GetComponent<EnemyPrefab>();
+        skillInfo = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
     }
 
     void Update()
@@ -56,14 +59,24 @@ public class JStatUIManager : MonoBehaviour
         soulSlider.value = (float)plInfo.soulHp / maxSoul;
 
         //RIGHT Page - 능력치
-        string lang = "EN"; //SettingManager에서 불러온 값
-        if (lang.Equals("KR"))
+        int langOffset = 0;
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
+        if (lang.Equals("KR")) //현재
         {
             prefabNameText.text = enemyPrefabInfo.enemyPrefabNames_KR[plInfo.curPrefabIndex];
+            if (plInfo.curSkill.skillIndex >= 5 && plInfo.curSkill.skillIndex < 10) //EN
+            {
+                langOffset = -5;
+            }
         }
         else if (lang.Equals("EN"))
         {
             prefabNameText.text = enemyPrefabInfo.enemyPrefabNames_EN[plInfo.curPrefabIndex];
+            if (plInfo.curSkill.skillIndex < 5) //KR
+            {
+                langOffset = 5;
+            }
+
         }
         
         plAtkText.text = plInfo.plAtk.ToString();
@@ -71,7 +84,8 @@ public class JStatUIManager : MonoBehaviour
 
         //RIGHT Page - 스킬 상세
         curSImage.GetComponent<Image>().sprite = plInfo.curSkill.thumnail;
-        curSNameText.text = plInfo.curSkill.skillName;
-        curSDescriptionText.text = plInfo.curSkill.skillDescription;
+        curSNameText.text = skillInfo.skills[plInfo.curSkill.skillIndex + langOffset].skillName;
+        curSDescriptionText.text = skillInfo.skills[plInfo.curSkill.skillIndex + langOffset].skillDescription;
+        //curSDescriptionText.text = plInfo.curSkill.skillDescription;
     }
 }
