@@ -6,12 +6,13 @@ public class ColliderController : MonoBehaviour
 {
     private ShowScript showScript;
     private ShowRecord showRecord;
-    public List<string> completeColliderNames;
+    //public List<string> completeColliderNames;
 
     void Awake()
     {
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
         showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
+        //completeColliderNames = new();
     }
 
     /// <summary>
@@ -75,9 +76,9 @@ public class ColliderController : MonoBehaviour
     /// <param name="colliderObjName">플레이어가 부딪힌 MoveCollider의 이름</param>
     public void AddMoveCollider(string colliderObjName)
     {
-        completeColliderNames.Add(colliderObjName);
+        SaveManager.Instance.saveClass.AddMoveCollider(colliderObjName);
         Debug.Log($"ADD GameObj name : {colliderObjName}");
-        SaveManager.Instance.saveClass.SetMoveSceneData(completeColliderNames);
+        //SaveManager.Instance.saveClass.SetMoveSceneData(completeColliderNames);
     }
 
     public void OffMoveSceneCollider(List<string> cColliderNames)
