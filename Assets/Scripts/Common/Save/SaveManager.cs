@@ -344,13 +344,36 @@ public class SaveManager : MonoBehaviour
 
         #region 기타 함수들
         /// <summary>
+        /// 새로 시작 시 초기화
+        /// </summary>
+        internal void InitSaveClass()
+        {
+            SetLastSavePosition(0);
+            // 임시
+            currentHp = 50;
+            currentSoulCount = 0;
+            currentBodyIndex = 0;
+            currentSkillIndex = -1;
+            // 임시
+            currentAttack = 20;
+            // 임시
+            currentSpeed = 10;
+            Array.Fill(scriptData, false);
+            Array.Fill(tipData, false);
+            Array.Fill(recordData, false);
+            moveSceneData.Clear();
+
+
+        }
+
+        /// <summary>
         /// 이동 씬 이름 체크 항목 추가
         /// </summary>
         /// <param name="colliderObjectName">저장할 씬이동 Collider 이름</param>
         internal void AddMoveCollider(string colliderObjectName)
         {
             moveSceneData.Add(colliderObjectName);
-        } 
+        }
         #endregion
     }
 
@@ -369,8 +392,7 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // 첫 시작 위치 저장
-        saveClass.SetLastSavePosition(0);
+        saveClass.InitSaveClass();
 
     }
 
@@ -484,7 +506,7 @@ public class SaveManager : MonoBehaviour
         }
 
         if (cc != null)
-        {   
+        {
             ss.GetCheckScriptArr(saveClass.GetScriptData());
             sr.GetCheckRecordArr(saveClass.GetRecordData());
         }
