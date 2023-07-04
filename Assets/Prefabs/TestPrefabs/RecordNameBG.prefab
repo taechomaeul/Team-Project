@@ -79,7 +79,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 0.7
   m_Text: "\uC5EC\uAE30\uC5D0 \uC81C\uBAA9 \uB4E4\uC5B4\uAC11\uB2C8\uB2E4. Prefab\uD654
     \uC2DC\uD0AC\uAC70\uC608\uC694"
 --- !u!114 &7426395954031004096
