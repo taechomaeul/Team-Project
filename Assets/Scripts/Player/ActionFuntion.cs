@@ -118,7 +118,6 @@ public class ActionFuntion : MonoBehaviour
 
                 newPlayer.transform.parent = player.transform;
                 newPlayer.transform.SetAsFirstSibling();
-                Debug.Log("NewPlayer Animator name: " + newPlayer.transform.GetComponent<Animator>().name);
 
                 newPlayer.transform.localPosition = originPlayerPrefabPos;
                 newPlayer.transform.localRotation = Quaternion.identity;

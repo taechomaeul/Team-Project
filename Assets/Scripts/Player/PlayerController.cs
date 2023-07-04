@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
         SaveManager.Instance.ApplyLoadedData();
         plInfo.curPositionIndex = SaveManager.Instance.saveClass.GetLastSavePosition();
 
+        //PlayerModel 위치 조정
         Transform playerPos = transform.GetChild(0);
         Debug.Log($"PlayerPos : {playerPos.localPosition}");
 
@@ -107,6 +108,23 @@ public class PlayerController : MonoBehaviour
         playerPos.localPosition = indexer.transform.GetChild(plInfo.curPositionIndex).localPosition;
         Debug.Log($"PlayerPos Pos AFTER : {playerPos.localPosition}");
         playerPos.GetComponent<CharacterController>().enabled = true;
+
+        //플레이어 정보 적용
+        GameObject playerPrefab = playerPos.transform.Find("PlayerPrefab").gameObject;
+
+        EnemyPrefab enemyPrefab = GameObject.Find("ActionFunction").GetComponent<EnemyPrefab>();
+        GameObject newPlayerPrefab = Instantiate(enemyPrefab.enemyPrefabs[plInfo.curPrefabIndex]);
+        newPlayerPrefab.transform.parent = playerPos;
+        newPlayerPrefab.transform.SetAsFirstSibling();
+        newPlayerPrefab.transform.localPosition = playerPrefab.transform.localPosition;
+        Destroy(playerPrefab);
+
+        newPlayerPrefab.transform.localRotation = Quaternion.identity;
+        newPlayerPrefab.transform.localScale = Vector3.one;
+        newPlayerPrefab.name = "PlayerPrefab";
+
+        // 플레이어 모델 애니메이터 연결
+        InitAnimator();
 
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
@@ -654,21 +672,40 @@ public class PlayerController : MonoBehaviour
         {
             isSkillCool = true;
             peasc.TurnOnEffectSkill();
+            int originAtk;
+            float originMoveSpd;
             switch (plInfo.curSkill.skillName)
             {
                 case "힘증가":
-                    int originAtk = plInfo.plAtk;
+                    originAtk = plInfo.plAtk;
                     actionFuntion.IncreasePower();
                     StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originAtk, 1));
                     break;
 
                 case "민첩증가":
-                    int originMoveSpd = plInfo.plAtk;
+                    originMoveSpd = plInfo.plAtk;
                     actionFuntion.IncreaseSpeed();
                     StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originMoveSpd, 2));
                     break;
 
                 case "체력회복":
+                    actionFuntion.IncreaseHp();
+                    StartCoroutine(ResetCoolTime(plInfo.curSkill.coolTime));
+                    break;
+
+                case "Power":
+                    originAtk = plInfo.plAtk;
+                    actionFuntion.IncreasePower();
+                    StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originAtk, 1));
+                    break;
+
+                case "Speed":
+                    originMoveSpd = plInfo.plAtk;
+                    actionFuntion.IncreaseSpeed();
+                    StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originMoveSpd, 2));
+                    break;
+
+                case "Healing":
                     actionFuntion.IncreaseHp();
                     StartCoroutine(ResetCoolTime(plInfo.curSkill.coolTime));
                     break;
@@ -684,12 +721,12 @@ public class PlayerController : MonoBehaviour
     /// <param name="originAmount">변수 변경되기 전의 값</param>
     /// <param name="select">공격력, 이동속도 선택용 변수</param>
     /// <returns></returns>
-    public IEnumerator Reset(float duringTime, float coolTime, int originAmount, int select)
+    public IEnumerator Reset(float duringTime, float coolTime, float originAmount, int select)
     {
         StartCoroutine(ResetCoolTime(coolTime)); //쿨타임 계산 함수
         yield return new WaitForSeconds(duringTime);
 
-        if (select == 1) { plInfo.plAtk = originAmount; }
+        if (select == 1) { plInfo.plAtk = (int) originAmount; }
         else if (select == 2) { plInfo.plMoveSpd = originAmount; }
         //원래 값으로 변경
     }
