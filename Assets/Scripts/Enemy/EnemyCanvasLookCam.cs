@@ -4,10 +4,25 @@ using UnityEngine;
 
 public class EnemyCanvasLookCam : MonoBehaviour
 {
+    [SerializeField] private EnemyInfo enemyInfo;
     public GameObject Cam;
 
-    void Update()
+    private void Awake()
     {
-        transform.rotation = Cam.transform.rotation;
+        enemyInfo = transform.parent.parent.GetComponent<EnemyInfo>();
+    }
+
+    private void OnEnable()
+    {
+        Cam = Camera.main.gameObject;
+    }
+
+    void FixedUpdate()
+    {
+        if (enemyInfo.stat.GetIsDead())
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
+        transform.LookAt(Cam.transform);
     }
 }
