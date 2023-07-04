@@ -69,28 +69,42 @@ public class ColliderController : MonoBehaviour
         }
     }
 
-    public void AddMoveCollider()
+    /// <summary>
+    /// 이미 지나간 MoveCollider 이름 저장
+    /// </summary>
+    /// <param name="colliderObjName">플레이어가 부딪힌 MoveCollider의 이름</param>
+    public void AddMoveCollider(string colliderObjName)
     {
-        GameObject aCollider = GameObject.Find("MoveCollider");
-        GameObject[] animObject = new GameObject[aCollider.transform.childCount];
-
-        //리스트에 추가
-
-        for (int i = 0; i < animObject.Length; i++)
-        {
-            completeColliderNames.Add(aCollider.transform.GetChild(i).name);
-        }
+        completeColliderNames.Add(colliderObjName);
+        Debug.Log($"ADD GameObj name : {colliderObjName}");
+        SaveManager.Instance.saveClass.SetMoveSceneData(completeColliderNames);
     }
 
-    public void OffAnimationSceneCollider(bool[] checkAnim)
+    public void OffMoveSceneCollider(List<string> cColliderNames)
     {
         GameObject aCollider = GameObject.Find("MoveCollider");
         GameObject[] animObject = new GameObject[aCollider.transform.childCount];
 
-        //리스트에 추가
 
-        for (int i=0; i<animObject.Length; i++)
+        Debug.Log($"MoveCollider Count : {aCollider.transform.childCount}\n aCollider.name : {aCollider.name}");
+
+        for (int i=0; i < animObject.Length; i++)
         {
+            animObject[i] = aCollider.transform.GetChild(i).gameObject;
+            Debug.Log(animObject[i].name);
+        }
+
+        for (int i=0; i< cColliderNames.Count; i++)
+        {
+            for (int j=0; j < animObject.Length; j++)
+            {
+                if (cColliderNames[i].Equals(animObject[j].name))
+                {
+                    animObject[j].SetActive(false);
+                    Debug.Log($"animObject : {animObject[j].name}");
+                    Debug.Log($"Collidername : {cColliderNames[i]}");
+                }
+            }
             
         }
     }
