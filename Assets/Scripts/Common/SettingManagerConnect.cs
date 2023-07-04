@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class SettingManagerConnect : MonoBehaviour
 {
     // 다른 스크립트
-    SettingManager settings;
     GameManager gm;
 
     // 값 변경되었는지 체크
@@ -41,9 +40,8 @@ public class SettingManagerConnect : MonoBehaviour
 
     private void Awake()
     {
-        settings = FindObjectOfType<SettingManager>();
         gm = FindObjectOfType<GameManager>();
-        settings.InitUIObjectAndLoadValues(bgmSlider, sfxSlider, resolutionsDropdown, fullscreenToggle, brightnessSlider, languageDropdown);
+        SettingManager.Instance.InitUIObjectAndLoadValues(bgmSlider, sfxSlider, resolutionsDropdown, fullscreenToggle, brightnessSlider, languageDropdown);
     }
 
     private void Update()
@@ -78,7 +76,7 @@ public class SettingManagerConnect : MonoBehaviour
     /// </summary>
     public void Btn_SettingApply()
     {
-        settings.Btn_SettingApply();
+        SettingManager.Instance.Btn_SettingApply();
         isChanged = false;
     }
 
@@ -87,7 +85,7 @@ public class SettingManagerConnect : MonoBehaviour
     /// </summary>
     public void Btn_UndoSetting()
     {
-        settings.Btn_UndoSetting();
+        SettingManager.Instance.Btn_UndoSetting();
         isChanged = false;
     }
 
@@ -96,7 +94,7 @@ public class SettingManagerConnect : MonoBehaviour
     /// </summary>
     public void Slider_SetBgmVolume()
     {
-        settings.Slider_SetBgmVolume();
+        SettingManager.Instance.Slider_SetBgmVolume();
         isChanged = true;
     }
 
@@ -105,7 +103,7 @@ public class SettingManagerConnect : MonoBehaviour
     /// </summary>
     public void Slider_SetSfxVolume()
     {
-        settings.Slider_SetSfxVolume();
+        SettingManager.Instance.Slider_SetSfxVolume();
         isChanged = true;
     }
 
@@ -115,7 +113,7 @@ public class SettingManagerConnect : MonoBehaviour
     /// <param name="isFullScreen">토글용</param>
     public void SetFullScreen(bool isFullScreen)
     {
-        settings.SetFullScreen(isFullScreen);
+        SettingManager.Instance.SetFullScreen(isFullScreen);
         isChanged = true;
     }
 
@@ -132,7 +130,7 @@ public class SettingManagerConnect : MonoBehaviour
     /// </summary>
     public void Slider_SetBrightness()
     {
-        settings.Slider_SetBrightness();
+        SettingManager.Instance.Slider_SetBrightness();
         isChanged = true;
     }
 
@@ -142,6 +140,6 @@ public class SettingManagerConnect : MonoBehaviour
     /// <param name="index">드랍다운용</param>
     public void Dropdown_SetLanguage(int index)
     {
-        settings.SetLanguage(index);
+        SettingManager.Instance.SetLanguage(index);
     }
 }
