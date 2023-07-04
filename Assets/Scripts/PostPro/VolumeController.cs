@@ -10,6 +10,7 @@ public class VolumeController : MonoBehaviour
     private Volume volume;
     private Bloom bloom;
     private MotionBlur blur;
+    private ChromaticAberration chromaticAberration;
     [SerializeField]
     private float intensity;
 
@@ -22,6 +23,10 @@ public class VolumeController : MonoBehaviour
         volume.profile.TryGet(out blur);
         {
             blur.intensity.value = intensity;
+        }
+        volume.profile.TryGet(out chromaticAberration);
+        {
+            chromaticAberration.intensity.value = intensity;
         }
     }
 }
