@@ -10,6 +10,8 @@ TagManager:
   - ClearTrigger
   - SkillBox
   - Index
+  - KR
+  - EN
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - UI
   - Environment
   - Minimap
-  - 
+  - Enemy
   - 
   - 
   - 

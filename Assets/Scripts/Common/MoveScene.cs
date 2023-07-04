@@ -37,8 +37,8 @@ public class MoveScene : MonoBehaviour
 
                 case "TestScene_2F":
                     SaveManager.Instance.saveClass.SetLastSavePosition(5);
-                    SaveManager.Instance.saveClass.SetScriptData(GameObject.Find("ActionFunction").GetComponent<ShowScript>().checkScriptComplete);
-                    SaveManager.Instance.saveClass.SetScriptData(GameObject.Find("ActionFunction").GetComponent<ShowRecord>().checkRecordComplete);
+                    //SaveManager.Instance.saveClass.SetScriptData(GameObject.Find("ActionFunction").GetComponent<ShowScript>().checkScriptComplete);
+                    //SaveManager.Instance.saveClass.SetScriptData(GameObject.Find("ActionFunction").GetComponent<ShowRecord>().checkRecordComplete);
                     gameManager.MoveTo2FScene();
                     //SaveManager.Instance.LoadSaveData();
                     break;

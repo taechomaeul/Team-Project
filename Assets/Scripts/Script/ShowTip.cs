@@ -22,16 +22,31 @@ public class ShowTip : MonoBehaviour
     [Tooltip("나의 일지 Panel")]
     public GameObject tipPanel;
 
+    [SerializeField]
+    private string[] langArr; //언어 이름만을 모은 배열
+
     void Awake()
     {
         tip = CSVReader.Read(tipPath);
         DOTween.Init();
 
-        checkTipComplete = new bool[tip.Count];
+        //배열 초기화
+        langArr = new string[tip.Count];
+
+        //언어 배열 생성
+        for (int i = 0; i < tip.Count; i++)
+        {
+            langArr[i] = tip[i]["Language"].ToString();
+        }
+
+        //중복제거
+        langArr = langArr.Distinct().ToArray();
+
+        checkTipComplete = new bool[tip.Count / langArr.Length];
         if (SaveManager.Instance.saveClass.GetTipData().Length == 0)
         {
             //체크 배열 초기화
-            for (int i = 0; i < tip.Count; i++)
+            for (int i = 0; i < checkTipComplete.Length; i++)
             {
                 checkTipComplete[i] = false;
             }
@@ -46,17 +61,24 @@ public class ShowTip : MonoBehaviour
     /// </summary>
     public void LoadTipName()
     {
+        //int index = 0;
         for (int i = 0; i < tip.Count; i++)
         {
-            string tipName = tip[i]["TIP_NAME"].ToString(); //이름만 불러온다.
-            GameObject newRecord = Instantiate(tipNamePrefab); //prefab 생성
-            if (EventSystem.current.currentSelectedGameObject.name.Contains("Tip")) //prefab 위치 고정 tipPanel
-            {
-                newRecord.transform.SetParent(tipPanel.transform);
-            }
+            string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
 
-            newRecord.name = tipName; //이름 변경
-            newRecord.transform.GetChild(0).GetComponent<Text>().text = tipName; //내용 변경
+            if (lang.Equals(tip[i]["Language"]))
+            {
+                string tipName = tip[i]["TIP_NAME"].ToString(); //이름만 불러온다.
+                GameObject newRecord = Instantiate(tipNamePrefab); //prefab 생성
+                if (EventSystem.current.currentSelectedGameObject.name.Contains("Tip")) //prefab 위치 고정 tipPanel
+                {
+                    newRecord.transform.SetParent(tipPanel.transform);
+                }
+
+                newRecord.name = tipName; //이름 변경
+                newRecord.transform.GetChild(0).GetComponent<Text>().text = tipName; //내용 변경
+            }
+            
         }
     }
 
@@ -70,26 +92,31 @@ public class ShowTip : MonoBehaviour
         context.text = colliName;
         for (int i = 0; i < tip.Count; i++)
         {
-            if (colliName.Equals(tip[i]["TIP_NAME"]))
+            string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+
+            if (lang.Equals(tip[i]["Language"]))
             {
-                context.text = tip[i]["CONTEXT"].ToString();
-                if (context.text.Contains("/"))
+                if (colliName.Equals(tip[i]["TIP_NAME"]))
                 {
-                    string[] sText = context.text.Split("/");
-                    context.text = "";
-                    for (int j = 0; j < sText.Length; j++)
+                    context.text = tip[i]["CONTEXT"].ToString();
+                    if (context.text.Contains("/"))
                     {
-                        if (j == sText.Length - 1)
+                        string[] sText = context.text.Split("/");
+                        context.text = "";
+                        for (int j = 0; j < sText.Length; j++)
                         {
-                            context.text += sText[j]; // '/'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                            if (j == sText.Length - 1)
+                            {
+                                context.text += sText[j]; // '/'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                            }
+                            else
+                            {
+                                context.text += (sText[j] + "\n");
+                            }
                         }
-                        else
-                        {
-                            context.text += (sText[j] + "\n");
-                        }
+                        //Debug.Log($"{context.text}");
+                        break;
                     }
-                    //Debug.Log($"{context.text}");
-                    break;
                 }
             }
 
@@ -104,7 +131,7 @@ public class ShowTip : MonoBehaviour
     {
         if (tipPanel.transform.childCount != 0)
         {
-            for (int i = 0; i < tip.Count; i++)
+            for (int i = 0; i < checkTipComplete.Length; i++)
             {
                 Destroy(tipPanel.transform.GetChild(i).gameObject);
             }

@@ -56,7 +56,16 @@ public class JStatUIManager : MonoBehaviour
         soulSlider.value = (float)plInfo.soulHp / maxSoul;
 
         //RIGHT Page - 능력치
-        prefabNameText.text = enemyPrefabInfo.enemyPrefabNames[plInfo.curPrefabIndex];
+        string lang = "EN"; //SettingManager에서 불러온 값
+        if (lang.Equals("KR"))
+        {
+            prefabNameText.text = enemyPrefabInfo.enemyPrefabNames_KR[plInfo.curPrefabIndex];
+        }
+        else if (lang.Equals("EN"))
+        {
+            prefabNameText.text = enemyPrefabInfo.enemyPrefabNames_EN[plInfo.curPrefabIndex];
+        }
+        
         plAtkText.text = plInfo.plAtk.ToString();
         plMoveSpdText.text = plInfo.plMoveSpd.ToString();
 
