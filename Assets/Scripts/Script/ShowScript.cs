@@ -61,6 +61,7 @@ public class ShowScript : MonoBehaviour
             }
             
         }
+        Debug.Log($"Length: {startIdxArr.Length}");
 
         //중복제거
         startIdxArr = startIdxArr.Distinct().ToArray();
@@ -123,7 +124,7 @@ public class ShowScript : MonoBehaviour
     {
         int e_Index;
 
-        if (index == startIdxArr.Length - 1) { e_Index = script.Count; }
+        if (index == startIdxArr.Length - 1) { e_Index = script.Count / langArr.Length; }
         else { e_Index = startIdxArr[index + 1]; }
 
         return e_Index;
@@ -194,12 +195,12 @@ public class ShowScript : MonoBehaviour
         isClick = true;
     }
 
-    IEnumerator WaitNSeconds(float time)
+    public IEnumerator WaitNSeconds(float time)
     {
         yield return new WaitForSecondsRealtime(time);
     }
 
-    IEnumerator WaitSecondsFunction(float time)
+    public IEnumerator WaitSecondsFunction(float time)
     {
         yield return StartCoroutine(WaitNSeconds(time));
     }

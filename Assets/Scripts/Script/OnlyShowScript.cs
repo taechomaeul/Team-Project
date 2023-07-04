@@ -13,7 +13,9 @@ public class OnlyShowScript : MonoBehaviour
 
     private ShowScript showScript;
     private int index;
+    [SerializeField]
     private int curIndex;
+    [SerializeField]
     private int nextIndex;
     [SerializeField]
     private int langOffset;
@@ -31,9 +33,9 @@ public class OnlyShowScript : MonoBehaviour
         {
             langOffset = 0;
         }
-        else if (lang.Equals("ER"))
+        else if (lang.Equals("EN"))
         {
-            langOffset = showScript.checkScriptComplete.Length;
+            langOffset = 63;
         }
         
         ConditionMove();
@@ -52,6 +54,11 @@ public class OnlyShowScript : MonoBehaviour
             {
                 scriptPanel.SetActive(false);
                 endingPanel.SetActive(true);
+
+                showScript.WaitSecondsFunction(3f);
+                GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+                gameManager.MoveToTitleScene();
+
             }
         }
     }
