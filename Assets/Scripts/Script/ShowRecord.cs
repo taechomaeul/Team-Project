@@ -124,7 +124,7 @@ public class ShowRecord : MonoBehaviour
     /// <returns>일지 이름과 일치하는 Context(전체 텍스트) 반환</returns>
     public IEnumerator LoadRecordDataFromCSV(string colliName)
     {
-        recordNameText.text = colliName;
+        //recordNameText.text = colliName;
         string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
         for (int i = 0; i < record.Count; i++)
         {
@@ -142,8 +142,28 @@ public class ShowRecord : MonoBehaviour
                 {
                     langOffset = checkRecordComplete.Length;
                 }
-                recordText.text = record[i + langOffset]["CONTEXT"].ToString();
 
+                recordNameText.text = record[i + langOffset]["RECORD_NAME"].ToString();
+                if (recordNameText.text.Contains(":"))
+                {
+                    string[] sText = recordNameText.text.Split("/");
+                    recordNameText.text = "";
+                    for (int j = 0; j < sText.Length; j++)
+                    {
+                        if (j == sText.Length - 1)
+                        {
+                            recordNameText.text += sText[j]; // ':'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                        }
+                        else
+                        {
+                            recordNameText.text += (sText[j] + "\n");
+                        }
+                    }
+                    break;
+                }
+
+
+                recordText.text = record[i + langOffset]["CONTEXT"].ToString();
                 if (recordText.text.Contains("/"))
                 {
                     string[] sText = recordText.text.Split("/");

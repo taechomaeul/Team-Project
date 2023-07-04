@@ -32,7 +32,7 @@ public class PushGameScript : MonoBehaviour
 
     private int[] startIdxArr;
     private string[] pointArr;
-
+    private int langOffset;
 
 
     private void Awake()
@@ -59,6 +59,16 @@ public class PushGameScript : MonoBehaviour
         pointArr = pointArr.Distinct().ToArray();
         scriptText.text = "";
 
+        string lang = "EN"; //settingManager에서 끌어올 수 있게 만들어줌
+        if (lang.Equals("KR"))
+        {
+            langOffset = 0;
+        }
+        else if (lang.Equals("EN"))
+        {
+            langOffset = 63;
+        }
+
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
     }
 
@@ -70,7 +80,7 @@ public class PushGameScript : MonoBehaviour
             {
                 if (curIndex < nextIndex)
                 {
-                    LoadScript(curIndex);
+                    LoadScript(curIndex, langOffset);
                     curIndex++;
                 }
                 else
@@ -141,34 +151,38 @@ public class PushGameScript : MonoBehaviour
         yield return StartCoroutine(WaitNSeconds(time));
     }
 
+    /// <summary>
+    /// 조건에 따라 움직임 제어하는 함수
+    /// 스크립트 패널 ON, 움직임 X, 스크립트 텍스트 불러오기
+    /// </summary>
     public void ConditionMove()
     {
         scriptPanel.SetActive(true);
         PauseGameForAct();
 
         //인덱스로 스크립트를 불러온다
-        LoadScript(curIndex);
+        LoadScript(curIndex, langOffset);
         curIndex++;
     }
 
-    public void LoadScript(int curIndex)
+    public void LoadScript(int curIndex, int langOffset)
     {
-        StartCoroutine(LoadScriptData(curIndex));
+        StartCoroutine(LoadScriptData(curIndex, langOffset));
     }
 
-    public IEnumerator LoadScriptData(int curIndex)
+    public IEnumerator LoadScriptData(int curIndex, int langOffset)
     {
-        yield return StartCoroutine(LoadScriptDataFromCSV(curIndex));
+        yield return StartCoroutine(LoadScriptDataFromCSV(curIndex, langOffset));
     }
 
     /// <summary>
-    /// 스크립트 대사를 읽어오는 함수
+    /// 스크립트 대사를 한줄씩 읽어오는 함수
     /// </summary>
     /// <param name="curIndex">현재 인덱스</param>
     /// <returns></returns>
-    public IEnumerator LoadScriptDataFromCSV(int curIndex)
+    public IEnumerator LoadScriptDataFromCSV(int curIndex, int langOffset)
     {
-        scriptText.text = script[curIndex]["CONTEXT"].ToString();
+        scriptText.text = script[curIndex + langOffset]["CONTEXT"].ToString();
         if (scriptText.text.Contains("/"))
         {
             string[] sText = scriptText.text.Split("/");
@@ -185,7 +199,7 @@ public class PushGameScript : MonoBehaviour
                 }
             }
         }
-        Debug.Log($"Type: {GetScriptType(curIndex)}");
+        Debug.Log($"Type: {GetScriptType(curIndex + langOffset)}");
         Debug.Log($"{scriptText.text}");
 
         yield return StartCoroutine(WaitSecondsFunction(1f));

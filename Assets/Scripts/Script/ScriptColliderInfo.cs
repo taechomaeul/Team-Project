@@ -33,9 +33,9 @@ public class ScriptColliderInfo : MonoBehaviour
         {
             langOffset = 0;
         }
-        else if (lang.Equals("ER"))
+        else if (lang.Equals("EN"))
         {
-            langOffset = showScript.checkScriptComplete.Length;
+            langOffset = 63;
         }
     }
 
