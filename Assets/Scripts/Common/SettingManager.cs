@@ -5,6 +5,20 @@ using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
 {
+    private static SettingManager instance;
+    public static SettingManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+
+
     #region 수치 조절용 변수들
     // 사운드 관련
     private float bgmVolume;
@@ -64,17 +78,19 @@ public class SettingManager : MonoBehaviour
 
     private void Awake()
     {
-        // DontDestroyOnLoad
-        var obj = FindObjectsOfType<SettingManager>();
-        if (obj.Length > 1)
+        // 싱글톤 세팅
+        //var obj = FindObjectsOfType<SettingManager>();
+        if (instance == null)
         {
-            Destroy(gameObject);
-        }
-        else
-        {
+            instance = this;
             DontDestroyOnLoad(gameObject);
             DontDestroyOnLoad(brightnessLight);
             lightComponent = brightnessLight.GetComponent<Light>();
+        }
+        else
+        {
+            Destroy(brightnessLight);
+            Destroy(gameObject);
         }
     }
 
@@ -227,6 +243,19 @@ public class SettingManager : MonoBehaviour
         // 저장된 sfx 볼륨 불러옴, 값이 없으면 1로 설정
         sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 1);
         audioMixer.SetFloat("bgmVolume", Mathf.Log10(sfxSlider.value) * 20);
+    }
+
+    public void SetBGMFade(float value)
+    {
+        audioMixer.SetFloat("bgmFade", Mathf.Log10(value) * 20);
+    }
+
+    public float GetBGMFade()
+    {
+        audioMixer.GetFloat("bgmFade", out float tempValue);
+        tempValue *= 0.05f;
+        tempValue = Mathf.Pow(10, tempValue);
+        return tempValue;
     }
     #endregion
 
