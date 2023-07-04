@@ -6,6 +6,7 @@ public class ColliderController : MonoBehaviour
 {
     private ShowScript showScript;
     private ShowRecord showRecord;
+    public List<string> completeColliderNames;
 
     void Awake()
     {
@@ -20,7 +21,7 @@ public class ColliderController : MonoBehaviour
     public void OffRecordCollider(bool[] checkRecord)
     {
         GameObject rCollider = GameObject.Find("RecordGroup");
-        GameObject[] recordObject = new GameObject[rCollider.transform.childCount];
+        GameObject[] recordObject = new GameObject[rCollider.transform.childCount]; //10
 
         int recordStart;
         if (rCollider.transform.GetChild(0).name.Contains("누명자"))
@@ -29,16 +30,19 @@ public class ColliderController : MonoBehaviour
         }
         else
         {
-            recordStart = showRecord.record.Count - recordObject.Length;
+            recordStart = showRecord.checkRecordComplete.Length - recordObject.Length; //15-10
         }
 
+        Debug.Log($"RecordStart : {recordStart}");
+        int index = 0;
         for (int i = recordStart; i < recordObject.Length + recordStart; i++)
         {
-            recordObject[i] = rCollider.transform.GetChild(i).gameObject;
+            recordObject[index] = rCollider.transform.GetChild(index).gameObject;
             if (checkRecord[i]) //true라면 ColliderObject를 끈다
             {
-                recordObject[i].SetActive(false);
+                recordObject[index].SetActive(false);
             }
+            index++;
         }
     }
 
@@ -62,6 +66,32 @@ public class ColliderController : MonoBehaviour
             {
                 scriptObject[i].SetActive(false);
             }
+        }
+    }
+
+    public void AddMoveCollider()
+    {
+        GameObject aCollider = GameObject.Find("MoveCollider");
+        GameObject[] animObject = new GameObject[aCollider.transform.childCount];
+
+        //리스트에 추가
+
+        for (int i = 0; i < animObject.Length; i++)
+        {
+            completeColliderNames.Add(aCollider.transform.GetChild(i).name);
+        }
+    }
+
+    public void OffAnimationSceneCollider(bool[] checkAnim)
+    {
+        GameObject aCollider = GameObject.Find("MoveCollider");
+        GameObject[] animObject = new GameObject[aCollider.transform.childCount];
+
+        //리스트에 추가
+
+        for (int i=0; i<animObject.Length; i++)
+        {
+            
         }
     }
 
