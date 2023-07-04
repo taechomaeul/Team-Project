@@ -3975,9 +3975,6 @@ MonoBehaviour:
   scriptPanel: {fileID: 2000590235}
   scriptText: {fileID: 953691706}
   scriptPath: Script/ScriptData
-  index: 0
-  curIndex: 0
-  nextIndex: 0
   isShowed: 0
 --- !u!4 &609725513 stripped
 Transform:
@@ -6885,6 +6882,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
+--- !u!1 &1065709489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1065709491}
+  - component: {fileID: 1065709490}
+  m_Layer: 0
+  m_Name: PostProcessVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1065709490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065709489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 80d5a64d51074724ab61b6449694b5a5, type: 2}
+--- !u!4 &1065709491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065709489}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1078102817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13996,9 +14042,6 @@ MonoBehaviour:
   scriptPanel: {fileID: 2000590235}
   scriptText: {fileID: 953691706}
   scriptPath: Script/ScriptData
-  index: 0
-  curIndex: 0
-  nextIndex: 0
   isShowed: 0
 --- !u!1001 &1936614487
 PrefabInstance:
@@ -15581,6 +15624,16 @@ PrefabInstance:
         type: 3}
       propertyPath: plMoveSpd
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016422805860396633, guid: 3a14b590aa962414b81cd520a9bc48e2,
+        type: 3}
+      propertyPath: curSkill.effectPos.x
+      value: -10.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016422805860396633, guid: 3a14b590aa962414b81cd520a9bc48e2,
+        type: 3}
+      propertyPath: curSkill.effectPos.z
+      value: -12.82
       objectReference: {fileID: 0}
     - target: {fileID: 1016422805860396635, guid: 3a14b590aa962414b81cd520a9bc48e2,
         type: 3}
