@@ -142,7 +142,28 @@ public class ShowRecord : MonoBehaviour
                 {
                     langOffset = checkRecordComplete.Length;
                 }
+
+                recordNameText.text = record[i + langOffset]["RECORD_NAME"].ToString();
                 recordText.text = record[i + langOffset]["CONTEXT"].ToString();
+                Debug.Log(record[i + langOffset]["RECORD_NAME"].ToString());
+                Debug.Log(record[i + langOffset]["CONTEXT"].ToString());
+
+                if (recordNameText.text.Contains(":"))
+                {
+                    string[] sText = recordNameText.text.Split(":");
+                    recordNameText.text = "";
+                    for (int j = 0; j < sText.Length; j++)
+                    {
+                        if (j == sText.Length - 1)
+                        {
+                            recordNameText.text += (": " + sText[j]); // ':'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                        }
+                        else
+                        {
+                            recordNameText.text += (sText[j] + "\n");
+                        }
+                    }
+                }
 
                 if (recordText.text.Contains("/"))
                 {
@@ -159,8 +180,6 @@ public class ShowRecord : MonoBehaviour
                             recordText.text += (sText[j] + "\n");
                         }
                     }
-                    //Debug.Log($"{recordText.text}");
-                    break;
                 }
                 
             }
