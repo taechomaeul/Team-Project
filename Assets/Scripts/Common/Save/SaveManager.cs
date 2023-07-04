@@ -362,8 +362,6 @@ public class SaveManager : MonoBehaviour
             Array.Fill(tipData, false);
             Array.Fill(recordData, false);
             moveSceneData.Clear();
-
-
         }
 
         /// <summary>
