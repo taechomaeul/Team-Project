@@ -373,9 +373,9 @@ public class SettingManager : MonoBehaviour
     {
         return languageIndex switch
         {
-            0 => "kr",
-            1 => "en",
-            _ => "kr",
+            0 => "KR",
+            1 => "EN",
+            _ => "KR",
         };
     }
 

@@ -1,64 +1,127 @@
-CHAPTER,SYSTEM/SCRIPT,POINT,IDX,START_IDX,CONTEXT
-TUTORIAL,SCRIPT,T_START,0,0,...낯선 곳이다./일단 상황을 파악해보자.
-TUTORIAL,SYSTEM,T_START,0,0,[W·A·S·D] 키를 이용하여 플레이어를 조작해보세요.
-TUTORIAL,SCRIPT,T_POSSESSION,1,2,내가 들어오기 이전에 있었던 사람이었을까?/손?을 뻗어보자.
-TUTORIAL,SYSTEM,T_POSSESSION,1,2,[F] 키를 눌러보세요.
-TUTORIAL,SCRIPT,T_POMOVE,2,4,감각이 느껴진다./시체로 ‘빙의’한 듯하다.
-TUTORIAL,SCRIPT,T_POMOVE,2,4,몸에 익숙해져야 할 것 같다./이동해보자.
-TUTORIAL,SCRIPT,T_RECORD,3,6,바닥에 무언가 떨어져 있는 것 같다./주워서 확인해보자.
-TUTORIAL,SYSTEM,T_RECORD,3,6,[F] 키를 눌러서 확인해보세요.
-TUTORIAL,SCRIPT,T_RECORD_A,4,8,이 사람의 일지인 듯하다./이 곳에 내용을 적을 수도 있을 것 같다.
-TUTORIAL,SYSTEM,T_RECORD_A,4,8,일지를 획득했습니다!/앞으로 [J]키를 눌러 습득한 일지 및 현재 상태를 확인할 수 있습니다.
-TUTORIAL,SCRIPT,T_RECORD_A,4,8,일단 앞으로 나아가보자.
-TUTORIAL,SCRIPT,T_BATTLE,5,11,문을 지키고 있는 문지기가 있다./들고 있는 검으로 공격할 수 있을 것 같다.
-TUTORIAL,SYSTEM,T_BATTLE,5,11,마우스 [클릭]으로 검을 휘둘러 공격할 수 있습니다./[Ctrl] 키를 누르면 천천히 다가갈 수 있습니다.
-TUTORIAL,SYSTEM,T_BATTLE,5,11,"발소리를 죽인 채로 문지기의 시야를 피해 공격한다면 기습할 수 있습니다./기습 공격 성공 시, 주는 대미지가 1.5배로 상승합니다."
-TUTORIAL,SYSTEM,T_BATTLE,5,11,공격이 온다면 [SHIFT] 키를 눌러서 회피할 수 있습니다.
-TUTORIAL,SCRIPT,T_BATTLE,5,11,앞에 있는 문지기를 공격해보자.
-TUTORIAL,SCRIPT,T_SOUL,6,16,…힘들었지만 다행히 이겼다.
-TUTORIAL,SCRIPT,T_SOUL,6,16,문지기의 시체다./확인해보자.
-TUTORIAL,SYSTEM,T_SOUL,6,16,"[F]-[1] 키를 눌러 영혼석을 흡수하고, [F]-[2]를 눌러 빙의체를 바꿀 수 있습니다./영혼석은 일정 범위에서 벗어나면 사라집니다."
-TUTORIAL,SYSTEM,T_SOUL_A,7,19,영혼의 무게가 [30]만큼 증가했습니다!
-TUTORIAL,SYSTEM,T_SOUL_A,7,19,[1]번 키를 통해 영혼의 무게만큼 혼력을 채울 수 있습니다./혼력은 키를 누르고 있으면 서서히 차오릅니다.
-TUTORIAL,SYSTEM,T_SOUL_A,7,19,최대 혼력은 [100]을 넘을 수 없습니다.
-TUTORIAL,SCRIPT,T_SAVE,8,22,누군가의 안배가 느껴지는 여신의 조각상이다./기도를 위해 만든 제단인듯하다.
-TUTORIAL,SCRIPT,T_SAVE,8,22,기묘한 느낌이 나는 것 같다./기도를 해보는 것도 좋을 것 같다.
-TUTORIAL,SYSTEM,T_SAVE,8,22,가까이 이동한 후 [F]를 눌러 기도를 해보세요.
-TUTORIAL,SYSTEM,SAVE_A,9,25,현재 위치가 저장되었습니다!
-TUTORIAL,SCRIPT,T_PUZZLE,10,26,문 앞에는 수상한 장치가 되어있다./’빛은 어둠을 몰아낼지니.’
-TUTORIAL,SCRIPT,T_PUZZLE,10,26,일지에 쓰여져 있던 내용이 힌트일 것 같다./모든 불이 켜질 수 있도록 장치를 조절해보자.
-TUTORIAL,SCRIPT,T_EXIT,11,28,덜컹이는 소리와 함께 철창이 올라갔다.
-TUTORIAL,SCRIPT,T_EXIT,11,28,뒤 역시 미궁의 일부다./어차피 나아갈 것이었다. 계속해서 나아가자.
-TUTORIAL,SYSTEM,GETRECORD,12,30,일지’(일지 이름)‘를 획득했습니다!
-TUTORIAL,SYSTEM,GETRECORD,12,30,획득한 일지는 [일지(J)] > [누군가의 일지] 에서 확인할 수 있습니다.
-TUTORIAL,SCRIPT,GENMON_START,13,32,가로막는 적을 무찌르고 앞으로 나아가자.
-TUTORIAL,SCRIPT,GENMON_END,14,33,처음의 전투보단 나아진 기분이다./바닥에 무언가 떨어져있는 것 같다. 확인해보자.
-TUTORIAL,SCRIPT,GENMON_END_A,15,34,"절망이 담긴 누군가의 일지들을 읽었지만, 나는 절망으로 떨어지지 않을 것이다."
-TUTORIAL,SCRIPT,MIDBOSS_BATSTART,16,35,이 뒤로 거대한 기운이 느껴진다./신의 힘이 필요한 순간인 것 같다.
-TUTORIAL,SCRIPT,MIDBOSS_BATSTART,16,35,제단에서 기도를 드리고 전장으로 향하자.
-TUTORIAL,SCRIPT,MIDBOSS_BATEND,17,37,거대한 적은 몸집에 걸맞은 소리를 내며 쓰러졌다./이전의 적보다 큰 영혼석이 생명이 스러진 시체 위로 떠올랐다.
-TUTORIAL,SCRIPT,MIDBOSS_BATEND,17,37,전투로 흐릿해진 혼력을 채우고 ‘빙의체’를 바꾸자.
-TUTORIAL,SCRIPT,MIDBOSS_POSSESSION,18,39,전과는 다른 힘이 느껴진다.
-TUTORIAL,SYSTEM,MIDBOSS_POSSESSION,18,39,스킬 [괴력]을 획득했습니다!
-TUTORIAL,SCRIPT,MIDBOSS_POSSESSION,18,39,아무리 무거운 돌이라도 움직일 수 있을 것 같다.
-TUTORIAL,SCRIPT,MIDBOSS_PUZ,19,42,괴력은 지금을 위해서 필요했던 것 같다./거대한 상자들 중 움직이는 상자를 밀어 길을 만들고 출구를 향해 나아가자.
-TUTORIAL,SCRIPT,MIDBOSS_PUZEND,20,43,"출구에 도착했지만, 이 거대한 몸은 비좁은 출구로 나가지 못할 것 같다."
-TUTORIAL,SCRIPT,MIDBOSS_PUZEND,20,43,어쩔 수 없이 옆에 있던 작은 빙의체로 몸을 바꾸고 계단을 마저 올랐다.
-TUTORIAL,SCRIPT,SCENE2F_START,21,45,계단을 오르고 맞이한 것은 또 다른 층이었다.
-TUTORIAL,SCRIPT,SCENE2F_START,21,45,"여신의 제단 앞에서 다시 한 번 기도를 드리자./’이번 층을 무사히 나간다면, 그 때야말로 진정한 탈출이길.’"
-TUTORIAL,SCRIPT,HARDMON_START,22,47,"이전에 봤던 적과 비슷하게 생겼지만, 본능적으로 위험이 감지된다./마음을 굳게 먹자. 여기서 또 죽을 수는 없으니."
-TUTORIAL,SCRIPT,HARDMON_END,23,48,예상한 대로 조금 더 강해진 적이었다./그래도 희망은 있다.
-TUTORIAL,SCRIPT,HARDMON_END,23,48,그동안 바친 기도 때문일까?/여신이 돕고 있다는 생각이 든다. 
-TUTORIAL,SCRIPT,SELECTSKILL,24,50,다른 기운이 느껴지는 세 개의 석상이다./특별한 힘을 얻을 수 있을 것 같다.
-TUTORIAL,SCRIPT,SELECTSKILL,24,50,"불같이 강력한 무력, 번개와 같은 빠름, 따스한 바람과 같은 평화가 느껴지는 듯하다."
-TUTORIAL,SYSTEM,SELECTSKILL,24,50,선택 후에도 원하는 스킬을 재선택할 수 있습니다.
-TUTORIAL,SCRIPT,FINBOSS_BATSTART,25,53,이 뒤에서 지금까지 느껴본 적 없는 어두운 힘이 느껴진다./이 미궁의 진정한 끝이 기다리고 있다는 확신이 든다.
-TUTORIAL,SCRIPT,FINBOSS_BATSTART,25,53,부디 이 마지막 전투에서 승리할 수 있길./여신에게 기도하고 최후의 전투에 임하자.
-TUTORIAL,SCRIPT,FINBOSS_BATEND,26,55,해냈다. 어려운 싸움을 이겨냈다./불가능할 것 같던 확률을 기어코 뒤집었다.
-TUTORIAL,SCRIPT,FINBOSS_BATEND,26,55,진정한 바깥을 향해 나아가자.
-TUTORIAL,SCRIPT,FINBOSS_EXIT_BE,27,57,"직감이 말해주고 있다./이 뒤는, '미궁의 끝'이라고."
-TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,28,58,"’아이야, 내가 내리는 시련을 딛고 운명을 쥐어라.’"
-TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,28,58,머리 속에 울리는 목소리가 말했다.
-TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,28,58,"이 또한 시련이었구나./나는 신과 함께니, 두려울 것이 없노라."
-TUTORIAL,SYSTEM,FINBOSS_EXIT_AFT,28,58,왕에게 버림받은 영웅이 다시 한 번 발걸음을 내딛는다./신화의 첫 장을 기록합니다.
-TUTORIAL,SYSTEM,FINBOSS_EXIT_AFT,28,58,기록 완료.
+CHAPTER,SYSTEM/SCRIPT,POINT,Language,IDX,START_IDX,CONTEXT
+TUTORIAL,SCRIPT,T_START,KR,0,0,...낯선 곳이다./일단 상황을 파악해보자.
+TUTORIAL,SYSTEM,T_START,KR,0,0,[W·A·S·D] 키를 이용하여 플레이어를 조작해보세요.
+TUTORIAL,SCRIPT,T_POSSESSION,KR,1,2,내가 들어오기 이전에 있었던 사람이었을까?/손?을 뻗어보자.
+TUTORIAL,SYSTEM,T_POSSESSION,KR,1,2,[F] 키를 눌러보세요.
+TUTORIAL,SCRIPT,T_POMOVE,KR,2,4,감각이 느껴진다./시체로 ‘빙의’한 듯하다.
+TUTORIAL,SCRIPT,T_POMOVE,KR,2,4,몸에 익숙해져야 할 것 같다./이동해보자.
+TUTORIAL,SCRIPT,T_RECORD,KR,3,6,바닥에 무언가 떨어져 있는 것 같다./주워서 확인해보자.
+TUTORIAL,SYSTEM,T_RECORD,KR,3,6,[F] 키를 눌러서 확인해보세요.
+TUTORIAL,SCRIPT,T_RECORD_A,KR,4,8,이 사람의 일지인 듯하다./이 곳에 내용을 적을 수도 있을 것 같다.
+TUTORIAL,SYSTEM,T_RECORD_A,KR,4,8,일지를 획득했습니다!/앞으로 [J]키를 눌러 습득한 일지 및 현재 상태를 확인할 수 있습니다.
+TUTORIAL,SCRIPT,T_RECORD_A,KR,4,8,일단 앞으로 나아가보자.
+TUTORIAL,SCRIPT,T_BATTLE,KR,5,11,문을 지키고 있는 문지기가 있다./들고 있는 검으로 공격할 수 있을 것 같다.
+TUTORIAL,SYSTEM,T_BATTLE,KR,5,11,마우스 [클릭]으로 검을 휘둘러 공격할 수 있습니다./[Ctrl] 키를 누르면 천천히 다가갈 수 있습니다.
+TUTORIAL,SYSTEM,T_BATTLE,KR,5,11,"발소리를 죽인 채로 문지기의 시야를 피해 공격한다면 기습할 수 있습니다./기습 공격 성공 시, 주는 대미지가 1.5배로 상승합니다."
+TUTORIAL,SYSTEM,T_BATTLE,KR,5,11,공격이 온다면 [SHIFT] 키를 눌러서 회피할 수 있습니다.
+TUTORIAL,SCRIPT,T_BATTLE,KR,5,11,앞에 있는 문지기를 공격해보자.
+TUTORIAL,SCRIPT,T_SOUL,KR,6,16,…힘들었지만 다행히 이겼다.
+TUTORIAL,SCRIPT,T_SOUL,KR,6,16,문지기의 시체다./확인해보자.
+TUTORIAL,SYSTEM,T_SOUL,KR,6,16,"[F]-[1] 키를 눌러 영혼석을 흡수하고, [F]-[2]를 눌러 빙의체를 바꿀 수 있습니다./영혼석은 일정 범위에서 벗어나면 사라집니다."
+TUTORIAL,SYSTEM,T_SOUL_A,KR,7,19,영혼의 무게가 [30]만큼 증가했습니다!
+TUTORIAL,SYSTEM,T_SOUL_A,KR,7,19,[1]번 키를 통해 영혼의 무게만큼 혼력을 채울 수 있습니다./혼력은 키를 누르고 있으면 서서히 차오릅니다.
+TUTORIAL,SYSTEM,T_SOUL_A,KR,7,19,최대 혼력은 [100]을 넘을 수 없습니다.
+TUTORIAL,SCRIPT,T_SAVE,KR,8,22,누군가의 안배가 느껴지는 여신의 조각상이다./기도를 위해 만든 제단인듯하다.
+TUTORIAL,SCRIPT,T_SAVE,KR,8,22,기묘한 느낌이 나는 것 같다./기도를 해보는 것도 좋을 것 같다.
+TUTORIAL,SYSTEM,T_SAVE,KR,8,22,가까이 이동한 후 [F]를 눌러 기도를 해보세요.
+TUTORIAL,SYSTEM,SAVE_A,KR,9,25,현재 위치가 저장되었습니다!
+TUTORIAL,SCRIPT,T_PUZZLE,KR,10,26,문 앞에는 수상한 장치가 되어있다./’빛은 어둠을 몰아낼지니.’
+TUTORIAL,SCRIPT,T_PUZZLE,KR,10,26,일지에 쓰여져 있던 내용이 힌트일 것 같다./모든 불이 켜질 수 있도록 장치를 조절해보자.
+TUTORIAL,SCRIPT,T_EXIT,KR,11,28,덜컹이는 소리와 함께 철창이 올라갔다.
+TUTORIAL,SCRIPT,T_EXIT,KR,11,28,뒤 역시 미궁의 일부다./어차피 나아갈 것이었다. 계속해서 나아가자.
+TUTORIAL,SYSTEM,GETRECORD,KR,12,30,일지’(일지 이름)‘를 획득했습니다!
+TUTORIAL,SYSTEM,GETRECORD,KR,12,30,획득한 일지는 [일지(J)] > [누군가의 일지] 에서 확인할 수 있습니다.
+TUTORIAL,SCRIPT,GENMON_START,KR,13,32,가로막는 적을 무찌르고 앞으로 나아가자.
+TUTORIAL,SCRIPT,GENMON_END,KR,14,33,처음의 전투보단 나아진 기분이다./바닥에 무언가 떨어져있는 것 같다. 확인해보자.
+TUTORIAL,SCRIPT,GENMON_END_A,KR,15,34,"절망이 담긴 누군가의 일지들을 읽었지만, 나는 절망으로 떨어지지 않을 것이다."
+TUTORIAL,SCRIPT,MIDBOSS_BATSTART,KR,16,35,이 뒤로 거대한 기운이 느껴진다./신의 힘이 필요한 순간인 것 같다.
+TUTORIAL,SCRIPT,MIDBOSS_BATSTART,KR,16,35,제단에서 기도를 드리고 전장으로 향하자.
+TUTORIAL,SCRIPT,MIDBOSS_BATEND,KR,17,37,거대한 적은 몸집에 걸맞은 소리를 내며 쓰러졌다./이전의 적보다 큰 영혼석이 생명이 스러진 시체 위로 떠올랐다.
+TUTORIAL,SCRIPT,MIDBOSS_BATEND,KR,17,37,전투로 흐릿해진 혼력을 채우고 ‘빙의체’를 바꾸자.
+TUTORIAL,SCRIPT,MIDBOSS_POSSESSION,KR,18,39,전과는 다른 힘이 느껴진다.
+TUTORIAL,SYSTEM,MIDBOSS_POSSESSION,KR,18,39,스킬 [괴력]을 획득했습니다!
+TUTORIAL,SCRIPT,MIDBOSS_POSSESSION,KR,18,39,아무리 무거운 돌이라도 움직일 수 있을 것 같다.
+TUTORIAL,SCRIPT,MIDBOSS_PUZ,KR,19,42,괴력은 지금을 위해서 필요했던 것 같다./거대한 상자들 중 움직이는 상자를 밀어 길을 만들고 출구를 향해 나아가자.
+TUTORIAL,SCRIPT,MIDBOSS_PUZEND,KR,20,43,"출구에 도착했지만, 이 거대한 몸은 비좁은 출구로 나가지 못할 것 같다."
+TUTORIAL,SCRIPT,MIDBOSS_PUZEND,KR,20,43,어쩔 수 없이 옆에 있던 작은 빙의체로 몸을 바꾸고 계단을 마저 올랐다.
+TUTORIAL,SCRIPT,SCENE2F_START,KR,21,45,계단을 오르고 맞이한 것은 또 다른 층이었다.
+TUTORIAL,SCRIPT,SCENE2F_START,KR,21,45,"여신의 제단 앞에서 다시 한 번 기도를 드리자./’이번 층을 무사히 나간다면, 그 때야말로 진정한 탈출이길.’"
+TUTORIAL,SCRIPT,HARDMON_START,KR,22,47,"이전에 봤던 적과 비슷하게 생겼지만, 본능적으로 위험이 감지된다./마음을 굳게 먹자. 여기서 또 죽을 수는 없으니."
+TUTORIAL,SCRIPT,HARDMON_END,KR,23,48,예상한 대로 조금 더 강해진 적이었다./그래도 희망은 있다.
+TUTORIAL,SCRIPT,HARDMON_END,KR,23,48,그동안 바친 기도 때문일까?/여신이 돕고 있다는 생각이 든다. 
+TUTORIAL,SCRIPT,SELECTSKILL,KR,24,50,다른 기운이 느껴지는 세 개의 돌이다./특별한 힘을 얻을 수 있을 것 같다.
+TUTORIAL,SCRIPT,SELECTSKILL,KR,24,50,"불같이 강력한 무력, 번개와 같은 빠름, 따스한 바람과 같은 평화가 느껴지는 듯하다."
+TUTORIAL,SYSTEM,SELECTSKILL,KR,24,50,선택 후에도 원하는 스킬을 재선택할 수 있습니다.
+TUTORIAL,SCRIPT,FINBOSS_BATSTART,KR,25,53,이 뒤에서 지금까지 느껴본 적 없는 어두운 힘이 느껴진다./이 미궁의 진정한 끝이 기다리고 있다는 확신이 든다.
+TUTORIAL,SCRIPT,FINBOSS_BATSTART,KR,25,53,부디 이 마지막 전투에서 승리할 수 있길./여신에게 기도하고 최후의 전투에 임하자.
+TUTORIAL,SCRIPT,FINBOSS_BATEND,KR,26,55,해냈다. 어려운 싸움을 이겨냈다./불가능할 것 같던 확률을 기어코 뒤집었다.
+TUTORIAL,SCRIPT,FINBOSS_BATEND,KR,26,55,진정한 바깥을 향해 나아가자.
+TUTORIAL,SCRIPT,FINBOSS_EXIT_BE,KR,27,57,"직감이 말해주고 있다./이 뒤는, '미궁의 끝'이라고."
+TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,KR,28,58,"’아이야, 내가 내리는 시련을 딛고 운명을 쥐어라.’"
+TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,KR,28,58,머리 속에 울리는 목소리가 말했다.
+TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,KR,28,58,"이 또한 시련이었구나./나는 신과 함께니, 두려울 것이 없노라."
+TUTORIAL,SYSTEM,FINBOSS_EXIT_AFT,KR,28,58,왕에게 버림받은 영웅이 다시 한 번 발걸음을 내딛는다./신화의 첫 장을 기록합니다.
+TUTORIAL,SYSTEM,FINBOSS_EXIT_AFT,KR,28,58,기록 완료.
+TUTORIAL,SCRIPT,T_START,EN,0,0,...It's a strange place./Let's get a grip on the situation first.
+TUTORIAL,SYSTEM,T_START,EN,0,0,"[W,A,S,D] Use the key to manipulate the player."
+TUTORIAL,SCRIPT,T_POSSESSION,EN,1,2,Was it someone before I came in?/Let's reach out.
+TUTORIAL,SYSTEM,T_POSSESSION,EN,1,2,[F] Press the key.
+TUTORIAL,SCRIPT,T_POMOVE,EN,2,4,I can feel the sensation./It seems to be 'possession' in the body.
+TUTORIAL,SCRIPT,T_POMOVE,EN,2,4,I think I need to get used to the body./Let's move on.
+TUTORIAL,SCRIPT,T_RECORD,EN,3,6,I think there's something on the floor./Let's pick it up and check it out.
+TUTORIAL,SYSTEM,T_RECORD,EN,3,6,[F] Press the key to check.
+TUTORIAL,SCRIPT,T_RECORD_A,EN,4,8,It seems to be this person's diary./I think I can write down the contents here.
+TUTORIAL,SYSTEM,T_RECORD_A,EN,4,8,"You have acquired a diary!/In the future, you can press the [J] key to view the acquired diary and the current status."
+TUTORIAL,SCRIPT,T_RECORD_A,EN,4,8,Let's move forward for now.
+TUTORIAL,SCRIPT,T_BATTLE,EN,5,11,There's a gatekeeper guarding the door./I think I can attack with the sword I'm holding.
+TUTORIAL,SYSTEM,T_BATTLE,EN,5,11,Use the mouse [click] to swing the sword to attack.Press the /[Ctrl] key to approach slowly.
+TUTORIAL,SYSTEM,T_BATTLE,EN,5,11,"If you attack the gatekeeper with the sound of footsteps killed, you can make a surprise attack./If a surprise attack is successful, the state's damage will increase by 1.5 times."
+TUTORIAL,SYSTEM,T_BATTLE,EN,5,11,"If an attack comes, press the [SHIFT] key to avoid it."
+TUTORIAL,SCRIPT,T_BATTLE,EN,5,11,Let's attack the gatekeeper in front.
+TUTORIAL,SCRIPT,T_SOUL,EN,6,16,"…It was hard, but fortunately I won."
+TUTORIAL,SCRIPT,T_SOUL,EN,6,16,It's the body of the gatekeeper.Let's check.
+TUTORIAL,SYSTEM,T_SOUL,EN,6,16,"Press the [F]-[1] key to absorb the soul stone, and press [F]-[2] to change the ice cube./Soul seats disappear when they are out of range."
+TUTORIAL,SYSTEM,T_SOUL_A,EN,7,19,The weight of the soul has increased by [30]!
+TUTORIAL,SYSTEM,T_SOUL_A,EN,7,19,[1]Burn key allows you to fill your soul with the weight of your soul./The soul slowly fills up when the key is pressed.
+TUTORIAL,SYSTEM,T_SOUL_A,EN,7,19,The maximum soul force cannot exceed [100].
+TUTORIAL,SCRIPT,T_SAVE,EN,8,22,It is a statue of a goddess who can feel someone's arrangement./Looks like an altar made for prayer.
+TUTORIAL,SCRIPT,T_SAVE,EN,8,22,It seems to have a strange feeling./It would be a good idea to pray.
+TUTORIAL,SYSTEM,T_SAVE,EN,8,22,Move closer and press [F] to pray.
+TUTORIAL,SYSTEM,SAVE_A,EN,9,25,Your current location has been saved!
+TUTORIAL,SCRIPT,T_PUZZLE,EN,10,26,There is a suspicious device in front of the door./'Light drives out darkness.’
+TUTORIAL,SCRIPT,T_PUZZLE,EN,10,26,I think what was written in the diary would be a hint./Let's adjust the device so that all the lights come on.
+TUTORIAL,SCRIPT,T_EXIT,EN,11,28,The iron bars went up with a rattling sound.
+TUTORIAL,SCRIPT,T_EXIT,EN,11,28,The back is also part of the labyrinth./I was going to move on anyway. Let's keep going.
+TUTORIAL,SYSTEM,GETRECORD,EN,12,30,You have acquired the diary '(diary name)'!
+TUTORIAL,SYSTEM,GETRECORD,EN,12,30,You can view the acquired diary in Diary (J) > Someone's Diary.
+TUTORIAL,SCRIPT,GENMON_START,EN,13,32,Let's defeat the enemy in the way and move forward.
+TUTORIAL,SCRIPT,GENMON_END,EN,14,33,I feel better than the first battle./There seems to be something on the floor. So check it out.
+TUTORIAL,SCRIPT,GENMON_END_A,EN,15,34,"I've read someone's journals of despair, but I won't fall into despair."
+TUTORIAL,SCRIPT,MIDBOSS_BATSTART,EN,16,35,I can feel a huge energy behind this./I think it's a moment that needs God's power.
+TUTORIAL,SCRIPT,MIDBOSS_BATSTART,EN,16,35,Let's pray at the altar and head to the battlefield.
+TUTORIAL,SCRIPT,MIDBOSS_BATEND,EN,17,37,The great enemy fell down with a sound worthy of his body.A soul stone larger than the previous enemy rose over a dead body.
+TUTORIAL,SCRIPT,MIDBOSS_BATEND,EN,17,37,Let's fill in the chaos blurred by the battle and change the 'body'.
+TUTORIAL,SCRIPT,MIDBOSS_POSSESSION,EN,18,39,I feel a different power than before.
+TUTORIAL,SYSTEM,MIDBOSS_POSSESSION,EN,18,39,You've acquired the skill [Strongness]!
+TUTORIAL,SCRIPT,MIDBOSS_POSSESSION,EN,18,39,"No matter how heavy the stone is, I think I can move it."
+TUTORIAL,SCRIPT,MIDBOSS_PUZ,EN,19,42,It seems that the force was needed for now./Let's push the moving box among the giant boxes to make a path and head for the exit.
+TUTORIAL,SCRIPT,MIDBOSS_PUZEND,EN,20,43,"Arrived at the exit, but this huge body is unlikely to get out of the cramped exit."
+TUTORIAL,SCRIPT,MIDBOSS_PUZEND,EN,20,43,I had no choice but to change my body to a small body next to me and go up the stairs.
+TUTORIAL,SCRIPT,SCENE2F_START,EN,21,45,Coming up the stairs was another floor.
+TUTORIAL,SCRIPT,SCENE2F_START,EN,21,45,"Let's pray again in front of the altar of the goddess./If you get out of this floor safely, that's when you're really out of here.'"
+TUTORIAL,SCRIPT,HARDMON_START,EN,22,47,"It looks similar to the one we've seen before, but instinctively, danger is detected./Let's make a firm heart. I can't die here again."
+TUTORIAL,SCRIPT,HARDMON_END,EN,23,48,It was a little stronger than expected./But there is hope.
+TUTORIAL,SCRIPT,HARDMON_END,EN,23,48,Is it because of the prayers you've given?/I feel like the goddess is helping.
+TUTORIAL,SCRIPT,SELECTSKILL,EN,24,50,These are three stones with different vibes./I think I can get a special boost.
+TUTORIAL,SCRIPT,SELECTSKILL,EN,24,50,"It seems that there is peace like firepower, lightning speed, and warm wind."
+TUTORIAL,SYSTEM,SELECTSKILL,EN,24,50,"After selection, you can still re-select the desired skill."
+TUTORIAL,SCRIPT,FINBOSS_BATSTART,EN,25,53,"Behind this, I can feel a dark power that I have never felt before./I'm sure the real end of this labyrinth is waiting."
+TUTORIAL,SCRIPT,FINBOSS_BATSTART,EN,25,53,I hope you can win this last battle./Let's pray to the goddess and go to the final battle.
+TUTORIAL,SCRIPT,FINBOSS_BATEND,EN,26,55,I did it. I overcame a difficult fight./It turned the odds upside down that seemed impossible.
+TUTORIAL,SCRIPT,FINBOSS_BATEND,EN,26,55,Let's move on to the real outside.
+TUTORIAL,SCRIPT,FINBOSS_EXIT_BE,EN,27,57,"Intuition is telling.Behind this, it's called the 'end of the labyrinth'."
+TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,EN,28,58,"Overcome my ordeal, child, and hold your fate.'"
+TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,EN,28,58,A ringing voice in my head said.
+TUTORIAL,SCRIPT,FINBOSS_EXIT_AFT,EN,28,58,"This was also an ordeal./I am with God, there is nothing to fear."
+TUTORIAL,SYSTEM,FINBOSS_EXIT_AFT,EN,28,58,The hero abandoned by the king takes another step./Record the first chapter of the myth.
+TUTORIAL,SYSTEM,FINBOSS_EXIT_AFT,EN,28,58,Recorded.
