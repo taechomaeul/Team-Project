@@ -117,6 +117,7 @@ public class ActionFuntion : MonoBehaviour
                 GameObject newPlayer = Instantiate(enemyPrefab);
 
                 newPlayer.transform.parent = player.transform;
+                newPlayer.transform.SetAsFirstSibling();
                 Debug.Log("NewPlayer Animator name: " + newPlayer.transform.GetComponent<Animator>().name);
 
                 newPlayer.transform.localPosition = originPlayerPrefabPos;
