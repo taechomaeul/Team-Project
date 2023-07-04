@@ -55,10 +55,7 @@ public class OnlyShowScript : MonoBehaviour
                 scriptPanel.SetActive(false);
                 endingPanel.SetActive(true);
 
-                showScript.WaitSecondsFunction(3f);
-                GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-                gameManager.MoveToTitleScene();
-
+                StartCoroutine(WaitAndMoveToTitle(3f));
             }
         }
     }
@@ -70,5 +67,12 @@ public class OnlyShowScript : MonoBehaviour
         //인덱스로 스크립트를 불러온다
         showScript.LoadScript(curIndex, langOffset);
         curIndex++;
+    }
+
+    IEnumerator WaitAndMoveToTitle(float time)
+    {
+        yield return StartCoroutine(showScript.WaitNSeconds(time));
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager.MoveToTitleScene();
     }
 }
