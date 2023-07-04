@@ -61,6 +61,7 @@ public class ShowScript : MonoBehaviour
             }
             
         }
+        Debug.Log($"Length: {startIdxArr.Length}");
 
         //중복제거
         startIdxArr = startIdxArr.Distinct().ToArray();
@@ -69,6 +70,7 @@ public class ShowScript : MonoBehaviour
 
         //스크립트 체크 배열 함수 선언
         checkScriptComplete = new bool[startIdxArr.Length];
+        Debug.Log($"checkScriptComplete Length: {checkScriptComplete.Length}");
         //Debug.Log($"startIdxArr Length : {startIdxArr.Length}");
 
         if (SaveManager.Instance.saveClass.GetScriptData().Length == 0)
@@ -80,6 +82,7 @@ public class ShowScript : MonoBehaviour
                 checkScriptComplete[i] = false;
             }
             SaveManager.Instance.saveClass.SetScriptData(checkScriptComplete);
+            Debug.Log($"checkScriptComplete Length2: {checkScriptComplete.Length}");
         }
 
     }

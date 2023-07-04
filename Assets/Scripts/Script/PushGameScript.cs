@@ -246,16 +246,6 @@ public class PushGameScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else
-        {
-            //인덱스 초기화
-            index = 0;
-            curIndex = 0;
-            nextIndex = 0;
-
-            isShowed = false; //저장은 다시 할 수 있으므로 저장 완료 스크립트를 보여줘야 함
-        }
-
     }
 
     /// <summary>
