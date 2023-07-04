@@ -102,17 +102,11 @@ public class PlayerController : MonoBehaviour
 
         Transform playerPos = transform.GetChild(0);
         Debug.Log($"PlayerPos : {playerPos.localPosition}");
-        //Transform sight = transform.GetChild(0).GetChild(1);
 
         playerPos.GetComponent<CharacterController>().enabled = false;
         playerPos.localPosition = indexer.transform.GetChild(plInfo.curPositionIndex).localPosition;
         Debug.Log($"PlayerPos Pos AFTER : {playerPos.localPosition}");
-        /*transform.rotation = indexer.transform.GetChild(plInfo.curPositionIndex).rotation;
-        sight.rotation = indexer.transform.GetChild(plInfo.curPositionIndex).GetChild(0).rotation;*/
         playerPos.GetComponent<CharacterController>().enabled = true;
-
-        //Debug.Log($"Index{plInfo.curPositionIndex} : " + indexer.transform.GetChild(plInfo.curPositionIndex).position);
-        //Debug.Log($"transform.GetChild(0).position : {transform.GetChild(0).position}");
 
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
@@ -266,7 +260,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
                         StartCoroutine(gcadt);
-                        //peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack1);
+                        peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack1);
                         coroutineCheck = true;
                     }
 
@@ -324,7 +318,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
                         StartCoroutine(gcadt);
-                        //peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack2);
+                        peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack2);
                         coroutineCheck = true;
                     }
 
@@ -383,7 +377,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                         StartCoroutine(gcadt);
-                        //peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack3);
+                        peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack3);
                         coroutineCheck = true;
                     }
 
@@ -710,7 +704,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("CoolTIme Reset-ing");
         yield return new WaitForSeconds(coolTime);
         isSkillCool = false; //스킬쿨 해제
-        //Debug.Log("CoolTIme Reset Complete!");
+        Debug.Log("CoolTIme Reset Complete!");
     }
 
     public void InitAnimator()
