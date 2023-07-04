@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -59,6 +60,8 @@ public class SaveManager : MonoBehaviour
         [SerializeField] private bool[] tipData;
         // 일지 체크
         [SerializeField] private bool[] recordData;
+        // 이동 Collider 체크
+        [SerializeField] private List<string> moveSceneData = new();
 
 
 
@@ -225,6 +228,15 @@ public class SaveManager : MonoBehaviour
         {
             recordData = recordDataCheckArray;
         }
+
+        /// <summary>
+        /// 이동 씬 이름 체크 일괄 설정
+        /// </summary>
+        /// <param name="moveSceneDataCheckList">저장할 씬이동 Collider 이름 List</param>
+        internal void SetMoveSceneData(List<string> moveSceneDataCheckList)
+        {
+            moveSceneData = moveSceneDataCheckList;
+        }
         #endregion
 
 
@@ -318,6 +330,27 @@ public class SaveManager : MonoBehaviour
         {
             return recordData;
         }
+
+        /// <summary>
+        /// 이동씬 이름 리스트 확인
+        /// </summary>
+        /// <returns>이동씬 이름 리스트</returns>
+        internal List<string> GetMoveSceneData()
+        {
+            return moveSceneData;
+        }
+        #endregion
+
+
+        #region 기타 함수들
+        /// <summary>
+        /// 이동 씬 이름 체크 항목 추가
+        /// </summary>
+        /// <param name="colliderObjectName">저장할 씬이동 Collider 이름</param>
+        internal void AddMoveCollider(string colliderObjectName)
+        {
+            moveSceneData.Add(colliderObjectName);
+        } 
         #endregion
     }
 
@@ -338,6 +371,7 @@ public class SaveManager : MonoBehaviour
 
         // 첫 시작 위치 저장
         saveClass.SetLastSavePosition(0);
+
     }
 
     // 새로운 씬에서 찾기
@@ -406,7 +440,7 @@ public class SaveManager : MonoBehaviour
             // 세이브 데이터 Json으로 변환
             SaveCurrentDataToClass(lastSavePosition);
             string saveJson = JsonUtility.ToJson(saveClass);
-
+            Debug.Log(saveJson);
             // 세이브 폴더 생성
             DirectoryInfo di = new(path);
             if (!di.Exists)
@@ -461,6 +495,7 @@ public class SaveManager : MonoBehaviour
 
         cc.OffRecordCollider(saveClass.GetRecordData());
         cc.OffScriptCollider(saveClass.GetScriptData());
+        cc.OffMoveSceneCollider(saveClass.GetMoveSceneData());
     }
 
     /// <summary>

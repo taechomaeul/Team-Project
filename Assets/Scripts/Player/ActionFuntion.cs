@@ -122,6 +122,7 @@ public class ActionFuntion : MonoBehaviour
 
                 newPlayer.transform.localPosition = originPlayerPrefabPos;
                 newPlayer.transform.localRotation = Quaternion.identity;
+                newPlayer.transform.localScale = Vector3.one;
                 newPlayer.name = "PlayerPrefab";
 
                 // 플레이어 모델 애니메이터 연결

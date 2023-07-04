@@ -70,7 +70,6 @@ public class ShowScript : MonoBehaviour
 
         //스크립트 체크 배열 함수 선언
         checkScriptComplete = new bool[startIdxArr.Length];
-        Debug.Log($"checkScriptComplete Length: {checkScriptComplete.Length}");
         //Debug.Log($"startIdxArr Length : {startIdxArr.Length}");
 
         if (SaveManager.Instance.saveClass.GetScriptData().Length == 0)
@@ -82,7 +81,6 @@ public class ShowScript : MonoBehaviour
                 checkScriptComplete[i] = false;
             }
             SaveManager.Instance.saveClass.SetScriptData(checkScriptComplete);
-            Debug.Log($"checkScriptComplete Length2: {checkScriptComplete.Length}");
         }
 
     }
@@ -126,7 +124,7 @@ public class ShowScript : MonoBehaviour
     {
         int e_Index;
 
-        if (index == startIdxArr.Length - 1) { e_Index = script.Count; }
+        if (index == startIdxArr.Length - 1) { e_Index = script.Count / langArr.Length; }
         else { e_Index = startIdxArr[index + 1]; }
 
         return e_Index;
@@ -197,12 +195,12 @@ public class ShowScript : MonoBehaviour
         isClick = true;
     }
 
-    IEnumerator WaitNSeconds(float time)
+    public IEnumerator WaitNSeconds(float time)
     {
         yield return new WaitForSecondsRealtime(time);
     }
 
-    IEnumerator WaitSecondsFunction(float time)
+    public IEnumerator WaitSecondsFunction(float time)
     {
         yield return StartCoroutine(WaitNSeconds(time));
     }

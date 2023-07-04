@@ -10,12 +10,12 @@ public class MoveScene : MonoBehaviour
     public string colliderName;
 
     private GameManager gameManager;
-    private ActionFuntion actionFuntion;
+    private GameObject actionFuntion;
 
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        //actionFuntion
+        actionFuntion = GameObject.Find("ActionFunction");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,16 +25,19 @@ public class MoveScene : MonoBehaviour
             switch (colliderName) //충돌한 Collider 이름이 특정 씬 이름과 같다면, 씬 이동.
             {
                 case "AnimMiddleBossCutScenes":
-                    Debug.Log($"checkScriptComplete : {GameObject.Find("ActionFunction").GetComponent<ShowScript>().checkScriptComplete.Length}");
-                    SaveManager.Instance.saveClass.SetScriptData(GameObject.Find("ActionFunction").GetComponent<ShowScript>().checkScriptComplete);
-                    SaveManager.Instance.saveClass.SetRecordData(GameObject.Find("ActionFunction").GetComponent<ShowRecord>().checkRecordComplete);
+                    actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
+                    Debug.Log($"ADD GameObj name : {gameObject.name}");
+                    SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
+                    SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
                     gameManager.MoveToMidBossScene();
                     //SaveManager.Instance.LoadSaveData();
                     break;
 
                 case "PushGameScene":
-                    SaveManager.Instance.saveClass.SetScriptData(GameObject.Find("ActionFunction").GetComponent<ShowScript>().checkScriptComplete);
-                    SaveManager.Instance.saveClass.SetRecordData(GameObject.Find("ActionFunction").GetComponent<ShowRecord>().checkRecordComplete);
+                    actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
+                    Debug.Log($"ADD GameObj name : {gameObject.name}");
+                    SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
+                    SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
                     gameManager.MoveToPush();
                     //SaveManager.Instance.LoadSaveData();
                     break;
@@ -43,21 +46,24 @@ public class MoveScene : MonoBehaviour
                     SaveManager.Instance.saveClass.SetLastSavePosition(5);
                     if (!SceneManager.GetActiveScene().name.Equals("PushGameScene"))
                     {
-                        SaveManager.Instance.saveClass.SetScriptData(GameObject.Find("ActionFunction").GetComponent<ShowScript>().checkScriptComplete);
-                        SaveManager.Instance.saveClass.SetRecordData(GameObject.Find("ActionFunction").GetComponent<ShowRecord>().checkRecordComplete);
+                        SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
+                        SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
                     }
                     gameManager.MoveTo2FScene();
                     //SaveManager.Instance.LoadSaveData();
                     break;
 
                 case "AnimMainBossCutScenes":
-                    SaveManager.Instance.saveClass.SetScriptData(GameObject.Find("ActionFunction").GetComponent<ShowScript>().checkScriptComplete);
-                    SaveManager.Instance.saveClass.SetRecordData(GameObject.Find("ActionFunction").GetComponent<ShowRecord>().checkRecordComplete);
+                    actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
+                    SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
+                    SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
                     gameManager.MoveToFinalBossScene();
                     //SaveManager.Instance.LoadSaveData();
                     break;
 
                 case "EndingScene":
+                    actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
+                    Debug.Log($"ADD GameObj name : {gameObject.name}");
                     gameManager.MoveToEnding();
                     //SaveManager.Instance.LoadSaveData();
                     break;
