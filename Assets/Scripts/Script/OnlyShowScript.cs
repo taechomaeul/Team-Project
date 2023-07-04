@@ -28,7 +28,7 @@ public class OnlyShowScript : MonoBehaviour
         curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
         nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기
 
-        string lang = "EN"; //settingManager에서 끌어올 수 있게 만들어줌
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
         if (lang.Equals("KR"))
         {
             langOffset = 0;

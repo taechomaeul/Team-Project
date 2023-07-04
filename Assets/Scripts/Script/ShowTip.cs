@@ -21,6 +21,8 @@ public class ShowTip : MonoBehaviour
     public GameObject tipNamePrefab;
     [Tooltip("나의 일지 Panel")]
     public GameObject tipPanel;
+    [Tooltip("나의 일지 오른쪽 패널 텍스트")]
+    public Text tipContext;
 
     [SerializeField]
     private string[] langArr; //언어 이름만을 모은 배열
@@ -64,7 +66,8 @@ public class ShowTip : MonoBehaviour
         //int index = 0;
         for (int i = 0; i < tip.Count; i++)
         {
-            string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+            //string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+            string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
 
             if (lang.Equals(tip[i]["Language"]))
             {
@@ -76,6 +79,22 @@ public class ShowTip : MonoBehaviour
                 }
 
                 newRecord.name = tipName; //이름 변경
+                if (tipName.Contains(":"))
+                {
+                    string[] sText = tipName.Split(":");
+                    for (int j = 0; j < sText.Length; j++)
+                    {
+                        tipName = "";
+                        if (j == sText.Length - 1)
+                        {
+                            tipName += (": " + sText[j]); // ':'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                        }
+                        else
+                        {
+                            tipName += (sText[j] + "\n");
+                        }
+                    }
+                }
                 newRecord.transform.GetChild(0).GetComponent<Text>().text = tipName; //내용 변경
             }
             
@@ -92,13 +111,15 @@ public class ShowTip : MonoBehaviour
         context.text = colliName;
         for (int i = 0; i < tip.Count; i++)
         {
-            string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+            //string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+            string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
 
             if (lang.Equals(tip[i]["Language"]))
             {
                 if (colliName.Equals(tip[i]["TIP_NAME"]))
                 {
                     context.text = tip[i]["CONTEXT"].ToString();
+
                     if (context.text.Contains("/"))
                     {
                         string[] sText = context.text.Split("/");
@@ -138,4 +159,9 @@ public class ShowTip : MonoBehaviour
         }
     }
 
+
+    public void ResetContext()
+    {
+        tipContext.text = "";
+    }
 }
