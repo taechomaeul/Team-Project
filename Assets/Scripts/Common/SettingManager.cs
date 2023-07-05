@@ -31,6 +31,7 @@ public class SettingManager : MonoBehaviour
 
     // 밝기 관련
     private Light lightComponent;
+    private float brightnessValue;
 
     // 언어
     private int languageIndex;
@@ -117,6 +118,11 @@ public class SettingManager : MonoBehaviour
         this.brightnessSlider = brightnessSlider;
         this.languageDropdown = languageDropdown;
         SetOriginValues();
+        // ui 표시 설정
+        InitSoundUI();
+        InitResolutionUI();
+        InitBrightnessUI();
+        InitLanguageUI();
     }
 
     /// <summary>
@@ -238,24 +244,41 @@ public class SettingManager : MonoBehaviour
     private void LoadSoundSetting()
     {
         // 저장된 bgm 볼륨 불러옴, 값이 없으면 1로 설정
-        bgmSlider.value = PlayerPrefs.GetFloat("bgmVolume", 1);
-        audioMixer.SetFloat("bgmVolume", Mathf.Log10(bgmSlider.value) * 20);
+        bgmVolume = PlayerPrefs.GetFloat("bgmVolume", 1);
+        audioMixer.SetFloat("bgmVolume", Mathf.Log10(bgmVolume) * 20);
         // 저장된 sfx 볼륨 불러옴, 값이 없으면 1로 설정
-        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 1);
-        audioMixer.SetFloat("bgmVolume", Mathf.Log10(sfxSlider.value) * 20);
+        sfxVolume = PlayerPrefs.GetFloat("sfxVolume", 1);
+        audioMixer.SetFloat("bgmVolume", Mathf.Log10(sfxVolume) * 20);
     }
 
+    /// <summary>
+    /// BGM Fade 설정
+    /// </summary>
+    /// <param name="value">BGM Fade 볼륨 값</param>
     public void SetBGMFade(float value)
     {
         audioMixer.SetFloat("bgmFade", Mathf.Log10(value) * 20);
     }
 
+    /// <summary>
+    /// BGM Fade 볼륨값 반환
+    /// </summary>
+    /// <returns>BGM Fade 불륨 값</returns>
     public float GetBGMFade()
     {
         audioMixer.GetFloat("bgmFade", out float tempValue);
         tempValue *= 0.05f;
         tempValue = Mathf.Pow(10, tempValue);
         return tempValue;
+    }
+
+    /// <summary>
+    /// 사운드 UI 초기화 설정
+    /// </summary>
+    private void InitSoundUI()
+    {
+        bgmSlider.value = bgmVolume;
+        sfxSlider.value = sfxVolume;
     }
     #endregion
 
@@ -271,7 +294,7 @@ public class SettingManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 해상도 UI 설정
+    /// 해상도 UI 초기화 설정
     /// </summary>
     private void InitResolutionUI()
     {
@@ -339,10 +362,7 @@ public class SettingManager : MonoBehaviour
         {
             resolutionIndex = -1;
         }
-
-        // ui 표시 설정
-        InitResolutionUI();
-    }
+            }
     #endregion
 
 
@@ -361,7 +381,7 @@ public class SettingManager : MonoBehaviour
     public void SaveBrightnessSetting()
     {
         // 값 저장
-        PlayerPrefs.SetFloat("brightness", brightnessSlider.value);
+        PlayerPrefs.SetFloat("brightness", lightComponent.intensity);
         PlayerPrefs.Save();
     }
 
@@ -370,7 +390,15 @@ public class SettingManager : MonoBehaviour
     /// </summary>
     public void LoadBrightnessSetting()
     {
-        brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 0.5f);
+        lightComponent.intensity = PlayerPrefs.GetFloat("brightness", 0.5f);
+    }
+
+    /// <summary>
+    /// 밝기 UI 초기화 설정
+    /// </summary>
+   private void InitBrightnessUI()
+    {
+        brightnessSlider.value = lightComponent.intensity;
     }
     #endregion
 
@@ -432,7 +460,6 @@ public class SettingManager : MonoBehaviour
     private void LoadLanguageSetting()
     {
         languageIndex = PlayerPrefs.GetInt("language", 0);
-        InitLanguageUI();
     }
     #endregion
 }
