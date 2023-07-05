@@ -25,14 +25,14 @@ public class SoulController : MonoBehaviour
     {
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        thisSoul = GetComponent<SoulInfo>();
 
         toolTip = actionFuntion.fCommonPanel;
         detailToolTip = actionFuntion.possessPanel;
 
         toolTip.SetActive(false);
 
-        thisSoul = GetComponent<SoulInfo>();
-
+ 
         if (gameObject.tag == "Enemy")
         {
             thisSoul.havingHP = (int) (transform.GetComponentInChildren<EnemyInfo>().stat.GetMaxHp() * enemySoulPercent);
