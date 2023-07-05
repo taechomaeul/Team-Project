@@ -18,8 +18,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private float fadeVolume;
-
+    // 인스펙터
     [Header("오디오 소스")]
     [Tooltip("BGM")]
     [SerializeField] private AudioSource bgmAudioSource;
@@ -31,7 +30,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField][Range(0.1f, 1f)] private float fadeRatio;
 
     [Header("BGM")]
-    [Tooltip("BGM 리스트")]
+    [Tooltip("BGM 리스트(타이틀, 필드, 중간보스, 최종보스, 엔딩)")]
     [SerializeField] private List<AudioClip> clipList;
 
 
@@ -44,7 +43,6 @@ public class SoundManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            fadeVolume = 0;
         }
         else
         {
@@ -53,10 +51,29 @@ public class SoundManager : MonoBehaviour
     }
 
     /// <summary>
+    /// BGM 바로 변경
+    /// </summary>
+    /// <param name="clipIndex">BGM 리스트의 변경할 BGM 인덱스</param>
+    internal void BGMChange(int clipIndex)
+    {
+        if (clipIndex < clipList.Count && clipIndex >= 0)
+        {
+            bgmAudioSource.Stop();
+            bgmAudioSource.clip = clipList[clipIndex];
+            bgmAudioSource.Play();
+            bgmAudioSource.loop = true;
+        }
+        else
+        {
+            Debug.Log("잘못된 BGM 인덱스");
+        }
+    }
+
+    /// <summary>
     /// 페이드 효과 주면서 BGM 변경
     /// </summary>
     /// <param name="clipIndex">BGM 리스트의 변경할 BGM 인덱스</param>
-    public void BGMChangeWithFade(int clipIndex)
+    internal void BGMChangeWithFade(int clipIndex)
     {
         if (clipIndex < clipList.Count && clipIndex >= 0)
         {
@@ -74,19 +91,17 @@ public class SoundManager : MonoBehaviour
     /// <param name="ac">변경할 오디오 클립</param>
     private IEnumerator BGMChangerCoroutine(AudioClip ac)
     {
-        StopAllCoroutines();
         yield return StartCoroutine(BGMFadeOut());
         bgmAudioSource.clip = ac;
         bgmAudioSource.Play();
         bgmAudioSource.loop = true;
         yield return StartCoroutine(BGMFadeIn());
-
     }
 
     /// <summary>
     /// BGM 페이드 아웃
     /// </summary>
-    IEnumerator BGMFadeOut()
+    internal IEnumerator BGMFadeOut()
     {
         float tempValue = SettingManager.Instance.GetBGMFade();
         while (true)
@@ -106,7 +121,7 @@ public class SoundManager : MonoBehaviour
     /// <summary>
     /// BGM 페이드 인
     /// </summary>
-    IEnumerator BGMFadeIn()
+    internal IEnumerator BGMFadeIn()
     {
         float tempValue = SettingManager.Instance.GetBGMFade();
         while (true)
@@ -121,5 +136,10 @@ public class SoundManager : MonoBehaviour
             SettingManager.Instance.SetBGMFade(tempValue);
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    internal AudioSource GetSFX()
+    {
+        return sfxAudioSource;
     }
 }
