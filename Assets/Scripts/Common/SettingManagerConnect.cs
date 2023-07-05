@@ -7,7 +7,7 @@ public class SettingManagerConnect : MonoBehaviour
     GameManager gm;
 
     // 값 변경되었는지 체크
-    bool isChanged = false;
+    bool isChanged;
 
     // 인스펙터
     [Header("환경설정 패널")]
@@ -42,6 +42,12 @@ public class SettingManagerConnect : MonoBehaviour
     {
         gm = FindObjectOfType<GameManager>();
         SettingManager.Instance.InitUIObjectAndLoadValues(bgmSlider, sfxSlider, resolutionsDropdown, fullscreenToggle, brightnessSlider, languageDropdown);
+    }
+
+    private void OnEnable()
+    {
+        isChanged = false;
+        Debug.Log(isChanged);
     }
 
     private void Update()
@@ -96,6 +102,7 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.Slider_SetBgmVolume();
         isChanged = true;
+        Debug.Log("bgm slider");
     }
 
     /// <summary>
@@ -105,6 +112,7 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.Slider_SetSfxVolume();
         isChanged = true;
+        Debug.Log("sfx slider");
     }
 
     /// <summary>
@@ -115,6 +123,7 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.SetFullScreen(isFullScreen);
         isChanged = true;
+        Debug.Log("toggle");
     }
 
     /// <summary>
@@ -123,6 +132,7 @@ public class SettingManagerConnect : MonoBehaviour
     public void ResolutionChangeCheck()
     {
         isChanged = true;
+        Debug.Log("resolution dropdown");
     }
 
     /// <summary>
@@ -132,6 +142,7 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.Slider_SetBrightness();
         isChanged = true;
+        Debug.Log("brightness");
     }
 
     /// <summary>
@@ -141,5 +152,7 @@ public class SettingManagerConnect : MonoBehaviour
     public void Dropdown_SetLanguage(int index)
     {
         SettingManager.Instance.SetLanguage(index);
+        isChanged = true;
+        Debug.Log("language");
     }
 }
