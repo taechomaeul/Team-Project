@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private void Start()
+    {
+        if (Time.timeScale == 0)
+        {
+            ResumeTheGame(); //일시정지 후 메인으로 온 뒤 게임 로드하면 시간 정지되는 문제
+        }
+    }
+
     /// <summary>
     /// 타이틀(로비)으로 이동하는 함수
     /// </summary>
