@@ -30,6 +30,8 @@ public class ShowRecord : MonoBehaviour
     public GameObject recordNamePrefab;
     [Tooltip("누군가의 일지 Panel")]
     public GameObject someonePanel;
+    [Tooltip("누군가의 일지 오른쪽 패널 텍스트")]
+    public Text recordContext;
 
     [SerializeField]
     private string[] langArr; //언어 이름만을 모은 배열
@@ -81,11 +83,13 @@ public class ShowRecord : MonoBehaviour
     {
         for (int i = 0; i < record.Count; i++)
         {
-            string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+            //string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+            string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
 
             if (lang.Equals(record[i]["Language"]))
             {
                 string recordName = record[i]["RECORD_NAME"].ToString(); //이름만 불러온다.
+
                 GameObject newRecord = Instantiate(recordNamePrefab); //prefab 생성
                 if (EventSystem.current.currentSelectedGameObject.name.Contains("Someone")) //prefab 위치 고정 someonePanel
                 {
@@ -93,6 +97,22 @@ public class ShowRecord : MonoBehaviour
                 }
 
                 newRecord.name = recordName; //이름 변경
+                if (recordName.Contains(":"))
+                {
+                    string[] sText = recordName.Split(":");
+                    recordName = "";
+                    for (int j = 0; j < sText.Length; j++)
+                    {
+                        if (j == sText.Length - 1)
+                        {
+                            recordName += (": " + sText[j]); // ':'로 나뉘어진 마지막 text의 끝에는 \n을 붙이지 않는다.
+                        }
+                        else
+                        {
+                            recordName += (sText[j] + "\n");
+                        }
+                    }
+                }
                 newRecord.transform.GetChild(0).GetComponent<Text>().text = recordName; //내용 변경
             }
         }
@@ -125,7 +145,9 @@ public class ShowRecord : MonoBehaviour
     public IEnumerator LoadRecordDataFromCSV(string colliName)
     {
         recordNameText.text = colliName;
-        string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+        //string lang = "EN"; //SettingManager에서 끌어올 수 있게 만들어줌
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
+
         for (int i = 0; i < record.Count; i++)
         {
             if (colliName.Equals(record[i]["RECORD_NAME"]))
@@ -241,6 +263,11 @@ public class ShowRecord : MonoBehaviour
                 Destroy(someonePanel.transform.GetChild(i).gameObject);
             }
         }
+    }
+
+    public void ResetContext()
+    {
+        recordContext.text = "";
     }
 
 }

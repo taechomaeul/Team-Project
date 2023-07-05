@@ -3719,6 +3719,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4190269429678599830, guid: da835d76e9c410249afbc2fe6fae9bfb,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190269429678599830, guid: da835d76e9c410249afbc2fe6fae9bfb,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7007467376336274195, guid: da835d76e9c410249afbc2fe6fae9bfb,
         type: 3}
       propertyPath: audioSource
@@ -4816,6 +4826,7 @@ MonoBehaviour:
     scriptData: 
     tipData: 
     recordData: 
+    moveSceneData: []
 --- !u!4 &1541079561
 Transform:
   m_ObjectHideFlags: 0

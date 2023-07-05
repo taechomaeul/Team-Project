@@ -12,7 +12,6 @@ public class ColliderController : MonoBehaviour
     {
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
         showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
-        //completeColliderNames = new();
     }
 
     /// <summary>

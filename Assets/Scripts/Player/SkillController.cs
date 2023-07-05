@@ -13,11 +13,22 @@ public class SkillController : MonoBehaviour
 
     private PlayerInfo plInfo;
     private SkillInfo skillInfo;
+    private int langOffset;
 
     void Start()
     {
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         skillInfo = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
+
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
+        if (lang.Equals("KR"))
+        {
+            langOffset = 0;
+        }
+        else if (lang.Equals("EN"))
+        {
+            langOffset = skillInfo.skills.Length / skillInfo.langArr.Length;
+        }
     }
 
 
@@ -44,20 +55,20 @@ public class SkillController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 toolTip.SetActive(false);
-                //Debug.Log($"게임 오브젝트 이름 : {gameObject.name}");
+                Debug.Log($"게임 오브젝트 이름 : {gameObject.name}");
                 if (gameObject.name.Substring(gameObject.name.Length - 1).Equals("1"))
                 {
-                    plInfo.curSkill = skillInfo.skills[1];
+                    plInfo.curSkill = skillInfo.skills[1 + langOffset];
                     skillUI.GetComponent<Image>().sprite = skillInfo.skills[1].thumnail;
                 }
                 else if (gameObject.name.Substring(gameObject.name.Length - 1).Equals("2"))
                 {
-                    plInfo.curSkill = skillInfo.skills[2];
+                    plInfo.curSkill = skillInfo.skills[2 + langOffset];
                     skillUI.GetComponent<Image>().sprite = skillInfo.skills[2].thumnail;
                 }
                 else if (gameObject.name.Substring(gameObject.name.Length - 1).Equals("3"))
                 {
-                    plInfo.curSkill = skillInfo.skills[3];
+                    plInfo.curSkill = skillInfo.skills[3 + langOffset];
                     skillUI.GetComponent<Image>().sprite = skillInfo.skills[3].thumnail;
                 }
             }

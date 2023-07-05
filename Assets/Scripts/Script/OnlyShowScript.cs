@@ -28,7 +28,7 @@ public class OnlyShowScript : MonoBehaviour
         curIndex = showScript.GetStartIndex(index); //Start인덱스 구해오기
         nextIndex = showScript.GetEndIndex(index); //다음 인덱스의 Start인덱스가져오기
 
-        string lang = "EN"; //settingManager에서 끌어올 수 있게 만들어줌
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
         if (lang.Equals("KR"))
         {
             langOffset = 0;
@@ -55,10 +55,7 @@ public class OnlyShowScript : MonoBehaviour
                 scriptPanel.SetActive(false);
                 endingPanel.SetActive(true);
 
-                showScript.WaitSecondsFunction(3f);
-                GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-                gameManager.MoveToTitleScene();
-
+                StartCoroutine(WaitAndMoveToTitle(3f));
             }
         }
     }
@@ -70,5 +67,12 @@ public class OnlyShowScript : MonoBehaviour
         //인덱스로 스크립트를 불러온다
         showScript.LoadScript(curIndex, langOffset);
         curIndex++;
+    }
+
+    IEnumerator WaitAndMoveToTitle(float time)
+    {
+        yield return StartCoroutine(showScript.WaitNSeconds(time));
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager.MoveToTitleScene();
     }
 }
