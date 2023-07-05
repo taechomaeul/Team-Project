@@ -52,9 +52,13 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void BGMChange(int clipIndex)
+    /// <summary>
+    /// 페이드 효과 주면서 BGM 변경
+    /// </summary>
+    /// <param name="clipIndex">BGM 리스트의 변경할 BGM 인덱스</param>
+    public void BGMChangeWithFade(int clipIndex)
     {
-        if (clipIndex < clipList.Count - 1 && clipIndex >= 0)
+        if (clipIndex < clipList.Count && clipIndex >= 0)
         {
             StartCoroutine(BGMChangerCoroutine(clipList[clipIndex]));
         }
@@ -64,7 +68,11 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    IEnumerator BGMChangerCoroutine(AudioClip ac)
+    /// <summary>
+    /// BGM 페이드 아웃-인 변경
+    /// </summary>
+    /// <param name="ac">변경할 오디오 클립</param>
+    private IEnumerator BGMChangerCoroutine(AudioClip ac)
     {
         StopAllCoroutines();
         yield return StartCoroutine(BGMFadeOut());
@@ -75,6 +83,9 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// BGM 페이드 아웃
+    /// </summary>
     IEnumerator BGMFadeOut()
     {
         float tempValue = SettingManager.Instance.GetBGMFade();
@@ -92,6 +103,9 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// BGM 페이드 인
+    /// </summary>
     IEnumerator BGMFadeIn()
     {
         float tempValue = SettingManager.Instance.GetBGMFade();
