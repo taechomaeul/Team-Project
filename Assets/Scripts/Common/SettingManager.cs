@@ -86,6 +86,7 @@ public class SettingManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             //DontDestroyOnLoad(brightnessLight);
             lightComponent = brightnessLight.GetComponent<Light>();
+            LoadSettings();
         }
         else
         {
@@ -105,7 +106,7 @@ public class SettingManager : MonoBehaviour
     /// <param name="fullscreenToggle">전체화면 체크 토글</param>
     /// <param name="brightnessSlider">밝기 슬라이더</param>
     /// <param name="languageDropdown">언어 드랍다운</param>
-    public void InitUIObjectAndLoadValues(
+    public void InitUIObject(
         Slider bgmSlider, Slider sfxSlider, Dropdown resolutionsDropdown,
         Toggle fullscreenToggle, Slider brightnessSlider, Dropdown languageDropdown)
     {
@@ -115,7 +116,6 @@ public class SettingManager : MonoBehaviour
         this.fullscreenToggle = fullscreenToggle;
         this.brightnessSlider = brightnessSlider;
         this.languageDropdown = languageDropdown;
-        LoadSettings();
         SetOriginValues();
     }
 
@@ -432,6 +432,7 @@ public class SettingManager : MonoBehaviour
     private void LoadLanguageSetting()
     {
         languageIndex = PlayerPrefs.GetInt("language", 0);
+        Debug.Log($"Ianguage Idx : {languageIndex}");
         InitLanguageUI();
     }
     #endregion

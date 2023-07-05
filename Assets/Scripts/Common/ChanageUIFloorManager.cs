@@ -16,7 +16,8 @@ public class ChanageUIFloorManager : MonoBehaviour
 
     void Start()
     {
-        changeLanguage = GameObject.Find("ActionFunction").GetComponent<ChangeLanguage>();
+        changeLanguage = GameObject.Find("UIManager").GetComponent<ChangeLanguage>();
+        ChangeAllPanel();
     }
 
     public void ChangeAllPanel()
@@ -70,6 +71,5 @@ public class ChanageUIFloorManager : MonoBehaviour
                 Debug.Log($"changeLanguage.langCDataList[{index}].enName : {changeLanguage.langCDataList[index].enName}");
             }
         }
-
     }
 }

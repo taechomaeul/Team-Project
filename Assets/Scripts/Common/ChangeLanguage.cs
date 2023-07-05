@@ -48,10 +48,10 @@ public class ChangeLanguage : MonoBehaviour
 
         for (int i = 0; i < lang.Count; i++)
         {
-            if (!lang[i]["Scenes"].Equals("TitleScene")) //타이틀씬이 아니라면 1F/2F
+            if (lang[i]["Language"].ToString().Contains("TestScene")) //타이틀씬이 아니라면 1F/2F
             {
                 LangCData newLangCData = new LangCData();
-                newLangCData.index = langCDataList.Count + 1;
+                newLangCData.index = langCDataList.Count;
                 newLangCData.panelName = lang[i]["Object_Name"].ToString();
                 newLangCData.krName = lang[i]["KR"].ToString();
                 newLangCData.enName = lang[i]["EN"].ToString();

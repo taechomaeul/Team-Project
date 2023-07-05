@@ -37,6 +37,7 @@ public class ScriptColliderInfo : MonoBehaviour
         else if (lang.Equals("EN"))
         {
             langOffset = 63;
+            Debug.Log($"현재 Offset : {langOffset}");
         }
     }
 
@@ -85,6 +86,17 @@ public class ScriptColliderInfo : MonoBehaviour
         actionFunction.PauseGameForAct();
 
         //인덱스로 스크립트를 불러온다
+        Debug.Log($"현재 Offset BE : {langOffset}");
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
+        if (lang.Equals("KR"))
+        {
+            langOffset = 0;
+        }
+        else if (lang.Equals("EN"))
+        {
+            langOffset = 63;
+            Debug.Log($"현재 Offset AF : {langOffset}");
+        }
         showScript.LoadScript(curIndex, langOffset);
         curIndex++;
     }
