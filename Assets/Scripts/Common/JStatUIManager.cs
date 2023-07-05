@@ -34,6 +34,11 @@ public class JStatUIManager : MonoBehaviour
     [Tooltip("스킬 상세 - 스킬 설명")]
     public Text curSDescriptionText;
 
+    [Header("연결 필수 / 지도")]
+    [Tooltip("N번째 제단 텍스트")]
+    public GameObject lastPosText;
+
+
     [Header("고정 변수")]
     private readonly int maxSoul = 666;
 
@@ -68,6 +73,16 @@ public class JStatUIManager : MonoBehaviour
             {
                 langOffset = -5;
             }
+
+            if (SaveManager.Instance.saveClass.GetLastSavePosition() == 0)
+            {
+                lastPosText.GetComponent<Text>().text = "최초 시작 지점";
+            }
+            else
+            {
+                lastPosText.GetComponent<Text>().text = SaveManager.Instance.saveClass.GetLastSavePosition() + "번째 제단";
+            }
+            
         }
         else if (lang.Equals("EN"))
         {
@@ -77,6 +92,14 @@ public class JStatUIManager : MonoBehaviour
                 langOffset = 5;
             }
 
+            if (SaveManager.Instance.saveClass.GetLastSavePosition() == 0)
+            {
+                lastPosText.GetComponent<Text>().text = "First Starting Point";
+            }
+            else
+            {
+                lastPosText.GetComponent<Text>().text = "Save Point #" + SaveManager.Instance.saveClass.GetLastSavePosition();
+            }
         }
         
         plAtkText.text = plInfo.plAtk.ToString();
@@ -87,5 +110,7 @@ public class JStatUIManager : MonoBehaviour
         curSNameText.text = skillInfo.skills[plInfo.curSkill.skillIndex + langOffset].skillName;
         curSDescriptionText.text = skillInfo.skills[plInfo.curSkill.skillIndex + langOffset].skillDescription;
         //curSDescriptionText.text = plInfo.curSkill.skillDescription;
+
+        
     }
 }
