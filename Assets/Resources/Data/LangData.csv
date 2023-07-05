@@ -22,10 +22,50 @@ TitleScene,SettingPanel,LanguagePanel,LanguageHdTxt,언어,Language
 TitleScene,SettingPanel,LanguagePanel,LanguagePickTxt,언어 선택,Language Selection
 TitleScene,SettingPanel,LanguagePanel,OkayBtTxt,확인,Ok
 TitleScene,SettingPanel,SettingErrorPanel,SettingErrorTxt,이대로 나가면 설정이 초기화 됩니다. 나가시겠습니까?,"If you leave as it is, the setting will be reset. Would you like to leave?"
-TitleScene,SettingPanel,SettingErrorPanel,OTxt,확인,Ok,,,,
+TitleScene,SettingPanel,SettingErrorPanel,OTxt,확인,Ok
 TitleScene,SettingPanel,LanguagePanel,XTxt,취소,Cancel
 TestScene_1F,FCommonPanel,,FSearchTxt,살펴보기,Search
 TestScene_1F,FPrayPanel,,FPrayTxt,기도하기,Pray
 TestScene_1F,FDetailPanel,N1toolTip,1Absorbtxt,흡수하기,Absorb
 TestScene_1F,FDetailPanel,N2toolTip,2Possesstxt,빙의하기,Possess
-TestScene_1F,SkillToolTipPanel
+TestScene_1F,FSkillPanel,,FSkillTxt,스킬적용,Apply
+TestScene_1F,2PossessPanel,,2PossessTxt,빙의하기,Possess
+TestScene_1F,IndexPanel,StatusIndexBtn,StatusTitleText,현재 상태,Status
+TestScene_1F,IndexPanel,SomeoneIndexBtn,SomeoneTitleText,누군가의 기록,Someone's Record
+TestScene_1F,IndexPanel,TipIndexBtn,TipTitleText,나의 일지,My Diary
+TestScene_1F,IndexPanel,MapIndexBtn,MapTitleText,지도,Map
+TestScene_1F,IndexPanel,SettingIndexBtn,SettingTitleText,환경설정,Setting
+TestScene_1F,StatusPanel,PlayerHp,PlayerHpNameTxt,혼력,Soul
+TestScene_1F,StatusPanel,Soul,SoulNameTxt,영혼석,Soul Stone
+TestScene_1F,StatusPanel,StateImage,StateTxt,능력치,State
+TestScene_1F,StatusPanel,StateImage,PowerTxt,공격력,Power
+TestScene_1F,StatusPanel,StateImage,SpeedTxt,민첩,Speed
+TestScene_1F,StatusPanel,SkillImg,SkillTxt,스킬 상세,Skill
+TestScene_1F,StatusPanel,StatusIndexBtn,StatusTitleText,현재 상태,Status
+TestScene_1F,SomeonePanel,SomeoneIndexBtn,SomeoneTitleText,누군가의 기록,Someone's Record
+TestScene_1F,TipPanel,TipIndexBtn,TipTitleText,나의 일지,My Diary
+TestScene_1F,MapPanel,,LatestLocationTxt,최근 저장 위치,Latest Storage Location
+TestScene_1F,MapPanel,MapIndexBtn,MapTitleText,지도,Map
+TestScene_1F,SettingPanel,,OptionHdTXT,환경설정,Option
+TestScene_1F,SettingPanel,AudioBt,AudioTXT,오디오,Audio
+TestScene_1F,SettingPanel,GraphicsBt,GraphicsTXT,그래픽,Graphics
+TestScene_1F,SettingPanel,LanguageBt,LanguageTXT,언어,Language
+TestScene_1F,SettingPanel,MainBackBt,MainBackTXT,타이틀로 돌아가기,Return to Title
+TestScene_1F,SettingPanel,AudioPanel,AudioHdTxt,오디오,Audio
+TestScene_1F,SettingPanel,AudioPanel,OkayBtTxt,확인,Ok
+TestScene_1F,SettingPanel,AudioPanel,BGSoundTxt,배경음,BGM
+TestScene_1F,SettingPanel,AudioPanel,EffectSoundTxt,효과음,SFX
+TestScene_1F,SettingPanel,GraphicsPanel,GraphicsHdTxt,그래픽,Graphics
+TestScene_1F,SettingPanel,GraphicsPanel,BrightnessTxt,밝기,Brightness
+TestScene_1F,SettingPanel,GraphicsPanel,ResolutionTxt,해상도,Resolution
+TestScene_1F,SettingPanel,GraphicsPanel,WindowTxt,창모드,Window mode
+TestScene_1F,SettingPanel,GraphicsPanel,OkayBtTxt,확인,Ok
+TestScene_1F,SettingPanel,LanguagePanel,LanguageHdTxt,언어,Language
+TestScene_1F,SettingPanel,LanguagePanel,LanguagePickTxt,언어 선택,Language Selection
+TestScene_1F,SettingPanel,LanguagePanel,OkayBtTxt,확인,Ok
+TestScene_1F,SettingPanel,SettingErrorPanel,SettingErrorTxt,이대로 나가면 설정이 초기화 됩니다. 나가시겠습니까?,"If you leave as it is, the setting will be reset. Would you like to leave?"
+TestScene_1F,SettingPanel,SettingErrorPanel,OTxt,확인,Ok
+TestScene_1F,SettingPanel,LanguagePanel,XTxt,취소,Cancel
+TestScene_1F,SettingPanel,SettingIndexBtn,SettingTitleText,환경설정,Setting
+TestScene_1F,EndingPanel,BackTitleBt,BackTitleTxt,타이틀로 돌아가기,Return to Title
+TestScene_1F,EndingPanel,BackGameBt,BackGameTxt,최근 저장된 위치에서 부활,Resurrect from the most recently saved location

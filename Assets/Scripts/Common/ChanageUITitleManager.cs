@@ -14,7 +14,9 @@ public class ChanageUITitleManager : MonoBehaviour
     {
         changeLanguage = GameObject.Find("UIManager").GetComponent<ChangeLanguage>();
 
-        ChangeJournalPanel();
+        Debug.Log($"SettingManager.Instance.GetCurrentLanguageIndexToString() : {SettingManager.Instance.GetCurrentLanguageIndexToString()}");
+
+        ChangeAllPanel();
     }
 
     public void ChangeAllPanel()

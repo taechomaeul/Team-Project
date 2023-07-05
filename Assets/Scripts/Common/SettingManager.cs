@@ -432,6 +432,7 @@ public class SettingManager : MonoBehaviour
     private void LoadLanguageSetting()
     {
         languageIndex = PlayerPrefs.GetInt("language", 0);
+        Debug.Log($"Ianguage Idx : {languageIndex}");
         InitLanguageUI();
     }
     #endregion
