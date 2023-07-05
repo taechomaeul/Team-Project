@@ -12,7 +12,9 @@ public class ChanageUITitleManager : MonoBehaviour
 
     void Start()
     {
-        changeLanguage = GameObject.Find("ActionFunction").GetComponent<ChangeLanguage>();
+        changeLanguage = GameObject.Find("UIManager").GetComponent<ChangeLanguage>();
+
+        ChangeJournalPanel();
     }
 
     public void ChangeAllPanel()

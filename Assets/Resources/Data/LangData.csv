@@ -1,0 +1,31 @@
+Language,Panel_Name,InPanel_Name,Object_Name,KR,EN
+TitleScene,ReallyQuitPanel,ReallyQuitImg,ReallyQuitTxt,게임을 종료하시겠습니까?,Are you sure you want to quit the game?
+TitleScene,ReallyQuitPanel,ReallyQuitImg,OTxt,확인,Ok
+TitleScene,ReallyQuitPanel,ReallyQuitImg,XTxt,취소,Cancel
+TitleScene,NoDataPanel,NoDataPanelImg,NoDataPanelImgTxt,저장된 데이터가 없습니다!,No data saved!
+TitleScene,NoDataPanel,NoDataPanelImg,OTxt,확인,Ok
+TitleScene,NoDataPanel,NoDataPanelImg,XTxt,취소,Cancel
+TitleScene,SettingPanel,,OptionHdTXT,환경설정,Option
+TitleScene,SettingPanel,AudioBt,AudioTXT,오디오,Audio
+TitleScene,SettingPanel,GraphicsBt,GraphicsTXT,그래픽,Graphics
+TitleScene,SettingPanel,LanguageBt,LanguageTXT,언어,Language
+TitleScene,SettingPanel,AudioPanel,AudioHdTxt,오디오,Audio
+TitleScene,SettingPanel,AudioPanel,OkayBtTxt,확인,Ok
+TitleScene,SettingPanel,AudioPanel,BGSoundTxt,배경음,BGM
+TitleScene,SettingPanel,AudioPanel,EffectSoundTxt,효과음,SFX
+TitleScene,SettingPanel,GraphicsPanel,GraphicsHdTxt,그래픽,Graphics
+TitleScene,SettingPanel,GraphicsPanel,BrightnessTxt,밝기,Brightness
+TitleScene,SettingPanel,GraphicsPanel,ResolutionTxt,해상도,Resolution
+TitleScene,SettingPanel,GraphicsPanel,WindowTxt,창모드,Window mode
+TitleScene,SettingPanel,GraphicsPanel,OkayBtTxt,확인,Ok
+TitleScene,SettingPanel,LanguagePanel,LanguageHdTxt,언어,Language
+TitleScene,SettingPanel,LanguagePanel,LanguagePickTxt,언어 선택,Language Selection
+TitleScene,SettingPanel,LanguagePanel,OkayBtTxt,확인,Ok
+TitleScene,SettingPanel,SettingErrorPanel,SettingErrorTxt,이대로 나가면 설정이 초기화 됩니다. 나가시겠습니까?,"If you leave as it is, the setting will be reset. Would you like to leave?"
+TitleScene,SettingPanel,SettingErrorPanel,OTxt,확인,Ok,,,,
+TitleScene,SettingPanel,LanguagePanel,XTxt,취소,Cancel
+TestScene_1F,FCommonPanel,,FSearchTxt,살펴보기,Search
+TestScene_1F,FPrayPanel,,FPrayTxt,기도하기,Pray
+TestScene_1F,FDetailPanel,N1toolTip,1Absorbtxt,흡수하기,Absorb
+TestScene_1F,FDetailPanel,N2toolTip,2Possesstxt,빙의하기,Possess
+TestScene_1F,SkillToolTipPanel
