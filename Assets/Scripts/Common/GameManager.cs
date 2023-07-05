@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 
         if (!SaveManager.Instance.SaveFileExistCheck()) //저장된 세이브 파일이 없다면
         {
-            GameObject goToNewGamePanel = GameObject.Find("Canvas").transform.GetChild(0).GetChild(3).gameObject;
+            GameObject goToNewGamePanel = GameObject.Find("Canvas").transform.GetChild(0).GetChild(2).gameObject;
             goToNewGamePanel.SetActive(true); //새게임으로 가도록 유도하는 패널 ON
         }
 
