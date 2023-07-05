@@ -28,7 +28,11 @@ public class SoulController : MonoBehaviour
         thisSoul = GetComponent<SoulInfo>();
 
         toolTip = actionFuntion.fCommonPanel;
-        detailToolTip = actionFuntion.possessPanel;
+
+        if (!gameObject.transform.parent.name.Equals("Enemy1_TutorialDead"))
+        {
+            detailToolTip = actionFuntion.possessPanel;
+        }
 
         toolTip.SetActive(false);
 

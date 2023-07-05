@@ -26,18 +26,18 @@ public class MoveScene : MonoBehaviour
             {
                 case "AnimMiddleBossCutScenes":
                     actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
-                    Debug.Log($"ADD GameObj name : {gameObject.name}");
-                    SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
-                    SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
+                    //SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
+                    //SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
+                    SaveManager.Instance.SaveCurrentDataToClass(SaveManager.Instance.saveClass.GetLastSavePosition());
                     gameManager.MoveToMidBossScene();
                     //SaveManager.Instance.LoadSaveData();
                     break;
 
                 case "PushGameScene":
                     actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
-                    Debug.Log($"ADD GameObj name : {gameObject.name}");
-                    SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
-                    SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
+                    //SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
+                    //SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
+                    SaveManager.Instance.SaveCurrentDataToClass(SaveManager.Instance.saveClass.GetLastSavePosition());
                     gameManager.MoveToPush();
                     //SaveManager.Instance.LoadSaveData();
                     break;
@@ -55,15 +55,16 @@ public class MoveScene : MonoBehaviour
 
                 case "AnimMainBossCutScenes":
                     actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
-                    SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
-                    SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
+                    //SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
+                    //SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
+                    SaveManager.Instance.SaveCurrentDataToClass(SaveManager.Instance.saveClass.GetLastSavePosition());
                     gameManager.MoveToFinalBossScene();
                     //SaveManager.Instance.LoadSaveData();
                     break;
 
                 case "EndingScene":
                     actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
-                    Debug.Log($"ADD GameObj name : {gameObject.name}");
+                    SaveManager.Instance.SaveCurrentDataToClass(SaveManager.Instance.saveClass.GetLastSavePosition());
                     gameManager.MoveToEnding();
                     //SaveManager.Instance.LoadSaveData();
                     break;
