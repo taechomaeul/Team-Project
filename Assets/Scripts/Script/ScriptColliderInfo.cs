@@ -28,7 +28,8 @@ public class ScriptColliderInfo : MonoBehaviour
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
 
-        string lang = "EN"; //settingManager에서 끌어올 수 있게 만들어줌
+        //string lang = "EN"; //settingManager에서 끌어올 수 있게 만들어줌
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
         if (lang.Equals("KR"))
         {
             langOffset = 0;
@@ -36,6 +37,7 @@ public class ScriptColliderInfo : MonoBehaviour
         else if (lang.Equals("EN"))
         {
             langOffset = 63;
+            Debug.Log($"현재 Offset : {langOffset}");
         }
     }
 
@@ -84,6 +86,17 @@ public class ScriptColliderInfo : MonoBehaviour
         actionFunction.PauseGameForAct();
 
         //인덱스로 스크립트를 불러온다
+        Debug.Log($"현재 Offset BE : {langOffset}");
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
+        if (lang.Equals("KR"))
+        {
+            langOffset = 0;
+        }
+        else if (lang.Equals("EN"))
+        {
+            langOffset = 63;
+            Debug.Log($"현재 Offset AF : {langOffset}");
+        }
         showScript.LoadScript(curIndex, langOffset);
         curIndex++;
     }
@@ -160,7 +173,6 @@ public class ScriptColliderInfo : MonoBehaviour
 
             //스크립트 체크 완료
             showScript.checkScriptComplete[index] = true;
-            //Debug.Log($"CheckScriptComplete[{index}] : {showScript.checkScriptComplete[index]}");
 
             if (colliderName.Equals("T_PUZZLE"))
             {

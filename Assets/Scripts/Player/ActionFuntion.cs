@@ -97,7 +97,6 @@ public class ActionFuntion : MonoBehaviour
     /// <param name="enemy">현재 적 이름(죽은 시체)</param>
     public void ChangePrefab(GameObject player, GameObject enemy)
     {
-        Debug.Log("3333333333333?");
         string enemyName = enemy.name.Split("_")[0]; //이름 '_'으로 분리한 후, 가장 앞에 저장된 이름을 저장한다
         Destroy(enemy.gameObject); //적 시체 삭제
 
@@ -118,7 +117,6 @@ public class ActionFuntion : MonoBehaviour
 
                 newPlayer.transform.parent = player.transform;
                 newPlayer.transform.SetAsFirstSibling();
-                Debug.Log("NewPlayer Animator name: " + newPlayer.transform.GetComponent<Animator>().name);
 
                 newPlayer.transform.localPosition = originPlayerPrefabPos;
                 newPlayer.transform.localRotation = Quaternion.identity;

@@ -34,16 +34,24 @@ public class JStatUIManager : MonoBehaviour
     [Tooltip("스킬 상세 - 스킬 설명")]
     public Text curSDescriptionText;
 
+    [Header("연결 필수 / 지도")]
+    [Tooltip("N번째 제단 텍스트")]
+    public GameObject lastPosText;
+
+
     [Header("고정 변수")]
     private readonly int maxSoul = 666;
 
     private PlayerInfo plInfo;
+    private SkillInfo skillInfo;
     private EnemyPrefab enemyPrefabInfo;
+
 
     void Start()
     {
         plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         enemyPrefabInfo = GameObject.Find("ActionFunction").GetComponent<EnemyPrefab>();
+        skillInfo = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
     }
 
     void Update()
@@ -56,14 +64,42 @@ public class JStatUIManager : MonoBehaviour
         soulSlider.value = (float)plInfo.soulHp / maxSoul;
 
         //RIGHT Page - 능력치
-        string lang = "EN"; //SettingManager에서 불러온 값
-        if (lang.Equals("KR"))
+        int langOffset = 0;
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
+        if (lang.Equals("KR")) //현재
         {
             prefabNameText.text = enemyPrefabInfo.enemyPrefabNames_KR[plInfo.curPrefabIndex];
+            if (plInfo.curSkill.skillIndex >= 5 && plInfo.curSkill.skillIndex < 10) //EN
+            {
+                langOffset = -5;
+            }
+
+            if (SaveManager.Instance.saveClass.GetLastSavePosition() == 0)
+            {
+                lastPosText.GetComponent<Text>().text = "최초 시작 지점";
+            }
+            else
+            {
+                lastPosText.GetComponent<Text>().text = SaveManager.Instance.saveClass.GetLastSavePosition() + "번째 제단";
+            }
+            
         }
         else if (lang.Equals("EN"))
         {
             prefabNameText.text = enemyPrefabInfo.enemyPrefabNames_EN[plInfo.curPrefabIndex];
+            if (plInfo.curSkill.skillIndex < 5) //KR
+            {
+                langOffset = 5;
+            }
+
+            if (SaveManager.Instance.saveClass.GetLastSavePosition() == 0)
+            {
+                lastPosText.GetComponent<Text>().text = "First Starting Point";
+            }
+            else
+            {
+                lastPosText.GetComponent<Text>().text = "Save Point #" + SaveManager.Instance.saveClass.GetLastSavePosition();
+            }
         }
         
         plAtkText.text = plInfo.plAtk.ToString();
@@ -71,7 +107,10 @@ public class JStatUIManager : MonoBehaviour
 
         //RIGHT Page - 스킬 상세
         curSImage.GetComponent<Image>().sprite = plInfo.curSkill.thumnail;
-        curSNameText.text = plInfo.curSkill.skillName;
-        curSDescriptionText.text = plInfo.curSkill.skillDescription;
+        curSNameText.text = skillInfo.skills[plInfo.curSkill.skillIndex + langOffset].skillName;
+        curSDescriptionText.text = skillInfo.skills[plInfo.curSkill.skillIndex + langOffset].skillDescription;
+        //curSDescriptionText.text = plInfo.curSkill.skillDescription;
+
+        
     }
 }

@@ -13,15 +13,15 @@ public class EffectAndSoundPlay : MonoBehaviour
     [SerializeField] float[] delays;
 
     // 사운드 재생을 위한 오디오 소스
-    private AudioSource audioSource;
+    //private AudioSource audioSource;
 
 
 
-    private void Awake()
-    {
-        // SFX 오디오 소스 초기화
-        audioSource = GameObject.Find("SFX").GetComponent<AudioSource>();
-    }
+    //private void Awake()
+    //{
+    //    // SFX 오디오 소스 초기화
+    //    audioSource = GameObject.Find("SFX").GetComponent<AudioSource>();
+    //}
 
     private void OnEnable()
     {
@@ -48,7 +48,8 @@ public class EffectAndSoundPlay : MonoBehaviour
             // 이펙트 재생
             effects[i].SetActive(true);
             // 사운드 재생
-            audioSource.PlayOneShot(sounds[i]);
+            //audioSource.PlayOneShot(sounds[i]);
+            SoundManager.Instance.GetSFX().PlayOneShot(sounds[i]);
 
             // 마지막 이펙트라면
             if (i == delays.Length - 1)
