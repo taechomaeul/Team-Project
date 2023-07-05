@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class EnemyCanvasLookCam : MonoBehaviour
+public class EnemyHpBar : MonoBehaviour
 {
     [SerializeField] private EnemyInfo enemyInfo;
     public GameObject Cam;
+    Slider hpbar;
 
     private void Awake()
     {
@@ -15,6 +15,7 @@ public class EnemyCanvasLookCam : MonoBehaviour
     private void OnEnable()
     {
         Cam = Camera.main.gameObject;
+        hpbar = GetComponent<Slider>();
     }
 
     void FixedUpdate()
@@ -24,5 +25,7 @@ public class EnemyCanvasLookCam : MonoBehaviour
             transform.parent.gameObject.SetActive(false);
         }
         transform.LookAt(Cam.transform);
+
+        hpbar.value = (float)enemyInfo.stat.GetCurrentHp() / enemyInfo.stat.GetMaxHp();
     }
 }
