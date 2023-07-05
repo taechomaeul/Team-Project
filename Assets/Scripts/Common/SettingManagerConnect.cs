@@ -41,12 +41,17 @@ public class SettingManagerConnect : MonoBehaviour
     private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
-        SettingManager.Instance.InitUIObjectAndLoadValues(bgmSlider, sfxSlider, resolutionsDropdown, fullscreenToggle, brightnessSlider, languageDropdown);
     }
 
     private void OnEnable()
     {
         // isChanged 초기화
+        isChanged = false;
+    }
+
+    private void Start()
+    {
+        SettingManager.Instance.InitUIObject(bgmSlider, sfxSlider, resolutionsDropdown, fullscreenToggle, brightnessSlider, languageDropdown);
         isChanged = false;
     }
 
