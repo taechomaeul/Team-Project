@@ -46,8 +46,8 @@ public class SettingManagerConnect : MonoBehaviour
 
     private void OnEnable()
     {
+        // isChanged 초기화
         isChanged = false;
-        Debug.Log(isChanged);
     }
 
     private void Update()
@@ -102,7 +102,6 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.Slider_SetBgmVolume();
         isChanged = true;
-        Debug.Log("bgm slider");
     }
 
     /// <summary>
@@ -112,7 +111,6 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.Slider_SetSfxVolume();
         isChanged = true;
-        Debug.Log("sfx slider");
     }
 
     /// <summary>
@@ -123,7 +121,6 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.SetFullScreen(isFullScreen);
         isChanged = true;
-        Debug.Log("toggle");
     }
 
     /// <summary>
@@ -132,7 +129,6 @@ public class SettingManagerConnect : MonoBehaviour
     public void ResolutionChangeCheck()
     {
         isChanged = true;
-        Debug.Log("resolution dropdown");
     }
 
     /// <summary>
@@ -142,7 +138,6 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.Slider_SetBrightness();
         isChanged = true;
-        Debug.Log("brightness");
     }
 
     /// <summary>
@@ -153,6 +148,5 @@ public class SettingManagerConnect : MonoBehaviour
     {
         SettingManager.Instance.SetLanguage(index);
         isChanged = true;
-        Debug.Log("language");
     }
 }
