@@ -84,12 +84,12 @@ public class SettingManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            DontDestroyOnLoad(brightnessLight);
+            //DontDestroyOnLoad(brightnessLight);
             lightComponent = brightnessLight.GetComponent<Light>();
         }
         else
         {
-            Destroy(brightnessLight);
+            //Destroy(brightnessLight);
             Destroy(gameObject);
         }
     }

@@ -51,6 +51,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: b58e8eabb235d8b4182d63b0f0fa65fd
     name: bgmVolume
+  - guid: 147143fcc5b7e7f41a8e0764733b27d8
+    name: bgmFade
   - guid: 2bef572da0f5a3246b2b7e60abfded57
     name: sfxVolume
   m_AudioMixerGroupViews:
