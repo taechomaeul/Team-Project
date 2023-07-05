@@ -9,6 +9,10 @@ public class ActionFuntion : MonoBehaviour
     public readonly int increaseHp = 30;
     public readonly float increaseAmount = 1.3f; // 30% 증가
 
+    [Header("연결 필요 / enemyPrefab 사용용")]
+    public GameObject fCommonPanel;
+    public GameObject possessPanel;
+
     [Header("연결 X")]
     public EnemyPrefab enemyPrefabInfo;
     public PlayerInfo plInfo;
