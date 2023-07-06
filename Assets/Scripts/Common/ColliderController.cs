@@ -10,8 +10,8 @@ public class ColliderController : MonoBehaviour
 
     void Awake()
     {
-        showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
-        showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
+        showScript = GetComponent<ShowScript>();
+        showRecord = GetComponent<ShowRecord>();
     }
 
     /// <summary>
@@ -57,11 +57,15 @@ public class ColliderController : MonoBehaviour
 
         for (int i = 0; i < scriptObject.Length; i++)
         {
+            Debug.Log($"{i} CName1 : {sCollider.transform.GetChild(i).GetComponent<ScriptColliderInfo>().colliderName}");
             string cName = sCollider.transform.GetChild(i).GetComponent<ScriptColliderInfo>().colliderName; //collider 이름으로
+            Debug.Log($"showScript {showScript == null}");
             int index = showScript.GetIndex(cName); //index를 불러온 뒤
+            Debug.Log($"CName2 : {sCollider.transform.GetChild(i).GetComponent<ScriptColliderInfo>().colliderName}");
+            
             //-> 해당 script의 인덱스는 IDX입니다. (START_IDX  X)
             scriptObject[i] = sCollider.transform.GetChild(i).gameObject;
-
+            Debug.Log($"scriptObject[i] : {scriptObject[i]}");
             if (checkScript[index]) //해당 인덱스에 있는 체크 값이 true라면 ColliderObject를 끈다
             {
                 scriptObject[i].SetActive(false);
@@ -76,7 +80,7 @@ public class ColliderController : MonoBehaviour
     public void AddMoveCollider(string colliderObjName)
     {
         SaveManager.Instance.saveClass.AddMoveCollider(colliderObjName);
-        Debug.Log($"ADD GameObj name : {colliderObjName}");
+        //Debug.Log($"ADD GameObj name : {colliderObjName}");
         //SaveManager.Instance.saveClass.SetMoveSceneData(completeColliderNames);
     }
 
