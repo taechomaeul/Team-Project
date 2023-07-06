@@ -13,9 +13,6 @@ public class ChanageUITitleManager : MonoBehaviour
     void Start()
     {
         changeLanguage = GameObject.Find("UIManager").GetComponent<ChangeLanguage>();
-
-        Debug.Log($"SettingManager.Instance.GetCurrentLanguageIndexToString() : {SettingManager.Instance.GetCurrentLanguageIndexToString()}");
-
         ChangeAllPanel();
     }
 
@@ -29,18 +26,15 @@ public class ChanageUITitleManager : MonoBehaviour
         for (int i = 0; i < jPanels.Length; i++) //저장된 데이터만큼
         {
             int index = changeLanguage.FindPanelNameOfIndex(jPanels[i].name);
-            Debug.Log($"Index : {index}");
 
             string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
             if (lang.Equals("KR"))
             {
                 jPanels[i].GetComponent<Text>().text = changeLanguage.langCDataList[index].krName;
-                Debug.Log($"changeLanguage.langCDataList[{index}].krName : {changeLanguage.langCDataList[index].krName}");
             }
             else if (lang.Equals("EN"))
             {
                 jPanels[i].GetComponent<Text>().text = changeLanguage.langCDataList[index].enName;
-                Debug.Log($"changeLanguage.langCDataList[{index}].enName : {changeLanguage.langCDataList[index].enName}");
             }
         }
 

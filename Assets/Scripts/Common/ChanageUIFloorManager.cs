@@ -32,20 +32,16 @@ public class ChanageUIFloorManager : MonoBehaviour
         for (int i = 0; i < fPanels.Length; i++) //저장된 데이터만큼
         {
             int index = changeLanguage.FindPanelNameOfIndex(fPanels[i].name);
-
-            Debug.Log($"Index : {index} / ChildCount : {fPanels[i].transform.childCount}");
             for (int j = 0; j < fPanels[i].transform.childCount; j++) //3
             {
                 string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
                 if (lang.Equals("KR"))
                 {
                     fPanels[i].transform.GetChild(j).GetComponent<Text>().text = changeLanguage.langCDataList[index].krName;
-                    Debug.Log($"changeLanguage.langCDataList[{index}].krName : {changeLanguage.langCDataList[index].krName}");
                 }
                 else if (lang.Equals("EN"))
                 {
                     fPanels[i].transform.GetChild(j).GetComponent<Text>().text = changeLanguage.langCDataList[index].enName;
-                    Debug.Log($"changeLanguage.langCDataList[{index}].enName : {changeLanguage.langCDataList[index].enName}");
                 }
             }
 
@@ -57,18 +53,14 @@ public class ChanageUIFloorManager : MonoBehaviour
         for (int i = 0; i < jPanels.Length; i++) //저장된 데이터만큼
         {
             int index = changeLanguage.FindPanelNameOfIndex(jPanels[i].name);
-            Debug.Log($"Index : {index}");
-
             string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
             if (lang.Equals("KR"))
             {
                 jPanels[i].GetComponent<Text>().text = changeLanguage.langCDataList[index].krName;
-                Debug.Log($"changeLanguage.langCDataList[{index}].krName : {changeLanguage.langCDataList[index].krName}");
             }
             else if (lang.Equals("EN"))
             {
                 jPanels[i].GetComponent<Text>().text = changeLanguage.langCDataList[index].enName;
-                Debug.Log($"changeLanguage.langCDataList[{index}].enName : {changeLanguage.langCDataList[index].enName}");
             }
         }
     }
