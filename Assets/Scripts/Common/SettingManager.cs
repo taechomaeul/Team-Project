@@ -20,6 +20,7 @@ public class SettingManager : MonoBehaviour
 
 
     #region 수치 조절용 변수들
+
     // 사운드 관련
     private float bgmVolume;
     private float sfxVolume;
@@ -47,6 +48,7 @@ public class SettingManager : MonoBehaviour
 
 
     #region UI 요소
+
     // BGM 조절 슬라이더
     private Slider bgmSlider;
 
@@ -98,6 +100,7 @@ public class SettingManager : MonoBehaviour
 
 
     #region 시스템
+
     /// <summary>
     /// SettingManagerConnect에서 UI요소 초기화
     /// </summary>
@@ -191,6 +194,7 @@ public class SettingManager : MonoBehaviour
 
 
     #region 사운드
+
     /// <summary>
     /// BGM 볼륨 설정
     /// </summary>
@@ -284,6 +288,7 @@ public class SettingManager : MonoBehaviour
 
 
     #region 해상도
+
     /// <summary>
     /// 전체화면 체크 토글용 함수
     /// </summary>
@@ -362,11 +367,12 @@ public class SettingManager : MonoBehaviour
         {
             resolutionIndex = -1;
         }
-            }
+    }
     #endregion
 
 
     #region 밝기
+
     /// <summary>
     /// 밝기 설정
     /// </summary>
@@ -396,7 +402,7 @@ public class SettingManager : MonoBehaviour
     /// <summary>
     /// 밝기 UI 초기화 설정
     /// </summary>
-   private void InitBrightnessUI()
+    private void InitBrightnessUI()
     {
         brightnessSlider.value = lightComponent.intensity;
     }
@@ -404,6 +410,7 @@ public class SettingManager : MonoBehaviour
 
 
     #region 언어
+
     /// <summary>
     /// 언어 선택
     /// </summary>
