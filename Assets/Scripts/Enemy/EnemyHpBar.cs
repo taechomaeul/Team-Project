@@ -18,7 +18,7 @@ public class EnemyHpBar : MonoBehaviour
         hpbar = GetComponent<Slider>();
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (enemyInfo.stat.GetIsDead())
         {
