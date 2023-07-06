@@ -17,6 +17,9 @@ public class ToggleManager : MonoBehaviour
     public GameObject fire4;
     public GameObject fire5;
 
+    [Tooltip("파괴할 문 오브젝트")]
+    public GameObject doorObject;
+
     [Header("플래그 변수")]
     public bool isClear = false;
 
@@ -34,6 +37,7 @@ public class ToggleManager : MonoBehaviour
         if (fire1.activeSelf && fire2.activeSelf && fire3.activeSelf && fire4.activeSelf && fire5.activeSelf)
         {
             isClear = true;
+            Destroy(doorObject);
             Debug.Log("CLEAR!!!!!!!!!!!!!!!!");
             StartCoroutine(WaitClearFunction());
             enabled = false;

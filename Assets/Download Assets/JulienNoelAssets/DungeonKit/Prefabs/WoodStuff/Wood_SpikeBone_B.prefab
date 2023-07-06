@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 1682405405}
   - component: {fileID: 1682405404}
   - component: {fileID: 2072637042967240829}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wood_SpikeBone_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &799315906
 Transform:

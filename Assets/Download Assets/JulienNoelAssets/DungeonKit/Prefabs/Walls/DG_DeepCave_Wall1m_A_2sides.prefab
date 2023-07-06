@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 5702889297477818288}
   - component: {fileID: 5354775636729778952}
   - component: {fileID: 8645419087397553344}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_DeepCave_Wall1m_A_2sides
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1666771651120987486
 Transform:

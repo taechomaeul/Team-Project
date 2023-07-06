@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 6578980384152493086}
   - component: {fileID: 8095006957505978131}
   - component: {fileID: 9102995321785805115}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WoodePlateforms_Beam_Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6578980384152493086
 Transform:

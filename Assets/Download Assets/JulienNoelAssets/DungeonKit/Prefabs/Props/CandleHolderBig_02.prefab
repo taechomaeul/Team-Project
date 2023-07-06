@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4911690403168352336}
   - component: {fileID: 8324540028849230011}
   - component: {fileID: 2334548858924892996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CandleHolderBig_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

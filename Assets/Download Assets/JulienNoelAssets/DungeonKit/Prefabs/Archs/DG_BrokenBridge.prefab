@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2953551072573007326}
   - component: {fileID: 7075622738335275344}
   - component: {fileID: 3162624587648645177}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_BrokenBridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7101031300985434864}
   - component: {fileID: 2424680246935446147}
   - component: {fileID: 3583357299805666703}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_SpiderWeb_2L
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4400163294872801620}
   - component: {fileID: 3547420065484254692}
   - component: {fileID: 1880216403729434951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_WallArch_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}

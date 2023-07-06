@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3195916083617741116}
   - component: {fileID: 5948874394251102229}
   - component: {fileID: 2758539278221363823}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_StairSides_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8353544081521266810
 Transform:

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6913440118652755992}
   - component: {fileID: 1803370323995943828}
   - component: {fileID: 5394763376337385330}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CandleHolderBig_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,6 +112,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigCandles_02
       objectReference: {fileID: 0}
+    - target: {fileID: 760169707, guid: 0a5818da03ff27f429e6df7728788108, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 663347159810130851, guid: 0a5818da03ff27f429e6df7728788108,
         type: 3}
       propertyPath: m_RootOrder
@@ -182,6 +186,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2908604393027817060, guid: 0a5818da03ff27f429e6df7728788108,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708400862940805791, guid: 0a5818da03ff27f429e6df7728788108,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093499797950359397, guid: 0a5818da03ff27f429e6df7728788108,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431042682850954014, guid: 0a5818da03ff27f429e6df7728788108,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a5818da03ff27f429e6df7728788108, type: 3}
 --- !u!4 &1541495522175424305 stripped
@@ -200,6 +224,15 @@ PrefabInstance:
     - target: {fileID: 526984445, guid: 1584a82803e78884aba35129518c65e4, type: 3}
       propertyPath: m_Name
       value: BigCandles_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 526984445, guid: 1584a82803e78884aba35129518c65e4, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 90480004362699682, guid: 1584a82803e78884aba35129518c65e4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 408156171066496928, guid: 1584a82803e78884aba35129518c65e4,
         type: 3}
@@ -256,6 +289,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1113961892373513472, guid: 1584a82803e78884aba35129518c65e4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704945074311803714, guid: 1584a82803e78884aba35129518c65e4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1584a82803e78884aba35129518c65e4, type: 3}
 --- !u!4 &2393894646042096827 stripped
@@ -274,6 +317,10 @@ PrefabInstance:
     - target: {fileID: 496950209, guid: d357f7729e4db234fa9ed72a762fb1ce, type: 3}
       propertyPath: m_Name
       value: BigCandles_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 496950209, guid: d357f7729e4db234fa9ed72a762fb1ce, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 667033729184526641, guid: d357f7729e4db234fa9ed72a762fb1ce,
         type: 3}
@@ -344,6 +391,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015360827742217515, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2528102200598927141, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954012810883063894, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298785174712658764, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366034536702587344, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d357f7729e4db234fa9ed72a762fb1ce, type: 3}

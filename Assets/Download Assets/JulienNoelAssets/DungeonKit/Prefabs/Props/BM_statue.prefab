@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4421194406379848749}
   - component: {fileID: 3155834948317784082}
   - component: {fileID: 1791337785212467307}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BM_statue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,20 +102,40 @@ PrefabInstance:
       value: BM_Statue
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 8ac8f87baf5af5a42bf353b13f7a50c3, type: 3}
       propertyPath: m_StaticEditorFlags

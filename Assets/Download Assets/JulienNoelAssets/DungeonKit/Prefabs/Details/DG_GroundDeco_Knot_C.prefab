@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7747146182844916412}
   - component: {fileID: 6690015189904113736}
   - component: {fileID: 3305809908295874567}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_GroundDeco_Knot_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}

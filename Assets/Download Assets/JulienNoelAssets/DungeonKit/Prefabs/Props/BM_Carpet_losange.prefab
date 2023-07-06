@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7843097537148863883}
   - component: {fileID: 4347792848098566855}
   - component: {fileID: 7290678411806143440}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BM_Carpet_losange
   m_TagString: Untagged
   m_Icon: {fileID: 0}

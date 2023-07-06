@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2865129930503305176}
   - component: {fileID: 4750019026872940755}
   - component: {fileID: 4819199268389709009}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_GroundDeco_separator_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}

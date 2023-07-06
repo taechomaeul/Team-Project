@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5474432984317448133}
   - component: {fileID: 4800713721307581210}
   - component: {fileID: 7847755034197929971}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Chain_Gound_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

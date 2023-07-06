@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8545998381946541587}
   - component: {fileID: 6173260531516227626}
   - component: {fileID: 4842252847795235124}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_GridWall_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8055396873454264270
 Transform:
