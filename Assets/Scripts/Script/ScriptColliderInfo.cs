@@ -103,8 +103,6 @@ public class ScriptColliderInfo : MonoBehaviour
         {
             //현재 Collider의 이름으로 인덱스를 받아온다
             index = showScript.GetIndex(colliderName);
-
-            //Debug.Log($"GetIndex : {index}");
             if (showScript.checkScriptComplete[index]) //true가 아닐 때만 스크립트 읽기
             {
                 gameObject.SetActive(false);

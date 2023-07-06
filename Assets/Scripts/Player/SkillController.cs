@@ -17,7 +17,7 @@ public class SkillController : MonoBehaviour
 
     void Start()
     {
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
         skillInfo = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
 
         string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();

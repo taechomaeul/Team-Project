@@ -49,7 +49,7 @@ public class JStatUIManager : MonoBehaviour
 
     void Start()
     {
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
         enemyPrefabInfo = GameObject.Find("ActionFunction").GetComponent<EnemyPrefab>();
         skillInfo = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
     }

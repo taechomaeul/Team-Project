@@ -22,8 +22,8 @@ public class ActionFuntion : MonoBehaviour
     private void Start()
     {
         enemyPrefabInfo = GetComponent<EnemyPrefab>();
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
-        plController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
+        plController = GameObject.Find("Player").GetComponent<PlayerController>();
         playerLook = GameObject.Find("Sight").GetComponent<PlayerLook>();
     }
 

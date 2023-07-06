@@ -23,7 +23,7 @@ public class PlayerUIManager : MonoBehaviour
 
     void Start()
     {
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
