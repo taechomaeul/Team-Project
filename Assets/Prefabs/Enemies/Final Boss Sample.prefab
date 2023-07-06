@@ -547,7 +547,9 @@ GameObject:
   - component: {fileID: 3102516749943650221}
   - component: {fileID: 3102516749943650222}
   - component: {fileID: 3102516749943650223}
-  - component: {fileID: 3102516749943650216}
+  - component: {fileID: 295609870848929933}
+  - component: {fileID: 5607261351830847793}
+  - component: {fileID: 6037841646589463512}
   m_Layer: 8
   m_Name: soulStone
   m_TagString: Untagged
@@ -620,19 +622,50 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3102516749943650216
-BoxCollider:
+--- !u!135 &295609870848929933
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3102516749943650217}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5607261351830847793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3102516749943650217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c660707ac4cb2a24b932141df056a951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDetail: 0
+  toolTip: {fileID: 0}
+  detailToolTip: {fileID: 0}
+  thisSoul: {fileID: 0}
+  actionFuntion: {fileID: 0}
+  plInfo: {fileID: 0}
+--- !u!114 &6037841646589463512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3102516749943650217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f94335c7cd6d7419573686ddf2dc52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  havingHP: 0
 --- !u!1 &3940485547042319390
 GameObject:
   m_ObjectHideFlags: 0

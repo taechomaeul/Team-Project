@@ -23,10 +23,20 @@ public class SoulController : MonoBehaviour
 
     private void Start()
     {
-        toolTip.SetActive(false);
-
+        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         thisSoul = GetComponent<SoulInfo>();
 
+        toolTip = actionFuntion.fCommonPanel;
+
+        if (!gameObject.transform.parent.name.Equals("Enemy1_TutorialDead"))
+        {
+            detailToolTip = actionFuntion.possessPanel;
+        }
+
+        toolTip.SetActive(false);
+
+ 
         if (gameObject.tag == "Enemy")
         {
             thisSoul.havingHP = (int) (transform.GetComponentInChildren<EnemyInfo>().stat.GetMaxHp() * enemySoulPercent);
@@ -36,8 +46,7 @@ public class SoulController : MonoBehaviour
             thisSoul.havingHP = 30; //예시로 만들어놓은 프리팹 적용용
         }
         //Debug.Log($"시체에서 추출할 수 있는 영혼의 양 : {thisSoul.havingHP}");
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        
     }
 
     void OnDrawGizmosSelected()
