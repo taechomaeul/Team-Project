@@ -23,8 +23,6 @@ public class SaveManager : MonoBehaviour
 
     // 플레이어 정보
     private PlayerInfo playerInfo;
-    // 플레이어 기본 스탯
-    private Dictionary<string, object> playerStat;
 
     // 세이브 경로
     private readonly string path = "Save";
@@ -348,18 +346,18 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 새로 시작 시 초기화
         /// </summary>
-        internal void InitSaveClass(int currentHp, int currentAttack, float currentSpeed)
+        internal void InitSaveClass(Dictionary<string, object> playerStat)
         {
             SetLastSavePosition(0);
             // 임시
-            this.currentHp = currentHp;
+            currentHp = int.Parse(playerStat["maxHp"].ToString());
             currentSoulCount = 0;
             currentBodyIndex = 0;
             currentSkillIndex = -1;
             // 임시
-            this.currentAttack = currentAttack;
+            currentAttack = int.Parse(playerStat["attack"].ToString());
             // 임시
-            this.currentSpeed = currentSpeed;
+            currentSpeed = float.Parse(playerStat["movingSpeed"].ToString());
             Array.Fill(scriptData, false);
             Array.Fill(tipData, false);
             Array.Fill(recordData, false);
@@ -391,15 +389,17 @@ public class SaveManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        playerStat = DefaultStatManager.Instance.GetPlayerData();
-        saveClass.InitSaveClass((int)playerStat["maxHp"], (int)playerStat["attack"], (float)playerStat["movingSpeed"]);
-
     }
 
     // 새로운 씬에서 찾기
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        saveClass.InitSaveClass(DefaultStatManager.Instance.GetPlayerData());
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

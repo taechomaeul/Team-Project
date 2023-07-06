@@ -25,7 +25,7 @@ public class DefaultStatManager : MonoBehaviour
     [SerializeField] string path;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -35,6 +35,7 @@ public class DefaultStatManager : MonoBehaviour
             Destroy(gameObject);
         }
         statData = CSVReader.Read(path);
+        Debug.Log(statData == null);
     }
 
     /// <summary>
