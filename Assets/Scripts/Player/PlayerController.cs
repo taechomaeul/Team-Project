@@ -78,12 +78,8 @@ public class PlayerController : MonoBehaviour
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
-        Debug.Log($"plInfo : {plInfo}");
-        Debug.Log($"actionFuntion : {actionFuntion}");
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
-        Debug.Log($"SkillData : {skillData}",gameObject);
-        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
-        Debug.Log($"cameraTransform : {cameraTransform}");
+        cameraTransform = Camera.main.GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
         pac = GetComponent<PlayerAnimatorControll>();
         peasc = GetComponent<PlayerEffectAndSoundControll>();
@@ -101,15 +97,7 @@ public class PlayerController : MonoBehaviour
             indexer.transform.position = new Vector3(-4.42f, 1f, -41.29f);
         }
 
-
-        //임시
-        //Transform playerPos = transform.GetChild(0);
-        //playerPos.GetComponent<CharacterController>().enabled = false;
-        //playerPos.localPosition = indexer.transform.GetChild(9).localPosition;
-
-
         // 불러온 데이터 적용
-        Debug.Log($"Does SaveManager exist? : {FindObjectOfType<SaveManager>()}");
         SaveManager.Instance.ApplyLoadedData();
         plInfo.curPositionIndex = SaveManager.Instance.saveClass.GetLastSavePosition();
 
@@ -161,7 +149,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             plInfo.curSkill = skillData.skills[SaveManager.Instance.saveClass.GetCurrentSkillIndex()];
-            Debug.Log($"plInfo.curskill : {plInfo.curSkill.skillName}");
         }
 
         coroutineCheck = false;

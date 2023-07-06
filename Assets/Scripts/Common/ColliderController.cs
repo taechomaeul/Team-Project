@@ -6,7 +6,6 @@ public class ColliderController : MonoBehaviour
 {
     private ShowScript showScript;
     private ShowRecord showRecord;
-    //public List<string> completeColliderNames;
 
     void Awake()
     {
@@ -76,20 +75,16 @@ public class ColliderController : MonoBehaviour
     public void AddMoveCollider(string colliderObjName)
     {
         SaveManager.Instance.saveClass.AddMoveCollider(colliderObjName);
-        //Debug.Log($"ADD GameObj name : {colliderObjName}");
-        //SaveManager.Instance.saveClass.SetMoveSceneData(completeColliderNames);
     }
 
     public void OffMoveSceneCollider(List<string> cColliderNames)
     {
         GameObject aCollider = GameObject.Find("MoveCollider");
         GameObject[] animObject = new GameObject[aCollider.transform.childCount];
-        //Debug.Log($"MoveCollider Count : {aCollider.transform.childCount}\n aCollider.name : {aCollider.name}");
 
         for (int i=0; i < animObject.Length; i++)
         {
             animObject[i] = aCollider.transform.GetChild(i).gameObject;
-            //Debug.Log(animObject[i].name);
         }
 
         for (int i=0; i< cColliderNames.Count; i++)
@@ -99,8 +94,6 @@ public class ColliderController : MonoBehaviour
                 if (cColliderNames[i].Equals(animObject[j].name))
                 {
                     animObject[j].SetActive(false);
-                    //Debug.Log($"animObject : {animObject[j].name}");
-                    //Debug.Log($"Collidername : {cColliderNames[i]}");
                 }
             }
             

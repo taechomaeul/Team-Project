@@ -39,13 +39,8 @@ public class SkillInfo : MonoBehaviour
     public bool isReadCompleted = false;
 
 
-    public IEnumerator CoLoadSkillData()
-    {
-        yield return StartCoroutine(LoadSkillData());
-    }
-
     //읽어온 csv파일 데이터 저장
-    public IEnumerator LoadSkillData()
+    private void Awake()
     {
         data = CSVReader.Read(dataPath);
 
@@ -99,10 +94,7 @@ public class SkillInfo : MonoBehaviour
             //skills[i].effectPrefab = cSkillInfo.effectPrefabs[i];
             //skills[i].effectPos = cSkillInfo.effectPos;
             //skills[i].effectRot = cSkillInfo.effectRot;
-            Debug.Log($"skill[{i}] is {skills[i].skillIndex}",gameObject);
         }
-        Debug.Log("READ COMPLETE!");
-        yield return new WaitForEndOfFrame();
     }
     
 }
