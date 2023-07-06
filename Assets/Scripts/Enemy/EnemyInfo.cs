@@ -16,6 +16,9 @@ public class EnemyInfo : MonoBehaviour
         InitStat();
     }
 
+    /// <summary>
+    /// 스탯 초기 설정
+    /// </summary>
     private void InitStat()
     {
         Dictionary<string, object> statData = DefaultStatManager.Instance.GetEnemyData();

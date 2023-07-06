@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossInfo : MonoBehaviour
 {
+    // 보스 종류
     private enum BossType
     {
         MiniBoss,
@@ -24,6 +25,9 @@ public class BossInfo : MonoBehaviour
         InitStat();
     }
 
+    /// <summary>
+    /// 스탯 초기 설정
+    /// </summary>
     private void InitStat()
     {
         Dictionary<string, object> statData = null;
