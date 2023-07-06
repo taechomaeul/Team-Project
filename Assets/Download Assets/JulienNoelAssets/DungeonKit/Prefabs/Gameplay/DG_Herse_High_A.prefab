@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7323376802172433746}
   - component: {fileID: 3140919927633925542}
   - component: {fileID: 8378871924825707893}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Herse_High_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}

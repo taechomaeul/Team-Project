@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4475882961756826481}
   - component: {fileID: 5249076570814003946}
   - component: {fileID: 1439316882}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SkullCandle_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3499444537389067717}
   - component: {fileID: 6212274020894241388}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: lensFlare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,6 +175,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Torch
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771871, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}

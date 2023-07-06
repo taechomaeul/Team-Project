@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2639780884280359644}
   - component: {fileID: 4973299853271998532}
   - component: {fileID: 6649485910825847354}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Wall_Torch_ON
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8587451587217763186}
   - component: {fileID: 6593167076827674322}
   - component: {fileID: 2012642771776205731}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,6 +207,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2639780884280359644}
     m_Modifications:
+    - target: {fileID: 2187706694669117009, guid: 198c1ab7ba7b48f44afde6ee2f916651,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3937554435712215182, guid: 198c1ab7ba7b48f44afde6ee2f916651,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -331,6 +336,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Torch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281908279249104983, guid: 198c1ab7ba7b48f44afde6ee2f916651,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 198c1ab7ba7b48f44afde6ee2f916651, type: 3}

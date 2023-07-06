@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5743466224444791895}
   - component: {fileID: 5345119658669580061}
   - component: {fileID: 8226406848685155116}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CandleHolderBig_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,6 +110,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigCandles_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 496950209, guid: d357f7729e4db234fa9ed72a762fb1ce, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 667033729184526641, guid: d357f7729e4db234fa9ed72a762fb1ce,
         type: 3}
       propertyPath: m_RootOrder
@@ -180,10 +184,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2015360827742217515, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2528102200598927141, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954012810883063894, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6298785174712658764, guid: d357f7729e4db234fa9ed72a762fb1ce,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366034536702587344, guid: d357f7729e4db234fa9ed72a762fb1ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d357f7729e4db234fa9ed72a762fb1ce, type: 3}

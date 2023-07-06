@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3907332535832909148}
   - component: {fileID: 2622682423166523742}
   - component: {fileID: 4821608360316646824}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WoodenPlateform_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1061831634311618694
 Transform:

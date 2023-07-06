@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 1307767212}
   - component: {fileID: 1307767211}
   - component: {fileID: 8411829288700463694}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cave_CampeFire_Stones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1307767213
 Transform:
