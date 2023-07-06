@@ -55,7 +55,7 @@ public class SkillController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 toolTip.SetActive(false);
-                Debug.Log($"게임 오브젝트 이름 : {gameObject.name}");
+                //Debug.Log($"게임 오브젝트 이름 : {gameObject.name}");
                 if (gameObject.name.Substring(gameObject.name.Length - 1).Equals("1"))
                 {
                     plInfo.curSkill = skillInfo.skills[1 + langOffset];
