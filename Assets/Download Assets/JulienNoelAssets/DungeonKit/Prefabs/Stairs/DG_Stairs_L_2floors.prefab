@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2301807473254889523}
   - component: {fileID: 5228337206811542790}
   - component: {fileID: 4607246254141962405}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Stairs_L_2floors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 317255524379523635}
   - component: {fileID: 4489597642562518093}
   - component: {fileID: 7058433054680847128}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 4176622776202890419}
   - component: {fileID: 4880236532308274547}
   - component: {fileID: 802002650356111466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

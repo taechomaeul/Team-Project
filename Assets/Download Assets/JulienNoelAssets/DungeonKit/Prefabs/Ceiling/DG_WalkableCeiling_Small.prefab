@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4366006485187508111}
   - component: {fileID: 1343341825720732516}
   - component: {fileID: 7361196007134564130}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_WalkableCeiling_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}

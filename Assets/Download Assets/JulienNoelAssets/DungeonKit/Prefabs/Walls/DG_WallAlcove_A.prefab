@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8319870671495303935}
   - component: {fileID: 8862818960760990195}
   - component: {fileID: 72544103}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_WallAlcove_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5550410310249798859
 Transform:

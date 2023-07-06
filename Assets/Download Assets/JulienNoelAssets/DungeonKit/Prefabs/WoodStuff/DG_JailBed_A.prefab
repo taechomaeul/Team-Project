@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 2788611959430092459}
   - component: {fileID: 8636467447464795187}
   - component: {fileID: 5826804168079978331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_JailBed_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &221763846081634077
 Transform:

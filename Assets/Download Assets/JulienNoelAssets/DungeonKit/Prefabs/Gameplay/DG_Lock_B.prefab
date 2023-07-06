@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7649564016547485253}
   - component: {fileID: 5780466507864146823}
   - component: {fileID: 748070202733333653}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Lock_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

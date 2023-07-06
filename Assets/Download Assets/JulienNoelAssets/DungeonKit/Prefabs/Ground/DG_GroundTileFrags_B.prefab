@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6484422145244766614}
   - component: {fileID: 7763150533874153191}
   - component: {fileID: 2801703234982466148}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_GroundTileFrags_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

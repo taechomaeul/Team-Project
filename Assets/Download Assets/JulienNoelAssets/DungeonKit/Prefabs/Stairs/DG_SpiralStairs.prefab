@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1609876516}
   - component: {fileID: 1609876515}
   - component: {fileID: 8222645847572055746}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_SpiralStairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 1596510789}
   - component: {fileID: 1596510788}
   - component: {fileID: 2286225765052934561}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CaveSupportBeam_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1596510791
 Transform:
@@ -124,12 +124,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2104022745923390795}
   - component: {fileID: 801947376846422325}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: col
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2104022745923390795
 Transform:
@@ -169,12 +169,12 @@ GameObject:
   m_Component:
   - component: {fileID: 391281238639051610}
   - component: {fileID: 1169939330875630088}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: col (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &391281238639051610
 Transform:

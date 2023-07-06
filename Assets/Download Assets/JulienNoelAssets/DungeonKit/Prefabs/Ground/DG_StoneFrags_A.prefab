@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 458725840252020064}
   - component: {fileID: 4911971561599767434}
   - component: {fileID: 6128681726133856010}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_StoneFrags_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1432891976692343661}
   - component: {fileID: 8491230752162354482}
   - component: {fileID: 944211289}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground_UnEven_2x2_corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
