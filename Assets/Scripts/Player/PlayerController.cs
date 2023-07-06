@@ -78,7 +78,10 @@ public class PlayerController : MonoBehaviour
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        Debug.Log($"plInfo : {plInfo}");
+        Debug.Log($"actionFuntion : {GameObject.Find("ActionFunction").GetComponent<ActionFuntion>().name}");
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
+        Debug.Log($"SkillData : {skillData}");
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
         pac = GetComponent<PlayerAnimatorControll>();
@@ -130,7 +133,8 @@ public class PlayerController : MonoBehaviour
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
 
-        if (string.IsNullOrEmpty(plInfo.curSkill.skillName))
+        //if (string.IsNullOrEmpty(plInfo.curSkill.skillName))
+        if (SaveManager.Instance.saveClass.GetCurrentSkillIndex() < 0)
         {
             if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "KR")
             {
@@ -144,6 +148,11 @@ public class PlayerController : MonoBehaviour
                 //Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
                 //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [9]번 스킬 내용을 적용
             }
+        }
+        else
+        {
+            plInfo.curSkill = skillData.skills[SaveManager.Instance.saveClass.GetCurrentSkillIndex()];
+            Debug.Log($"plInfo.curskill : {plInfo.curSkill.skillName}");
         }
 
         coroutineCheck = false;

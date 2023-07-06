@@ -11,6 +11,8 @@ public class PlayerUIManager : MonoBehaviour
     public Slider hpSlider;
     [Tooltip("영혼석 - 영혼의 무게 TEXT")]
     public Text soulHpText;
+    [Tooltip("스킬 UI")]
+    public GameObject curSkillImg;
     [Tooltip("일지 Panel")]
     public GameObject journalPanel;
     [Tooltip("플레이어 사망 패널")]
@@ -29,6 +31,7 @@ public class PlayerUIManager : MonoBehaviour
     {
         soulHpText.text = $"{plInfo.soulHp}";
         hpSlider.value = (float) plInfo.curHp / plInfo.maxHp;
+        curSkillImg.GetComponent<Image>().sprite = plInfo.curSkill.thumnail;
 
         if (Input.GetKeyDown(KeyCode.J)) //J를 누르면
         {
