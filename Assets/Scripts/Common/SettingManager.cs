@@ -305,20 +305,15 @@ public class SettingManager : MonoBehaviour
     {
         // 드랍다운 메뉴 항목 비우기
         resolutionsDropdown.options.Clear();
-
         // 드랍다운 메뉴 항목 채우기
         for (int i = 0; i < resolutions.Count; i++)
         {
-            // UI 조절에 시간이 없는 관계로 16:9 비율만
-            if (resolutions[i].width / 16 * 9 == resolutions[i].height)
+            //Debug.Log($"{resolutions[i].width} x {resolutions[i].height}");
+            Dropdown.OptionData option = new()
             {
-                Debug.Log($"{resolutions[i].width} x {resolutions[i].height}");
-                Dropdown.OptionData option = new()
-                {
-                    text = $"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}hz"
-                };
-                resolutionsDropdown.options.Add(option);
-            }
+                text = $"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}hz"
+            };
+            resolutionsDropdown.options.Add(option);
 
             if (resolutionIndex == -1 && resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
             {
@@ -356,6 +351,17 @@ public class SettingManager : MonoBehaviour
         // 모니터의 사용 가능한 해상도 불러오기
         resolutions.AddRange(Screen.resolutions);
 
+        // UI 조절에 시간이 없는 관계로 16:9 비율만
+        List<Resolution> tempResolutions = new();
+        for (int i = 0; i < resolutions.Count; i++)
+        {
+            if (resolutions[i].width / 16 * 9 == resolutions[i].height)
+            {
+                tempResolutions.Add(resolutions[i]);
+            }
+        }
+        resolutions = tempResolutions;
+
         // 저장된 값이 없다면 기본 해상도와 화면 모드를 쓰게 될 것
         if (PlayerPrefs.HasKey("resolutionIndex") && PlayerPrefs.HasKey("fullScreen"))
         {
@@ -365,6 +371,7 @@ public class SettingManager : MonoBehaviour
         }
         else
         {
+            Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
             resolutionIndex = -1;
         }
     }
