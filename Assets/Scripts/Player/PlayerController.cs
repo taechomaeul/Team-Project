@@ -79,10 +79,11 @@ public class PlayerController : MonoBehaviour
         timer = GameObject.Find("Timer").GetComponent<Timer>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         Debug.Log($"plInfo : {plInfo}");
-        Debug.Log($"actionFuntion : {GameObject.Find("ActionFunction").GetComponent<ActionFuntion>().name}");
+        Debug.Log($"actionFuntion : {actionFuntion}");
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
-        Debug.Log($"SkillData : {skillData}");
+        Debug.Log($"SkillData : {skillData}",gameObject);
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+        Debug.Log($"cameraTransform : {cameraTransform}");
         characterController = GetComponentInChildren<CharacterController>();
         pac = GetComponent<PlayerAnimatorControll>();
         peasc = GetComponent<PlayerEffectAndSoundControll>();
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
         //현재 씬에 따라 인덱서 위치를 지정 (인덱서 위치는 Player 기본 위치)
         Scene scene = SceneManager.GetActiveScene();
         GameObject indexer = GameObject.Find("Indexes").gameObject;
+        Debug.Log($"indexer : {indexer}");
         if (scene.name.Contains("1F"))
         {
             indexer.transform.position = new Vector3(-0.41f, 1f, -56.52f);
