@@ -346,18 +346,18 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 새로 시작 시 초기화
         /// </summary>
-        internal void InitSaveClass()
+        internal void InitSaveClass(Dictionary<string, object> playerStat)
         {
             SetLastSavePosition(0);
             // 임시
-            currentHp = 50;
+            currentHp = int.Parse(playerStat["maxHp"].ToString());
             currentSoulCount = 0;
             currentBodyIndex = 0;
             currentSkillIndex = -1;
             // 임시
-            currentAttack = 20;
+            currentAttack = int.Parse(playerStat["attack"].ToString());
             // 임시
-            currentSpeed = 10;
+            currentSpeed = float.Parse(playerStat["movingSpeed"].ToString());
             Array.Fill(scriptData, false);
             Array.Fill(tipData, false);
             Array.Fill(recordData, false);
@@ -389,15 +389,17 @@ public class SaveManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        saveClass.InitSaveClass();
-
     }
 
     // 새로운 씬에서 찾기
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        saveClass.InitSaveClass(DefaultStatManager.Instance.GetPlayerData());
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
