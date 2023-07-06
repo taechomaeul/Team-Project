@@ -509,15 +509,15 @@ public class SaveManager : MonoBehaviour
         {
             ss.GetCheckScriptArr(saveClass.GetScriptData());
             sr.GetCheckRecordArr(saveClass.GetRecordData());
+
+            cc.OffRecordCollider(saveClass.GetRecordData());
+            cc.OffScriptCollider(saveClass.GetScriptData());
+            cc.OffMoveSceneCollider(saveClass.GetMoveSceneData());
         }
         else
         {
             Debug.Log("cc is not exist");
         }
-
-        cc.OffRecordCollider(saveClass.GetRecordData());
-        cc.OffScriptCollider(saveClass.GetScriptData());
-        cc.OffMoveSceneCollider(saveClass.GetMoveSceneData());
     }
 
     /// <summary>

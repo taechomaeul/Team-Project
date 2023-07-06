@@ -33,7 +33,7 @@ public class ColliderController : MonoBehaviour
             recordStart = showRecord.checkRecordComplete.Length - recordObject.Length; //15-10
         }
 
-        Debug.Log($"RecordStart : {recordStart}");
+        //Debug.Log($"RecordStart : {recordStart}");
         int index = 0;
         for (int i = recordStart; i < recordObject.Length + recordStart; i++)
         {

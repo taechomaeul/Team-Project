@@ -97,16 +97,17 @@ public class PlayerController : MonoBehaviour
         }
 
         // 불러온 데이터 적용
+        Debug.Log($"Does SaveManager exist? : {FindObjectOfType<SaveManager>()}");
         SaveManager.Instance.ApplyLoadedData();
         plInfo.curPositionIndex = SaveManager.Instance.saveClass.GetLastSavePosition();
 
         //PlayerModel 위치 조정
         Transform playerPos = transform.GetChild(0);
-        Debug.Log($"PlayerPos : {playerPos.localPosition}");
+        //Debug.Log($"PlayerPos : {playerPos.localPosition}");
 
         playerPos.GetComponent<CharacterController>().enabled = false;
         playerPos.localPosition = indexer.transform.GetChild(plInfo.curPositionIndex).localPosition;
-        Debug.Log($"PlayerPos Pos AFTER : {playerPos.localPosition}");
+        //Debug.Log($"PlayerPos Pos AFTER : {playerPos.localPosition}");
         playerPos.GetComponent<CharacterController>().enabled = true;
 
         //플레이어 정보 적용
@@ -134,13 +135,13 @@ public class PlayerController : MonoBehaviour
             if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "KR")
             {
                 plInfo.curSkill = skillData.skills[4];
-                Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
+                //Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
                 //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [4]번 스킬 내용을 적용
             }
             else if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "EN")
             {
                 plInfo.curSkill = skillData.skills[9];
-                Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
+                //Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
                 //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [9]번 스킬 내용을 적용
             }
         }
