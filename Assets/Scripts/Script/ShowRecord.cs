@@ -64,6 +64,7 @@ public class ShowRecord : MonoBehaviour
             }
             SaveManager.Instance.saveClass.SetRecordData(checkRecordComplete);
         }
+        Debug.Log("ShowRecord Read Complete");
     }
 
     /// <summary>

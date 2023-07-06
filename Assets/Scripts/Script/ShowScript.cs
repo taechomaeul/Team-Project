@@ -83,6 +83,7 @@ public class ShowScript : MonoBehaviour
             SaveManager.Instance.saveClass.SetScriptData(checkScriptComplete);
         }
 
+        Debug.Log("ShowScript Read Complete");
     }
 
     /// <summary>
