@@ -350,7 +350,7 @@ public class SaveManager : MonoBehaviour
         {
             SetLastSavePosition(0);
             // 임시
-            currentHp = int.Parse(playerStat["maxHp"].ToString());
+            currentHp = int.Parse(playerStat["currentHp"].ToString());
             currentSoulCount = 0;
             currentBodyIndex = 0;
             currentSkillIndex = -1;
