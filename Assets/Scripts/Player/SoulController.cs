@@ -23,7 +23,7 @@ public class SoulController : MonoBehaviour
 
     private void Start()
     {
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         thisSoul = GetComponent<SoulInfo>();
 
