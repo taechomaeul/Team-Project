@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d85968346dc2a4a9fb0682a0bc9840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossType: 0
   stat:
     isDebug: 1
     movingSpeed: 5
@@ -292,7 +293,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425086370244495716}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -536,7 +537,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425086370707320352}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1006,9 +1007,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1425086370649866093}
     m_Modifications:
+    - target: {fileID: 1087372179352684, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180495232730458, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1223526616464650, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_Name
       value: Magic fire pro blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223526616464650, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1430769185673144, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1841570873457930, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_RootOrder
