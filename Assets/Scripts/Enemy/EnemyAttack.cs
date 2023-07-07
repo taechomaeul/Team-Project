@@ -20,7 +20,7 @@ public class EnemyAttack : MonoBehaviour
     {
         // 적 정보 초기화
         // 일반 몬스터라면
-        if (transform.root.GetComponent<BossInfo>() == null)
+        if (enemyBody.GetComponent<BossInfo>() == null)
         {
             enemyInfo = enemyBody.GetComponent<EnemyInfo>().stat;
             isSkill = false;
