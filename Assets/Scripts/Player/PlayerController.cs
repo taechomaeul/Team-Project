@@ -687,39 +687,46 @@ public class PlayerController : MonoBehaviour
             peasc.TurnOnEffectSkill();
             int originAtk;
             float originMoveSpd;
+            GameObject effect;
             switch (plInfo.curSkill.skillName)
             {
                 case "힘증가":
                     originAtk = plInfo.plAtk;
                     actionFuntion.IncreasePower();
+                    SettingEffect(plInfo.curSkill.effectPrefab, plInfo.curSkill.duringTime);
                     StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originAtk, 1));
                     break;
 
                 case "민첩증가":
                     originMoveSpd = plInfo.plAtk;
                     actionFuntion.IncreaseSpeed();
+                    SettingEffect(plInfo.curSkill.effectPrefab, plInfo.curSkill.duringTime);
                     StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originMoveSpd, 2));
                     break;
 
                 case "체력회복":
                     actionFuntion.IncreaseHp();
+                    SettingEffect(plInfo.curSkill.effectPrefab, 3f);
                     StartCoroutine(ResetCoolTime(plInfo.curSkill.coolTime));
                     break;
 
                 case "Power":
                     originAtk = plInfo.plAtk;
                     actionFuntion.IncreasePower();
+                    SettingEffect(plInfo.curSkill.effectPrefab, plInfo.curSkill.duringTime);
                     StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originAtk, 1));
                     break;
 
                 case "Speed":
                     originMoveSpd = plInfo.plAtk;
                     actionFuntion.IncreaseSpeed();
+                    SettingEffect(plInfo.curSkill.effectPrefab, plInfo.curSkill.duringTime);
                     StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originMoveSpd, 2));
                     break;
 
                 case "Healing":
                     actionFuntion.IncreaseHp();
+                    SettingEffect(plInfo.curSkill.effectPrefab, 3f);
                     StartCoroutine(ResetCoolTime(plInfo.curSkill.coolTime));
                     break;
             }
@@ -771,6 +778,19 @@ public class PlayerController : MonoBehaviour
         attackTime = 0;
         isAttack = false;
         isNextAtk = false;
+    }
+
+    public void SettingEffect(GameObject prefab, float destroyTime)
+    {
+        GameObject effect = Instantiate(prefab);
+        effect.layer = 3;
+        effect.transform.parent = transform.GetChild(0);
+        effect.transform.SetAsFirstSibling();
+        effect.transform.localPosition = plInfo.curSkill.effectPos;
+        effect.transform.localRotation = plInfo.curSkill.effectRot;
+        effect.transform.localScale = Vector3.one;
+        effect.GetComponent<ParticleSystem>().Play();
+        Destroy(effect, destroyTime);
     }
 
 }
