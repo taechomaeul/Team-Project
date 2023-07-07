@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4190269429678599830}
   - component: {fileID: 9139287638874545992}
   - component: {fileID: 8325180319349994717}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4562574755276150038}
   - component: {fileID: 6049662430217107104}
   - component: {fileID: 4022733400867779519}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3818342410263473007}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.8114319, y: 0}
+  m_AnchoredPosition: {x: -0.8114319, y: 0}
   m_SizeDelta: {x: -14.635, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2244122308626663159
@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 7431133848874728320}
   - component: {fileID: 8148333226564123372}
   - component: {fileID: 4222440701728616602}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +748,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6560307444328790114}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +773,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0.8114929, y: -0.18999863}
+  m_AnchoredPosition: {x: -0.8114929, y: -0.18999863}
   m_SizeDelta: {x: -14.6346, y: 6.9937}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5080628305611860199
@@ -871,7 +871,7 @@ GameObject:
   - component: {fileID: 6079452489505322713}
   - component: {fileID: 7403782421455654906}
   - component: {fileID: 699543552526899766}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -971,7 +971,7 @@ GameObject:
   - component: {fileID: 1312103289704604649}
   - component: {fileID: 8806225726166426460}
   - component: {fileID: 2665576731096991011}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: EnemyHP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4190269429678599830}
   m_HandleRect: {fileID: 0}
-  m_Direction: 0
+  m_Direction: 1
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
@@ -1318,9 +1318,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2244122308626663163}
     m_Modifications:
+    - target: {fileID: 1087372179352684, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180495232730458, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1223526616464650, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_Name
       value: Magic fire pro blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223526616464650, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1430769185673144, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1841570873457930, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_RootOrder
