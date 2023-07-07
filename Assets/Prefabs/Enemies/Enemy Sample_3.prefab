@@ -24717,8 +24717,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf97702923aeb3a45aefbd5f2939ff6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectAttack1: {fileID: 0}
-  effectAttack2: {fileID: 0}
+  effectAttack1: {fileID: 2796619491232175686}
+  effectAttack2: {fileID: 3526109879541535848}
   effectAttack3: {fileID: 0}
   effectSkill: {fileID: 0}
 --- !u!1 &2244122309395477055
@@ -54258,7 +54258,7 @@ GameObject:
   - component: {fileID: 3528644753223251954}
   - component: {fileID: 1067956302713559068}
   - component: {fileID: 2915690562586290821}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54335,7 +54335,7 @@ GameObject:
   - component: {fileID: 220642302624859529}
   - component: {fileID: 4058865126759404668}
   - component: {fileID: 814276743637493199}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73963,7 +73963,7 @@ GameObject:
   - component: {fileID: 1918368349914346133}
   - component: {fileID: 4793303725512826072}
   - component: {fileID: 4796325730872000905}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78945,7 +78945,7 @@ GameObject:
   - component: {fileID: 7512049315025367750}
   - component: {fileID: 1925352869113096229}
   - component: {fileID: 3432510039883642113}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83984,7 +83984,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5877558870712954566}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84009,7 +84009,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0.8114929, y: -0.18999863}
+  m_AnchoredPosition: {x: -0.8114929, y: -0.18999863}
   m_SizeDelta: {x: -14.6346, y: 6.9937}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8602837270905695130
@@ -88914,7 +88914,7 @@ GameObject:
   - component: {fileID: 2184218739529810006}
   - component: {fileID: 1316942626713556530}
   - component: {fileID: 1099073648054402982}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: EnemyHP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88988,7 +88988,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 3528644753223251954}
   m_HandleRect: {fileID: 0}
-  m_Direction: 0
+  m_Direction: 1
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
@@ -89019,7 +89019,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3780380549168248349}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89043,7 +89043,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.8114319, y: 0}
+  m_AnchoredPosition: {x: -0.8114319, y: 0}
   m_SizeDelta: {x: -14.635, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2026580303878180523
@@ -95008,9 +95008,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2244122308626663163}
     m_Modifications:
+    - target: {fileID: 1087372179352684, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180495232730458, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1223526616464650, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_Name
       value: Magic fire pro blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223526616464650, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1430769185673144, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1841570873457930, guid: c590b17884b119046bc6412066500b7d, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4731861580502952, guid: c590b17884b119046bc6412066500b7d, type: 3}
       propertyPath: m_RootOrder

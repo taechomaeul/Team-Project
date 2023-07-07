@@ -16,7 +16,7 @@ TitleScene,SettingPanel,AudioPanel,EffectSoundTxt,효과음,SFX
 TitleScene,SettingPanel,GraphicsPanel,GraphicsHdTxt,그래픽,Graphics
 TitleScene,SettingPanel,GraphicsPanel,BrightnessTxt,밝기,Brightness
 TitleScene,SettingPanel,GraphicsPanel,ResolutionTxt,해상도,Resolution
-TitleScene,SettingPanel,GraphicsPanel,WindowTxt,창모드,Window mode
+TitleScene,SettingPanel,GraphicsPanel,WindowTxt,전체 화면,Full screen
 TitleScene,SettingPanel,GraphicsPanel,OkayBtTxt,확인,Ok
 TitleScene,SettingPanel,LanguagePanel,LanguageHdTxt,언어,Language
 TitleScene,SettingPanel,LanguagePanel,LanguagePickTxt,언어 선택,Language Selection
@@ -58,7 +58,7 @@ TestScene_1F,SettingPanel,AudioPanel,EffectSoundTxt,효과음,SFX
 TestScene_1F,SettingPanel,GraphicsPanel,GraphicsHdTxt,그래픽,Graphics
 TestScene_1F,SettingPanel,GraphicsPanel,BrightnessTxt,밝기,Brightness
 TestScene_1F,SettingPanel,GraphicsPanel,ResolutionTxt,해상도,Resolution
-TestScene_1F,SettingPanel,GraphicsPanel,WindowTxt,창모드,Window mode
+TestScene_1F,SettingPanel,GraphicsPanel,WindowTxt,전체 화면,Full screen
 TestScene_1F,SettingPanel,GraphicsPanel,OkayBtTxt,확인,Ok
 TestScene_1F,SettingPanel,LanguagePanel,LanguageHdTxt,언어,Language
 TestScene_1F,SettingPanel,LanguagePanel,LanguagePickTxt,언어 선택,Language Selection
