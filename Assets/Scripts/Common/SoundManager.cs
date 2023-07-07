@@ -138,8 +138,20 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    internal void BGMStop()
+    {
+        StartCoroutine(BGMStopCoroutine());
+    }
+
+    internal IEnumerator BGMStopCoroutine()
+    {
+        yield return StartCoroutine(BGMFadeOut());
+        bgmAudioSource.Stop();
+    }
+
     internal AudioSource GetSFX()
     {
         return sfxAudioSource;
     }
+
 }

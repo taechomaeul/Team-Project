@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToTitleScene()
     {
+        SoundManager.Instance.BGMChangeWithFade(0);
         SceneManager.LoadScene("TitleScene");
     }
 
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToPush()
     {
+        SoundManager.Instance.BGMChangeWithFade(1);
         SceneManager.LoadScene("PushGameScene");
     }
 
@@ -34,6 +36,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveTo1FScene()
     {
+
+        int temp = SaveManager.Instance.saveClass.GetLastSavePosition();
+            if(temp==8)
+        {
+            SoundManager.Instance.BGMChangeWithFade(2);
+        }else if(temp>=0 && temp <= 4)
+        {
+        SoundManager.Instance.BGMChangeWithFade(1);
+        }
         SceneManager.LoadScene("TestScene_1F");
     }
 
@@ -42,6 +53,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveTo2FScene()
     {
+        int temp = SaveManager.Instance.saveClass.GetLastSavePosition();
+        if(temp==9)
+        {
+            SoundManager.Instance.BGMChangeWithFade(3);
+        }else if(temp>=5 && temp <= 7)
+        {
+        SoundManager.Instance.BGMChangeWithFade(1);
+        }
         SceneManager.LoadScene("TestScene_2F");
     }
 
@@ -50,6 +69,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToEnding()
     {
+        SoundManager.Instance.BGMChangeWithFade(4);
         SceneManager.LoadScene("EndingScene");
     }
 
@@ -58,6 +78,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToMidBossScene()
     {
+        SoundManager.Instance.BGMStop();
         SceneManager.LoadScene("AnimMiddleBossCutScenes");
     }
 
@@ -66,6 +87,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToFinalBossScene()
     {
+        SoundManager.Instance.BGMStop();
         SceneManager.LoadScene("AnimMainBossCutScenes");
     }
 
