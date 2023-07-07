@@ -50,6 +50,14 @@ public class MoveScene : MonoBehaviour
                         SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
                     }
                     SaveManager.Instance.saveClass.SetCurrentBodyIndex(1); //푸시 게임 이후에는 일반 몬스터로 playerPrefab을 변경시켜야 한다
+                    if (SettingManager.Instance.GetCurrentLanguageIndexToString().Equals("KR"))
+                    {
+                        SaveManager.Instance.saveClass.SetCurrentSkillIndex(4);
+                    }
+                    else if (SettingManager.Instance.GetCurrentLanguageIndexToString().Equals("EN"))
+                    {
+                        SaveManager.Instance.saveClass.SetCurrentSkillIndex(9);
+                    }
                     gameManager.MoveTo2FScene();
                     //SaveManager.Instance.LoadSaveData();
                     break;
