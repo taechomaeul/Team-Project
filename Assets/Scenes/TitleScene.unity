@@ -4047,12 +4047,12 @@ GameObject:
   - component: {fileID: 728362680}
   - component: {fileID: 728362679}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: FPS Counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &728362679
 MonoBehaviour:
   m_ObjectHideFlags: 0
