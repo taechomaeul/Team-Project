@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class BossInfo : MonoBehaviour
 {
-    // 보스 종류
-    private enum BossType
-    {
-        MiniBoss,
-        FinalBoss
-    }
 
     // 인스펙터
     [Header("보스 정보")]
-    [Tooltip("보스 종류")]
-    [SerializeField] private BossType bossType;
     [Tooltip("보스 정보")]
     [SerializeField] internal Boss stat = new();
 
@@ -31,12 +23,12 @@ public class BossInfo : MonoBehaviour
     private void InitStat()
     {
         Dictionary<string, object> statData = null;
-        switch (bossType)
+        switch (stat.GetBossType())
         {
-            case BossType.MiniBoss:
+            case 0:
                 statData = DefaultStatManager.Instance.GetMiniBossData();
                 break;
-            case BossType.FinalBoss:
+            case 1:
                 statData = DefaultStatManager.Instance.GetFinalBossData();
                 break;
         }
@@ -71,7 +63,18 @@ public class BossInfo : MonoBehaviour
 [Serializable]
 internal class Boss : Enemy
 {
+    // 보스 종류
+    private enum BossType
+    {
+        MiniBoss,
+        FinalBoss
+    }
+
     // 인스펙터
+    [Header("보스 종류")]
+    [Tooltip("보스 종류")]
+    [SerializeField] private BossType bossType;
+
     [Header("스킬")]
     [Tooltip("스킬 공격력")]
     [SerializeField] private int skillDamage;
@@ -140,10 +143,13 @@ internal class Boss : Enemy
     /// </summary>
     /// <returns>스킬 시전 중 여부</returns>
     public bool GetIsSkillCasting() { return isSkillCasting; }
+
+    public int GetBossType() { return (int)bossType; }
     #endregion
 
     // 변수 세팅 함수들
     #region Set Functions
+
     /// <summary>
     /// 스킬 사용 가능 여부 설정
     /// </summary>
