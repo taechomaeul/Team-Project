@@ -9361,11 +9361,11 @@ MonoBehaviour:
   sfxAudioSource: {fileID: 301990832}
   fadeRatio: 0.1
   clipList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 0587f8ccd23355946b7eaa62acafa1c7, type: 3}
+  - {fileID: 8300000, guid: ceb29d392e89cc4469da873d2ad93098, type: 3}
+  - {fileID: 8300000, guid: d1ec7e0bb7db8e4418559ee090f74a5d, type: 3}
+  - {fileID: 8300000, guid: f3793f425ab611c4992916428413cc54, type: 3}
+  - {fileID: 8300000, guid: 4d3ab92038e83b946ba736a33b55b0cb, type: 3}
 --- !u!114 &1601740549
 MonoBehaviour:
   m_ObjectHideFlags: 0
