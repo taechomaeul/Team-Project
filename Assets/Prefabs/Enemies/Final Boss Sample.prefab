@@ -443,6 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d85968346dc2a4a9fb0682a0bc9840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossType: 1
   stat:
     isDebug: 1
     movingSpeed: 5
