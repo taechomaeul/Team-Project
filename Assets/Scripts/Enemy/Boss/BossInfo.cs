@@ -10,10 +10,9 @@ public class BossInfo : MonoBehaviour
     [Tooltip("보스 정보")]
     [SerializeField] internal Boss stat = new();
 
-
-
-    private void Start()
+    private void Awake()
     {
+        // 탐지 대상 초기화
         InitStat();
     }
 

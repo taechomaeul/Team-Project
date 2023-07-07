@@ -22,18 +22,21 @@ public class EnemyBossHpUI : MonoBehaviour
         BossNameLanguageChange();
     }
 
+    private void Update()
+    {
+        if (bossInfo.GetIsTracking())
+        {
+            hpBar.SetActive(true);
+        }
+        hpSlider.value = (float)bossInfo.GetCurrentHp() / bossInfo.GetMaxHp();
+    }
+
     private void LateUpdate()
     {
         if(languageIndex != SettingManager.Instance.GetCurrentLanguageIndex())
         {
             BossNameLanguageChange();
         }
-
-        if (bossInfo.GetIsTracking())
-        {
-            gameObject.SetActive(true);
-        }
-        hpSlider.value = (float)bossInfo.GetCurrentHp() / bossInfo.GetMaxHp();
     }
 
     private void BossNameLanguageChange()
