@@ -24717,8 +24717,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf97702923aeb3a45aefbd5f2939ff6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectAttack1: {fileID: 0}
-  effectAttack2: {fileID: 0}
+  effectAttack1: {fileID: 2796619491232175686}
+  effectAttack2: {fileID: 3526109879541535848}
   effectAttack3: {fileID: 0}
   effectSkill: {fileID: 0}
 --- !u!1 &2244122309395477055
