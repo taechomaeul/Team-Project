@@ -84,16 +84,39 @@ public class SkillInfo : MonoBehaviour
             if (i >= data.Count / langArr.Length) // i가 5보다 크면
             {
                 skills[i].thumnail = cSkillInfo.sImage[i-data.Count/langArr.Length]; //0번부터 다시 돌아가서 적용
+                if (cSkillInfo.effectPrefabs[i - data.Count / langArr.Length] != null)
+                {
+                    skills[i].effectPrefab = cSkillInfo.effectPrefabs[i - data.Count / langArr.Length];
+                    skills[i].effectPos = cSkillInfo.effectPos;
+                    skills[i].effectRot = cSkillInfo.effectRot;
+                }
+                else
+                {
+                    skills[i].effectPrefab = null;
+                    skills[i].effectPos = Vector3.zero;
+                    skills[i].effectRot = Quaternion.identity;
+                }
             }
             else
             {
                 skills[i].thumnail = cSkillInfo.sImage[i]; //기존에 등록해놨던 스킬 이미지로 적용
+                Debug.Log($"i : {i}");
+                if (cSkillInfo.effectPrefabs[i] != null)
+                {
+                    skills[i].effectPrefab = cSkillInfo.effectPrefabs[i];
+                    skills[i].effectPos = cSkillInfo.effectPos;
+                    skills[i].effectRot = cSkillInfo.effectRot;
+                }
+                else
+                {
+                    skills[i].effectPrefab = null;
+                    skills[i].effectPos = Vector3.zero;
+                    skills[i].effectRot = Quaternion.identity;
+                }
+                
             }
             skills[i].coolTime = float.Parse(data[i]["CoolTime"].ToString());
             skills[i].duringTime = float.Parse(data[i]["DuringTime"].ToString());
-            //skills[i].effectPrefab = cSkillInfo.effectPrefabs[i];
-            //skills[i].effectPos = cSkillInfo.effectPos;
-            //skills[i].effectRot = cSkillInfo.effectRot;
         }
     }
     
