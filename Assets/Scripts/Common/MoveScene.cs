@@ -37,7 +37,6 @@ public class MoveScene : MonoBehaviour
                     actionFuntion.GetComponent<ColliderController>().AddMoveCollider(gameObject.name);
                     //SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
                     //SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
-                    SaveManager.Instance.saveClass.SetCurrentBodyIndex(1); //푸시 게임 이후에는 일반 몬스터로 playerPrefab을 변경시켜야 한다
                     SaveManager.Instance.SaveCurrentDataToClass(SaveManager.Instance.saveClass.GetLastSavePosition());
                     gameManager.MoveToPush();
                     //SaveManager.Instance.LoadSaveData();
@@ -50,6 +49,7 @@ public class MoveScene : MonoBehaviour
                         SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
                         SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);
                     }
+                    SaveManager.Instance.saveClass.SetCurrentBodyIndex(1); //푸시 게임 이후에는 일반 몬스터로 playerPrefab을 변경시켜야 한다
                     gameManager.MoveTo2FScene();
                     //SaveManager.Instance.LoadSaveData();
                     break;

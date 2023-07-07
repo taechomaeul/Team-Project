@@ -111,6 +111,21 @@ public class ActionFuntion : MonoBehaviour
             {
                 //플레이어 정보에 빙의체 인덱스 저장
                 plInfo.curPrefabIndex = i;
+                if (enemyName.Contains("MidBoss"))
+                {
+                    SkillInfo skillInfo = GetComponent<SkillInfo>();
+                    if (SettingManager.Instance.GetCurrentLanguageIndexToString().Equals("KR"))
+                    {
+                        SaveManager.Instance.saveClass.SetCurrentSkillIndex(0); //괴력으로 설정
+                        plInfo.curSkill = skillInfo.skills[0];
+                    }
+                    else if (SettingManager.Instance.GetCurrentLanguageIndexToString().Equals("EN"))
+                    {
+                        SaveManager.Instance.saveClass.SetCurrentSkillIndex(5);
+                        plInfo.curSkill = skillInfo.skills[5];
+                    }
+                    
+                }
 
                 Vector3 originPlayerPrefabPos = player.transform.Find("PlayerPrefab").localPosition;
                 Destroy(player.transform.Find("PlayerPrefab").gameObject);

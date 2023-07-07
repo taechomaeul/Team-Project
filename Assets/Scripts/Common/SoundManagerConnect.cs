@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManagerConnect : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private enum BGMType
     {
-        
+        Title,
+        Field,
+        MiniBoss,
+        FinalBoss,
+        Ending
     }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private BGMType bgmType;
+
+    void Start()
     {
-        
+        SoundManager.Instance.BGMChangeWithFade((int)bgmType);
     }
 }

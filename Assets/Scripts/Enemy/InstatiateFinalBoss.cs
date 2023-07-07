@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class InstatiateFinalBoss : MonoBehaviour
 {
-    public GameObject bossPrefab;
+    public GameObject mainBoss;
     public Vector3 prefabPos;
 
     void Start()
@@ -16,12 +16,15 @@ public class InstatiateFinalBoss : MonoBehaviour
         {
             if (sceneDta[i].Contains("BossScene"))
             {
-                GameObject mainBoss = Instantiate(bossPrefab);
+                /*GameObject mainBoss = Instantiate(bossPrefab);
                 mainBoss.GetComponent<NavMeshAgent>().enabled = false;
                 mainBoss.transform.localPosition = prefabPos;
                 mainBoss.transform.rotation = Quaternion.Euler(new Vector3(0, 90f, 0));
                 mainBoss.GetComponent<NavMeshAgent>().enabled = true;
-                mainBoss.name = "FinalBoss_Minotaur";
+                mainBoss.name = "FinalBoss_Minotaur";*/
+
+                mainBoss.SetActive(true);
+
             }
         }
     }
