@@ -2832,7 +2832,7 @@ PrefabInstance:
     - target: {fileID: 2244122309189287926, guid: 4e6c0b10eb24c7c40bd21666a679c708,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2244122309189287933, guid: 4e6c0b10eb24c7c40bd21666a679c708,
         type: 3}
@@ -3630,7 +3630,7 @@ PrefabInstance:
     - target: {fileID: 1425086370163302266, guid: df2f9b8f6df5e544c88a683d9276fcac,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1425086370244495715, guid: df2f9b8f6df5e544c88a683d9276fcac,
         type: 3}
@@ -4305,6 +4305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolTime: 2
+  fCommonPanel: {fileID: 0}
+  possessPanel: {fileID: 0}
   enemyPrefabInfo: {fileID: 0}
   plInfo: {fileID: 0}
   plController: {fileID: 0}
@@ -5254,7 +5256,7 @@ PrefabInstance:
     - target: {fileID: 3102516749540191956, guid: 12c3bce84301bac42ab0eb606ddfb70b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3102516749540191964, guid: 12c3bce84301bac42ab0eb606ddfb70b,
         type: 3}
@@ -5310,6 +5312,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3102516749540191967, guid: 12c3bce84301bac42ab0eb606ddfb70b,
+        type: 3}
+      propertyPath: bossType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3102516749540191967, guid: 12c3bce84301bac42ab0eb606ddfb70b,
         type: 3}

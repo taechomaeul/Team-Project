@@ -12,7 +12,7 @@ public class NoRotate : MonoBehaviour
     void Start()
     {
         cameraTransform = GetComponent<Transform>();
-        playerRot = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().localRotation;
+        playerRot = GameObject.Find("Player").GetComponent<Transform>().localRotation;
     }
 
     // Update is called once per frame

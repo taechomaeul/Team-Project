@@ -71,7 +71,7 @@ public class PushGameScript : MonoBehaviour
             langOffset = 63;
         }
 
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
     }
 
     private void Update()

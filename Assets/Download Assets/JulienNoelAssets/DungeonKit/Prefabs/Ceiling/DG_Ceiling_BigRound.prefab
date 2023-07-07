@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8350761371337859965}
   - component: {fileID: 3790904738336873602}
   - component: {fileID: 3174206040896498468}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Ceiling_BigRound
   m_TagString: Untagged
   m_Icon: {fileID: 0}

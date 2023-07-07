@@ -6,12 +6,11 @@ public class ColliderController : MonoBehaviour
 {
     private ShowScript showScript;
     private ShowRecord showRecord;
-    //public List<string> completeColliderNames;
 
     void Awake()
     {
-        showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
-        showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
+        showScript = GetComponent<ShowScript>();
+        showRecord = GetComponent<ShowRecord>();
     }
 
     /// <summary>
@@ -33,7 +32,7 @@ public class ColliderController : MonoBehaviour
             recordStart = showRecord.checkRecordComplete.Length - recordObject.Length; //15-10
         }
 
-        Debug.Log($"RecordStart : {recordStart}");
+        //Debug.Log($"RecordStart : {recordStart}");
         int index = 0;
         for (int i = recordStart; i < recordObject.Length + recordStart; i++)
         {
@@ -59,9 +58,9 @@ public class ColliderController : MonoBehaviour
         {
             string cName = sCollider.transform.GetChild(i).GetComponent<ScriptColliderInfo>().colliderName; //collider 이름으로
             int index = showScript.GetIndex(cName); //index를 불러온 뒤
+            
             //-> 해당 script의 인덱스는 IDX입니다. (START_IDX  X)
             scriptObject[i] = sCollider.transform.GetChild(i).gameObject;
-
             if (checkScript[index]) //해당 인덱스에 있는 체크 값이 true라면 ColliderObject를 끈다
             {
                 scriptObject[i].SetActive(false);
@@ -76,20 +75,16 @@ public class ColliderController : MonoBehaviour
     public void AddMoveCollider(string colliderObjName)
     {
         SaveManager.Instance.saveClass.AddMoveCollider(colliderObjName);
-        Debug.Log($"ADD GameObj name : {colliderObjName}");
-        //SaveManager.Instance.saveClass.SetMoveSceneData(completeColliderNames);
     }
 
     public void OffMoveSceneCollider(List<string> cColliderNames)
     {
         GameObject aCollider = GameObject.Find("MoveCollider");
         GameObject[] animObject = new GameObject[aCollider.transform.childCount];
-        //Debug.Log($"MoveCollider Count : {aCollider.transform.childCount}\n aCollider.name : {aCollider.name}");
 
         for (int i=0; i < animObject.Length; i++)
         {
             animObject[i] = aCollider.transform.GetChild(i).gameObject;
-            //Debug.Log(animObject[i].name);
         }
 
         for (int i=0; i< cColliderNames.Count; i++)
@@ -99,8 +94,6 @@ public class ColliderController : MonoBehaviour
                 if (cColliderNames[i].Equals(animObject[j].name))
                 {
                     animObject[j].SetActive(false);
-                    //Debug.Log($"animObject : {animObject[j].name}");
-                    //Debug.Log($"Collidername : {cColliderNames[i]}");
                 }
             }
             

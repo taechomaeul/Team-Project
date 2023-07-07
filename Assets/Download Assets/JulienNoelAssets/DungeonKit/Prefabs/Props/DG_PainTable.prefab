@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6411979051112818129}
   - component: {fileID: 7268242291041563393}
   - component: {fileID: 6777102468757797333}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Torture_A_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 63121011852439416}
   - component: {fileID: 7061925107083443637}
   - component: {fileID: 4845587801147501374}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_PainTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1320258200925059567}
   - component: {fileID: 6443709118243675287}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7728674030115410282}
   - component: {fileID: 981969005324776736}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9000737424638919981}
   - component: {fileID: 6821073710510794736}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5727861636332973806}
   - component: {fileID: 3160393300482738735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

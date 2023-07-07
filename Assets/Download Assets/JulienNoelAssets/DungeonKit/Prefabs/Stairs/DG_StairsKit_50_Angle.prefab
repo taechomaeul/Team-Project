@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9134593731440430900}
   - component: {fileID: 1086453220225778712}
   - component: {fileID: 992287013441611194}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_StairsKit_50_Angle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

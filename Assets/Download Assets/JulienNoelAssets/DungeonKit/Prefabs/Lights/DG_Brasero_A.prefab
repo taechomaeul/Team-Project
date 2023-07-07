@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5446754851332296127}
   - component: {fileID: 1400955549887498549}
   - component: {fileID: 1734879644503311769}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Brasero_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,9 +135,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5972420938592174080}
     m_Modifications:
+    - target: {fileID: 320335499, guid: fb06b1a40434f814891f0e320583a9d0, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1657101679, guid: fb06b1a40434f814891f0e320583a9d0, type: 3}
       propertyPath: m_Name
       value: VFX_Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657101679, guid: fb06b1a40434f814891f0e320583a9d0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1657101680, guid: fb06b1a40434f814891f0e320583a9d0, type: 3}
       propertyPath: m_RootOrder
@@ -190,6 +198,11 @@ PrefabInstance:
     - target: {fileID: 1657101680, guid: fb06b1a40434f814891f0e320583a9d0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 782025998633125839, guid: fb06b1a40434f814891f0e320583a9d0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb06b1a40434f814891f0e320583a9d0, type: 3}

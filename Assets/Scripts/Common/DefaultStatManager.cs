@@ -35,7 +35,6 @@ public class DefaultStatManager : MonoBehaviour
             Destroy(gameObject);
         }
         statData = CSVReader.Read(path);
-        Debug.Log(statData == null);
     }
 
     /// <summary>

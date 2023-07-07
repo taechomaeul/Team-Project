@@ -350,7 +350,7 @@ public class SaveManager : MonoBehaviour
         {
             SetLastSavePosition(0);
             // 임시
-            currentHp = int.Parse(playerStat["maxHp"].ToString());
+            currentHp = int.Parse(playerStat["currentHp"].ToString());
             currentSoulCount = 0;
             currentBodyIndex = 0;
             currentSkillIndex = -1;
@@ -509,15 +509,15 @@ public class SaveManager : MonoBehaviour
         {
             ss.GetCheckScriptArr(saveClass.GetScriptData());
             sr.GetCheckRecordArr(saveClass.GetRecordData());
+
+            cc.OffRecordCollider(saveClass.GetRecordData());
+            cc.OffScriptCollider(saveClass.GetScriptData());
+            cc.OffMoveSceneCollider(saveClass.GetMoveSceneData());
         }
         else
         {
             Debug.Log("cc is not exist");
         }
-
-        cc.OffRecordCollider(saveClass.GetRecordData());
-        cc.OffScriptCollider(saveClass.GetScriptData());
-        cc.OffMoveSceneCollider(saveClass.GetMoveSceneData());
     }
 
     /// <summary>

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 147455629716304718}
   - component: {fileID: 5291889490766145293}
   - component: {fileID: 1953122779168204735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_TriggerSocket_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,6 +95,10 @@ PrefabInstance:
     - target: {fileID: 100002, guid: 5dc8c0ec5bf160d4cab7e22e5532ea6a, type: 3}
       propertyPath: m_Name
       value: DG_TriggerLever_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 5dc8c0ec5bf160d4cab7e22e5532ea6a, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5dc8c0ec5bf160d4cab7e22e5532ea6a, type: 3}
       propertyPath: m_RootOrder

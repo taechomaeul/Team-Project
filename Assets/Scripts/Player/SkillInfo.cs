@@ -36,6 +36,8 @@ public class SkillInfo : MonoBehaviour
     public List<Dictionary<string, object>> data;
 
     public string[] langArr; //언어 이름만을 모은 배열
+    public bool isReadCompleted = false;
+
 
     //읽어온 csv파일 데이터 저장
     private void Awake()
@@ -94,6 +96,5 @@ public class SkillInfo : MonoBehaviour
             //skills[i].effectRot = cSkillInfo.effectRot;
         }
     }
-
     
 }

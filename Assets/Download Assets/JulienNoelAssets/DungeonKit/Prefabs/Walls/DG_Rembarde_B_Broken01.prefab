@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 7816619292457327815}
   - component: {fileID: 1534041217153626725}
   - component: {fileID: 4846467127849809123}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Rembarde_B_Broken01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7682584190139795822
 Transform:

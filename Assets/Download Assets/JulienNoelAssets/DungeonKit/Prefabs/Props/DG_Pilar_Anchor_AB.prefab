@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7013051349187807711}
   - component: {fileID: 6530057911474303820}
   - component: {fileID: 6586260770874819780}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Pilar_Anchor_AB
   m_TagString: Untagged
   m_Icon: {fileID: 0}

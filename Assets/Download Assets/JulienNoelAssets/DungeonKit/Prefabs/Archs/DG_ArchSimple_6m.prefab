@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3767562479231451266}
   - component: {fileID: 7325343734857978935}
   - component: {fileID: 4175663044147352198}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_ArchSimple_6m
   m_TagString: Untagged
   m_Icon: {fileID: 0}

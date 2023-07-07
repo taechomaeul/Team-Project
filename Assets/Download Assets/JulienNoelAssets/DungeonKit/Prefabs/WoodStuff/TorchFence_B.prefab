@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8368452564169173165}
   - component: {fileID: 8021944031092939326}
   - component: {fileID: 6594364874150258431}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TorchFence_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &654072958
 Transform:
@@ -183,6 +183,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_TorchWood
       objectReference: {fileID: 0}
+    - target: {fileID: 3493599289486336619, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493599289486336619, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423285824424428123, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423285824424428123, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552570971967198849, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552570971967198849, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a24e712c3c627e49b766a641c857d96, type: 3}
 --- !u!4 &186023753750922660 stripped
@@ -272,6 +302,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_TorchWood (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493599289486336619, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493599289486336619, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423285824424428123, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423285824424428123, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552570971967198849, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552570971967198849, guid: 6a24e712c3c627e49b766a641c857d96,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a24e712c3c627e49b766a641c857d96, type: 3}

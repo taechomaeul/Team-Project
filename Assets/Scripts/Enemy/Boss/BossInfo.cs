@@ -1,23 +1,67 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossInfo : MonoBehaviour
 {
+    // 보스 종류
+    private enum BossType
+    {
+        MiniBoss,
+        FinalBoss
+    }
+
     // 인스펙터
     [Header("보스 정보")]
+    [Tooltip("보스 종류")]
+    [SerializeField] private BossType bossType;
     [Tooltip("보스 정보")]
     [SerializeField] internal Boss stat = new();
 
 
 
-    private void Awake()
+    private void Start()
     {
-        // 체력 초기화
-        stat.SetCurrentHp(stat.GetMaxHp());
+        InitStat();
+    }
+
+    /// <summary>
+    /// 스탯 초기 설정
+    /// </summary>
+    private void InitStat()
+    {
+        Dictionary<string, object> statData = null;
+        switch (bossType)
+        {
+            case BossType.MiniBoss:
+                statData = DefaultStatManager.Instance.GetMiniBossData();
+                break;
+            case BossType.FinalBoss:
+                statData = DefaultStatManager.Instance.GetFinalBossData();
+                break;
+        }
+
         // 탐지 대상 초기화
         stat.SetTarget(GameObject.Find("Player").transform.GetChild(0).gameObject);
         // 컴포넌트 대상 트랜스폼 초기화
         stat.SetTransform(transform);
+        // 체력 초기화
+        stat.SetMaxHp(int.Parse(statData["maxHp"].ToString()));
+        stat.SetCurrentHp(stat.GetMaxHp());
+        // 이동 속도 초기화
+        stat.SetMovingSpeed(float.Parse(statData["movingSpeed"].ToString()));
+        // 탐지 범위 초기화
+        stat.SetDetectAngle(float.Parse(statData["detectAngle"].ToString()));
+        stat.SetDetectRadius(float.Parse(statData["detectRadius"].ToString()));
+        // 공격 수치 초기화
+        stat.SetDamage(int.Parse(statData["attack"].ToString()));
+        stat.SetAttackCycle(float.Parse(statData["attackCycle"].ToString()));
+        stat.SetAttackRange(float.Parse(statData["attackRange"].ToString()));
+        // 스킬 수치 초기화
+        stat.SetSkillDamage(int.Parse(statData["skillDamage"].ToString()));
+        stat.SetSkillCoolDown(float.Parse(statData["skillCoolDown"].ToString()));
+        stat.SetSkillCastRange(float.Parse(statData["skillCastRange"].ToString()));
+        stat.SetSkillPhaseRatio(float.Parse(statData["skillPhaseHpRatio"].ToString()));
     }
 }
 
@@ -76,7 +120,7 @@ internal class Boss : Enemy
     /// <summary>
     /// 스킬 사용 페이즈 진입 비율 값 가져오기
     /// </summary>
-    /// <returns>스킬 사용 페이즈 진입 비율(0 ~ 1)</returns>
+    /// <returns>스킬 사용 페이즈 진입 체력 비율(0 ~ 1)</returns>
     public float GetSkillPhaseHpRatio() { return skillPhaseHpRatio * 0.01f; }
 
     /// <summary>
@@ -117,5 +161,29 @@ internal class Boss : Enemy
     /// </summary>
     /// <param name="tf">true or false</param>
     public void SetIsSkillCasting(bool tf) { isSkillCasting = tf; }
+
+    /// <summary>
+    /// 스킬 공격력 설정
+    /// </summary>
+    /// <param name="skillDamage">스킬 공격력</param>
+    public void SetSkillDamage(int skillDamage) { this.skillDamage = skillDamage; }
+
+    /// <summary>
+    /// 스킬 재사용 대기시간 설정
+    /// </summary>
+    /// <param name="skillCoolDown">스킬 재사용 대기시간</param>
+    public void SetSkillCoolDown(float skillCoolDown) { this.skillCoolDown = skillCoolDown; }
+
+    /// <summary>
+    /// 스킬 시전 사거리 설정
+    /// </summary>
+    /// <param name="skillCastRange">스킬 시전 사거리</param>
+    public void SetSkillCastRange(float skillCastRange) { this.skillCastRange = skillCastRange; }
+
+    /// <summary>
+    /// 스킬 사용 페이즈 진입 체력 비율 설정
+    /// </summary>
+    /// <param name="skillPhaseHpRatio">스킬 사용 페이즈 진입 체력 비율(0 ~ 100)</param>
+    public void SetSkillPhaseRatio(float skillPhaseHpRatio) { this.skillPhaseHpRatio = skillPhaseHpRatio; }
     #endregion
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2831260448007900734}
   - component: {fileID: 1898976789}
   - component: {fileID: 1898976791}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BM_Fabric_MageC
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -17,7 +17,7 @@ public class SkillController : MonoBehaviour
 
     void Start()
     {
-        plInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
         skillInfo = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
 
         string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
@@ -55,7 +55,7 @@ public class SkillController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 toolTip.SetActive(false);
-                Debug.Log($"게임 오브젝트 이름 : {gameObject.name}");
+                //Debug.Log($"게임 오브젝트 이름 : {gameObject.name}");
                 if (gameObject.name.Substring(gameObject.name.Length - 1).Equals("1"))
                 {
                     plInfo.curSkill = skillInfo.skills[1 + langOffset];

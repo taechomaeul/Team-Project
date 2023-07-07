@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3007122613471070059}
   - component: {fileID: 1121938161805984986}
   - component: {fileID: 760169708}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigCandles_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 7518723541723449614}
   - component: {fileID: 4179176396690712872}
   - component: {fileID: 3750051842617061566}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6222257657261157827}
   - component: {fileID: 3411730712638778831}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,6 +276,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Candle (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771871, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}
@@ -366,6 +371,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Candle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771871, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}

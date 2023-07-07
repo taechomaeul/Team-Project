@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8267575159600399982}
   - component: {fileID: 5110696464428348300}
   - component: {fileID: 698881197226596520}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Flag_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}

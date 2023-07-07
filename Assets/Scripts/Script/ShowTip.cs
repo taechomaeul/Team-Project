@@ -54,7 +54,6 @@ public class ShowTip : MonoBehaviour
             }
             SaveManager.Instance.saveClass.SetTipData(checkTipComplete);
         }
-
     }
 
     /// <summary>

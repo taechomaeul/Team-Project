@@ -28,7 +28,6 @@ public class ScriptColliderInfo : MonoBehaviour
         actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
 
-        //string lang = "EN"; //settingManager에서 끌어올 수 있게 만들어줌
         string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
         if (lang.Equals("KR"))
         {
@@ -37,7 +36,6 @@ public class ScriptColliderInfo : MonoBehaviour
         else if (lang.Equals("EN"))
         {
             langOffset = 63;
-            Debug.Log($"현재 Offset : {langOffset}");
         }
     }
 
@@ -86,7 +84,6 @@ public class ScriptColliderInfo : MonoBehaviour
         actionFunction.PauseGameForAct();
 
         //인덱스로 스크립트를 불러온다
-        Debug.Log($"현재 Offset BE : {langOffset}");
         string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
         if (lang.Equals("KR"))
         {
@@ -95,7 +92,6 @@ public class ScriptColliderInfo : MonoBehaviour
         else if (lang.Equals("EN"))
         {
             langOffset = 63;
-            Debug.Log($"현재 Offset AF : {langOffset}");
         }
         showScript.LoadScript(curIndex, langOffset);
         curIndex++;
@@ -107,8 +103,6 @@ public class ScriptColliderInfo : MonoBehaviour
         {
             //현재 Collider의 이름으로 인덱스를 받아온다
             index = showScript.GetIndex(colliderName);
-
-            Debug.Log($"GetIndex : {index}");
             if (showScript.checkScriptComplete[index]) //true가 아닐 때만 스크립트 읽기
             {
                 gameObject.SetActive(false);

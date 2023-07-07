@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8165060154585895861}
   - component: {fileID: 1682064178402013990}
   - component: {fileID: 4759685960016341659}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WoodFence01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5791793278111435248
 Transform:

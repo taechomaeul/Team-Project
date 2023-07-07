@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2512805175121460623}
   - component: {fileID: 2005577486209321316}
   - component: {fileID: 7303006862531923260}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Arch_Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}

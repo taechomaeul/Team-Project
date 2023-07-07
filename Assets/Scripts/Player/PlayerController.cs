@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         timer = GameObject.Find("Timer").GetComponent<Timer>();
         actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
-        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+        cameraTransform = Camera.main.GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
         pac = GetComponent<PlayerAnimatorControll>();
         peasc = GetComponent<PlayerEffectAndSoundControll>();
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         GameObject indexer = GameObject.Find("Indexes").gameObject;
         if (scene.name.Contains("1F"))
         {
-            indexer.transform.position = new Vector3(-0.41f, 1f, -56.52f);
+            indexer.transform.position = new Vector3(3.6f, 1f, -54.15f);
         }
         else if (scene.name.Contains("2F"))
         {
@@ -102,11 +102,12 @@ public class PlayerController : MonoBehaviour
 
         //PlayerModel 위치 조정
         Transform playerPos = transform.GetChild(0);
-        Debug.Log($"PlayerPos : {playerPos.localPosition}");
+        //Debug.Log($"PlayerPos : {playerPos.localPosition}");
 
         playerPos.GetComponent<CharacterController>().enabled = false;
+        transform.rotation = indexer.transform.GetChild(plInfo.curPositionIndex).localRotation;
         playerPos.localPosition = indexer.transform.GetChild(plInfo.curPositionIndex).localPosition;
-        Debug.Log($"PlayerPos Pos AFTER : {playerPos.localPosition}");
+        //Debug.Log($"PlayerPos Pos AFTER : {playerPos.localPosition}");
         playerPos.GetComponent<CharacterController>().enabled = true;
 
         //플레이어 정보 적용
@@ -129,20 +130,23 @@ public class PlayerController : MonoBehaviour
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
 
-        if (string.IsNullOrEmpty(plInfo.curSkill.skillName))
+        //if (string.IsNullOrEmpty(plInfo.curSkill.skillName))
+        if (SaveManager.Instance.saveClass.GetCurrentSkillIndex() < 0)
         {
             if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "KR")
             {
                 plInfo.curSkill = skillData.skills[4];
-                Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
                 //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [4]번 스킬 내용을 적용
             }
             else if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "EN")
             {
                 plInfo.curSkill = skillData.skills[9];
-                Debug.Log("현재 스킬 정보 : " + plInfo.curSkill.skillDescription);
                 //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [9]번 스킬 내용을 적용
             }
+        }
+        else
+        {
+            plInfo.curSkill = skillData.skills[SaveManager.Instance.saveClass.GetCurrentSkillIndex()];
         }
 
         coroutineCheck = false;
@@ -165,12 +169,13 @@ public class PlayerController : MonoBehaviour
 
         if (!isActivated) //스크립트 활성화 중에는 힐, 스킬, 회피, 점프 등 상태 변경 불가능
         {
-
             if (characterController.isGrounded)
             {
                 yVelocity = 0;
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    ResetAttack();
+                    damagedTime = 0;
                     yVelocity = jumpSpeed;
                     plState = PL_STATE.JUMP;
                 }
@@ -315,14 +320,13 @@ public class PlayerController : MonoBehaviour
                             }
                             else
                             {
-                                attackTime = 0;
+                                ResetAttack();
+                                damagedTime = 0;
                                 coroutineCheck = false;
                                 waitTimeCheck = false;
                                 plInfo.plAtk = originAtk; //원래의 대미지로 변경
                                 plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
                                 plState = PL_STATE.IDLE;
-                                isNextAtk = false;
-                                isAttack = false;
                             }
                             attackRange.SetActive(false);
                         }
@@ -375,13 +379,12 @@ public class PlayerController : MonoBehaviour
                             }
                             else
                             {
-                                attackTime = 0;
+                                ResetAttack();
+                                damagedTime = 0;
                                 coroutineCheck = false;
                                 waitTimeCheck = false;
                                 plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
                                 plState = PL_STATE.IDLE;
-                                isNextAtk = false;
-                                isAttack = false;
                             }
                             attackRange.SetActive(false);
                         }
@@ -436,13 +439,12 @@ public class PlayerController : MonoBehaviour
                             }
                             else
                             {
-                                attackTime = 0;
+                                ResetAttack();
+                                damagedTime = 0;
                                 coroutineCheck = false;
                                 waitTimeCheck = false;
                                 plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
                                 plState = PL_STATE.IDLE;
-                                isNextAtk = false;
-                                isAttack = false;
                             }
                             attackRange.SetActive(false);
                         }
@@ -613,6 +615,8 @@ public class PlayerController : MonoBehaviour
         {
             isAvoid = true;
             plState = PL_STATE.AVOIDJUMP;
+            ResetAttack();
+            damagedTime = 0;
         }
     }
 
@@ -626,6 +630,7 @@ public class PlayerController : MonoBehaviour
             || Input.GetMouseButtonDown(1))
         {
             isAttack = true;
+            plState = PL_STATE.ATTACKM1;
             return true;
         }
         else return false;
@@ -746,7 +751,6 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     public IEnumerator ResetCoolTime(float coolTime)
     {
-        //Debug.Log("CoolTIme Reset-ing");
         yield return new WaitForSeconds(coolTime);
         isSkillCool = false; //스킬쿨 해제
         Debug.Log("CoolTIme Reset Complete!");
@@ -761,4 +765,12 @@ public class PlayerController : MonoBehaviour
     {
         waitTimeCheck = tf;
     }
+
+    public void ResetAttack()
+    {
+        attackTime = 0;
+        isAttack = false;
+        isNextAtk = false;
+    }
+
 }

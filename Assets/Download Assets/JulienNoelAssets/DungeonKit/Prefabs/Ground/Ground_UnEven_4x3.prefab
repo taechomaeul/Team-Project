@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2406074744933687175}
   - component: {fileID: 8008871922884916512}
   - component: {fileID: 4504663126910059727}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground_UnEven_4x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

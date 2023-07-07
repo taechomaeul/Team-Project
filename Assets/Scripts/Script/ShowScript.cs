@@ -61,7 +61,7 @@ public class ShowScript : MonoBehaviour
             }
             
         }
-        Debug.Log($"Length: {startIdxArr.Length}");
+        //Debug.Log($"Length: {startIdxArr.Length}");
 
         //중복제거
         startIdxArr = startIdxArr.Distinct().ToArray();
@@ -82,7 +82,6 @@ public class ShowScript : MonoBehaviour
             }
             SaveManager.Instance.saveClass.SetScriptData(checkScriptComplete);
         }
-
     }
 
     /// <summary>

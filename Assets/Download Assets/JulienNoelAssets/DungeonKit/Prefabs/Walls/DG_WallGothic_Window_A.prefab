@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 7514323590596951178}
   - component: {fileID: 5293813386925183819}
   - component: {fileID: 5472112045833697939}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_WallGothic_Window_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1621804371
 Transform:
