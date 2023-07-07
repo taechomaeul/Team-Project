@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 1425086370163302264}
   - component: {fileID: 1425086370163302267}
   - component: {fileID: 6033345870888237938}
+  - component: {fileID: 2920445223541017778}
   m_Layer: 8
   m_Name: Mini Boss Sample
   m_TagString: Enemy
@@ -149,7 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d85968346dc2a4a9fb0682a0bc9840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossType: 0
   stat:
     isDebug: 1
     movingSpeed: 5
@@ -166,6 +166,7 @@ MonoBehaviour:
     isAttacking: 0
     isAttacked: 0
     isDead: 0
+    bossType: 0
     skillDamage: 15
     skillCoolDown: 10
     skillCastRange: 5
@@ -243,6 +244,19 @@ MonoBehaviour:
   effectAttack2: {fileID: 1104960254507235907}
   effectAttack3: {fileID: 0}
   effectSkill: {fileID: 1935458605565716233}
+--- !u!114 &2920445223541017778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425086370163302266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08b7f7eeb2878f49a649bc42b396dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBar: {fileID: 0}
 --- !u!1 &1425086370244495716
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1425086370244495717
 Transform:
   m_ObjectHideFlags: 0
@@ -271,8 +285,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425086370244495716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 2}
-  m_LocalScale: {x: 3, y: 0.2, z: 3}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0.95}
+  m_LocalScale: {x: 5, y: 0.2, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1425086370163302258}
@@ -515,7 +529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425086370707320352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 1}
+  m_LocalPosition: {x: 1.319, y: 0.71, z: 0.956}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []

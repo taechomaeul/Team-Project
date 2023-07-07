@@ -18,15 +18,16 @@ public class EnemyAttack : MonoBehaviour
     {
         // 적 정보 초기화
         // 일반 몬스터라면
-        if (transform.parent.GetComponent<BossInfo>() == null)
+        if (transform.root.GetComponent<BossInfo>() == null)
         {
-            enemyInfo = transform.parent.GetComponent<EnemyInfo>().stat;
+            enemyInfo = transform.root.GetComponent<EnemyInfo>().stat;
+            
             isSkill = false;
         }
         // 보스라면
         else
         {
-            enemyInfo = transform.parent.GetComponent<BossInfo>().stat;
+            enemyInfo = transform.root.GetComponent<BossInfo>().stat;
             bossInfo = enemyInfo as Boss;
         }
 
@@ -62,6 +63,9 @@ public class EnemyAttack : MonoBehaviour
             }
             else
             {
+                Debug.Log(other.name, other);
+                Debug.Log(other.GetComponentInParent<PlayerController>() == null);
+                Debug.Log(enemyInfo.GetDamage());
                 // 평타 데미지, 설정한 랜덤 범위 수치 계산 후 플레이어 체력에서 차감
                 other.GetComponentInParent<PlayerController>().BeAttacked(DamageManager.Instance.DamageRandomCalc(enemyInfo.GetDamage(), atkRandomRatio * 0.01f));
             }

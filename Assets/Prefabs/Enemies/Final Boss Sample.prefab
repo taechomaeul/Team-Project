@@ -138,7 +138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3102516748592279502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 2}
+  m_LocalPosition: {x: 1.12, y: 1.138, z: 1.023}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 3102516749540191962}
   - component: {fileID: 3102516749540191963}
   - component: {fileID: 3918628994398871695}
+  - component: {fileID: -8831141222166068773}
   m_Layer: 8
   m_Name: Final Boss Sample
   m_TagString: Enemy
@@ -443,7 +444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d85968346dc2a4a9fb0682a0bc9840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossType: 1
   stat:
     isDebug: 1
     movingSpeed: 5
@@ -460,6 +460,7 @@ MonoBehaviour:
     isAttacking: 0
     isAttacked: 0
     isDead: 0
+    bossType: 1
     skillDamage: 30
     skillCoolDown: 20
     skillCastRange: 15
@@ -537,6 +538,18 @@ MonoBehaviour:
   effectAttack2: {fileID: 719968375141419951}
   effectAttack3: {fileID: 8592477703674832213}
   effectSkill: {fileID: 1424487089121479079}
+--- !u!114 &-8831141222166068773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3102516749540191956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08b7f7eeb2878f49a649bc42b396dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3102516749943650217
 GameObject:
   m_ObjectHideFlags: 0
