@@ -114,7 +114,6 @@ public class EnemyAnimationControll : MonoBehaviour
         float time = 0;
         // 상태머신 state를 비교하기 위한 변수
         string smState = GetStringFromAnimationStateMachine(state);
-        Debug.Log(smState);
         // 상태머신 state의 애니메이션 clip
         string smClip = "";
         // 상태머신 state의 배속

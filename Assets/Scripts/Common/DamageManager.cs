@@ -43,8 +43,8 @@ public class DamageManager : MonoBehaviour
         // 범위가 0 미만이거나 1 초과인 경우
         if (rangeValue < 0 || rangeValue > 1)
         {
-            // rangeValue 0으로
-            Debug.Log("잘못된 입력값");
+            // 잘못된 입력값
+            // rangeValue 0으로 설정
             rangeValue = 0;
         }
         // 데미지 값 계산 후 반환
