@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,20 +21,17 @@ public class EnemyBossHpUI : MonoBehaviour
     private void Start()
     {
         BossNameLanguageChange();
+        StartCoroutine(BossHpOnOff());
     }
 
     private void Update()
     {
-        if (bossInfo.GetIsTracking())
-        {
-            hpBar.SetActive(true);
-        }
         hpSlider.value = (float)bossInfo.GetCurrentHp() / bossInfo.GetMaxHp();
     }
 
     private void LateUpdate()
     {
-        if(languageIndex != SettingManager.Instance.GetCurrentLanguageIndex())
+        if (languageIndex != SettingManager.Instance.GetCurrentLanguageIndex())
         {
             BossNameLanguageChange();
         }
@@ -64,6 +62,28 @@ public class EnemyBossHpUI : MonoBehaviour
             {
                 bossName.text = FindObjectOfType<EnemyPrefab>().enemyPrefabNames_EN[5];
             }
+        }
+    }
+
+    IEnumerator BossHpOnOff()
+    {
+        bool onChecked = false;
+        while (true)
+        {
+            if (!onChecked)
+            {
+                if (bossInfo.GetIsTracking())
+                {
+                    hpBar.SetActive(true);
+                    onChecked = true;
+                }
+            }
+            if (bossInfo.GetIsDead())
+            {
+                hpBar.SetActive(false);
+                break;
+            }
+            yield return new WaitForSeconds(1);
         }
     }
 }
