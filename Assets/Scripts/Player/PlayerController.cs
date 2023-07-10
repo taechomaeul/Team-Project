@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.WALK:
                     //애니메이션 연결
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Walk);
 
                     plInfo.plMoveSpd = WalkMoveSpd();
                     //이동속도를 반으로 줄인다.
@@ -291,7 +291,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
                         StartCoroutine(gcadt);
-                        peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack1);
+                        peasc.TurnOnEffectAttack();
                         coroutineCheck = true;
                     }
 
@@ -348,7 +348,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
                         StartCoroutine(gcadt);
-                        peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack2);
+                        peasc.TurnOnEffectAttack();
                         coroutineCheck = true;
                     }
 
@@ -406,7 +406,7 @@ public class PlayerController : MonoBehaviour
                         }
                         gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
                         StartCoroutine(gcadt);
-                        peasc.TurnOnEffectAttack((int)PlayerAnimatorControll.Animation_State.Attack3);
+                        peasc.TurnOnEffectAttack();
                         coroutineCheck = true;
                     }
 
@@ -500,6 +500,7 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case PL_STATE.AVOIDJUMP:
+                    plInfo.plMoveSpd = 0;
                     //애니메이션 연결
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid1);
                     //avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
@@ -522,6 +523,10 @@ public class PlayerController : MonoBehaviour
 
                         isNoDamage = true; //무적 ON
 
+                        transform.GetChild(0).Translate(0, 0, moveSpd * Time.deltaTime * 0.5f);
+
+
+
                         //애니메이션 시간 대기
                         avoidTime += Time.deltaTime;
                         if (avoidTime > avoidJAnimTime)
@@ -529,49 +534,52 @@ public class PlayerController : MonoBehaviour
                             avoidTime = 0;
                             coroutineCheck = false;
                             waitTimeCheck = false;
-                            plState = PL_STATE.AVOIDROLL;
-                        }
-                    }
-
-
-                    break;
-
-                case PL_STATE.AVOIDROLL:
-                    isNoDamage = false; //무적 OFF
-
-                    //애니메이션 연결
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid2);
-                    //avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
-                    if (!coroutineCheck)
-                    {
-                        if (gcadt != null)
-                        {
-                            StopCoroutine(gcadt);
-                        }
-                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
-                        StartCoroutine(gcadt);
-                        coroutineCheck = true;
-                    }
-
-                    if (waitTimeCheck)
-                    {
-                        float? temp = gcadt.Current as float?;
-                        avoidRAnimTime = (float)temp;
-
-
-                        //애니메이션 시간 대기
-                        avoidTime += Time.deltaTime;
-                        if (avoidTime > avoidRAnimTime)
-                        {
-                            avoidTime = 0;
-                            coroutineCheck = false;
-                            waitTimeCheck = false;
+                            isNoDamage = false; //무적 OFF
                             plState = PL_STATE.IDLE;
                         }
                     }
 
-                    isAvoid = false;
+
                     break;
+
+                //case PL_STATE.AVOIDROLL:
+                //    transform.GetChild(0).Translate(0, 0, moveSpd * Time.deltaTime * 0.5f);
+
+                //    //애니메이션 연결
+                //    //pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid2);
+                //    //avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
+                //    if (!coroutineCheck)
+                //    {
+                //        if (gcadt != null)
+                //        {
+                //            StopCoroutine(gcadt);
+                //        }
+                //        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
+                //        StartCoroutine(gcadt);
+                //        coroutineCheck = true;
+                //    }
+
+                //    if (waitTimeCheck)
+                //    {
+                //        float? temp = gcadt.Current as float?;
+                //        avoidRAnimTime = (float)temp;
+
+
+                //        //애니메이션 시간 대기
+                //        avoidTime += Time.deltaTime;
+                //        if (avoidTime > avoidRAnimTime)
+                //        {
+                //            avoidTime = 0;
+                //            coroutineCheck = false;
+                //            waitTimeCheck = false;
+                //            plInfo.plMoveSpd = moveSpd;
+                //            isNoDamage = false; //무적 OFF
+                //            plState = PL_STATE.IDLE;
+                //        }
+                //    }
+
+                //    isAvoid = false;
+                //    break;
 
                 case PL_STATE.DIE:
                     //애니메이션 연결
@@ -630,7 +638,10 @@ public class PlayerController : MonoBehaviour
             || Input.GetMouseButtonDown(1))
         {
             isAttack = true;
-            plState = PL_STATE.ATTACKM1;
+            if (plState == PL_STATE.IDLE || plState == PL_STATE.MOVE)
+            {
+                plState = PL_STATE.ATTACKM1;
+            }
             return true;
         }
         else return false;
@@ -746,7 +757,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(ResetCoolTime(coolTime)); //쿨타임 계산 함수
         yield return new WaitForSeconds(duringTime);
 
-        if (select == 1) { plInfo.plAtk = (int) originAmount; }
+        if (select == 1) { plInfo.plAtk = (int)originAmount; }
         else if (select == 2) { plInfo.plMoveSpd = originAmount; }
         //원래 값으로 변경
     }
