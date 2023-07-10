@@ -4428,9 +4428,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e427555abb6754743841677a2ee1a307, type: 3}
   effectPrefabs:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8789184839226780017, guid: 64fbf002a8b841548a7db674f43e1b5b, type: 3}
+  - {fileID: 7206451333170306125, guid: 0e4a247d07b9db14585c9ff0ca3b9194, type: 3}
+  - {fileID: 5648340438428576084, guid: 7a5ad678bb0d1dd4a8578e209a7a1021, type: 3}
   effectPos: {x: 0, y: 0, z: 0}
   effectRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1391277947

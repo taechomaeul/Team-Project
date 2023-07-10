@@ -9,10 +9,9 @@ public class EnemyInfo : MonoBehaviour
     [Tooltip("적 정보")]
     [SerializeField] internal Enemy stat = new();
 
-
-
-    private void Start()
+    private void Awake()
     {
+        // 탐지 대상 초기화
         InitStat();
     }
 

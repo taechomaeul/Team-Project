@@ -18,13 +18,13 @@ public class SoulController : MonoBehaviour
 
     [Header("연결 X")]
     public SoulInfo thisSoul;
-    public ActionFuntion actionFuntion;
+    public ActionFunction actionFuntion;
     public PlayerInfo plInfo;
 
     private void Start()
     {
         plInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
         thisSoul = GetComponent<SoulInfo>();
 
         toolTip = actionFuntion.fCommonPanel;

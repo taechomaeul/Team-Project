@@ -21,11 +21,11 @@ public class ScriptColliderInfo : MonoBehaviour
     private int langOffset;
 
     private ShowScript showScript;
-    private ActionFuntion actionFunction;
+    private ActionFunction actionFunction;
 
     private void Start()
     {
-        actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
 
         string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();

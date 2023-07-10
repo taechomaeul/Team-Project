@@ -24,11 +24,11 @@ public class ToggleManager : MonoBehaviour
     public bool isClear = false;
 
     private ToggleGame toggleGame;
-    private ActionFuntion actionFuntion;
+    private ActionFunction actionFuntion;
 
     void Start()
     {
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
     }
 
     
@@ -96,10 +96,12 @@ public class ToggleManager : MonoBehaviour
         actionFuntion.RestartGame();
         toggleCamera.SetActive(false);
         mainCanvas.SetActive(true);
+        Cursor.visible = false;
     }
 
     public void PlayToggleGame()
     {
+        Cursor.visible = true;
         mainCanvas.SetActive(false);
         toggleCamera.SetActive(true);
         togglePanel.SetActive(true);

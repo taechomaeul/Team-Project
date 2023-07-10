@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     {
         if (Time.timeScale == 0)
         {
-            ResumeTheGame(); //일시정지 후 메인으로 온 뒤 게임 로드하면 시간 정지되는 문제
+            //ResumeTheGame(); //일시정지 후 메인으로 온 뒤 게임 로드하면 시간 정지되는 문제
+            Time.timeScale = 1f;
         }
     }
 
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToTitleScene()
     {
+        Cursor.visible = true;
+        SoundManager.Instance.BGMChangeWithFade(0);
         SceneManager.LoadScene("TitleScene");
     }
 
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToPush()
     {
+        SoundManager.Instance.BGMChangeWithFade(1);
         SceneManager.LoadScene("PushGameScene");
     }
 
@@ -34,6 +38,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveTo1FScene()
     {
+
+        int temp = SaveManager.Instance.saveClass.GetLastSavePosition();
+            if(temp==8)
+        {
+            SoundManager.Instance.BGMChangeWithFade(2);
+        }else if(temp>=0 && temp <= 4)
+        {
+        SoundManager.Instance.BGMChangeWithFade(1);
+        }
+        Cursor.visible = false;
         SceneManager.LoadScene("TestScene_1F");
     }
 
@@ -42,6 +56,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveTo2FScene()
     {
+        int temp = SaveManager.Instance.saveClass.GetLastSavePosition();
+        if(temp==9)
+        {
+            SoundManager.Instance.BGMChangeWithFade(3);
+        }else if(temp>=5 && temp <= 7)
+        {
+        SoundManager.Instance.BGMChangeWithFade(1);
+        }
+        Cursor.visible = false;
         SceneManager.LoadScene("TestScene_2F");
     }
 
@@ -50,6 +73,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToEnding()
     {
+        SoundManager.Instance.BGMChangeWithFade(4);
         SceneManager.LoadScene("EndingScene");
     }
 
@@ -58,6 +82,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToMidBossScene()
     {
+        SoundManager.Instance.BGMStop();
         SceneManager.LoadScene("AnimMiddleBossCutScenes");
     }
 
@@ -66,6 +91,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToFinalBossScene()
     {
+        SoundManager.Instance.BGMStop();
         SceneManager.LoadScene("AnimMainBossCutScenes");
     }
 
@@ -89,6 +115,7 @@ public class GameManager : MonoBehaviour
     public void PauseTheGame()
     {
         Time.timeScale = 0;
+        Cursor.visible = true;
     }
 
     /// <summary>
@@ -97,6 +124,7 @@ public class GameManager : MonoBehaviour
     public void ResumeTheGame()
     {
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
 
     /// <summary>

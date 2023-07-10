@@ -137,7 +137,6 @@ public class SettingManager : MonoBehaviour
         LoadResolutionSetting();
         LoadBrightnessSetting();
         LoadLanguageSetting();
-        Debug.Log("설정 값 불러오기 완료");
     }
 
     /// <summary>
@@ -156,7 +155,6 @@ public class SettingManager : MonoBehaviour
         originBrightness = brightnessSlider.value;
         // 언어
         originLanguageIndex = languageIndex;
-        Debug.Log("origin 저장");
     }
 
     /// <summary>
@@ -168,7 +166,6 @@ public class SettingManager : MonoBehaviour
         SaveResolutionSetting(resolutionsDropdown.value);
         SaveBrightnessSetting();
         SaveLanguageSetting();
-        Debug.Log("설정 값 저장");
     }
 
     /// <summary>
@@ -188,7 +185,6 @@ public class SettingManager : MonoBehaviour
         brightnessSlider.value = originBrightness;
         // 언어
         languageDropdown.value = originLanguageIndex;
-        Debug.Log("origin 적용");
     }
     #endregion
 
@@ -308,7 +304,6 @@ public class SettingManager : MonoBehaviour
         // 드랍다운 메뉴 항목 채우기
         for (int i = 0; i < resolutions.Count; i++)
         {
-            //Debug.Log($"{resolutions[i].width} x {resolutions[i].height}");
             Dropdown.OptionData option = new()
             {
                 text = $"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}hz"

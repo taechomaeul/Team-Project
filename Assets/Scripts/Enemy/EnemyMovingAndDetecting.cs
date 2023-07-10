@@ -56,7 +56,7 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         navMeshAgent.angularSpeed = 360;
         if (isBoss)
         {
-            navMeshAgent.stoppingDistance = 0.5f;
+            navMeshAgent.stoppingDistance = 0.6f;
         }
         else
         {
@@ -72,7 +72,6 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         // 살아있는 상태라면
         if (!enemyInfo.GetIsDead())
         {
-            //Debug.Log("CurrentTarget : " + enemyInfo.GetCurrentTarget());
             // 탐지 대상이 시야각 안에 존재 && 인식 거리 안에 존재한다면
             if ((Mathf.Acos(Vector3.Dot(transform.forward, (enemyInfo.GetCurrentTarget().transform.position - transform.position).normalized)) * Mathf.Rad2Deg) <= enemyInfo.GetDetectAngle() * 0.5f
                 && enemyInfo.GetDistanceFromTarget() <= enemyInfo.GetDetectRadius())
