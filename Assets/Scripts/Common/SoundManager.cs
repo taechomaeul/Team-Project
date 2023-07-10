@@ -77,6 +77,7 @@ public class SoundManager : MonoBehaviour
     {
         if (clipIndex < clipList.Count && clipIndex >= 0)
         {
+            StopAllCoroutines();
             StartCoroutine(BGMChangerCoroutine(clipList[clipIndex]));
         }
         else
