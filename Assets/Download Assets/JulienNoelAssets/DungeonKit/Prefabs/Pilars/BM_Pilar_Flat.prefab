@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4923037422967101298}
   - component: {fileID: 1153433808352068965}
   - component: {fileID: 5982096880443043795}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BM_Pilar_Flat
   m_TagString: Untagged
   m_Icon: {fileID: 0}

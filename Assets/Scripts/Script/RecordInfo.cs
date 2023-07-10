@@ -5,19 +5,20 @@ using UnityEngine;
 public class RecordInfo : MonoBehaviour
 {
     [Header("연결 필수")]
+    [Tooltip("일지 이름")]
     public string recordName;
+    [Tooltip("툴팁(F) 패널")]
     public GameObject toolTipPanel;
+    [Tooltip("일지 출력 패널")]
     public GameObject recordPanel;
 
-    //[SerializeField]
     private ShowRecord showRecord;
-    //[SerializeField]
-    private ActionFuntion actionFuntion;
+    private ActionFunction actionFuntion;
     private bool isConfirm = false;
 
     private void Start()
     {
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
         showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
     }
 

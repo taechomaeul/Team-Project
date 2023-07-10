@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2021235431705113009}
   - component: {fileID: 2021235431705113011}
   - component: {fileID: 2021235431705113008}
+  - component: {fileID: 7426395954031004096}
   m_Layer: 5
   m_Name: RecordNameText
   m_TagString: Untagged
@@ -78,9 +79,24 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 0.7
   m_Text: "\uC5EC\uAE30\uC5D0 \uC81C\uBAA9 \uB4E4\uC5B4\uAC11\uB2C8\uB2E4. Prefab\uD654
     \uC2DC\uD0AC\uAC70\uC608\uC694"
+--- !u!114 &7426395954031004096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021235431705113014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.7169812, g: 0.60537565, b: 0.5309719, a: 1}
+  m_EffectDistance: {x: 0.5, y: 0.5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2021235432480316179
 GameObject:
   m_ObjectHideFlags: 0

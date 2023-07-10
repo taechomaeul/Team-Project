@@ -6,7 +6,9 @@ using UnityEngine;
 public class ScriptColliderInfo : MonoBehaviour
 {
     [Header("연결 필수")]
+    [Tooltip("스크립트 파트(POINT) 이름")]
     public string colliderName;
+    [Tooltip("스크립트 출력 패널")]
     public GameObject scriptPanel;
 
     [Header("연결 X")]
@@ -15,35 +17,47 @@ public class ScriptColliderInfo : MonoBehaviour
     public int nextIndex;
     public bool isShowed = false;
     private bool isStay = false;
+    [SerializeField]
+    private int langOffset;
 
     private ShowScript showScript;
-    private ActionFuntion actionFunction;
+    private ActionFunction actionFunction;
 
     private void Start()
     {
-        actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFunction = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
         showScript = GameObject.Find("ActionFunction").GetComponent<ShowScript>();
+
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
+        if (lang.Equals("KR"))
+        {
+            langOffset = 0;
+        }
+        else if (lang.Equals("EN"))
+        {
+            langOffset = 63;
+        }
     }
 
     private void Update()
     {
-        if (isStay)
+        if (isStay) //Collider Stay 상태에 들어오고
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0)) //마우스 왼쪽 클릭 버튼 입력이 들어오면
             {
-                if (curIndex < nextIndex)
+                if (curIndex < nextIndex) //현재 인덱스가 다음 인덱스의 시작보다 작으면
                 {
-                    if (colliderName != "SAVE_A")
+                    if (colliderName != "SAVE_A") //세이브가 아닐 때만
                     {
-                        showScript.LoadScript(curIndex);
+                        showScript.LoadScript(curIndex, langOffset); //다음 스크립트를 불러온다
                         curIndex++;
                     }
                 }
                 else
                 {
-                    scriptPanel.SetActive(false);
+                    scriptPanel.SetActive(false); //현재 인덱스가 다음 인덱스와 같아지면 스크립트 패널을 끄고
 
-                    actionFunction.RestartGame();
+                    actionFunction.RestartGame(); //카메라와 캐릭터 움직임을 원래 속도로 변경한다.
                     isShowed = true;
                 }
             }
@@ -60,13 +74,26 @@ public class ScriptColliderInfo : MonoBehaviour
         showScript.isClick = false;
     }
 
+    /// <summary>
+    /// 조건에 따라 움직임 제어하는 함수
+    /// 스크립트 패널 ON, 움직임 X, 스크립트 텍스트 불러오기
+    /// </summary>
     public void ConditionMove()
     {
         scriptPanel.SetActive(true);
         actionFunction.PauseGameForAct();
 
         //인덱스로 스크립트를 불러온다
-        showScript.LoadScript(curIndex);
+        string lang = SettingManager.Instance.GetCurrentLanguageIndexToString();
+        if (lang.Equals("KR"))
+        {
+            langOffset = 0;
+        }
+        else if (lang.Equals("EN"))
+        {
+            langOffset = 63;
+        }
+        showScript.LoadScript(curIndex, langOffset);
         curIndex++;
     }
 
@@ -76,10 +103,9 @@ public class ScriptColliderInfo : MonoBehaviour
         {
             //현재 Collider의 이름으로 인덱스를 받아온다
             index = showScript.GetIndex(colliderName);
-
             if (showScript.checkScriptComplete[index]) //true가 아닐 때만 스크립트 읽기
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
 
             else
@@ -141,7 +167,6 @@ public class ScriptColliderInfo : MonoBehaviour
 
             //스크립트 체크 완료
             showScript.checkScriptComplete[index] = true;
-            Debug.Log($"CheckScriptComplete[{index}] : {showScript.checkScriptComplete[index]}");
 
             if (colliderName.Equals("T_PUZZLE"))
             {

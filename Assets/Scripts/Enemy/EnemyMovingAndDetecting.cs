@@ -54,7 +54,14 @@ public class EnemyMovingAndDetecting : MonoBehaviour
         navMeshAgent.acceleration = 50;
         // 회전 속도는 탐지 대상에 고정되게 설정
         navMeshAgent.angularSpeed = 360;
-        navMeshAgent.stoppingDistance = 0.1f;
+        if (isBoss)
+        {
+            navMeshAgent.stoppingDistance = 0.6f;
+        }
+        else
+        {
+            navMeshAgent.stoppingDistance = 0.2f;
+        }
 
         // 애니메이터 컨트롤 세팅
         eac = GetComponent<EnemyAnimationControll>();

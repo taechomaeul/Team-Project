@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5802242637424138803}
   - component: {fileID: 8684751764948918953}
   - component: {fileID: 1541851261618510352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Ceiling_Hub_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

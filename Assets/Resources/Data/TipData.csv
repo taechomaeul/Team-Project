@@ -1,9 +1,13 @@
-TIP_NAME,CONTEXT
-이동,[W·A·S·D]키와 마우스 이동으로 캐릭터를 조작할 수 있습니다./- [W·A·S·D] : 이동/- 마우스 이동 : 화면 회전
-빙의,상호작용이 가능한 시체 가까이에서 [F]키을 누르면 해당 시체로 빙의할 수 있습니다./이전 빙의체는 사라집니다.
-일지(습득/재확인),떨어진 일지는 [F]키를 눌러 습득할 수 있습니다./습득한 일지는[J]키를 눌러서 확인할 수 있습니다.
-전투,"적의 시야에 들어오거나, 선공격을 하면 전투가 시작됩니다./마우스 [좌클릭·우클릭]을 통해 공격할 수 있습니다./공격에는 일반공격과 기습공격이 있습니다./ 기습 공격은 적의 시야에 들어오지 않은 채로 공격이 성공하면 적용됩니다./기습을 위한 구보(천천히 걷기)는 [Ctrl]키를 유지하거나, [C]버튼으로 할 수 있습니다./기습 공격의 대미지 범위는 일반 공격 대미지 범위의 1.5배 상승합니다./[Shift]키를 누르면 구를 수 있고, 적의 공격을 회피할 수 있습니다."
-영혼석(영혼흡수/사용),"적의 사망 시, 적의 영혼을 추출할 수 있습니다./추출된 영혼은 플레이어의 영혼석으로 흡수되며, 흡수된 영혼은 [1]키를 통해 플레이어의 혼력으로 채울 수 있습니다./영혼석은 최대 666개까지 채울 수 있으며, 현재 영혼석에 채워진 영혼의 무게는 왼쪽 상단의 혼력 아래의 UI에서 확인할 수 있습니다./"
-저장,"여신상 가까이에서 [F]키를 눌러 기도하면 현재까지의 내용을 저장할 수 있습니다. 플레이어의 사망 시, 가장 최근에 저장한 지점에서 부활합니다."
-,
- ,
+Language,TIP_NAME,CONTEXT
+KR,이동,[W·A·S·D]키와 마우스 이동으로 캐릭터를 조작할 수 있습니다./- [W·A·S·D] : 이동/- 마우스 이동 : 화면 회전
+KR,빙의,상호작용이 가능한 시체 가까이에서 [F]키을 누르면 해당 시체로 빙의할 수 있습니다./이전 빙의체는 사라집니다.
+KR,일지(습득/재확인),떨어진 일지는 [F]키를 눌러 습득할 수 있습니다./습득한 일지는[J]키를 눌러서 확인할 수 있습니다.
+KR,전투,"적의 시야에 들어오거나, 선공격을 하면 전투가 시작됩니다./마우스 [좌클릭·우클릭]을 통해 공격할 수 있습니다./공격에는 일반공격과 기습공격이 있습니다./ 기습 공격은 적의 시야에 들어오지 않은 채로 공격이 성공하면 적용됩니다./기습을 위한 구보(천천히 걷기)는 [Ctrl]키를 유지하거나, [C]버튼으로 할 수 있습니다./기습 공격의 대미지 범위는 일반 공격 대미지 범위의 1.5배 상승합니다./[Shift]키를 누르면 구를 수 있고, 적의 공격을 회피할 수 있습니다."
+KR,영혼석(영혼흡수/사용),"적의 사망 시, 적의 영혼을 추출할 수 있습니다./추출된 영혼은 플레이어의 영혼석으로 흡수되며, 흡수된 영혼은 [1]키를 통해 플레이어의 혼력으로 채울 수 있습니다./영혼석은 최대 666개까지 채울 수 있으며, 현재 영혼석에 채워진 영혼의 무게는 왼쪽 상단의 혼력 아래의 UI에서 확인할 수 있습니다./"
+KR,저장,"여신상 가까이에서 [F]키를 눌러 기도하면 현재까지의 내용을 저장할 수 있습니다. 플레이어의 사망 시, 가장 최근에 저장한 지점에서 부활합니다."
+EN,Move,[W·A·S·D] You can manipulate the character by moving the key and mouse./- [W·A·S·D]: Move/- Mouse: Rotate the screen
+EN,Possession,Press the [F] key close to the interactive corpse and you can be possessed by that corpse./The previous body disappears.
+EN,Diary (acquired/reconfirmed),The dropped log can be acquired by pressing the [F] key./You can check the acquired diary by pressing the [J] key.
+EN,Battle,"The battle begins when you enter the enemy's sight or make a first attack./Mouse [left-click, right-click] to attack./There are general attacks and surprise attacks./ A surprise attack is applied if the attack succeeds without being in the enemy's sight./Slow walking for the raid can be done by holding the [Ctrl] key, or by the [C] button./Sudden attack damage range is 1.5 times higher than normal attack damage range./Press the [Shift] key to roll and avoid enemy attacks."
+EN,Soul Stone (Soul Absorption/Use),"In the event of an enemy's death, the enemy's soul can be extracted./The extracted soul is absorbed into the player's soul stone, and the absorbed soul can be filled with the player's soul force through the [1] key./You can fill up to 666 soul seats, and the weight of the soul currently filled in the soul seats can be found in the UI under the horn in the upper left./"
+EN,Save,"Press the [F] key near the statue to pray to save the contents so far. When the player dies, it will be revived at the most recent saved point."

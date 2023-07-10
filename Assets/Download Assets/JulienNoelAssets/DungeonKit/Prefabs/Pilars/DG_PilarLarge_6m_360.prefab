@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7652295405139378271}
   - component: {fileID: 8462846288489902032}
   - component: {fileID: 555747462430518478}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_PilarLarge_6m_360
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3466970893946190151}
   - component: {fileID: 7516674714794077563}
   - component: {fileID: 2454309902604643613}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BM_Ceiling_3x6_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}

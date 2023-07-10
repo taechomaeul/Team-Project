@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -43,11 +43,16 @@ public class PlayerController : MonoBehaviour
     public Timer timer;
     public SkillInfo skillData;
     public PlayerInfo plInfo;
-    public ActionFuntion actionFuntion;
+    public ActionFunction actionFuntion;
     public Transform cameraTransform;
     public CharacterController characterController;
 
     private PlayerAnimatorControll pac;
+    private PlayerEffectAndSoundControll peasc;
+
+    private bool coroutineCheck;
+    private bool waitTimeCheck;
+    IEnumerator gcadt;
 
     public enum PL_STATE
     {
@@ -72,23 +77,88 @@ public class PlayerController : MonoBehaviour
     {
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
-        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+        cameraTransform = Camera.main.GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
-        //anim = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         pac = GetComponent<PlayerAnimatorControll>();
+        peasc = GetComponent<PlayerEffectAndSoundControll>();
+
+        if (GetComponentInChildren<TrailRenderer>())
+        {
+            peasc.SetTrail();
+        }
+
+        //현재 씬에 따라 인덱서 위치를 지정 (인덱서 위치는 Player 기본 위치)
+        Scene scene = SceneManager.GetActiveScene();
+        GameObject indexer = GameObject.Find("Indexes").gameObject;
+        if (scene.name.Contains("1F"))
+        {
+            indexer.transform.position = new Vector3(3.6f, 1f, -54.15f);
+        }
+        else if (scene.name.Contains("2F"))
+        {
+            indexer.transform.position = new Vector3(-4.42f, 1f, -41.29f);
+        }
+
+        // 불러온 데이터 적용
+        SaveManager.Instance.ApplyLoadedData();
+        plInfo.curPositionIndex = SaveManager.Instance.saveClass.GetLastSavePosition();
+
+        //PlayerModel 위치 조정
+        Transform playerPos = transform.GetChild(0);
+        //Debug.Log($"PlayerPos : {playerPos.localPosition}");
+
+        playerPos.GetComponent<CharacterController>().enabled = false;
+        transform.rotation = indexer.transform.GetChild(plInfo.curPositionIndex).localRotation;
+        playerPos.localPosition = indexer.transform.GetChild(plInfo.curPositionIndex).localPosition;
+        //Debug.Log($"PlayerPos Pos AFTER : {playerPos.localPosition}");
+        playerPos.GetComponent<CharacterController>().enabled = true;
+
+        //플레이어 정보 적용
+        GameObject playerPrefab = playerPos.transform.Find("PlayerPrefab").gameObject;
+
+        EnemyPrefab enemyPrefab = GameObject.Find("ActionFunction").GetComponent<EnemyPrefab>();
+        GameObject newPlayerPrefab = Instantiate(enemyPrefab.enemyPrefabs[plInfo.curPrefabIndex]);
+        newPlayerPrefab.transform.parent = playerPos;
+        newPlayerPrefab.transform.SetAsFirstSibling();
+        newPlayerPrefab.transform.localPosition = playerPrefab.transform.localPosition;
+        Destroy(playerPrefab);
+
+        newPlayerPrefab.transform.localRotation = Quaternion.identity;
+        newPlayerPrefab.transform.localScale = Vector3.one;
+        newPlayerPrefab.name = "PlayerPrefab";
+
+        // 플레이어 모델 애니메이터 연결
+        InitAnimator();
 
         plInfo.plMoveSpd = moveSpd;
         originAtk = plInfo.plAtk;
-    }
 
-    void OnDrawGizmosSelected()
-    {
-        //Gizmos.color = Color.blue;
-        //Gizmos.DrawWireSphere(GameObject.Find("Sword").transform.position, 1f);
-    }
+        //if (string.IsNullOrEmpty(plInfo.curSkill.skillName))
+        if (SaveManager.Instance.saveClass.GetCurrentSkillIndex() < 0)
+        {
+            if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "KR")
+            {
+                plInfo.curSkill = skillData.skills[4];
+                //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [4]번 스킬 내용을 적용
+            }
+            else if (SettingManager.Instance.GetCurrentLanguageIndexToString() == "EN")
+            {
+                plInfo.curSkill = skillData.skills[9];
+                //가지고 있는 스킬이 없다면 빈 스킬 정보를 가지고 있는 [9]번 스킬 내용을 적용
+            }
+        }
+        else
+        {
+            plInfo.curSkill = skillData.skills[SaveManager.Instance.saveClass.GetCurrentSkillIndex()];
+        }
 
+        coroutineCheck = false;
+        waitTimeCheck = false;
+
+        peasc.SetTrail();
+    }
 
     void FixedUpdate()
     {
@@ -106,12 +176,12 @@ public class PlayerController : MonoBehaviour
 
         if (!isActivated) //스크립트 활성화 중에는 힐, 스킬, 회피, 점프 등 상태 변경 불가능
         {
-
             if (characterController.isGrounded)
             {
                 yVelocity = 0;
-                if (Input.GetKeyDown(KeyCode.Space))
+                if ((plState == PL_STATE.IDLE || plState == PL_STATE.MOVE) && Input.GetKeyDown(KeyCode.Space))
                 {
+                    ResetActivate();
                     yVelocity = jumpSpeed;
                     plState = PL_STATE.JUMP;
                 }
@@ -126,14 +196,25 @@ public class PlayerController : MonoBehaviour
             {
                 Heal(); //회복한다.
             }
-            isSkill();
-            IsAvoiding();
+            IsSkill();
+
+            if (plState == PL_STATE.IDLE || plState == PL_STATE.MOVE)
+            {
+                IsAvoiding();
+            }
+
 
             switch (plState)
             {
                 case PL_STATE.IDLE:
+
+                    if (peasc.GetTrail()!=null)
+                    {
+                        peasc.TurnOffEffectAttack();
+                    }
+
+
                     //애니메이션 연결
-                    //anim.SetInteger("State", 0);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Idle);
 
                     if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
@@ -146,12 +227,15 @@ public class PlayerController : MonoBehaviour
                     {
                         plState = PL_STATE.ATTACKM1;
                     }
+                    else
+                    {
+                        isAttack = false;
+                    }
 
                     break;
 
                 case PL_STATE.MOVE:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 1);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
 
                     plInfo.plMoveSpd = moveSpd;
@@ -176,8 +260,7 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.WALK:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 2);
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Move);
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Walk);
 
                     plInfo.plMoveSpd = WalkMoveSpd();
                     //이동속도를 반으로 줄인다.
@@ -200,12 +283,12 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case PL_STATE.ACT:
+                    ResetActivate();
                     isActivated = true;
                     break;
 
                 case PL_STATE.JUMP:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 4);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Jump);
 
 
@@ -218,187 +301,332 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.ATTACKM1:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 5);
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);                    
-                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
-
                     plInfo.plMoveSpd = 0; //공격할 때에는 움직이지 못하게 한다.
-                    attackRange.SetActive(true);
 
-                    //연타 초기화 시간
-                    attackTime += Time.deltaTime;
-                    if (IsAttacking())
+                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack1);
+                    //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
+
+                    if (!coroutineCheck)
                     {
-                        isNextAtk = true;
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack1);
+                        StartCoroutine(gcadt);
+                        peasc.TurnOnEffectAttack();
+                        coroutineCheck = true;
                     }
-                    if (attackTime > atkResetTime)
+
+                    if (waitTimeCheck)
                     {
-                        if (isNextAtk == true)
+                        float? temp = gcadt.Current as float?;
+                        atkResetTime = (float)temp;
+
+                        attackRange.SetActive(true);
+
+                        //연타 초기화 시간
+                        attackTime += Time.deltaTime;
+                        if (IsAttacking())
                         {
-                            attackTime = 0;
-                            plState = PL_STATE.ATTACKM2;
-                            isNextAtk = false;
+                            isNextAtk = true;
                         }
-                        else
+                        if (attackTime > atkResetTime)
                         {
-                            attackTime = 0;
-                            plInfo.plAtk = originAtk; //원래의 대미지로 변경
-                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
-                            plState = PL_STATE.IDLE;
-                            isNextAtk = false;
-                            isAttack = false;
+                            if (isNextAtk == true)
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plState = PL_STATE.ATTACKM2;
+                                isNextAtk = false;
+                            }
+                            else
+                            {
+                                ResetAttack();
+                                damagedTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plInfo.plAtk = originAtk; //원래의 대미지로 변경
+                                plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                                plState = PL_STATE.IDLE;
+                            }
+                            attackRange.SetActive(false);
                         }
-                        attackRange.SetActive(false);
                     }
+
 
                     break;
 
                 case PL_STATE.ATTACKM2:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 6);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack2);
-                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
+                    //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
 
-                    plInfo.plAtk = originAtk; //공격력 설정
-                    attackRange.SetActive(true);
+                    if (!coroutineCheck)
+                    {
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack2);
+                        StartCoroutine(gcadt);
+                        peasc.TurnOnEffectAttack();
+                        coroutineCheck = true;
+                    }
 
-                    //연타 초기화 시간
-                    attackTime += Time.deltaTime;
-                    if (IsAttacking())
+                    if (waitTimeCheck)
                     {
-                        isNextAtk = true;
-                    }
-                    if (attackTime > atkResetTime)
-                    {
-                        if (isNextAtk == true)
+                        float? temp = gcadt.Current as float?;
+                        atkResetTime = (float)temp;
+
+
+                        plInfo.plAtk = originAtk; //공격력 설정
+                        attackRange.SetActive(true);
+
+                        //연타 초기화 시간
+                        attackTime += Time.deltaTime;
+                        if (IsAttacking())
                         {
-                            attackTime = 0;
-                            plState = PL_STATE.ATTACKM3;
-                            isNextAtk = false;
+                            isNextAtk = true;
                         }
-                        else
+                        if (attackTime > atkResetTime)
                         {
-                            attackTime = 0;
-                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
-                            plState = PL_STATE.IDLE;
-                            isNextAtk = false;
-                            isAttack = false;
+                            if (isNextAtk == true)
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plState = PL_STATE.ATTACKM3;
+                                isNextAtk = false;
+                            }
+                            else
+                            {
+                                ResetAttack();
+                                damagedTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                                plState = PL_STATE.IDLE;
+                            }
+                            attackRange.SetActive(false);
                         }
-                        attackRange.SetActive(false);
                     }
+
 
 
                     break;
 
                 case PL_STATE.ATTACKM3:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 7);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Attack3);
-                    atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
-
-                    plInfo.plAtk = originAtk;
-                    //공격력 설정
-
-                    attackRange.SetActive(true);
-
-                    //연타 초기화 시간
-                    attackTime += Time.deltaTime;
-                    if (IsAttacking())
+                    //atkResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
+                    if (!coroutineCheck)
                     {
-                        isNextAtk = true;
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Attack3);
+                        StartCoroutine(gcadt);
+                        peasc.TurnOnEffectAttack();
+                        coroutineCheck = true;
                     }
-                    if (attackTime > atkResetTime)
+
+                    if (waitTimeCheck)
                     {
-                        if (isNextAtk == true)
+                        float? temp = gcadt.Current as float?;
+                        atkResetTime = (float)temp;
+
+
+                        plInfo.plAtk = originAtk;
+                        //공격력 설정
+
+                        attackRange.SetActive(true);
+
+                        //연타 초기화 시간
+                        attackTime += Time.deltaTime;
+                        if (IsAttacking())
                         {
-                            attackTime = 0;
-                            plState = PL_STATE.ATTACKM1;
-                            isNextAtk = false;
+                            isNextAtk = true;
                         }
-                        else
+                        if (attackTime > atkResetTime)
                         {
-                            attackTime = 0;
-                            plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
-                            plState = PL_STATE.IDLE;
-                            isNextAtk = false;
-                            isAttack = false;
+                            if (isNextAtk == true)
+                            {
+                                attackTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plState = PL_STATE.ATTACKM1;
+                                isNextAtk = false;
+                            }
+                            else
+                            {
+                                ResetAttack();
+                                damagedTime = 0;
+                                coroutineCheck = false;
+                                waitTimeCheck = false;
+                                plInfo.plMoveSpd = moveSpd; //공격 종료, 원래 속도로 변경
+                                plState = PL_STATE.IDLE;
+                            }
+                            attackRange.SetActive(false);
                         }
-                        attackRange.SetActive(false);
                     }
+
 
                     break;
 
                 case PL_STATE.DAMAGED:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 8);
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
-                    dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
+                    //pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
+                    //dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
+                    //if (!coroutineCheck)
+                    //{
+                    //    if (gcadt != null)
+                    //    {
+                    //        StopCoroutine(gcadt);
+                    //    }
+                    //    gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit);
+                    //    StartCoroutine(gcadt);
+                    //    coroutineCheck = true;
+                    //}
 
+                    //if (waitTimeCheck)
+                    //{
+                    //    float? temp = gcadt.Current as float?;
+                    //    dmgResetTime = (float)temp;
+
+
+                    //    //애니메이션 시간 대기
+                    //    damagedTime += Time.deltaTime;
+                    //    if (damagedTime > dmgResetTime)
+                    //    {
+                    //        damagedTime = 0;
+                    //        if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
+                    //        {
+                    //            plInfo.curHp = 0;
+                    //            coroutineCheck = false;
+                    //            waitTimeCheck = false;
+                    //            plState = PL_STATE.DIE;
+                    //        }
+                    //        else
+                    //        {
+                    //            coroutineCheck = false;
+                    //            waitTimeCheck = false;
+                    //            plState = PL_STATE.IDLE;
+                    //        }
+                    //    }
+
+                    //}
                     if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
                     {
                         plInfo.curHp = 0;
+                        //coroutineCheck = false;
+                        //waitTimeCheck = false;
                         plState = PL_STATE.DIE;
                     }
                     else
                     {
+                        //coroutineCheck = false;
+                        //waitTimeCheck = false;
                         plState = PL_STATE.IDLE;
                     }
 
-                    //애니메이션 시간 대기
-                    damagedTime += Time.deltaTime;
-                    if (damagedTime > dmgResetTime)
-                    {
-                        damagedTime = 0;
-                        plState = PL_STATE.IDLE;
-                    }
 
                     break;
 
                 case PL_STATE.AVOIDJUMP:
+                    plInfo.plMoveSpd = 0;
                     //애니메이션 연결
-                    //anim.SetInteger("State", 9);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid1);
-                    avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
-
-                    isNoDamage = true; //무적 ON
-
-                    //애니메이션 시간 대기
-                    avoidTime += Time.deltaTime;
-                    if (avoidTime > avoidJAnimTime)
+                    //avoidJAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
+                    if (!coroutineCheck)
                     {
-                        avoidTime = 0;
-                        plState = PL_STATE.AVOIDROLL;
+                        if (gcadt != null)
+                        {
+                            StopCoroutine(gcadt);
+                        }
+                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid1);
+                        StartCoroutine(gcadt);
+                        coroutineCheck = true;
                     }
+
+                    if (waitTimeCheck)
+                    {
+                        float? temp = gcadt.Current as float?;
+                        avoidJAnimTime = (float)temp;
+
+                        isNoDamage = true; //무적 ON
+                        transform.GetChild(0).Translate(0, 0, moveSpd * Time.deltaTime * 0.5f);
+
+                        //애니메이션 시간 대기
+                        avoidTime += Time.deltaTime;
+                        if (avoidTime > avoidJAnimTime)
+                        {
+                            avoidTime = 0;
+                            coroutineCheck = false;
+                            waitTimeCheck = false;
+                            isNoDamage = false; //무적 OFF
+                            isAvoid = false;
+                            plState = PL_STATE.IDLE;
+                        }
+                    }
+
 
                     break;
 
-                case PL_STATE.AVOIDROLL:
-                    isNoDamage = false; //무적 OFF
+                //case PL_STATE.AVOIDROLL:
+                //    transform.GetChild(0).Translate(0, 0, moveSpd * Time.deltaTime * 0.5f);
 
-                    //애니메이션 연결
-                    //anim.SetInteger("State", 10);
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid2);
-                    avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
+                //    //애니메이션 연결
+                //    //pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Avoid2);
+                //    //avoidRAnimTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
+                //    if (!coroutineCheck)
+                //    {
+                //        if (gcadt != null)
+                //        {
+                //            StopCoroutine(gcadt);
+                //        }
+                //        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Avoid2);
+                //        StartCoroutine(gcadt);
+                //        coroutineCheck = true;
+                //    }
 
-                    //애니메이션 시간 대기
-                    avoidTime += Time.deltaTime;
-                    if (avoidTime > avoidRAnimTime)
-                    {
-                        avoidTime = 0;
-                        plState = PL_STATE.IDLE;
-                    }
-                    isAvoid = false;
-                    break;
+                //    if (waitTimeCheck)
+                //    {
+                //        float? temp = gcadt.Current as float?;
+                //        avoidRAnimTime = (float)temp;
+
+
+                //        //애니메이션 시간 대기
+                //        avoidTime += Time.deltaTime;
+                //        if (avoidTime > avoidRAnimTime)
+                //        {
+                //            avoidTime = 0;
+                //            coroutineCheck = false;
+                //            waitTimeCheck = false;
+                //            plInfo.plMoveSpd = moveSpd;
+                //            isNoDamage = false; //무적 OFF
+                //            plState = PL_STATE.IDLE;
+                //        }
+                //    }
+
+                //    isAvoid = false;
+                //    break;
 
                 case PL_STATE.DIE:
                     //애니메이션 연결
-                    //anim.SetInteger("State", 11);
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Dead);
 
                     //플래그 ON, 속도 X
                     isDead = true;
                     plInfo.plMoveSpd = 0;
-                    Debug.Log("PLAYER DIE");
+                    //Debug.Log("PLAYER DIE");
+
+                    //Die Panel ON
+                    PlayerUIManager uiManager = GameObject.Find("UIManager").GetComponent<PlayerUIManager>();
+                    uiManager.OnPlayerDiePanel();
+
                     break;
 
                 default:
@@ -406,35 +634,56 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        
+
     }
 
+    /// <summary>
+    /// 기습 공격을 위한 속도 설정
+    /// 움직이는 속도를 반으로 줄인다.
+    /// </summary>
+    /// <returns>반으로 나눈 속도를 반환</returns>
     public float WalkMoveSpd()
     {
         return moveSpd / 2;
     }
 
+    /// <summary>
+    /// 왼쪽 Shift 버튼 입력이 들어오면 회피 중인 상태로 바꿔주는 함수
+    /// </summary>
     public void IsAvoiding()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             isAvoid = true;
             plState = PL_STATE.AVOIDJUMP;
+            ResetAttack();
+            damagedTime = 0;
         }
     }
 
+    /// <summary>
+    /// 마우스 클릭 입력이 들어오면 공격 중인 상태로 바꿔주는 함수
+    /// </summary>
+    /// <returns>공격 중이면 True, 아니면 false</returns>
     public bool IsAttacking()
     {
         if (Input.GetMouseButtonDown(0)
             || Input.GetMouseButtonDown(1))
         {
-            isAttack = true;
+            if (plState == PL_STATE.IDLE || plState == PL_STATE.MOVE)
+            {
+                isAttack = true;
+                plState = PL_STATE.ATTACKM1;
+            }
             return true;
         }
         else return false;
-        
+
     }
 
+    /// <summary>
+    /// 체력 회복 함수
+    /// </summary>
     public void Heal()
     {
         if (timer.CountSeconds(1f))
@@ -455,7 +704,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("영혼석이 비어있습니다!");
             }
         }
-        
+
     }
 
     /// <summary>
@@ -474,27 +723,53 @@ public class PlayerController : MonoBehaviour
     /// 스킬 쿨타임에 따른 스킬 사용 가능 여부 확인 후, 스킬을 실행하는 함수
     /// E키를 눌렀을 때 SkillCool이 초기화(false)가 되었다면 스킬 사용 가능
     /// </summary>
-    public void isSkill()
+    public void IsSkill()
     {
         if (Input.GetKeyDown(KeyCode.E) && !isSkillCool) //E키 입력이 들어왔는데 CoolTime이 없다면
         {
             isSkillCool = true;
+            peasc.TurnOnEffectSkill();
+            int originAtk;
+            float originMoveSpd;
             switch (plInfo.curSkill.skillName)
             {
                 case "힘증가":
-                    int originAtk = plInfo.plAtk;
+                    originAtk = plInfo.plAtk;
                     actionFuntion.IncreasePower();
+                    SettingEffect(plInfo.curSkill.effectPrefab, plInfo.curSkill.duringTime);
                     StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originAtk, 1));
                     break;
 
                 case "민첩증가":
-                    int originMoveSpd = plInfo.plAtk;
+                    originMoveSpd = plInfo.plAtk;
                     actionFuntion.IncreaseSpeed();
+                    SettingEffect(plInfo.curSkill.effectPrefab, plInfo.curSkill.duringTime);
                     StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originMoveSpd, 2));
                     break;
 
                 case "체력회복":
                     actionFuntion.IncreaseHp();
+                    SettingEffect(plInfo.curSkill.effectPrefab, 3f);
+                    StartCoroutine(ResetCoolTime(plInfo.curSkill.coolTime));
+                    break;
+
+                case "Power":
+                    originAtk = plInfo.plAtk;
+                    actionFuntion.IncreasePower();
+                    SettingEffect(plInfo.curSkill.effectPrefab, plInfo.curSkill.duringTime);
+                    StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originAtk, 1));
+                    break;
+
+                case "Speed":
+                    originMoveSpd = plInfo.plAtk;
+                    actionFuntion.IncreaseSpeed();
+                    SettingEffect(plInfo.curSkill.effectPrefab, plInfo.curSkill.duringTime);
+                    StartCoroutine(Reset(plInfo.curSkill.duringTime, plInfo.curSkill.coolTime, originMoveSpd, 2));
+                    break;
+
+                case "Healing":
+                    actionFuntion.IncreaseHp();
+                    SettingEffect(plInfo.curSkill.effectPrefab, 3f);
                     StartCoroutine(ResetCoolTime(plInfo.curSkill.coolTime));
                     break;
             }
@@ -509,12 +784,12 @@ public class PlayerController : MonoBehaviour
     /// <param name="originAmount">변수 변경되기 전의 값</param>
     /// <param name="select">공격력, 이동속도 선택용 변수</param>
     /// <returns></returns>
-    public IEnumerator Reset(float duringTime, float coolTime, int originAmount, int select)
+    public IEnumerator Reset(float duringTime, float coolTime, float originAmount, int select)
     {
         StartCoroutine(ResetCoolTime(coolTime)); //쿨타임 계산 함수
         yield return new WaitForSeconds(duringTime);
 
-        if (select == 1) { plInfo.plAtk = originAmount; }
+        if (select == 1) { plInfo.plAtk = (int)originAmount; }
         else if (select == 2) { plInfo.plMoveSpd = originAmount; }
         //원래 값으로 변경
     }
@@ -526,14 +801,54 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     public IEnumerator ResetCoolTime(float coolTime)
     {
-        //Debug.Log("CoolTIme Reset-ing");
         yield return new WaitForSeconds(coolTime);
         isSkillCool = false; //스킬쿨 해제
-        //Debug.Log("CoolTIme Reset Complete!");
+        Debug.Log("CoolTIme Reset Complete!");
     }
 
     public void InitAnimator()
     {
         pac.InitAnimator();
     }
+
+    public void WaitTimeCheckChange(bool tf)
+    {
+        waitTimeCheck = tf;
+    }
+
+    public void ResetActivate()
+    {
+        ResetAttack();
+        ResetAvoid();
+        damagedTime = 0;
+    }
+
+    public void ResetAttack()
+    {
+        peasc.TurnOffEffectAttack();
+        attackTime = 0;
+        isAttack = false;
+        Debug.Log($"isAttack : false");
+        isNextAtk = false;
+    }
+
+    public void ResetAvoid()
+    {
+        isAvoid = false;
+        isNoDamage = false;
+    }
+
+    public void SettingEffect(GameObject prefab, float destroyTime)
+    {
+        GameObject effect = Instantiate(prefab);
+        effect.layer = 3;
+        effect.transform.parent = transform.GetChild(0);
+        effect.transform.SetAsFirstSibling();
+        effect.transform.localPosition = plInfo.curSkill.effectPos;
+        effect.transform.localRotation = plInfo.curSkill.effectRot;
+        effect.transform.localScale = Vector3.one;
+        effect.GetComponent<ParticleSystem>().Play();
+        Destroy(effect, destroyTime);
+    }
+
 }

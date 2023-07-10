@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2751371840601377681}
   - component: {fileID: 3863991608635494844}
   - component: {fileID: 2234260885196612189}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_SpiderWebs_Angle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

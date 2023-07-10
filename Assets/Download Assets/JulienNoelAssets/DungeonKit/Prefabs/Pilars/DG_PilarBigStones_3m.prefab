@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5753215459809484928}
   - component: {fileID: 8895751056434901043}
   - component: {fileID: 830215295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_PilarBigStones_3m
   m_TagString: Untagged
   m_Icon: {fileID: 0}

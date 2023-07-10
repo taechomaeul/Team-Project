@@ -21,8 +21,7 @@ public class LoadUIRecord : MonoBehaviour
     public void LoadRecord()
     {
         string colliName = gameObject.name;
-        GameObject context = gameObject.transform.parent.parent.parent.parent.parent.GetChild(1).GetChild(0).gameObject;
-        StartCoroutine(showRecord.LoadRecordData(colliName, context.GetComponent<Text>()));
+        StartCoroutine(showRecord.LoadRecordData(colliName, showRecord.recordContext));
     }
 
     /// <summary>
@@ -31,8 +30,7 @@ public class LoadUIRecord : MonoBehaviour
     public void LoadTip()
     {
         string colliName = gameObject.name;
-        GameObject context = gameObject.transform.parent.parent.parent.parent.parent.GetChild(1).GetChild(0).gameObject;
-        StartCoroutine(showTip.LoadTipData(colliName, context.GetComponent<Text>()));
+        StartCoroutine(showTip.LoadTipData(colliName, showTip.tipContext));
     }
 
 }

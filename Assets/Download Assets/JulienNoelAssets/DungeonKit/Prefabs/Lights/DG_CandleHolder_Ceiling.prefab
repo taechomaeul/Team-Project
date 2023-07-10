@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4982064256701348}
   - component: {fileID: 4982064257798500}
   - component: {fileID: 1797076604989090087}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_Chain_300_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 4982064356887971}
   - component: {fileID: 4982064355790691}
   - component: {fileID: 992264393082080039}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_CandleHolder_Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 5189108419072463633}
   - component: {fileID: 5461274760570134968}
   - component: {fileID: 9192446303627931853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 5634146073214525199}
   - component: {fileID: 4255051416727619927}
   - component: {fileID: 7635905634115727584}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 2404642277474974252}
   - component: {fileID: 8709441638375965150}
   - component: {fileID: 2411504297277062423}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DG_CandleHolderCeiling_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 1103551228906431982}
   - component: {fileID: 7930157946451177598}
   - component: {fileID: 8782679769952388336}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -667,7 +667,7 @@ GameObject:
   - component: {fileID: 326629837630352961}
   - component: {fileID: 4128633282154694445}
   - component: {fileID: 4143545131295217408}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -782,7 +782,7 @@ GameObject:
   - component: {fileID: 6908670179243162255}
   - component: {fileID: 3130662649260744215}
   - component: {fileID: 7766801726825954801}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -897,7 +897,7 @@ GameObject:
   - component: {fileID: 5814661274876168598}
   - component: {fileID: 4060082410233722733}
   - component: {fileID: 160416826486417896}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1012,7 +1012,7 @@ GameObject:
   - component: {fileID: 4544678421669563902}
   - component: {fileID: 3400410465913853829}
   - component: {fileID: 5185384787329747520}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1128,6 +1128,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Candle (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771869, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -1207,6 +1212,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Candle (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771869, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}
@@ -1288,6 +1298,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Candle (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771869, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -1367,6 +1382,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Candle (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771869, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}
@@ -1448,6 +1468,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Candle
       objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771869, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -1527,6 +1552,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Candle (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106652846307771868, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5106652846307771869, guid: d4ec88ad2a31c834e92c0a63c7cbd179,
         type: 3}

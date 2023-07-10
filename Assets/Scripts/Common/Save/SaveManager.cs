@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -26,8 +28,9 @@ public class SaveManager : MonoBehaviour
     private readonly string path = "Save";
 
     // 저장 데이터 클래스
-    internal SaveClass saveClass = new();
+    [SerializeField] internal SaveClass saveClass = new();
 
+    // 스크립트와 일지 등등 관리
     ShowScript ss;
     ShowRecord sr;
     ShowTip st;
@@ -57,6 +60,8 @@ public class SaveManager : MonoBehaviour
         [SerializeField] private bool[] tipData;
         // 일지 체크
         [SerializeField] private bool[] recordData;
+        // 이동 Collider 체크
+        [SerializeField] private List<string> moveSceneData = new();
 
 
 
@@ -126,7 +131,7 @@ public class SaveManager : MonoBehaviour
         }
 
         /// <summary>
-        /// 스크립트 체크 설정
+        /// 세이브 클래스의 스크립트 체크 인덱스별 설정
         /// </summary>
         /// <param name="index">값을 변경할 스크립트의 인덱스</param>
         /// <param name="tf">변경할 값(true or false)</param>
@@ -150,7 +155,7 @@ public class SaveManager : MonoBehaviour
         }
 
         /// <summary>
-        /// 스크립트 체크 설정
+        /// 스크립트 체크 일괄 설정
         /// </summary>
         /// <param name="scriptDataCheckArray">저장할 스크립트 체크 배열</param>
         internal void SetScriptData(bool[] scriptDataCheckArray)
@@ -159,7 +164,7 @@ public class SaveManager : MonoBehaviour
         }
 
         /// <summary>
-        /// 팁 체크 설정
+        /// 세이브 클래스의 팁 체크 인덱스별 설정
         /// </summary>
         /// <param name="index">값을 변경할 팁의 인덱스</param>
         /// <param name="tf">변경할 값(true or false)</param>
@@ -183,7 +188,7 @@ public class SaveManager : MonoBehaviour
         }
 
         /// <summary>
-        /// 팁 체크 설정
+        /// 팁 체크 일괄 설정
         /// </summary>
         /// <param name="tipDataCheckArray">저장할 팁 체크 배열</param>
         internal void SetTipData(bool[] tipDataCheckArray)
@@ -192,7 +197,7 @@ public class SaveManager : MonoBehaviour
         }
 
         /// <summary>
-        /// 일지 체크 설정
+        /// 세이브 클래스의 일지 체크 인덱스별 설정
         /// </summary>
         /// <param name="index">값을 변경할 일지의 인덱스</param>
         /// <param name="tf">변경할 값(true or false)</param>
@@ -216,12 +221,21 @@ public class SaveManager : MonoBehaviour
         }
 
         /// <summary>
-        /// 일지 체크 설정
+        /// 일지 체크 일괄 설정
         /// </summary>
         /// <param name="recordDataCheckArray">저장할 일지 체크 배열</param>
         internal void SetRecordData(bool[] recordDataCheckArray)
         {
             recordData = recordDataCheckArray;
+        }
+
+        /// <summary>
+        /// 이동 씬 이름 체크 일괄 설정
+        /// </summary>
+        /// <param name="moveSceneDataCheckList">저장할 씬이동 Collider 이름 List</param>
+        internal void SetMoveSceneData(List<string> moveSceneDataCheckList)
+        {
+            moveSceneData = moveSceneDataCheckList;
         }
         #endregion
 
@@ -230,7 +244,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 마지막 저장 지점 확인
         /// </summary>
-        /// <returns>마지막 저장 지점 인덱스 or null</returns>
+        /// <returns>마지막 저장 지점 인덱스</returns>
         internal int GetLastSavePosition()
         {
             return lastSavePosition;
@@ -239,7 +253,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 현재 체력 확인
         /// </summary>
-        /// <returns>현재 체력 or null</returns>
+        /// <returns>현재 체력</returns>
         internal int GetCurrentHp()
         {
             return currentHp;
@@ -248,7 +262,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 현재 영혼 확인
         /// </summary>
-        /// <returns>현재 영혼 or null</returns>
+        /// <returns>현재 영혼</returns>
         internal int GetCurrentSoulCount()
         {
             return currentSoulCount;
@@ -257,7 +271,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 현재 빙의체 인덱스 확인
         /// </summary>
-        /// <returns>현재 빙의체 인덱스 or null</returns>
+        /// <returns>현재 빙의체 인덱스</returns>
         internal int GetCurrentBodyIndex()
         {
             return currentBodyIndex;
@@ -266,7 +280,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 현재 스킬 인덱스 확인
         /// </summary>
-        /// <returns>현재 스킬 인덱스 or null</returns>
+        /// <returns>현재 스킬 인덱스</returns>
         internal int GetCurrentSkillIndex()
         {
             return currentSkillIndex;
@@ -275,7 +289,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 현재 공격력 확인
         /// </summary>
-        /// <returns>현재 공격력 or null</returns>
+        /// <returns>현재 공격력</returns>
         internal int GetCurrentAttack()
         {
             return currentAttack;
@@ -284,7 +298,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 현재 이동 속도 확인
         /// </summary>
-        /// <returns>현재 이동 속도 or null</returns>
+        /// <returns>현재 이동 속도</returns>
         internal float GetCurrentSpeed()
         {
             return currentSpeed;
@@ -293,7 +307,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 스크립트 체크 확인
         /// </summary>
-        /// <returns>스크립트 체크 or null</returns>
+        /// <returns>스크립트 체크 배열</returns>
         internal bool[] GetScriptData()
         {
             return scriptData;
@@ -302,7 +316,7 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 팁 체크 확인
         /// </summary>
-        /// <returns>팁 체크</returns>
+        /// <returns>팁 체크 배열</returns>
         internal bool[] GetTipData()
         {
             return tipData;
@@ -311,10 +325,52 @@ public class SaveManager : MonoBehaviour
         /// <summary>
         /// 일지 체크 확인
         /// </summary>
-        /// <returns>일지 체크</returns>
+        /// <returns>일지 체크 배열</returns>
         internal bool[] GetRecordData()
         {
             return recordData;
+        }
+
+        /// <summary>
+        /// 이동씬 이름 리스트 확인
+        /// </summary>
+        /// <returns>이동씬 이름 리스트</returns>
+        internal List<string> GetMoveSceneData()
+        {
+            return moveSceneData;
+        }
+        #endregion
+
+
+        #region 기타 함수들
+        /// <summary>
+        /// 새로 시작 시 초기화
+        /// </summary>
+        internal void InitSaveClass(Dictionary<string, object> playerStat)
+        {
+            SetLastSavePosition(0);
+            // 임시
+            currentHp = int.Parse(playerStat["currentHp"].ToString());
+            currentSoulCount = 0;
+            currentBodyIndex = 0;
+            currentSkillIndex = -1;
+            // 임시
+            currentAttack = int.Parse(playerStat["attack"].ToString());
+            // 임시
+            currentSpeed = float.Parse(playerStat["movingSpeed"].ToString());
+            Array.Fill(scriptData, false);
+            Array.Fill(tipData, false);
+            Array.Fill(recordData, false);
+            moveSceneData.Clear();
+        }
+
+        /// <summary>
+        /// 이동 씬 이름 체크 항목 추가
+        /// </summary>
+        /// <param name="colliderObjectName">저장할 씬이동 Collider 이름</param>
+        internal void AddMoveCollider(string colliderObjectName)
+        {
+            moveSceneData.Add(colliderObjectName);
         }
         #endregion
     }
@@ -333,31 +389,55 @@ public class SaveManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    // 새로운 씬에서 찾기
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        saveClass.InitSaveClass(DefaultStatManager.Instance.GetPlayerData());
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 플레이어 정보, 스크립트, 일지 등등 관리 변수 초기화
         if (playerInfo == null)
         {
             playerInfo = FindObjectOfType<PlayerInfo>();
+        }
+        if (cc == null)
+        {
             cc = FindObjectOfType<ColliderController>();
+        }
+        if (ss == null)
+        {
             ss = FindObjectOfType<ShowScript>();
-            sr = FindObjectOfType<ShowRecord>();
+        }
+        if (st == null)
+        {
             st = FindObjectOfType<ShowTip>();
         }
-        // 첫 시작 위치 저장
-        saveClass.SetLastSavePosition(0);
+        if (sr == null)
+        {
+            sr = FindObjectOfType<ShowRecord>();
+        }
     }
 
     /// <summary>
-    /// 클래스에 저장할 데이터 초기화
+    /// 세이브 클래스에 저장할 데이터 초기화
     /// </summary>
-    /// <param name="lastSavePosition">저장 위치</param>
-    private void SetSaveClass(int lastSavePosition)
+    /// <param name="lastSavePosition">저장 위치 인덱스</param>
+    public void SaveCurrentDataToClass(int lastSavePosition)
     {
-        Debug.Log(playerInfo.curHp);
         saveClass.SetLastSavePosition(lastSavePosition);
         saveClass.SetCurrentHp(playerInfo.curHp);
         saveClass.SetCurrentSoulCount(playerInfo.soulHp);
         saveClass.SetCurrentBodyIndex(playerInfo.curPrefabIndex);
-        saveClass.SetCurrentSkillIndex(5);
+        saveClass.SetCurrentSkillIndex(playerInfo.curSkill.skillIndex);
         saveClass.SetCurrentAttack(playerInfo.plAtk);
         saveClass.SetCurrentSpeed(playerInfo.plMoveSpd);
         saveClass.SetScriptData(ss.checkScriptComplete);
@@ -370,7 +450,7 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     /// <param name="lastSavePosition">저장 위치 인덱스</param>
     /// <returns>작업 결과</returns>
-    internal void SaveCurrentData(int lastSavePosition)
+    internal bool SaveCurrentDataToFile(int lastSavePosition)
     {
         try
         {
@@ -380,9 +460,8 @@ public class SaveManager : MonoBehaviour
             }
 
             // 세이브 데이터 Json으로 변환
-            SetSaveClass(lastSavePosition);
+            SaveCurrentDataToClass(lastSavePosition);
             string saveJson = JsonUtility.ToJson(saveClass);
-
             // 세이브 폴더 생성
             DirectoryInfo di = new(path);
             if (!di.Exists)
@@ -395,35 +474,47 @@ public class SaveManager : MonoBehaviour
             byte[] data = Encoding.UTF8.GetBytes(saveJson);
             fs.Write(data, 0, data.Length);
             fs.Close();
-            Debug.Log("세이브 파일 생성됨");
+            return true;
         }
         catch (Exception e)
         {
             Debug.LogError(e);
+            return false;
         }
     }
 
     /// <summary>
     /// 데이터 수치를 게임에 적용
     /// </summary>
-    private void ApplyLoadedData()
+    public void ApplyLoadedData()
     {
-        // 세이브 위치ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ
-        playerInfo.curHp = saveClass.GetCurrentHp();
-        playerInfo.soulHp = saveClass.GetCurrentSoulCount();
-        playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
-        // 스킬 인덱스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        playerInfo.plAtk = saveClass.GetCurrentAttack();
-        playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
-        cc.OffRecordCollider(saveClass.GetRecordData());
-        cc.OffScriptCollider(saveClass.GetScriptData());
+        if (playerInfo != null)
+        {
+            playerInfo.curPositionIndex = saveClass.GetLastSavePosition();
+            playerInfo.curHp = saveClass.GetCurrentHp();
+            playerInfo.soulHp = saveClass.GetCurrentSoulCount();
+            playerInfo.curPrefabIndex = saveClass.GetCurrentBodyIndex();
+            playerInfo.curSkill.skillIndex = saveClass.GetCurrentSkillIndex();
+            playerInfo.plAtk = saveClass.GetCurrentAttack();
+            playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
+        }
+
+        if (cc != null)
+        {
+            ss.GetCheckScriptArr(saveClass.GetScriptData());
+            sr.GetCheckRecordArr(saveClass.GetRecordData());
+
+            cc.OffRecordCollider(saveClass.GetRecordData());
+            cc.OffScriptCollider(saveClass.GetScriptData());
+            cc.OffMoveSceneCollider(saveClass.GetMoveSceneData());
+        }
     }
 
     /// <summary>
     /// 세이브 데이터 불러오기
     /// </summary>
     /// <returns>작업 결과</returns>
-    public void LoadSaveData()
+    public bool LoadSaveData()
     {
         try
         {
@@ -442,20 +533,45 @@ public class SaveManager : MonoBehaviour
                 // Json 형태의 정보 변환
                 string saveJson = Encoding.UTF8.GetString(data);
                 saveClass = JsonUtility.FromJson<SaveClass>(saveJson);
-                // 불러온 데이터 적용
-                ApplyLoadedData();
-                Debug.Log("세이브 파일 불러옴");
+                return true;
             }
             // 세이브 파일이 존재하지 않는 경우
             else
             {
-                // 추가 필요
-                Debug.Log("세이브 데이터가 존재하지 않음");
+                return false;
             }
         }
         catch (Exception e)
         {
             Debug.LogError(e);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 세이브 파일이 존재하는지 확인
+    /// </summary>
+    /// <returns>존재: true, 없음 또는 오류: false</returns>
+    public bool SaveFileExistCheck()
+    {
+        try
+        {
+            // 세이브 경로에서 파일 정보 가져오기
+            FileInfo fi = new($"{path}/saveData.json");
+            // 세이브 파일이 존재할 경우
+            if (fi.Exists)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            return false;
         }
     }
 }

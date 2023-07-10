@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3518990632781422031}
   - component: {fileID: 8295069715427192046}
   - component: {fileID: 8626481753525808025}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WoodShelf_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8773046464069802555
 Transform:

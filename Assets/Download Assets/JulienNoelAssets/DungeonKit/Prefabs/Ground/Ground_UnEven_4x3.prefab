@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2406074744933687175}
   - component: {fileID: 8008871922884916512}
   - component: {fileID: 4504663126910059727}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground_UnEven_4x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971192714235484947}
-  m_Mesh: {fileID: 4300000, guid: 200d829f5de5daf4a950a8c718f20b82, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 8327ab06bcee0394e816562763d3f692, type: 2}
 --- !u!23 &8008871922884916512
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ MeshCollider:
   m_GameObject: {fileID: 1971192714235484947}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30

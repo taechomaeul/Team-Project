@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyInfo : MonoBehaviour
@@ -8,18 +9,35 @@ public class EnemyInfo : MonoBehaviour
     [Tooltip("적 정보")]
     [SerializeField] internal Enemy stat = new();
 
-
-
     private void Awake()
     {
-        // 데이터 파일 추가되면 여기서 수치 초기화
+        // 탐지 대상 초기화
+        InitStat();
+    }
 
-        // 체력 초기화
-        stat.SetCurrentHp(stat.GetMaxHp());
+    /// <summary>
+    /// 스탯 초기 설정
+    /// </summary>
+    private void InitStat()
+    {
+        Dictionary<string, object> statData = DefaultStatManager.Instance.GetEnemyData();
+
         // 탐지 대상 초기화
         stat.SetTarget(GameObject.Find("Player").transform.GetChild(0).gameObject);
         // 컴포넌트 대상 트랜스폼 초기화
         stat.SetTransform(transform);
+        // 체력 초기화
+        stat.SetMaxHp(int.Parse(statData["maxHp"].ToString()));
+        stat.SetCurrentHp(stat.GetMaxHp());
+        // 이동 속도 초기화
+        stat.SetMovingSpeed(float.Parse(statData["movingSpeed"].ToString()));
+        // 탐지 범위 초기화
+        stat.SetDetectAngle(float.Parse(statData["detectAngle"].ToString()));
+        stat.SetDetectRadius(float.Parse(statData["detectRadius"].ToString()));
+        // 공격 수치 초기화
+        stat.SetDamage(int.Parse(statData["attack"].ToString()));
+        stat.SetAttackCycle(float.Parse(statData["attackCycle"].ToString()));
+        stat.SetAttackRange(float.Parse(statData["attackRange"].ToString()));
     }
 }
 
@@ -273,9 +291,51 @@ internal class Enemy
     public void SetIsDead(bool tf) { isDead = tf; }
 
     /// <summary>
+    /// 이동 속도 설정
+    /// </summary>
+    /// <param name="speed">이동 속도</param>
+    public void SetMovingSpeed(float speed) { movingSpeed = speed; }
+
+    /// <summary>
+    /// 적 시야각 설정
+    /// </summary>
+    /// <param name="angle"></param>
+    public void SetDetectAngle(float angle) { detectAngle = angle; }
+
+    /// <summary>
+    /// 적 탐지거리 설정
+    /// </summary>
+    /// <param name="radius"></param>
+    public void SetDetectRadius(float radius) { detectRadius = radius; }
+
+    /// <summary>
+    /// 최대 체력 설정
+    /// </summary>
+    /// <param name="hp">최대 체력</param>
+    public void SetMaxHp(int hp) { maxHp = hp; }
+
+    /// <summary>
     /// 현재 체력 설정
     /// </summary>
     /// <param name="hp">현재 체력</param>
     public void SetCurrentHp(int hp) { currentHp = hp; }
+
+    /// <summary>
+    /// 공격력 설정
+    /// </summary>
+    /// <param name="damage">공격력</param>
+    public void SetDamage(int damage) { this.damage = damage; }
+
+    /// <summary>
+    /// 평타 공격 주기 설정
+    /// </summary>
+    /// <param name="cycle">공격 주기</param>
+    public void SetAttackCycle(float cycle) { attackCycle = cycle; }
+
+    /// <summary>
+    /// 공격 사거리 설정
+    /// </summary>
+    /// <param name="range">공격 사거리</param>
+    public void SetAttackRange(float range) { attackRange = range; }
     #endregion
 }

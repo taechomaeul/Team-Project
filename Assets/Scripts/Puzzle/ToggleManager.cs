@@ -17,15 +17,18 @@ public class ToggleManager : MonoBehaviour
     public GameObject fire4;
     public GameObject fire5;
 
+    [Tooltip("파괴할 문 오브젝트")]
+    public GameObject doorObject;
+
     [Header("플래그 변수")]
     public bool isClear = false;
 
     private ToggleGame toggleGame;
-    private ActionFuntion actionFuntion;
+    private ActionFunction actionFuntion;
 
     void Start()
     {
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
     }
 
     
@@ -34,6 +37,7 @@ public class ToggleManager : MonoBehaviour
         if (fire1.activeSelf && fire2.activeSelf && fire3.activeSelf && fire4.activeSelf && fire5.activeSelf)
         {
             isClear = true;
+            Destroy(doorObject);
             Debug.Log("CLEAR!!!!!!!!!!!!!!!!");
             StartCoroutine(WaitClearFunction());
             enabled = false;
@@ -92,10 +96,12 @@ public class ToggleManager : MonoBehaviour
         actionFuntion.RestartGame();
         toggleCamera.SetActive(false);
         mainCanvas.SetActive(true);
+        Cursor.visible = false;
     }
 
     public void PlayToggleGame()
     {
+        Cursor.visible = true;
         mainCanvas.SetActive(false);
         toggleCamera.SetActive(true);
         togglePanel.SetActive(true);
