@@ -5,34 +5,21 @@ using UnityEngine;
 public class PlayerEffectAndSoundControll : MonoBehaviour
 {
     [Header("재생할 이펙트 오브젝트")]
-    [Tooltip("공격1")]
-    [SerializeField] private GameObject effectAttack1;
-
-    [Tooltip("공격2")]
-    [SerializeField] private GameObject effectAttack2;
-
-    [Tooltip("공격3")]
-    [SerializeField] private GameObject effectAttack3;
-
     [Tooltip("스킬")]
     [SerializeField] private GameObject effectSkill;
 
+    [Tooltip("트레일 랜더러")]
+    [SerializeField] private GameObject trailRenderer;
 
 
-    internal void TurnOnEffectAttack(int attackType)
+    internal void TurnOnEffectAttack()
     {
-        switch (attackType)
-        {
-            case 4:
-                effectAttack1.SetActive(true);
-                break;
-            case 5:
-                effectAttack2.SetActive(true);
-                break;
-            case 6:
-                effectAttack3.SetActive(true);
-                break;
-        }
+        trailRenderer.SetActive(true);
+    }
+
+    internal void TurnOffEffectAttack()
+    {
+        trailRenderer.SetActive(false);
     }
 
     internal void TurnOnEffectSkill()
