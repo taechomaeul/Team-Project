@@ -109,8 +109,5 @@ public class JStatUIManager : MonoBehaviour
         curSImage.GetComponent<Image>().sprite = plInfo.curSkill.thumnail;
         curSNameText.text = skillInfo.skills[plInfo.curSkill.skillIndex + langOffset].skillName;
         curSDescriptionText.text = skillInfo.skills[plInfo.curSkill.skillIndex + langOffset].skillDescription;
-        //curSDescriptionText.text = plInfo.curSkill.skillDescription;
-
-        
     }
 }
