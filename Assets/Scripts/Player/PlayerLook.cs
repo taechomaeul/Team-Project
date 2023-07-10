@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerLook : MonoBehaviour
 {
     public float sensitivity;
-    public float readOnlySens = 500f;
+    public float readOnlySens = 100f;
     public float rotationX;
     public float rotationY;
 

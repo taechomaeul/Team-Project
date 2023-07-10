@@ -43,7 +43,8 @@ public class PlayerAnimatorControll : MonoBehaviour
         "isAttacking2",
         "isAttacking3",
         "isHit",
-        "isDead"
+        "isDead",
+        "isWalking"
     };
 
     // 인스펙터
@@ -71,6 +72,7 @@ public class PlayerAnimatorControll : MonoBehaviour
                 SetAnimatorParam(animatorParams[0]);
                 break;
             case Animation_State.Walk:
+                SetAnimatorParam(animatorParams[8]);
                 break;
             case Animation_State.Jump:
                 SetAnimatorParam(animatorParams[1]);
@@ -88,7 +90,8 @@ public class PlayerAnimatorControll : MonoBehaviour
                 SetAnimatorParam(animatorParams[6]);
                 break;
             case Animation_State.Avoid1:
-                SetAnimatorParam(animatorParams[2]);
+                //SetAnimatorParam(animatorParams[2]);
+                animator.SetTrigger(animatorParams[2]);
                 break;
             case Animation_State.Avoid2:
                 break;
@@ -195,20 +198,42 @@ public class PlayerAnimatorControll : MonoBehaviour
     /// <returns>현재 상태의 애니메이션 재생시간</returns>
     internal IEnumerator GetCurrentAnimationDurationTime(Animation_State state)
     {
+        //while (true)
+        //{
+        //    if (animator.GetNextAnimatorStateInfo(0).IsName(GetStringFromAnimationStateMachine(state)))
+        //    {
+        //        break;
+        //    }
+        //}
         while (true)
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName(GetStringFromAnimationStateMachine(state)))
+            if (animator.GetNextAnimatorStateInfo(0).IsName(GetStringFromAnimationStateMachine(state)))
             {
+                Debug.Log(state);
+                Debug.Log(animator.GetNextAnimatorStateInfo(0).length);
                 break;
             }
             else
             {
-                playerController.WaitTimeCheckChange(false);
                 yield return null;
             }
         }
-        yield return animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return animator.GetNextAnimatorStateInfo(0).length;
         playerController.WaitTimeCheckChange(true);
+        //while (true)
+        //{
+        //    if (animator.GetCurrentAnimatorStateInfo(0).IsName(GetStringFromAnimationStateMachine(state)))
+        //    {
+        //        break;
+        //    }
+        //    else
+        //    {
+        //        playerController.WaitTimeCheckChange(false);
+        //        yield return null;
+        //    }
+        //}
+        //yield return animator.GetCurrentAnimatorStateInfo(0).length;
+        //playerController.WaitTimeCheckChange(true);
     }
 
     /// <summary>
