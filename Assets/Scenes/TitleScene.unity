@@ -9359,7 +9359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmAudioSource: {fileID: 663871708}
   sfxAudioSource: {fileID: 301990832}
-  fadeRatio: 0.1
+  fadeRatio: 0.25
   clipList:
   - {fileID: 8300000, guid: 0587f8ccd23355946b7eaa62acafa1c7, type: 3}
   - {fileID: 8300000, guid: ceb29d392e89cc4469da873d2ad93098, type: 3}
