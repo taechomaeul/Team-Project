@@ -172,11 +172,9 @@ public class PlayerController : MonoBehaviour
             if (characterController.isGrounded)
             {
                 yVelocity = 0;
-                if (Input.GetKeyDown(KeyCode.Space))
+                if ((plState == PL_STATE.IDLE || plState == PL_STATE.MOVE) && Input.GetKeyDown(KeyCode.Space))
                 {
-                    ResetAttack();
-                    damagedTime = 0;
-                    isAvoid = false;
+                    ResetActivate();
                     yVelocity = jumpSpeed;
                     plState = PL_STATE.JUMP;
                 }
@@ -192,7 +190,12 @@ public class PlayerController : MonoBehaviour
                 Heal(); //회복한다.
             }
             IsSkill();
-            IsAvoiding();
+
+            if (plState == PL_STATE.IDLE || plState == PL_STATE.MOVE)
+            {
+                IsAvoiding();
+            }
+            
 
             switch (plState)
             {
@@ -209,6 +212,10 @@ public class PlayerController : MonoBehaviour
                     if (IsAttacking())
                     {
                         plState = PL_STATE.ATTACKM1;
+                    }
+                    else
+                    {
+                        isAttack = false;
                     }
 
                     break;
@@ -262,6 +269,7 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case PL_STATE.ACT:
+                    ResetActivate();
                     isActivated = true;
                     break;
 
@@ -521,12 +529,8 @@ public class PlayerController : MonoBehaviour
                         float? temp = gcadt.Current as float?;
                         avoidJAnimTime = (float)temp;
 
-
                         isNoDamage = true; //무적 ON
-
                         transform.GetChild(0).Translate(0, 0, moveSpd * Time.deltaTime * 0.5f);
-
-
 
                         //애니메이션 시간 대기
                         avoidTime += Time.deltaTime;
@@ -639,9 +643,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0)
             || Input.GetMouseButtonDown(1))
         {
-            isAttack = true;
             if (plState == PL_STATE.IDLE || plState == PL_STATE.MOVE)
             {
+                isAttack = true;
                 plState = PL_STATE.ATTACKM1;
             }
             return true;
@@ -700,7 +704,6 @@ public class PlayerController : MonoBehaviour
             peasc.TurnOnEffectSkill();
             int originAtk;
             float originMoveSpd;
-            GameObject effect;
             switch (plInfo.curSkill.skillName)
             {
                 case "힘증가":
@@ -786,12 +789,26 @@ public class PlayerController : MonoBehaviour
         waitTimeCheck = tf;
     }
 
+    public void ResetActivate()
+    {
+        ResetAttack();
+        ResetAvoid();
+        damagedTime = 0;
+    }
+
     public void ResetAttack()
     {
         peasc.TurnOffEffectAttack();
         attackTime = 0;
         isAttack = false;
+        Debug.Log($"isAttack : false");
         isNextAtk = false;
+    }
+
+    public void ResetAvoid()
+    {
+        isAvoid = false;
+        isNoDamage = false;
     }
 
     public void SettingEffect(GameObject prefab, float destroyTime)
