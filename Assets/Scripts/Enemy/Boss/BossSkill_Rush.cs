@@ -18,6 +18,6 @@ public class BossSkill_Rush : MonoBehaviour
     private void FixedUpdate()
     {
         // 부모 오브젝트(적)를 앞으로 이동 시킴
-        transform.parent.Translate(0, 0, bossInfo.GetMovingSpeed() * Time.deltaTime * 2);
+        transform.parent.Translate(0, 0, bossInfo.GetMovingSpeed() * Time.deltaTime * 2 * transform.parent.localScale.y);
     }
 }

@@ -6,10 +6,12 @@ using UnityEngine.AI;
 public class InstatiateFinalBoss : MonoBehaviour
 {
     public GameObject mainBoss;
-    public Vector3 prefabPos;
+    private bool bossActive;
 
     void Start()
     {
+        bossActive = false;
+
         List<string> sceneDta = SaveManager.Instance.saveClass.GetMoveSceneData();
         int sceneDataCnt = sceneDta.Count;
         for (int i = 0; i < sceneDataCnt; i++)
@@ -23,9 +25,13 @@ public class InstatiateFinalBoss : MonoBehaviour
                 mainBoss.GetComponent<NavMeshAgent>().enabled = true;
                 mainBoss.name = "FinalBoss_Minotaur";*/
 
-                mainBoss.SetActive(true);
-
+                bossActive = true;
             }
+        }
+
+        if(!bossActive)
+        {
+            mainBoss.SetActive(false);
         }
     }
 }

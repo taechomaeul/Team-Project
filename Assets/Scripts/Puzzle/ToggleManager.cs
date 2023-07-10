@@ -96,10 +96,12 @@ public class ToggleManager : MonoBehaviour
         actionFuntion.RestartGame();
         toggleCamera.SetActive(false);
         mainCanvas.SetActive(true);
+        Cursor.visible = false;
     }
 
     public void PlayToggleGame()
     {
+        Cursor.visible = true;
         mainCanvas.SetActive(false);
         toggleCamera.SetActive(true);
         togglePanel.SetActive(true);

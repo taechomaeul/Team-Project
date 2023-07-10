@@ -7,6 +7,8 @@ public class EnemyAttack : MonoBehaviour
     Boss bossInfo;
 
     // 인스펙터
+    [Tooltip("본체")]
+    [SerializeField] GameObject enemyBody;
     [Tooltip("스킬 여부")]
     [SerializeField] bool isSkill;
     [Tooltip("랜덤 수치 범위(%)")]
@@ -18,15 +20,15 @@ public class EnemyAttack : MonoBehaviour
     {
         // 적 정보 초기화
         // 일반 몬스터라면
-        if (transform.parent.GetComponent<BossInfo>() == null)
+        if (enemyBody.GetComponent<BossInfo>() == null)
         {
-            enemyInfo = transform.parent.GetComponent<EnemyInfo>().stat;
+            enemyInfo = enemyBody.GetComponent<EnemyInfo>().stat;
             isSkill = false;
         }
         // 보스라면
         else
         {
-            enemyInfo = transform.parent.GetComponent<BossInfo>().stat;
+            enemyInfo = enemyBody.GetComponent<BossInfo>().stat;
             bossInfo = enemyInfo as Boss;
         }
 

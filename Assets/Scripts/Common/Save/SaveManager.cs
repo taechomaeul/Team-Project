@@ -462,7 +462,6 @@ public class SaveManager : MonoBehaviour
             // 세이브 데이터 Json으로 변환
             SaveCurrentDataToClass(lastSavePosition);
             string saveJson = JsonUtility.ToJson(saveClass);
-            Debug.Log(saveJson);
             // 세이브 폴더 생성
             DirectoryInfo di = new(path);
             if (!di.Exists)
@@ -475,7 +474,6 @@ public class SaveManager : MonoBehaviour
             byte[] data = Encoding.UTF8.GetBytes(saveJson);
             fs.Write(data, 0, data.Length);
             fs.Close();
-            Debug.Log("세이브 파일 생성됨");
             return true;
         }
         catch (Exception e)
@@ -500,10 +498,6 @@ public class SaveManager : MonoBehaviour
             playerInfo.plAtk = saveClass.GetCurrentAttack();
             playerInfo.plMoveSpd = saveClass.GetCurrentSpeed();
         }
-        else
-        {
-            Debug.Log("player is not exist");
-        }
 
         if (cc != null)
         {
@@ -513,10 +507,6 @@ public class SaveManager : MonoBehaviour
             cc.OffRecordCollider(saveClass.GetRecordData());
             cc.OffScriptCollider(saveClass.GetScriptData());
             cc.OffMoveSceneCollider(saveClass.GetMoveSceneData());
-        }
-        else
-        {
-            Debug.Log("cc is not exist");
         }
     }
 
@@ -543,15 +533,11 @@ public class SaveManager : MonoBehaviour
                 // Json 형태의 정보 변환
                 string saveJson = Encoding.UTF8.GetString(data);
                 saveClass = JsonUtility.FromJson<SaveClass>(saveJson);
-
-                Debug.Log("세이브 파일 불러옴");
                 return true;
             }
             // 세이브 파일이 존재하지 않는 경우
             else
             {
-                // 추가 필요
-                Debug.Log("세이브 데이터가 존재하지 않음");
                 return false;
             }
         }

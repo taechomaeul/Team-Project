@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     {
         if (Time.timeScale == 0)
         {
-            ResumeTheGame(); //일시정지 후 메인으로 온 뒤 게임 로드하면 시간 정지되는 문제
+            //ResumeTheGame(); //일시정지 후 메인으로 온 뒤 게임 로드하면 시간 정지되는 문제
+            Time.timeScale = 1f;
         }
     }
 
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void MoveToTitleScene()
     {
+        Cursor.visible = true;
         SoundManager.Instance.BGMChangeWithFade(0);
         SceneManager.LoadScene("TitleScene");
     }
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
         {
         SoundManager.Instance.BGMChangeWithFade(1);
         }
+        Cursor.visible = false;
         SceneManager.LoadScene("TestScene_1F");
     }
 
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
         {
         SoundManager.Instance.BGMChangeWithFade(1);
         }
+        Cursor.visible = false;
         SceneManager.LoadScene("TestScene_2F");
     }
 
@@ -111,6 +115,7 @@ public class GameManager : MonoBehaviour
     public void PauseTheGame()
     {
         Time.timeScale = 0;
+        Cursor.visible = true;
     }
 
     /// <summary>
@@ -119,6 +124,7 @@ public class GameManager : MonoBehaviour
     public void ResumeTheGame()
     {
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
 
     /// <summary>
