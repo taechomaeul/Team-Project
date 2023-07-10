@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerEffectAndSoundControll : MonoBehaviour
@@ -16,15 +14,34 @@ public class PlayerEffectAndSoundControll : MonoBehaviour
         trailRenderer = transform.GetComponentInChildren<TrailRenderer>().gameObject;
     }
 
+    public GameObject GetTrail()
+    {
+        if (trailRenderer != null)
+        {
+            return trailRenderer;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     internal void TurnOnEffectAttack()
     {
-        trailRenderer.GetComponent<TrailRenderer>().Clear();
-        trailRenderer.SetActive(true);
+        if (trailRenderer != null)
+        {
+            Debug.Log("트레일 끔");
+            trailRenderer.GetComponent<TrailRenderer>().Clear();
+            trailRenderer.SetActive(true);
+        }
     }
 
     internal void TurnOffEffectAttack()
     {
-        trailRenderer.SetActive(false);
+        if (trailRenderer != null)
+        {
+            trailRenderer.SetActive(false);
+        }
     }
 
     internal void TurnOnEffectSkill()
