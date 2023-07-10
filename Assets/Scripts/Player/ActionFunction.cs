@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionFuntion : MonoBehaviour
+public class ActionFunction : MonoBehaviour
 {
     [Header("고정 변수")]
     public float coolTime = 2f;
@@ -144,6 +144,8 @@ public class ActionFuntion : MonoBehaviour
 
                 // 플레이어 모델 애니메이터 연결
                 plController.InitAnimator();
+                plController.gameObject.GetComponent<PlayerEffectAndSoundControll>().SetTrail();
+                plController.gameObject.GetComponent<PlayerEffectAndSoundControll>().TurnOffEffectAttack();
             }
         }
                 

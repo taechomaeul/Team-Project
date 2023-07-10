@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     public Timer timer;
     public SkillInfo skillData;
     public PlayerInfo plInfo;
-    public ActionFuntion actionFuntion;
+    public ActionFunction actionFuntion;
     public Transform cameraTransform;
     public CharacterController characterController;
 
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         plInfo = GetComponent<PlayerInfo>();
         timer = GameObject.Find("Timer").GetComponent<Timer>();
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
         skillData = GameObject.Find("ActionFunction").GetComponent<SkillInfo>();
         cameraTransform = Camera.main.GetComponent<Transform>();
         characterController = GetComponentInChildren<CharacterController>();
@@ -176,6 +176,7 @@ public class PlayerController : MonoBehaviour
                 {
                     ResetAttack();
                     damagedTime = 0;
+                    isAvoid = false;
                     yVelocity = jumpSpeed;
                     plState = PL_STATE.JUMP;
                 }
@@ -535,6 +536,7 @@ public class PlayerController : MonoBehaviour
                             coroutineCheck = false;
                             waitTimeCheck = false;
                             isNoDamage = false; //무적 OFF
+                            isAvoid = false;
                             plState = PL_STATE.IDLE;
                         }
                     }
@@ -786,6 +788,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetAttack()
     {
+        peasc.TurnOffEffectAttack();
         attackTime = 0;
         isAttack = false;
         isNextAtk = false;

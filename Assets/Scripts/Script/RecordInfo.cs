@@ -13,12 +13,12 @@ public class RecordInfo : MonoBehaviour
     public GameObject recordPanel;
 
     private ShowRecord showRecord;
-    private ActionFuntion actionFuntion;
+    private ActionFunction actionFuntion;
     private bool isConfirm = false;
 
     private void Start()
     {
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
         showRecord = GameObject.Find("ActionFunction").GetComponent<ShowRecord>();
     }
 

@@ -24,11 +24,11 @@ public class ToggleManager : MonoBehaviour
     public bool isClear = false;
 
     private ToggleGame toggleGame;
-    private ActionFuntion actionFuntion;
+    private ActionFunction actionFuntion;
 
     void Start()
     {
-        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFuntion>();
+        actionFuntion = GameObject.Find("ActionFunction").GetComponent<ActionFunction>();
     }
 
     

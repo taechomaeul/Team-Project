@@ -11,9 +11,14 @@ public class PlayerEffectAndSoundControll : MonoBehaviour
     [Tooltip("트레일 랜더러")]
     [SerializeField] private GameObject trailRenderer;
 
+    public void SetTrail()
+    {
+        trailRenderer = transform.GetComponentInChildren<TrailRenderer>().gameObject;
+    }
 
     internal void TurnOnEffectAttack()
     {
+        trailRenderer.GetComponent<TrailRenderer>().Clear();
         trailRenderer.SetActive(true);
     }
 
