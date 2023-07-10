@@ -84,6 +84,11 @@ public class PlayerController : MonoBehaviour
         pac = GetComponent<PlayerAnimatorControll>();
         peasc = GetComponent<PlayerEffectAndSoundControll>();
 
+        if (GetComponentInChildren<TrailRenderer>())
+        {
+            peasc.SetTrail();
+        }
+
         //현재 씬에 따라 인덱서 위치를 지정 (인덱서 위치는 Player 기본 위치)
         Scene scene = SceneManager.GetActiveScene();
         GameObject indexer = GameObject.Find("Indexes").gameObject;
@@ -151,6 +156,8 @@ public class PlayerController : MonoBehaviour
 
         coroutineCheck = false;
         waitTimeCheck = false;
+
+        peasc.SetTrail();
     }
 
     void FixedUpdate()
@@ -195,11 +202,18 @@ public class PlayerController : MonoBehaviour
             {
                 IsAvoiding();
             }
-            
+
 
             switch (plState)
             {
                 case PL_STATE.IDLE:
+
+                    if (peasc.GetTrail()!=null)
+                    {
+                        peasc.TurnOffEffectAttack();
+                    }
+
+
                     //애니메이션 연결
                     pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Idle);
 
@@ -464,45 +478,58 @@ public class PlayerController : MonoBehaviour
 
                 case PL_STATE.DAMAGED:
                     //애니메이션 연결
-                    pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
+                    //pac.SetAnimationState(PlayerAnimatorControll.Animation_State.Hit);
                     //dmgResetTime = pac.GetAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit); //피격 애니메이션 길이
-                    if (!coroutineCheck)
+                    //if (!coroutineCheck)
+                    //{
+                    //    if (gcadt != null)
+                    //    {
+                    //        StopCoroutine(gcadt);
+                    //    }
+                    //    gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit);
+                    //    StartCoroutine(gcadt);
+                    //    coroutineCheck = true;
+                    //}
+
+                    //if (waitTimeCheck)
+                    //{
+                    //    float? temp = gcadt.Current as float?;
+                    //    dmgResetTime = (float)temp;
+
+
+                    //    //애니메이션 시간 대기
+                    //    damagedTime += Time.deltaTime;
+                    //    if (damagedTime > dmgResetTime)
+                    //    {
+                    //        damagedTime = 0;
+                    //        if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
+                    //        {
+                    //            plInfo.curHp = 0;
+                    //            coroutineCheck = false;
+                    //            waitTimeCheck = false;
+                    //            plState = PL_STATE.DIE;
+                    //        }
+                    //        else
+                    //        {
+                    //            coroutineCheck = false;
+                    //            waitTimeCheck = false;
+                    //            plState = PL_STATE.IDLE;
+                    //        }
+                    //    }
+
+                    //}
+                    if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
                     {
-                        if (gcadt != null)
-                        {
-                            StopCoroutine(gcadt);
-                        }
-                        gcadt = pac.GetCurrentAnimationDurationTime(PlayerAnimatorControll.Animation_State.Hit);
-                        StartCoroutine(gcadt);
-                        coroutineCheck = true;
+                        plInfo.curHp = 0;
+                        //coroutineCheck = false;
+                        //waitTimeCheck = false;
+                        plState = PL_STATE.DIE;
                     }
-
-                    if (waitTimeCheck)
+                    else
                     {
-                        float? temp = gcadt.Current as float?;
-                        dmgResetTime = (float)temp;
-
-
-                        //애니메이션 시간 대기
-                        damagedTime += Time.deltaTime;
-                        if (damagedTime > dmgResetTime)
-                        {
-                            damagedTime = 0;
-                            if (plInfo.curHp <= 0) //현재 PL의 HP(혼력) 0이하면 DIE
-                            {
-                                plInfo.curHp = 0;
-                                coroutineCheck = false;
-                                waitTimeCheck = false;
-                                plState = PL_STATE.DIE;
-                            }
-                            else
-                            {
-                                coroutineCheck = false;
-                                waitTimeCheck = false;
-                                plState = PL_STATE.IDLE;
-                            }
-                        }
-
+                        //coroutineCheck = false;
+                        //waitTimeCheck = false;
+                        plState = PL_STATE.IDLE;
                     }
 
 
