@@ -100,7 +100,7 @@ public class SkillInfo : MonoBehaviour
             else
             {
                 skills[i].thumnail = cSkillInfo.sImage[i]; //기존에 등록해놨던 스킬 이미지로 적용
-                Debug.Log($"i : {i}");
+                //Debug.Log($"i : {i}");
                 if (cSkillInfo.effectPrefabs[i] != null)
                 {
                     skills[i].effectPrefab = cSkillInfo.effectPrefabs[i];

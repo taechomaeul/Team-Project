@@ -11,6 +11,7 @@ public class BoxController : MonoBehaviour
     private void Start()
     {
         pPlayerController = GameObject.Find("Player").GetComponent<PushPlayerController>();
+        originPos = transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -44,7 +44,7 @@ public class MoveScene : MonoBehaviour
 
                 case "TestScene_2F":
                     SaveManager.Instance.saveClass.SetLastSavePosition(5);
-                    if (!SceneManager.GetActiveScene().name.Equals("PushGameScene"))
+                    if (!SceneManager.GetActiveScene().name.Equals("GeneratePush"))
                     {
                         SaveManager.Instance.saveClass.SetScriptData(actionFuntion.GetComponent<ShowScript>().checkScriptComplete);
                         SaveManager.Instance.saveClass.SetRecordData(actionFuntion.GetComponent<ShowRecord>().checkRecordComplete);

@@ -1,11 +1,11 @@
 SkillName,Language,CoolTime,DuringTime,Description
 괴력,KR,0,0,제어하기 힘들만큼의 거대한 힘이다. 이 힘이라면 어느 것이라도 움직일 수 있을 것 같다.
-힘증가,KR,30,10,거세게 타오르는 불의 기운이 감도는 힘이다. 힘이 조금 강해진 기분이 든다./[효과] 10초동안 공격력 30% 증가/[쿨타임] 30초
-체력회복,KR,30,0,따스한 바람의 기운이 감도는 힘이다. 몸이 안정되는 기분이 든다./[효과] 체력 30 회복/[쿨타임] 없음
-민첩증가,KR,30,10,하늘을 가르는 번개의 기운이 감도는 힘이다. 움직임이 조금 빨라진 기분이 든다./[효과] 10초동안 이동 속도 30% 증가/[쿨타임] 30초
+힘 증가,KR,30,10,거세게 타오르는 불의 기운이 감도는 힘이다. 힘이 조금 강해진 기분이 든다./[효과] 10초동안 공격력 30% 증가/[쿨타임] 30초
+혼력 회복,KR,30,0,따스한 바람의 기운이 감도는 힘이다. 몸이 안정되는 기분이 든다./[효과] 체력 30 회복/[쿨타임] 30초
+민첩 증가,KR,30,10,하늘을 가르는 번개의 기운이 감도는 힘이다. 움직임이 조금 빨라진 기분이 든다./[효과] 10초동안 이동 속도 30% 증가/[쿨타임] 30초
 없음,KR,0,0, 
 Strength,EN,0,0,It's a huge force that's hard to control. I think I can move anything with this force.
 Power,EN,30,10,It is the power of the burning fire. I feel a little stronger./[Effect] Increases attack power by 30% for 10 seconds/[Cool time] 30 seconds
-Healing,EN,30,0,It is the force of the warm wind. I feel like I'/[Effect] Physical strength 30 recovery /[Cool time] None
+Healing,EN,30,0,It is the force of the warm wind. I feel like I'/[Effect] Physical strength 30 recovery /[Cool time] 30 seconds
 Speed,EN,30,10,It is the force of lightning that cuts through the sky. I feel like I'm moving a little faster./[Effect] 30% increase in travel speed for 10 seconds /[Cool time] 30 seconds
 Nothing,EN,0,0, 
