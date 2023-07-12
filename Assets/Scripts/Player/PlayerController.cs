@@ -446,10 +446,10 @@ public class PlayerController : MonoBehaviour
 
                         //연타 초기화 시간
                         attackTime += Time.deltaTime;
-                        if (IsAttacking())
-                        {
-                            isNextAtk = true;
-                        }
+                        //if (IsAttacking())
+                        //{
+                        //    isNextAtk = true;
+                        //}
                         if (attackTime > atkResetTime)
                         {
                             if (isNextAtk == true)
@@ -557,7 +557,7 @@ public class PlayerController : MonoBehaviour
                         avoidJAnimTime = (float)temp;
 
                         isNoDamage = true; //무적 ON
-                        transform.GetChild(0).Translate(0, 0, moveSpd * Time.deltaTime * 0.5f);
+                        transform.GetChild(0).Translate(0, 0, moveSpd * Time.deltaTime * 0.7f);
 
                         //애니메이션 시간 대기
                         avoidTime += Time.deltaTime;
@@ -828,7 +828,7 @@ public class PlayerController : MonoBehaviour
         peasc.TurnOffEffectAttack();
         attackTime = 0;
         isAttack = false;
-        Debug.Log($"isAttack : false");
+        //Debug.Log($"isAttack : false");
         isNextAtk = false;
     }
 
