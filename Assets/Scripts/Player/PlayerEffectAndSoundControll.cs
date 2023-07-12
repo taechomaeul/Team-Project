@@ -30,7 +30,7 @@ public class PlayerEffectAndSoundControll : MonoBehaviour
     {
         if (trailRenderer != null)
         {
-            Debug.Log("트레일 끔");
+            //Debug.Log("트레일 끔");
             trailRenderer.GetComponent<TrailRenderer>().Clear();
             trailRenderer.SetActive(true);
         }
