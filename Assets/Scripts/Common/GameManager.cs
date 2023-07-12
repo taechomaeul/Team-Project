@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -40,12 +38,13 @@ public class GameManager : MonoBehaviour
     {
 
         int temp = SaveManager.Instance.saveClass.GetLastSavePosition();
-            if(temp==8)
+        if (temp == 8)
         {
             SoundManager.Instance.BGMChangeWithFade(2);
-        }else if(temp>=0 && temp <= 4)
+        }
+        else if (temp >= 0 && temp <= 4)
         {
-        SoundManager.Instance.BGMChangeWithFade(1);
+            SoundManager.Instance.BGMChangeWithFade(1);
         }
         Cursor.visible = false;
         SceneManager.LoadScene("TestScene_1F");
@@ -57,12 +56,13 @@ public class GameManager : MonoBehaviour
     public void MoveTo2FScene()
     {
         int temp = SaveManager.Instance.saveClass.GetLastSavePosition();
-        if(temp==9)
+        if (temp == 9)
         {
             SoundManager.Instance.BGMChangeWithFade(3);
-        }else if(temp>=5 && temp <= 7)
+        }
+        else if (temp >= 5 && temp <= 7)
         {
-        SoundManager.Instance.BGMChangeWithFade(1);
+            SoundManager.Instance.BGMChangeWithFade(1);
         }
         Cursor.visible = false;
         SceneManager.LoadScene("TestScene_2F");
@@ -159,6 +159,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        
+
     }
 }
