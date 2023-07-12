@@ -1,5 +1,5 @@
 ﻿maxHp,currentHp,movingSpeed,attack,detectAngle,detectRadius,attackCycle,attackRange,skillDamage,skillCoolDown,skillCastRange,skillPhaseHpRatio
 100,50,4,20,-1,-1,-1,-1,-1,-1,-1,-1
-30,30,3.5,5,90,10,5,2,-1,-1,-1,-1
+30,30,3.5,5,90,20,5,2,-1,-1,-1,-1
 100,100,5,7,360,30,7,4,15,15,5,70
-150,150,5,10,360,30,9,4.5,20,30,15,70
+150,150,5,10,360,50,9,4.5,20,30,15,70
