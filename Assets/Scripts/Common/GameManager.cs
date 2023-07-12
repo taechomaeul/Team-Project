@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public void MoveToPush()
     {
         SoundManager.Instance.BGMChangeWithFade(1);
-        SceneManager.LoadScene("PushGameScene");
+        SceneManager.LoadScene("GeneratePush");
     }
 
     /// <summary>

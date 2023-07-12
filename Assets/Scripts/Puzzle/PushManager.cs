@@ -22,7 +22,11 @@ public class PushManager : MonoBehaviour
         Destroy(player);
         GameObject newPlayer = Instantiate(playerPrefab);
 
+        newPlayer.GetComponentInChildren<CharacterController>().enabled = false;
         newPlayer.transform.localPosition = originPos;
+        newPlayer.transform.GetChild(0).localPosition = Vector3.zero;
+        newPlayer.GetComponentInChildren<CharacterController>().enabled = true;
+
         GameObject[] boxes = GameObject.FindGameObjectsWithTag("Box");
 
         foreach (GameObject item in boxes)
@@ -33,5 +37,14 @@ public class PushManager : MonoBehaviour
         
         player = newPlayer; //새로 생성된 플레이어를 연결
         player.name = "Player";
+    }
+
+    public void ResetBox()
+    {
+        GameObject[] movingBoxes = GameObject.FindGameObjectsWithTag("Box");
+        for (int i = 0; i < movingBoxes.Length; i++)
+        {
+            movingBoxes[i].transform.position = movingBoxes[i].GetComponent<BoxController>().originPos;
+        }
     }
 }
