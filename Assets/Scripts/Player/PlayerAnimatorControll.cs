@@ -209,8 +209,8 @@ public class PlayerAnimatorControll : MonoBehaviour
         {
             if (animator.GetNextAnimatorStateInfo(0).IsName(GetStringFromAnimationStateMachine(state)))
             {
-                Debug.Log(state);
-                Debug.Log(animator.GetNextAnimatorStateInfo(0).length);
+                //Debug.Log(state);
+                //Debug.Log(animator.GetNextAnimatorStateInfo(0).length);
                 break;
             }
             else

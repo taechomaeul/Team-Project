@@ -97,7 +97,7 @@ public class SoulController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha2) && isDetail)
             {
-                Debug.Log(transform.parent.gameObject, gameObject);
+                //Debug.Log(transform.parent.gameObject, gameObject);
                 actionFuntion.ChangePrefab(other.gameObject, transform.parent.gameObject); //PlayerModel, Enemy
                 detailToolTip.SetActive(false);
             }
