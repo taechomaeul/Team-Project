@@ -172,8 +172,8 @@ public class ShowScript : MonoBehaviour
                 }
             }
         }
-        Debug.Log($"Type: {GetScriptType(curIndex + langOffset)}");
-        Debug.Log($"{scriptText.text}");
+        //Debug.Log($"Type: {GetScriptType(curIndex + langOffset)}");
+        //Debug.Log($"{scriptText.text}");
 
         yield return StartCoroutine(WaitSecondsFunction(1f));
     }

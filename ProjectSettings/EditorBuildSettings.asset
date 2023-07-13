@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScene_2F.unity
     guid: 91f5bab69300a5946b15210a47f71aeb
   - enabled: 1
-    path: Assets/Scenes/PushGameScene.unity
-    guid: 8d8a7443ffa52d94888d9b611ae68518
+    path: Assets/Scenes/GeneratePush.unity
+    guid: 5e8a6daf9773f9441be3a8affdeb6ace
   - enabled: 1
     path: Assets/Scenes/AnimMiddleBossCutScenes.unity
     guid: 3ac232075b5f36c4aa9b4d29a9e4542b
